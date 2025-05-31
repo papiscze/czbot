@@ -60,7 +60,6 @@ Náš bot si pamatuje spoustu informací, aby mohl fungovat, i když se restartu
 * **Jaké novinky sledovat přes RSS**: Aby vám neunikly žádné důležité zprávy z vašich oblíbených webů.
 * **Jaké role dát novým členům automaticky**: Pro usnadnění onboarding procesu.
 * **Texty uvítacích a odchodových zpráv**: Pro osobní přivítání a rozloučení.
-* **Kdo má kdy narozeniny**: Aby bot mohl popřát.
 * **Vaše připomenutí**: Aby na nic nezapomněl a připomněl vám to včas.
 * **Úroveň a XP členů**: Pro zábavný systém odměn.
 * **Pravidla pro zakázaná slova**: Pro automatické hlídání chatu.
