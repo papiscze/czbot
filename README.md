@@ -101,7 +101,7 @@ Náš bot má malou vestavěnou webovou stránku, která slouží pro přehled m
 
 Bot má speciální "kontrolu" pro moderátorské příkazy:
 
-* **Oprávnění "Spravovat zprávy"**: Bot považuje za moderátora každého, kdo má na Discord serveru oprávnění s názvem **"Spravovat zprávy"**. Pokud tedy chcete používat moderátorské příkazy bota, ujistěte se, že vaše role na serveru toto oprávnění má!
+* Bot považuje za moderátora každého, kdo má na Discord serveru oprávnění s názvem **"Spravovat zprávy"**. Pokud tedy chcete používat moderátorské příkazy bota, ujistěte se, že vaše role na serveru toto oprávnění má!
 
 ---
 
