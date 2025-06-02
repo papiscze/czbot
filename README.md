@@ -8,7 +8,7 @@ Tento dokument vám ukáže, co se děje "pod pokličkou" našeho Discord bota. 
 
 Abyste mohli našeho bota používat na svém Discord serveru, musíte ho nejprve pozvat. Je to jednoduché:
 
-* **Pozvěte bota na server**: K pozvání bota na váš server použijte tento [pozvánka](https://discord.com/oauth2/authorize?client_id=902877191086420008).
+* **Pozvěte bota na server**: K pozvání bota na váš server použijte [pozvánka](https://discord.com/oauth2/authorize?client_id=902877191086420008).
     * Klikněte na odkaz.
     * Vyberte server, na který chcete bota přidat.
     * Potvrďte oprávnění, která bot potřebuje k fungování (například posílání zpráv, čtení historie chatu atd.). Nebojte, žádná citlivá data nesbíráme.
