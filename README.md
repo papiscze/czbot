@@ -104,4 +104,11 @@ Bot má speciální "kontrolu" pro moderátorské příkazy:
 
 ---
 
+## 6. Kde získám podporu?
+
+Bot má speciální discord server, kde se můžete dozvědět o novinkách, oznamovat chyby nebo posílat náměty na vylepšení:
+
+* Odkaz k připojení [zde na tomto odkazu](https://discord.gg/hk6PdtVxbm).
+
+---
 Doufáme, že vám tento přehled pomohl lépe pochopit, jak náš Discord bot funguje v zákulisí! Pokud máte jakékoli dotazy, neváhejte se zeptat.
