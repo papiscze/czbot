@@ -73,12 +73,12 @@ Náš bot je neustále ve střehu a reaguje na různé situace na Discordu, a ta
 
 * **Reaguje na zprávy**: Když někdo pošle zprávu, bot ji "přečte". Může:
     * Zjistit, jestli zpráva neobsahuje zakázaná slova.
-    * (WIP) Dát vám XP body za aktivitu (pokud je systém úrovní zapnutý).
+    * Dát vám XP body za aktivitu (pokud je systém úrovní zapnutý).
     * Reagovat na jednoduchá slova (jako "marco" -> "Polo!").
     * Zpracovat vaše `/slash` příkazy.
     * Provádět **automatický překlad**, pokud je kanál takto nastaven.
 * **Vítá a loučí se**: Když se nový člen připojí, bot ho přivítá. Když někdo odejde, bot se rozloučí. Může mu také automaticky přidělit role.
-* **(WIP) Hlídá hlasové kanály**: Sleduje, kdo se připojí a odejde z hlasových kanálů, a umí například vytvářet dočasné hlasové kanály, které se samy smažou, když v nich nikdo není.
+* **Hlídá hlasové kanály**: Sleduje, kdo se připojí a odejde z hlasových kanálů, a umí například vytvářet dočasné hlasové kanály, které se samy smažou, když v nich nikdo není.
 * **Posílá soukromé zprávy**: Pokud je někdo potrestán (umlčen, vykopnut, zabanován, varován), bot se mu pokusí poslat soukromou zprávu s informací o tom, co se stalo a proč.
 
 **Automatické úkoly (běží samy)**: Bot má naplánované věci, které dělá automaticky v pravidelných intervalech, aniž byste ho museli žádat:
