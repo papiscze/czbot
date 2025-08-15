@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <title>CZBOT - Moderation Logs</title>
     <style>
+        /* Vaše stávající CSS */
         body {
             font-family: Arial, sans-serif;
             max-width: 900px;
@@ -127,6 +128,7 @@
 
     <h1>CZBOT - Výpis prohřešků uživatelů</h1>
     <input type="text" id="searchInput" placeholder="Hledat podle uživatele nebo důvodu..." />
+    <button id="czbotFilter" data-filter="all">Filtrace záznamů</button>
     <button id="themeToggle">Světlý/Tmavý mód</button>
     <button id="refreshButton">Aktualizovat</button>
 
@@ -152,7 +154,7 @@
     </div>
 
     <script>
-        const API_URL = "https://rs422cznas.myds.me:5038/logs";
+        const API_URL = "http://rs422cznas.myds.me:25551/logs";
         const SIMULATED_DELAY_MS = 2000;
         const RECORDS_PER_PAGE = 20;
 
@@ -160,9 +162,10 @@
         const logTableBody = document.getElementById("logTableBody");
         const themeToggle = document.getElementById("themeToggle");
         const refreshButton = document.getElementById("refreshButton");
+        const czbotFilterButton = document.getElementById("czbotFilter");
         const body = document.body;
         const loadingSpinner = document.getElementById("loadingSpinner");
-        const contentElements = [document.querySelector('h1'), searchInput, themeToggle, refreshButton, document.querySelector('table'), document.querySelector('.pagination')];
+        const contentElements = [document.querySelector('h1'), searchInput, themeToggle, refreshButton, document.querySelector('table'), document.querySelector('.pagination'), czbotFilterButton];
 
         const prevPageButton = document.getElementById("prevPage");
         const nextPageButton = document.getElementById("nextPage");
@@ -206,7 +209,7 @@
                     return;
                 }
                 allLogs = await response.json();
-                filterLogs(searchInput.value.trim()); // Filter and render on initial load
+                applyFiltersAndRender();
             } catch (error) {
                 console.error("Chyba při načítání logů:", error);
                 alert("Došlo k chybě při komunikaci se serverem.");
@@ -253,20 +256,45 @@
             updatePaginationButtons();
         }
 
-        function filterLogs(query) {
-            const lowerQuery = query.toLowerCase();
-            filteredLogs = allLogs.filter(log =>
-                (log.user_name || log.user_id).toLowerCase().includes(lowerQuery) ||
-                (log.reason || "").toLowerCase().includes(lowerQuery) ||
-                (log.moderator_name || log.moderator_id).toLowerCase().includes(lowerQuery) ||
-                (log.guild_name || log.guild_id).toLowerCase().includes(lowerQuery)
-            );
+        function applyFiltersAndRender() {
+            const searchQuery = searchInput.value.trim().toLowerCase();
+            const filterState = czbotFilterButton.dataset.filter;
+            
+            filteredLogs = allLogs.filter(log => {
+                const matchesSearch = (log.user_name || log.user_id).toLowerCase().includes(searchQuery) ||
+                                      (log.reason || "").toLowerCase().includes(searchQuery) ||
+                                      (log.moderator_name || log.moderator_id).toLowerCase().includes(searchQuery) ||
+                                      (log.guild_name || log.guild_id).toLowerCase().includes(searchQuery);
+
+                let matchesFilter = true;
+                if (filterState === 'czbot_only') {
+                    matchesFilter = log.is_czbot_action;
+                } else if (filterState === 'external_only') {
+                    matchesFilter = !log.is_czbot_action;
+                }
+                
+                return matchesSearch && matchesFilter;
+            });
+            
             currentPage = 1; // Reset to first page after filtering
             displayCurrentPage();
         }
 
-        searchInput.addEventListener("input", () => {
-            filterLogs(searchInput.value.trim());
+        searchInput.addEventListener("input", applyFiltersAndRender);
+
+        czbotFilterButton.addEventListener("click", () => {
+            let currentState = czbotFilterButton.dataset.filter;
+            if (currentState === 'all') {
+                czbotFilterButton.dataset.filter = 'czbot_only';
+                czbotFilterButton.textContent = 'Zobrazit záznamy pouze od czbota';
+            } else if (currentState === 'czbot_only') {
+                czbotFilterButton.dataset.filter = 'external_only';
+                czbotFilterButton.textContent = 'Zobrazit záznamy provedené mimo czbota';
+            } else {
+                czbotFilterButton.dataset.filter = 'all';
+                czbotFilterButton.textContent = 'Zobrazit vše';
+            }
+            applyFiltersAndRender();
         });
 
         prevPageButton.addEventListener("click", () => {
@@ -288,7 +316,6 @@
         refreshButton.addEventListener('click', fetchLogs);
         loadTheme();
 
-        // --- Nové: načtení parametru user z URL a nastavení filtru http://tva-adresa.cz/warns?user=RomanPapacek ---
         function getQueryParam(param) {
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get(param);
@@ -299,8 +326,7 @@
             searchInput.value = initialUserFilter;
         }
 
-        fetchLogs(); // Načte logy při načtení stránky
-
+        fetchLogs();
     </script>
 </body>
 </html>
