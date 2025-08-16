@@ -286,10 +286,10 @@
             let currentState = czbotFilterButton.dataset.filter;
             if (currentState === 'all') {
                 czbotFilterButton.dataset.filter = 'czbot_only';
-                czbotFilterButton.textContent = 'Zobrazit záznamy pouze od czbota';
+                czbotFilterButton.textContent = 'Zobrazení záznamů pouze od czbota';
             } else if (currentState === 'czbot_only') {
                 czbotFilterButton.dataset.filter = 'external_only';
-                czbotFilterButton.textContent = 'Zobrazit záznamy provedené mimo czbota';
+                czbotFilterButton.textContent = 'Zobrazení záznamů provedené mimo czbota';
             } else {
                 czbotFilterButton.dataset.filter = 'all';
                 czbotFilterButton.textContent = 'Zobrazit vše';
