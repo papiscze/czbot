@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="title-text">CZbot Discord Embed Creator</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Inter from Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1e1e2d;
+            color: #d1d1d1;
+        }
+        .discord-embed-preview {
+            background-color: #2b2d31;
+            border-left: 4px solid #5865f2;
+            padding: 16px;
+            border-radius: 4px;
+            font-size: 14px;
+            max-width: 450px;
+            /* Změna: Nastavení minimální šířky pro náhled */
+            min-width: 300px;
+        }
+        .embed-author {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        .embed-author-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+        }
+        .embed-title {
+            font-weight: 600;
+            font-size: 16px;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        .embed-description {
+            color: #b9bbbe;
+            margin-bottom: 8px;
+        }
+        .embed-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            margin-top: 8px;
+        }
+        .embed-thumbnail {
+            float: right;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-left: 10px;
+        }
+        .embed-fields {
+            margin-top: 8px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .embed-field {
+            margin-bottom: 4px;
+            flex-basis: 100%;
+        }
+        .embed-field.inline {
+            flex-basis: calc(50% - 8px);
+        }
+        .embed-field-name {
+            font-weight: 600;
+            color: #fff;
+        }
+        .embed-field-value {
+            color: #b9bbbe;
+        }
+        .embed-footer {
+            display: flex;
+            align-items: center;
+            font-size: 12px;
+            color: #6c6d71;
+            margin-top: 8px;
+        }
+        .embed-footer-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        .field-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .format-buttons {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 4px;
+        }
+        .format-button {
+            padding: 4px 8px;
+            background-color: #4b5563;
+            color: white;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .format-button:hover {
+            background-color: #6b7280;
+        }
+    </style>
+</head>
+<body class="p-8 flex flex-col min-h-screen">
+
+    <div class="flex justify-end mb-4">
+        <select id="lang-switcher" class="bg-gray-700 text-white p-2 rounded-md">
+            <option value="cs">Čeština</option>
+            <option value="en">English</option>
+        </select>
+    </div>
+
+    <div class="flex-1 flex flex-col lg:flex-row gap-8 max-w-7xl mx-auto">
+        
+        <!-- Formulář pro vytvoření Embedu -->
+        <div class="flex-1 bg-gray-800 p-8 rounded-xl shadow-lg">
+            <h1 id="form-title" class="text-3xl font-bold mb-6 text-white">CZbot Discord Embed Creator</h1>
+            
+            <form id="embed-form" class="space-y-4">
+                
+                <!-- Discord Webhook URL -->
+                <div>
+                    <label for="webhook-url" id="label-webhook-url" class="block text-sm font-medium text-gray-400">Discord Webhook URL</label>
+                    <input type="text" id="webhook-url" name="webhook-url" class="mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Vložte sem URL vašeho Discord webhooku">
+                </div>
+
+                <!-- Embed Barva -->
+                <div>
+                    <label for="embed-color" id="label-embed-color" class="block text-sm font-medium text-gray-400">Barva embedu</label>
+                    <input type="color" id="embed-color" name="embed-color" value="#5865f2" class="mt-1 block w-full h-10 rounded-md cursor-pointer">
+                </div>
+
+                <!-- Titulek Embedu -->
+                <div>
+                    <label for="embed-title" id="label-embed-title" class="block text-sm font-medium text-gray-400">Titulek embedu</label>
+                    <input type="text" id="embed-title" name="embed-title" class="mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Název vašeho embedu">
+                </div>
+                
+                <!-- Popis Embedu s formátováním -->
+                <div>
+                    <label for="embed-description" id="label-embed-description" class="block text-sm font-medium text-gray-400">Popis embedu</label>
+                    <div class="format-buttons">
+                        <button type="button" class="format-button" data-format="bold" data-target="embed-description" id="format-bold">**B**</button>
+                        <button type="button" class="format-button" data-format="italic" data-target="embed-description" id="format-italic">_I_</button>
+                        <button type="button" class="format-button" data-format="underline" data-target="embed-description" id="format-underline">__U__</button>
+                        <button type="button" class="format-button" data-format="code" data-target="embed-description" id="format-code">`</button>
+                        <button type="button" class="format-button" data-format="link" data-target="embed-description" id="format-link">🔗</button>
+                    </div>
+                    <textarea id="embed-description" name="embed-description" rows="4" class="mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Popis, text zprávy. Podporuje Markdown."></textarea>
+                </div>
+
+                <!-- Autor -->
+                <div>
+                    <label id="label-author" class="block text-sm font-medium text-gray-400">Autor</label>
+                    <div class="mt-1 flex flex-col sm:flex-row gap-2">
+                        <input type="text" id="author-name" name="author-name" class="flex-1 px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white" placeholder="Jméno autora">
+                        <input type="text" id="author-icon-url" name="author-icon-url" class="flex-1 px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white" placeholder="URL ikony autora">
+                    </div>
+                </div>
+
+                <!-- Obrázek a Miniatura -->
+                <div>
+                    <label for="image-url" id="label-image-url" class="block text-sm font-medium text-gray-400">URL hlavního obrázku</label>
+                    <input type="text" id="image-url" name="image-url" class="mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="https://example.com/image.png">
+                </div>
+                <div>
+                    <label for="thumbnail-url" id="label-thumbnail-url" class="block text-sm font-medium text-gray-400">URL miniatury</label>
+                    <input type="text" id="thumbnail-url" name="thumbnail-url" class="mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="https://example.com/thumbnail.png">
+                </div>
+
+                <!-- Patička (Footer) -->
+                <div>
+                    <label for="footer-text" id="label-footer-text" class="block text-sm font-medium text-gray-400">Patička</label>
+                    <div class="mt-1 flex flex-col sm:flex-row gap-2">
+                        <input type="text" id="footer-text" name="footer-text" class="flex-1 px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white" placeholder="Text patičky">
+                        <input type="text" id="footer-icon-url" name="footer-icon-url" class="flex-1 px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white" placeholder="URL ikony patičky">
+                    </div>
+                </div>
+
+                <!-- Pole (Fields) s formátováním -->
+                <div id="embed-fields-container">
+                    <div class="flex items-center justify-between">
+                        <h3 id="fields-title" class="text-lg font-semibold text-gray-300">Pole (Fields)</h3>
+                        <div class="format-buttons">
+                            <button type="button" class="format-button" data-format="bold" data-target-group="fields">**B**</button>
+                            <button type="button" class="format-button" data-format="italic" data-target-group="fields">_I_</button>
+                            <button type="button" class="format-button" data-format="underline" data-target-group="fields">__U__</button>
+                            <button type="button" class="format-button" data-format="code" data-target-group="fields">`</button>
+                            <button type="button" class="format-button" data-format="link" data-target-group="fields">🔗</button>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" id="add-field-btn" class="w-full px-4 py-2 bg-gray-700 text-gray-300 rounded-md hover:bg-gray-600 transition-colors">Přidat pole</button>
+                
+                <!-- Tlačítko pro odeslání -->
+                <div class="pt-4">
+                    <button type="submit" id="submit-btn" class="w-full px-4 py-2 bg-blue-600 text-white font-semibold rounded-md shadow-lg hover:bg-blue-700 transition-colors">Odeslat na Discord</button>
+                </div>
+            </form>
+
+            <div id="status-message" class="mt-4 text-center text-sm font-medium"></div>
+
+        </div>
+
+        <!-- Náhled Embedu -->
+        <div class="flex-1 bg-gray-900 p-8 rounded-xl shadow-lg">
+            <h2 id="preview-title-heading" class="text-xl font-bold mb-4 text-white">Náhled Embedu</h2>
+            <div id="embed-preview-container" class="relative">
+                <div id="embed-preview" class="discord-embed-preview">
+                    <img id="preview-thumbnail" class="embed-thumbnail hidden" alt="Miniatura embedu" />
+                    <div id="preview-author" class="embed-author hidden">
+                        <img id="preview-author-icon" class="embed-author-icon" alt="Autor ikona" />
+                        <span id="preview-author-name"></span>
+                    </div>
+                    <div id="preview-title" class="embed-title"></div>
+                    <div id="preview-description" class="embed-description"></div>
+                    <div id="preview-fields" class="embed-fields"></div>
+                    <img id="preview-image" class="embed-image hidden" alt="Obrázek embedu" />
+                    <div id="preview-footer" class="embed-footer hidden">
+                        <img id="preview-footer-icon" class="embed-footer-icon hidden" alt="Ikona patičky" />
+                        <span id="preview-footer-text"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Patička na konci stránky -->
+    <footer class="mt-8 text-center text-sm text-gray-500">
+        <p>Vytvořeno 2025, autor Papiscze</p>
+    </footer>
+
+    <script>
+        // Objekt s překlady
+        const translations = {
+            cs: {
+                title: 'CZbot Discord Embed Creator',
+                labelWebhookUrl: 'Discord Webhook URL',
+                placeholderWebhookUrl: 'Vložte sem URL vašeho Discord webhooku',
+                labelEmbedColor: 'Barva embedu',
+                labelEmbedTitle: 'Titulek embedu',
+                placeholderEmbedTitle: 'Název vašeho embedu',
+                labelEmbedDescription: 'Popis embedu',
+                placeholderEmbedDescription: 'Popis, text zprávy. Podporuje Markdown.',
+                labelAuthor: 'Autor',
+                placeholderAuthorName: 'Jméno autora',
+                placeholderAuthorIconUrl: 'URL ikony autora',
+                labelImageUrl: 'URL hlavního obrázku',
+                placeholderImageUrl: 'https://example.com/image.png',
+                labelThumbnailUrl: 'URL miniatury',
+                placeholderThumbnailUrl: 'https://example.com/thumbnail.png',
+                labelFooterText: 'Patička',
+                placeholderFooterText: 'Text patičky',
+                placeholderFooterIconUrl: 'URL ikony patičky',
+                fieldsTitle: 'Pole (Fields)',
+                placeholderFieldName: 'Název pole',
+                placeholderFieldValue: 'Hodnota pole',
+                addFieldBtn: 'Přidat pole',
+                submitBtn: 'Odeslat na Discord',
+                previewTitle: 'Náhled Embedu',
+                statusSuccess: 'Embed byl úspěšně odeslán!',
+                statusError: 'Chyba při odesílání: ',
+                statusFatalError: 'Došlo k chybě: ',
+                statusNoWebhook: 'Chyba: Zadejte prosím URL Discord webhooku.',
+                inlineLabel: 'Na stejném řádku'
+            },
+            en: {
+                title: 'CZbot Discord Embed Creator',
+                labelWebhookUrl: 'Discord Webhook URL',
+                placeholderWebhookUrl: 'Insert your Discord webhook URL here',
+                labelEmbedColor: 'Embed Color',
+                labelEmbedTitle: 'Embed Title',
+                placeholderEmbedTitle: 'Title of your embed',
+                labelEmbedDescription: 'Embed Description',
+                placeholderEmbedDescription: 'Description, message text. Supports Markdown.',
+                labelAuthor: 'Author',
+                placeholderAuthorName: 'Author Name',
+                placeholderAuthorIconUrl: 'Author Icon URL',
+                labelImageUrl: 'Main Image URL',
+                placeholderImageUrl: 'https://example.com/image.png',
+                labelThumbnailUrl: 'Thumbnail URL',
+                placeholderThumbnailUrl: 'https://example.com/thumbnail.png',
+                labelFooterText: 'Footer',
+                placeholderFooterText: 'Footer Text',
+                placeholderFooterIconUrl: 'Footer Icon URL',
+                fieldsTitle: 'Fields',
+                placeholderFieldName: 'Field Name',
+                placeholderFieldValue: 'Field Value',
+                addFieldBtn: 'Add Field',
+                submitBtn: 'Send to Discord',
+                previewTitle: 'Embed Preview',
+                statusSuccess: 'Embed sent successfully!',
+                statusError: 'Error sending: ',
+                statusFatalError: 'An error occurred: ',
+                statusNoWebhook: 'Error: Please enter a Discord webhook URL.',
+                inlineLabel: 'Inline'
+            }
+        };
+
+        const form = document.getElementById('embed-form');
+        const langSwitcher = document.getElementById('lang-switcher');
+        const webhookUrlInput = document.getElementById('webhook-url');
+        const embedColorInput = document.getElementById('embed-color');
+        const embedTitleInput = document.getElementById('embed-title');
+        const embedDescriptionInput = document.getElementById('embed-description');
+        const authorNameInput = document.getElementById('author-name');
+        const authorIconUrlInput = document.getElementById('author-icon-url');
+        const imageUrlInput = document.getElementById('image-url');
+        const thumbnailUrlInput = document.getElementById('thumbnail-url');
+        const footerTextInput = document.getElementById('footer-text');
+        const footerIconUrlInput = document.getElementById('footer-icon-url');
+        const addFieldBtn = document.getElementById('add-field-btn');
+        const fieldsContainer = document.getElementById('embed-fields-container');
+        const statusMessage = document.getElementById('status-message');
+
+        const previewContainer = document.getElementById('embed-preview');
+        const previewThumbnail = document.getElementById('preview-thumbnail');
+        const previewAuthor = document.getElementById('preview-author');
+        const previewAuthorIcon = document.getElementById('preview-author-icon');
+        const previewAuthorName = document.getElementById('preview-author-name');
+        const previewTitle = document.getElementById('preview-title');
+        const previewDescription = document.getElementById('preview-description');
+        const previewFields = document.getElementById('preview-fields');
+        const previewImage = document.getElementById('preview-image');
+        const previewFooter = document.getElementById('preview-footer');
+        const previewFooterIcon = document.getElementById('preview-footer-icon');
+        const previewFooterText = document.getElementById('preview-footer-text');
+
+        // Funkce pro obalení vybraného textu Markdown syntaxí
+        function formatText(textarea, format) {
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const text = textarea.value;
+            let formattedText = '';
+            let newCursorPos = 0;
+            const selectedText = text.substring(start, end);
+
+            switch (format) {
+                case 'bold':
+                    formattedText = `**${selectedText}**`;
+                    newCursorPos = start + 2;
+                    break;
+                case 'italic':
+                    formattedText = `_${selectedText}_`;
+                    newCursorPos = start + 1;
+                    break;
+                case 'underline':
+                    formattedText = `__${selectedText}__`;
+                    newCursorPos = start + 2;
+                    break;
+                case 'code':
+                    formattedText = `\`${selectedText}\``;
+                    newCursorPos = start + 1;
+                    break;
+                case 'link':
+                    formattedText = `[${selectedText || 'text'}](${'https://example.com'})`;
+                    newCursorPos = start + 1;
+                    break;
+            }
+
+            textarea.value = text.substring(0, start) + formattedText + text.substring(end);
+            textarea.focus();
+            textarea.setSelectionRange(newCursorPos, newCursorPos + (selectedText.length > 0 ? selectedText.length : 0));
+        }
+
+        // Funkce pro aktualizaci náhledu
+        function updatePreview() {
+            const color = embedColorInput.value;
+            const title = embedTitleInput.value;
+            const description = embedDescriptionInput.value;
+            const authorName = authorNameInput.value;
+            const authorIconUrl = authorIconUrlInput.value;
+            const imageUrl = imageUrlInput.value;
+            const thumbnailUrl = thumbnailUrlInput.value;
+            const footerText = footerTextInput.value;
+            const footerIconUrl = footerIconUrlInput.value;
+
+            // Barva okraje
+            previewContainer.style.borderColor = color;
+
+            // Titulek
+            previewTitle.textContent = title;
+            previewTitle.style.display = title ? 'block' : 'none';
+
+            // Popis
+            previewDescription.innerHTML = marked.parse(description); // Použití marked.js pro renderování Markdownu
+            previewDescription.style.display = description ? 'block' : 'none';
+
+            // Autor
+            if (authorName || authorIconUrl) {
+                previewAuthor.style.display = 'flex';
+                previewAuthorName.textContent = authorName;
+                if (authorIconUrl) {
+                    previewAuthorIcon.src = authorIconUrl;
+                    previewAuthorIcon.style.display = 'block';
+                } else {
+                    previewAuthorIcon.style.display = 'none';
+                }
+            } else {
+                previewAuthor.style.display = 'none';
+            }
+
+            // Obrázek
+            if (imageUrl) {
+                previewImage.src = imageUrl;
+                previewImage.style.display = 'block';
+            } else {
+                previewImage.style.display = 'none';
+            }
+
+            // Miniatura
+            if (thumbnailUrl) {
+                previewThumbnail.src = thumbnailUrl;
+                previewThumbnail.style.display = 'block';
+            } else {
+                previewThumbnail.style.display = 'none';
+            }
+
+            // Patička
+            if (footerText || footerIconUrl) {
+                previewFooter.style.display = 'flex';
+                previewFooterText.textContent = footerText;
+                if (footerIconUrl) {
+                    previewFooterIcon.src = footerIconUrl;
+                    previewFooterIcon.style.display = 'block';
+                } else {
+                    previewFooterIcon.style.display = 'none';
+                }
+            } else {
+                previewFooter.style.display = 'none';
+            }
+
+            // Pole (Fields)
+            previewFields.innerHTML = '';
+            const fieldRows = document.querySelectorAll('.field-row');
+            fieldRows.forEach(row => {
+                const name = row.querySelector('.field-name').value;
+                const value = row.querySelector('.field-value').value;
+                const inline = row.querySelector('.field-inline').checked;
+
+                if (name && value) {
+                    const fieldDiv = document.createElement('div');
+                    fieldDiv.className = 'embed-field';
+                    if (inline) {
+                        fieldDiv.classList.add('inline');
+                    }
+                    const nameHtml = marked.parseInline(name);
+                    const valueHtml = marked.parseInline(value);
+                    fieldDiv.innerHTML = `<div class="embed-field-name">${nameHtml}</div><div class="embed-field-value">${valueHtml}</div>`;
+                    previewFields.appendChild(fieldDiv);
+                }
+            });
+        }
+        
+        // Funkce pro aktualizaci jazyka
+        function updateLanguage(lang) {
+            const t = translations[lang];
+            // Aktualizace nadpisů a tlačítek
+            document.getElementById('title-text').textContent = t.title;
+            document.getElementById('form-title').textContent = t.title;
+            document.getElementById('preview-title-heading').textContent = t.previewTitle;
+            document.getElementById('fields-title').textContent = t.fieldsTitle;
+            addFieldBtn.textContent = t.addFieldBtn;
+            document.getElementById('submit-btn').textContent = t.submitBtn;
+
+            // Aktualizace labelů
+            document.getElementById('label-webhook-url').textContent = t.labelWebhookUrl;
+            document.getElementById('label-embed-color').textContent = t.labelEmbedColor;
+            document.getElementById('label-embed-title').textContent = t.labelEmbedTitle;
+            document.getElementById('label-embed-description').textContent = t.labelEmbedDescription;
+            document.getElementById('label-author').textContent = t.labelAuthor;
+            document.getElementById('label-image-url').textContent = t.labelImageUrl;
+            document.getElementById('label-thumbnail-url').textContent = t.labelThumbnailUrl;
+            document.getElementById('label-footer-text').textContent = t.labelFooterText;
+            
+            // Aktualizace placeholderů
+            webhookUrlInput.placeholder = t.placeholderWebhookUrl;
+            embedTitleInput.placeholder = t.placeholderEmbedTitle;
+            embedDescriptionInput.placeholder = t.placeholderEmbedDescription;
+            authorNameInput.placeholder = t.placeholderAuthorName;
+            authorIconUrlInput.placeholder = t.placeholderAuthorIconUrl;
+            imageUrlInput.placeholder = t.placeholderImageUrl;
+            thumbnailUrlInput.placeholder = t.placeholderThumbnailUrl;
+            footerTextInput.placeholder = t.placeholderFooterText;
+            footerIconUrlInput.placeholder = t.placeholderFooterIconUrl;
+
+            // Aktualizace placeholderů polí a popisků
+            const fieldNames = fieldsContainer.querySelectorAll('.field-name');
+            const fieldValues = fieldsContainer.querySelectorAll('.field-value');
+            const inlineLabels = fieldsContainer.querySelectorAll('.inline-label');
+            fieldNames.forEach(input => input.placeholder = t.placeholderFieldName);
+            fieldValues.forEach(input => input.placeholder = t.placeholderFieldValue);
+            inlineLabels.forEach(label => label.textContent = t.inlineLabel);
+        }
+
+        function addField() {
+            const currentLang = langSwitcher.value;
+            const t = translations[currentLang];
+            const fieldDiv = document.createElement('div');
+            fieldDiv.className = 'field-row mt-4 items-center';
+            fieldDiv.innerHTML = `
+                <input type="text" class="field-name px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white flex-1" placeholder="${t.placeholderFieldName}">
+                <input type="text" class="field-value px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white flex-1" placeholder="${t.placeholderFieldValue}">
+                <label class="flex items-center gap-2">
+                    <input type="checkbox" class="field-inline h-4 w-4 text-blue-600 bg-gray-700 border-gray-600 rounded-sm">
+                    <span class="inline-label">${t.inlineLabel}</span>
+                </label>
+                <button type="button" class="remove-field-btn px-2 py-1 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors">✕</button>
+            `;
+            fieldsContainer.appendChild(fieldDiv);
+            fieldDiv.querySelector('.remove-field-btn').addEventListener('click', () => {
+                fieldDiv.remove();
+                updatePreview();
+            });
+            fieldDiv.querySelector('.field-name').addEventListener('input', updatePreview);
+            fieldDiv.querySelector('.field-value').addEventListener('input', updatePreview);
+            fieldDiv.querySelector('.field-inline').addEventListener('change', updatePreview);
+            
+            // Přidání posluchačů pro formátování u nových polí
+            const nameInput = fieldDiv.querySelector('.field-name');
+            const valueInput = fieldDiv.querySelector('.field-value');
+            nameInput.addEventListener('focus', () => { window.activeField = nameInput; });
+            valueInput.addEventListener('focus', () => { window.activeField = valueInput; });
+            
+            updatePreview();
+        }
+
+        form.addEventListener('input', updatePreview);
+        addFieldBtn.addEventListener('click', addField);
+        langSwitcher.addEventListener('change', (e) => updateLanguage(e.target.value));
+
+        // Nastavení aktivního pole pro formátování
+        embedDescriptionInput.addEventListener('focus', () => { window.activeField = embedDescriptionInput; });
+
+        // Posluchač pro tlačítka formátování
+        document.querySelectorAll('.format-button').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const format = e.target.dataset.format;
+                const targetId = e.target.dataset.target;
+                const targetGroup = e.target.dataset.targetGroup;
+                
+                let targetInput;
+                if (targetId) {
+                    targetInput = document.getElementById(targetId);
+                } else if (targetGroup === 'fields' && window.activeField) {
+                    targetInput = window.activeField;
+                }
+                
+                if (targetInput) {
+                    formatText(targetInput, format);
+                    updatePreview();
+                }
+            });
+        });
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const currentLang = langSwitcher.value;
+            const t = translations[currentLang];
+
+            const webhookUrl = webhookUrlInput.value;
+            const title = embedTitleInput.value;
+            const description = embedDescriptionInput.value;
+            const color = parseInt(embedColorInput.value.slice(1), 16);
+            const authorName = authorNameInput.value;
+            const authorIconUrl = authorIconUrlInput.value;
+            const imageUrl = imageUrlInput.value;
+            const thumbnailUrl = thumbnailUrlInput.value;
+            const footerText = footerTextInput.value;
+            const footerIconUrl = footerIconUrlInput.value;
+
+            if (!webhookUrl) {
+                statusMessage.textContent = t.statusNoWebhook;
+                statusMessage.className = 'mt-4 text-center text-sm font-medium text-red-500';
+                return;
+            }
+
+            const embeds = [{
+                title: title,
+                description: description,
+                color: color,
+                author: (authorName || authorIconUrl) ? {
+                    name: authorName,
+                    icon_url: authorIconUrl
+                } : undefined,
+                image: imageUrl ? { url: imageUrl } : undefined,
+                thumbnail: thumbnailUrl ? { url: thumbnailUrl } : undefined,
+                footer: (footerText || footerIconUrl) ? {
+                    text: footerText,
+                    icon_url: footerIconUrl
+                } : undefined,
+                timestamp: new Date().toISOString(),
+                fields: []
+            }];
+
+            const fieldRows = fieldsContainer.querySelectorAll('.field-row');
+            fieldRows.forEach(row => {
+                const name = row.querySelector('.field-name').value;
+                const value = row.querySelector('.field-value').value;
+                const inline = row.querySelector('.field-inline').checked;
+                if (name && value) {
+                    embeds[0].fields.push({
+                        name: name,
+                        value: value,
+                        inline: inline
+                    });
+                }
+            });
+
+            const payload = { embeds: embeds };
+
+            try {
+                const response = await fetch(webhookUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    statusMessage.textContent = t.statusSuccess;
+                    statusMessage.className = 'mt-4 text-center text-sm font-medium text-green-500';
+                } else {
+                    const errorText = await response.text();
+                    statusMessage.textContent = `${t.statusError} ${response.status} - ${errorText}`;
+                    statusMessage.className = 'mt-4 text-center text-sm font-medium text-red-500';
+                }
+            } catch (error) {
+                statusMessage.textContent = `${t.statusFatalError} ${error.message}`;
+                statusMessage.className = 'mt-4 text-center text-sm font-medium text-red-500';
+            }
+        });
+
+        // Přidání marked.js pro parsování markdownu
+        const script = document.createElement('script');
+        script.src = "https://cdn.jsdelivr.net/npm/marked/marked.min.js";
+        script.onload = () => {
+            // Inicializace po načtení
+            updateLanguage(langSwitcher.value);
+            updatePreview();
+        };
+        document.head.appendChild(script);
+
+    </script>
+</body>
+</html>
