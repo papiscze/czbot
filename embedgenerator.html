@@ -23,7 +23,6 @@
             border-radius: 4px;
             font-size: 14px;
             max-width: 450px;
-            /* Změna: Nastavení minimální šířky pro náhled */
             min-width: 300px;
         }
         .embed-author {
@@ -42,9 +41,15 @@
             font-size: 16px;
             color: #fff;
             margin-bottom: 8px;
+            /* Zalamování pro dlouhé názvy */
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
         .embed-description,
-        .embed-field-value {
+        .embed-field-value,
+        .embed-author-name,
+        .embed-footer-text,
+        .embed-field-name {
             color: #b9bbbe;
             margin-bottom: 8px;
             /* Klíčová změna pro zalamování dlouhých slov */
@@ -120,6 +125,11 @@
         }
         .format-button:hover {
             background-color: #6b7280;
+        }
+        /* Klíčová změna pro zalamování textu v input polích */
+        input[type="text"] {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
     </style>
 </head>
@@ -237,7 +247,7 @@
                     <div id="preview-title" class="embed-title"></div>
                     <div id="preview-description" class="embed-description"></div>
                     <div id="preview-fields" class="embed-fields"></div>
-                    <img id="preview-image" id="preview-image" class="embed-image hidden" alt="Obrázek embedu" />
+                    <img id="preview-image" class="embed-image hidden" alt="Obrázek embedu" />
                     <div id="preview-footer" class="embed-footer hidden">
                         <img id="preview-footer-icon" class="embed-footer-icon hidden" alt="Ikona patičky" />
                         <span id="preview-footer-text"></span>
@@ -616,7 +626,7 @@
                 fields: []
             }];
 
-            const fieldRows = fieldsContainer.querySelectorAll('.field-row');
+            const fieldRows = document.querySelectorAll('.field-row');
             fieldRows.forEach(row => {
                 const name = row.querySelector('.field-name').value;
                 const value = row.querySelector('.field-value').value;
