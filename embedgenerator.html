@@ -43,9 +43,13 @@
             color: #fff;
             margin-bottom: 8px;
         }
-        .embed-description {
+        .embed-description,
+        .embed-field-value {
             color: #b9bbbe;
             margin-bottom: 8px;
+            /* Klíčová změna pro zalamování dlouhých slov */
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
         .embed-image {
             max-width: 100%;
@@ -78,6 +82,9 @@
         }
         .embed-field-value {
             color: #b9bbbe;
+            /* Zabezpečení zalamování i pro hodnoty polí */
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
         .embed-footer {
             display: flex;
@@ -230,7 +237,7 @@
                     <div id="preview-title" class="embed-title"></div>
                     <div id="preview-description" class="embed-description"></div>
                     <div id="preview-fields" class="embed-fields"></div>
-                    <img id="preview-image" class="embed-image hidden" alt="Obrázek embedu" />
+                    <img id="preview-image" id="preview-image" class="embed-image hidden" alt="Obrázek embedu" />
                     <div id="preview-footer" class="embed-footer hidden">
                         <img id="preview-footer-icon" class="embed-footer-icon hidden" alt="Ikona patičky" />
                         <span id="preview-footer-text"></span>
