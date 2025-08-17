@@ -45,11 +45,7 @@
             word-wrap: break-word;
             overflow-wrap: break-word;
         }
-        .embed-description,
-        .embed-field-value,
-        .embed-author-name,
-        .embed-footer-text,
-        .embed-field-name {
+        .embed-description {
             color: #b9bbbe;
             margin-bottom: 8px;
             /* Klíčová změna pro zalamování dlouhých slov */
@@ -81,13 +77,16 @@
         .embed-field.inline {
             flex-basis: calc(50% - 8px);
         }
-        .embed-field-name {
-            font-weight: 600;
+        .embed-field-name,
+        .embed-field-value {
             color: #fff;
+            font-weight: 600;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
         .embed-field-value {
             color: #b9bbbe;
-            /* Zabezpečení zalamování i pro hodnoty polí */
+            font-weight: 400;
             word-wrap: break-word;
             overflow-wrap: break-word;
         }
@@ -97,6 +96,9 @@
             font-size: 12px;
             color: #6c6d71;
             margin-top: 8px;
+            /* Zalamování pro patičku */
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
         .embed-footer-icon {
             width: 20px;
@@ -126,8 +128,13 @@
         .format-button:hover {
             background-color: #6b7280;
         }
-        /* Klíčová změna pro zalamování textu v input polích */
+        /* Klíčová změna pro zalamování textu ve vstupních polích */
         input[type="text"] {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            min-width: 0; /* Zajišťuje, že se pole může zmenšit */
+        }
+        .embed-title span, .embed-footer span {
             word-wrap: break-word;
             overflow-wrap: break-word;
         }
@@ -412,11 +419,11 @@
             previewContainer.style.borderColor = color;
 
             // Titulek
-            previewTitle.textContent = title;
+            previewTitle.innerHTML = marked.parseInline(title);
             previewTitle.style.display = title ? 'block' : 'none';
 
             // Popis
-            previewDescription.innerHTML = marked.parse(description); // Použití marked.js pro renderování Markdownu
+            previewDescription.innerHTML = marked.parse(description);
             previewDescription.style.display = description ? 'block' : 'none';
 
             // Autor
@@ -452,7 +459,7 @@
             // Patička
             if (footerText || footerIconUrl) {
                 previewFooter.style.display = 'flex';
-                previewFooterText.textContent = footerText;
+                previewFooterText.innerHTML = marked.parseInline(footerText);
                 if (footerIconUrl) {
                     previewFooterIcon.src = footerIconUrl;
                     previewFooterIcon.style.display = 'block';
@@ -471,7 +478,7 @@
                 const value = row.querySelector('.field-value').value;
                 const inline = row.querySelector('.field-inline').checked;
 
-                if (name && value) {
+                if (name || value) {
                     const fieldDiv = document.createElement('div');
                     fieldDiv.className = 'embed-field';
                     if (inline) {
