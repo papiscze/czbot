@@ -92,7 +92,7 @@ Náš bot je neustále ve střehu a reaguje na různé situace na Discordu, a ta
 
 Náš bot má malou vestavěnou webovou stránku, která slouží pro přehled moderátorských akcí vůči uživatelům.
 
-* **Stránka s varováními**: Na adrese `http://128.140.111.93:5038/warns` si můžete prohlédnout veškeré záznamy o moderátorských akcích (kdo byl varován, umlčen, vykopnut nebo zabanován a proč). Toto je užitečné pro přehled, ale přístup k ní je zabezpečen.
+* **Stránka s varováními**: Na adrese `https://papiscze.github.io/czbot/` si můžete prohlédnout veškeré záznamy o moderátorských akcích (kdo byl varován, umlčen, vykopnut nebo zabanován a proč). Toto je užitečné pro přehled, ale přístup k ní je zabezpečen.
 
 ---
 
