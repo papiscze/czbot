@@ -69,13 +69,14 @@
             margin-top: 8px;
             display: flex;
             flex-wrap: wrap;
+            gap: 8px; /* Přidáno pro mezery mezi poli */
         }
         .embed-field {
             margin-bottom: 4px;
             flex-basis: 100%;
         }
         .embed-field.inline {
-            flex-basis: calc(50% - 8px);
+            flex-basis: calc(33.333% - 8px); /* Klíčová změna pro 3 pole na řádek */
         }
         .embed-field-name,
         .embed-field-value {
