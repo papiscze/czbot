@@ -14,6 +14,7 @@
             transition: background-color 0.3s, color 0.3s;
             position: relative;
             min-height: 100vh;
+            padding-bottom: 60px; /* Přidáváme prostor pro footer */
         }
         table {
             width: 100%;
@@ -119,6 +120,25 @@
             font-weight: bold;
             margin: 0 10px;
         }
+
+        /* Nový styl pro footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+            border-top: 1px solid #ccc;
+            color: #666;
+            position: absolute; /* Umožní přilepení na konec stránky */
+            bottom: 0; /* Přilepí footer na spodní okraj */
+            width: 100%; /* Rozšíří na celou šířku */
+            max-width: 900px;
+            left: 50%; /* Centruje */
+            transform: translateX(-50%); /* Centruje */
+        }
+        body.dark-mode footer {
+            border-top-color: #555;
+            color: #aaa;
+        }
     </style>
 </head>
 <body>
@@ -128,7 +148,6 @@
 
     <h1>CZBOT - Výpis prohřešků uživatelů</h1>
     <input type="text" id="searchInput" placeholder="Hledat podle uživatele nebo důvodu..." />
-    <button id="czbotFilter" data-filter="czbot_only">Zobrazení záznamů pouze od czbota</button>
     <button id="themeToggle">Světlý/Tmavý mód</button>
     <button id="refreshButton">Aktualizovat</button>
 
@@ -162,17 +181,16 @@
         const logTableBody = document.getElementById("logTableBody");
         const themeToggle = document.getElementById("themeToggle");
         const refreshButton = document.getElementById("refreshButton");
-        const czbotFilterButton = document.getElementById("czbotFilter");
         const body = document.body;
         const loadingSpinner = document.getElementById("loadingSpinner");
-        const contentElements = [document.querySelector('h1'), searchInput, themeToggle, refreshButton, document.querySelector('table'), document.querySelector('.pagination'), czbotFilterButton];
+        const contentElements = [document.querySelector('h1'), searchInput, themeToggle, refreshButton, document.querySelector('table'), document.querySelector('.pagination')];
 
         const prevPageButton = document.getElementById("prevPage");
         const nextPageButton = document.getElementById("nextPage");
         const pageInfoSpan = document.getElementById("pageInfo");
 
         let allLogs = [];
-        let filteredLogs = []; // Stores logs after search filtering
+        let filteredLogs = [];
         let currentPage = 1;
 
         function loadTheme() {
@@ -258,7 +276,6 @@
 
         function applyFiltersAndRender() {
             const searchQuery = searchInput.value.trim().toLowerCase();
-            const filterState = czbotFilterButton.dataset.filter;
             
             filteredLogs = allLogs.filter(log => {
                 const matchesSearch = (log.user_name || log.user_id).toLowerCase().includes(searchQuery) ||
@@ -266,37 +283,12 @@
                                      (log.moderator_name || log.moderator_id).toLowerCase().includes(searchQuery) ||
                                      (log.guild_name || log.guild_id).toLowerCase().includes(searchQuery);
 
-                let matchesFilter = true;
-                if (filterState === 'czbot_only') {
-                    matchesFilter = log.is_czbot_action;
-                } else if (filterState === 'external_only') {
-                    matchesFilter = !log.is_czbot_action;
-                } else if (filterState === 'all') { // Přidáváme podmínku pro 'all', která zde dříve chyběla
-                    matchesFilter = true;
-                }
-                
-                return matchesSearch && matchesFilter;
+                return matchesSearch && log.is_czbot_action;
             });
             
-            currentPage = 1; // Reset to first page after filtering
+            currentPage = 1;
             displayCurrentPage();
         }
-
-        // Tuto funkci je nutné přepsat, aby se stavy cyklicky střídaly
-        czbotFilterButton.addEventListener("click", () => {
-            let currentState = czbotFilterButton.dataset.filter;
-            if (currentState === 'czbot_only') {
-                czbotFilterButton.dataset.filter = 'external_only';
-                czbotFilterButton.textContent = 'Zobrazení záznamů provedené mimo czbota';
-            } else if (currentState === 'external_only') {
-                czbotFilterButton.dataset.filter = 'all';
-                czbotFilterButton.textContent = 'Zobrazení všeho';
-            } else {
-                czbotFilterButton.dataset.filter = 'czbot_only';
-                czbotFilterButton.textContent = 'Zobrazení záznamů pouze od czbota';
-            }
-            applyFiltersAndRender();
-        });
 
         searchInput.addEventListener("input", applyFiltersAndRender);
 
@@ -331,5 +323,10 @@
 
         fetchLogs();
     </script>
+
+    <footer>
+        <p>Zde jsou logovány pouze akce provedené pomocí příkazů CZBOTa. Záznamy z jiných botů nebo integrovaných Discord příkazů se zde nezobrazují.</p>
+        <p>Made by papiscze 2025</p>
+    </footer>
 </body>
 </html>
