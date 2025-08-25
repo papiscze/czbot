@@ -128,7 +128,7 @@
 
     <h1>CZBOT - Výpis prohřešků uživatelů</h1>
     <input type="text" id="searchInput" placeholder="Hledat podle uživatele nebo důvodu..." />
-    <button id="czbotFilter" data-filter="all">Filtrace záznamů</button>
+    <button id="czbotFilter" data-filter="czbot_only">Zobrazení záznamů pouze od czbota</button>
     <button id="themeToggle">Světlý/Tmavý mód</button>
     <button id="refreshButton">Aktualizovat</button>
 
@@ -262,15 +262,17 @@
             
             filteredLogs = allLogs.filter(log => {
                 const matchesSearch = (log.user_name || log.user_id).toLowerCase().includes(searchQuery) ||
-                                      (log.reason || "").toLowerCase().includes(searchQuery) ||
-                                      (log.moderator_name || log.moderator_id).toLowerCase().includes(searchQuery) ||
-                                      (log.guild_name || log.guild_id).toLowerCase().includes(searchQuery);
+                                     (log.reason || "").toLowerCase().includes(searchQuery) ||
+                                     (log.moderator_name || log.moderator_id).toLowerCase().includes(searchQuery) ||
+                                     (log.guild_name || log.guild_id).toLowerCase().includes(searchQuery);
 
                 let matchesFilter = true;
                 if (filterState === 'czbot_only') {
                     matchesFilter = log.is_czbot_action;
                 } else if (filterState === 'external_only') {
                     matchesFilter = !log.is_czbot_action;
+                } else if (filterState === 'all') { // Přidáváme podmínku pro 'all', která zde dříve chyběla
+                    matchesFilter = true;
                 }
                 
                 return matchesSearch && matchesFilter;
@@ -280,22 +282,23 @@
             displayCurrentPage();
         }
 
-        searchInput.addEventListener("input", applyFiltersAndRender);
-
+        // Tuto funkci je nutné přepsat, aby se stavy cyklicky střídaly
         czbotFilterButton.addEventListener("click", () => {
             let currentState = czbotFilterButton.dataset.filter;
-            if (currentState === 'all') {
-                czbotFilterButton.dataset.filter = 'czbot_only';
-                czbotFilterButton.textContent = 'Zobrazení záznamů pouze od czbota';
-            } else if (currentState === 'czbot_only') {
+            if (currentState === 'czbot_only') {
                 czbotFilterButton.dataset.filter = 'external_only';
                 czbotFilterButton.textContent = 'Zobrazení záznamů provedené mimo czbota';
-            } else {
+            } else if (currentState === 'external_only') {
                 czbotFilterButton.dataset.filter = 'all';
                 czbotFilterButton.textContent = 'Zobrazení všeho';
+            } else {
+                czbotFilterButton.dataset.filter = 'czbot_only';
+                czbotFilterButton.textContent = 'Zobrazení záznamů pouze od czbota';
             }
             applyFiltersAndRender();
         });
+
+        searchInput.addEventListener("input", applyFiltersAndRender);
 
         prevPageButton.addEventListener("click", () => {
             if (currentPage > 1) {
