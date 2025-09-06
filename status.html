@@ -37,7 +37,7 @@ async function fetchStatus() {
     try {
         const res = await fetch("https://rs422cznas.myds.me:5038/status");
         const data = await res.json();
-        // Uptime
+
         const uptime_sec = data.uptime_seconds || 0;
         const hours = Math.floor(uptime_sec/3600);
         const minutes = Math.floor((uptime_sec%3600)/60);
@@ -50,17 +50,14 @@ async function fetchStatus() {
             return li;
         }
 
-        // Stav hlavní
         statusList.innerHTML="";
         statusList.appendChild(addItem("Bot status", data.bot_status, data.bot_status==="online"?"status-online":"status-offline"));
         statusList.appendChild(addItem("Uptime", uptime_str));
         statusList.appendChild(addItem("Počet serverů", data.guilds));
-        statusList.appendChild(addItem("Počet uživatelů", data.users));
         statusList.appendChild(addItem("CPU %", data.cpu_percent));
         statusList.appendChild(addItem("RAM MB", data.ram_mb));
         statusList.appendChild(addItem("Databáze", data.db_status, data.db_status==="OK"?"status-ok":"status-err"));
 
-        // Cogs – seřazení abecedně
         cogsList.innerHTML="";
         const sortedCogs = Object.entries(data.cogs).sort((a,b) => a[0].localeCompare(b[0], 'cs'));
         for(const [name,status] of sortedCogs){
@@ -70,8 +67,17 @@ async function fetchStatus() {
             cogsList.appendChild(addItem(name,status,cls));
         }
     } catch(err){
-        statusList.innerHTML=`<li>Chyba při načítání: ${err}</li>`;
-        cogsList.innerHTML=`<li>Chyba při načítání cogs: ${err}</li>`;
+        // Pokud fetch nebo JSON selže, ukážeme offline status
+        statusList.innerHTML="";
+        statusList.appendChild(document.createElement("li")).innerHTML=`<span class="label">Bot status</span><span class="value status-offline">offline</span>`;
+        statusList.appendChild(document.createElement("li")).innerHTML=`<span class="label">Uptime</span><span class="value">-</span>`;
+        statusList.appendChild(document.createElement("li")).innerHTML=`<span class="label">Počet serverů</span><span class="value">-</span>`;
+        statusList.appendChild(document.createElement("li")).innerHTML=`<span class="label">CPU %</span><span class="value">-</span>`;
+        statusList.appendChild(document.createElement("li")).innerHTML=`<span class="label">RAM MB</span><span class="value">-</span>`;
+        statusList.appendChild(document.createElement("li")).innerHTML=`<span class="label">Databáze</span><span class="value status-err">nedostupná</span>`;
+
+        cogsList.innerHTML="";
+        cogsList.appendChild(document.createElement("li")).innerHTML=`<span class="label">Cogs</span><span class="value status-err">nedostupné</span>`;
     }
 }
 
