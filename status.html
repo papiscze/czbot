@@ -9,35 +9,63 @@
       background: #f4f4f4;
       padding: 20px;
     }
-    h1 { color: #333; }
-    pre {
-      background: #fff;
-      padding: 15px;
-      border-radius: 8px;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
-      overflow-x: auto;
+    h1 { color: #333; text-align: center; }
+    ul {
+      list-style: none;
+      padding: 0;
+      max-width: 500px;
+      margin: 20px auto;
     }
+    li {
+      background: #fff;
+      margin-bottom: 10px;
+      padding: 10px 15px;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .label { font-weight: bold; }
+    .value { font-weight: normal; }
+    .status-online { color: green; font-weight: bold; }
+    .status-offline { color: red; font-weight: bold; }
   </style>
 </head>
 <body>
   <h1>Status CZBota</h1>
-  <p>Aktuální data z bota:</p>
-  <pre id="status">Načítám...</pre>
+  <ul id="statusList">
+    <li>Načítám data...</li>
+  </ul>
 
   <script>
     async function fetchStatus() {
+      const list = document.getElementById("statusList");
+      list.innerHTML = "<li>Načítám data...</li>";
+
       try {
-        const res = await fetch("https://rs422cznas.myds.me:5038/status"); 
+        const res = await fetch("https://rs422cznas.myds.me:5038/status");
         const data = await res.json();
-        document.getElementById("status").textContent = JSON.stringify(data, null, 2);
+
+        list.innerHTML = "";
+
+        const addItem = (label, value, cls="") => {
+          const li = document.createElement("li");
+          li.innerHTML = `<span class="label">${label}</span><span class="value ${cls}">${value}</span>`;
+          list.appendChild(li);
+        };
+
+        addItem("Bot status", data.bot_status, data.bot_status === "online" ? "status-online" : "status-offline");
+        addItem("Počet serverů", data.guilds);
+        addItem("Počet uživatelů", data.users);
+        addItem("CPU využití (%)", data.cpu_percent !== null ? data.cpu_percent : "N/A");
+        addItem("RAM využití (%)", data.ram_percent !== null ? data.ram_percent : "N/A");
+
       } catch (err) {
-        document.getElementById("status").textContent = "Chyba při načítání statusu: " + err;
+        list.innerHTML = `<li>Chyba při načítání statusu: ${err}</li>`;
       }
     }
 
+    // Načíst data jen při otevření stránky
     fetchStatus();
-    // případně auto-refresh každých 30 vteřin
-    setInterval(fetchStatus, 30000);
   </script>
 </body>
 </html>
