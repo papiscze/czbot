@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <title>Status CZBota</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 20px;
+    }
+    h1 { color: #333; }
+    pre {
+      background: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>Status CZBota</h1>
+  <p>Aktuální data z bota:</p>
+  <pre id="status">Načítám...</pre>
+
+  <script>
+    async function fetchStatus() {
+      try {
+        const res = await fetch("https://rs422cznas.myds.me:5038/status"); 
+        const data = await res.json();
+        document.getElementById("status").textContent = JSON.stringify(data, null, 2);
+      } catch (err) {
+        document.getElementById("status").textContent = "Chyba při načítání statusu: " + err;
+      }
+    }
+
+    fetchStatus();
+    // případně auto-refresh každých 30 vteřin
+    setInterval(fetchStatus, 30000);
+  </script>
+</body>
+</html>
