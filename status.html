@@ -9,10 +9,11 @@
 body { font-family:'Inter',sans-serif; background:#1a202c; color:#e2e8f0; margin:0; padding:20px; display:flex; justify-content:center; }
 .container { background:#2d3748; padding:32px; border-radius:12px; max-width:900px; width:100%; box-shadow:0 10px 15px rgba(0,0,0,0.2);}
 h1,h2 { text-align:center; color:#cbd5e0; }
-.status-online { color:#48bb78; }
-.status-offline { color:#f56565; }
-.status-ok { color:#48bb78; }
-.status-err { color:#f56565; }
+.status-online { color:#48bb78; } /* bot online */
+.status-offline { color:#f56565; } /* bot offline text */
+.status-ok { color:#48bb78; } /* funkční cogs */
+.status-err { color:#f56565; } /* chyby cogs */
+.status-offline-cog { color:#f56565; background:#742a2a; padding:2px 6px; border-radius:4px; } /* offline cogs a nedostupný bot/db */
 ul { list-style:none; padding:0; }
 li { display:flex; justify-content:space-between; background:#4a5568; padding:12px 16px; margin-bottom:8px; border-radius:8px; word-break:break-word;}
 .label { font-weight:600; }
@@ -28,11 +29,19 @@ hr { border:0; height:1px; background: linear-gradient(to right, rgba(0,0,0,0), 
 <h2>Stav Cogs</h2>
 <ul id="cogsList"></ul>
 <script>
+const cogs_to_load = ["Administrátorský cog","Administrátorský 2 cog","Pokročilé plánované právy","Auditlogger","Automatické publikace textů","Automatické role","Dočasné hlasové kanály","Giveaway","Hlasování","Kolo štěstí","Moderátorské příkazy","Narozeniny","Ověřování a Reakční role","Patreon","Počítání","Podcasty","Překlad","Reputace","RSS čtečka","Plánované zprávy","Scam ochrana","Statistiky","Tikety","Uvítací/odchodové zprávy a RAID ochrana","Uživatelské příkazy","Vlákna a reakce na zprávy","Vodoznaky","XP úrovně","AI cog"];
+
 async function fetchStatus() {
     const statusList = document.getElementById("statusList");
     const cogsList = document.getElementById("cogsList");
     statusList.innerHTML="<li>Načítám data...</li>";
     cogsList.innerHTML="<li>Načítám cogs...</li>";
+
+    function addItem(label,value,cls=""){ 
+        const li=document.createElement("li"); 
+        li.innerHTML=`<span class="label">${label}</span><span class="value ${cls}">${value}</span>`; 
+        return li;
+    }
 
     try {
         const res = await fetch("https://rs422cznas.myds.me:5038/status");
@@ -44,45 +53,44 @@ async function fetchStatus() {
         const seconds = Math.floor(uptime_sec%60);
         const uptime_str = `${hours}h ${minutes}m ${seconds}s`;
 
-        function addItem(label,value,cls=""){ 
-            const li=document.createElement("li"); 
-            li.innerHTML=`<span class="label">${label}</span><span class="value ${cls}">${value}</span>`; 
-            return li;
-        }
-
         statusList.innerHTML="";
-        statusList.appendChild(addItem("Bot status", data.bot_status, data.bot_status==="online"?"status-online":"status-offline"));
-        statusList.appendChild(addItem("Uptime", uptime_str));
-        statusList.appendChild(addItem("Počet serverů", data.guilds));
-        statusList.appendChild(addItem("CPU %", data.cpu_percent));
-        statusList.appendChild(addItem("RAM MB", data.ram_mb));
-        statusList.appendChild(addItem("Databáze", data.db_status, data.db_status==="OK"?"status-ok":"status-err"));
+        statusList.appendChild(addItem("Bot status", data.bot_status, data.bot_status==="online"?"status-online":"status-offline-cog"));
+        statusList.appendChild(addItem("Uptime", uptime_str, data.bot_status==="online"?"":"status-offline-cog"));
+        statusList.appendChild(addItem("Počet serverů", data.guilds, data.bot_status==="online"?"":"status-offline-cog"));
+        statusList.appendChild(addItem("Počet uživatelů", data.users, data.bot_status==="online"?"":"status-offline-cog"));
+        statusList.appendChild(addItem("CPU %", data.cpu_percent, data.bot_status==="online"?"":"status-offline-cog"));
+        statusList.appendChild(addItem("RAM MB", data.ram_mb, data.bot_status==="online"?"":"status-offline-cog"));
+        statusList.appendChild(addItem("Databáze", data.db_status, data.db_status==="OK"?"status-ok":"status-offline-cog"));
 
         cogsList.innerHTML="";
         const sortedCogs = Object.entries(data.cogs).sort((a,b) => a[0].localeCompare(b[0], 'cs'));
         for(const [name,status] of sortedCogs){
             let cls="";
             if(status==="Funkční") cls="status-ok";
-            else if(status==="Chyba") cls="status-err";
+            else cls="status-offline-cog";
             cogsList.appendChild(addItem(name,status,cls));
         }
     } catch(err){
-        // Pokud fetch nebo JSON selže, ukážeme offline status
+        // Bot offline → všechny cogy a bot/db jako nedostupné
         statusList.innerHTML="";
-        statusList.appendChild(document.createElement("li")).innerHTML=`<span class="label">Bot status</span><span class="value status-offline">offline</span>`;
-        statusList.appendChild(document.createElement("li")).innerHTML=`<span class="label">Uptime</span><span class="value">-</span>`;
-        statusList.appendChild(document.createElement("li")).innerHTML=`<span class="label">Počet serverů</span><span class="value">-</span>`;
-        statusList.appendChild(document.createElement("li")).innerHTML=`<span class="label">CPU %</span><span class="value">-</span>`;
-        statusList.appendChild(document.createElement("li")).innerHTML=`<span class="label">RAM MB</span><span class="value">-</span>`;
-        statusList.appendChild(document.createElement("li")).innerHTML=`<span class="label">Databáze</span><span class="value status-err">nedostupná</span>`;
+        statusList.appendChild(addItem("Bot status","offline","status-offline-cog"));
+        statusList.appendChild(addItem("Uptime","-")); // bez podbarvení
+        statusList.appendChild(addItem("Počet serverů","-")); // bez podbarvení
+        statusList.appendChild(addItem("Počet uživatelů","-")); // bez podbarvení
+        statusList.appendChild(addItem("CPU %","-")); // bez podbarvení
+        statusList.appendChild(addItem("RAM MB","-")); // bez podbarvení
+        statusList.appendChild(addItem("Databáze","nedostupná","status-offline-cog"));
 
         cogsList.innerHTML="";
-        cogsList.appendChild(document.createElement("li")).innerHTML=`<span class="label">Cogs</span><span class="value status-err">nedostupné</span>`;
+        cogs_to_load.forEach(label => {
+            cogsList.appendChild(addItem(label,"nedostupné","status-offline-cog"));
+        });
     }
 }
 
 fetchStatus(); // načíst pouze při otevření
 </script>
+
 </div>
 </body>
 </html>
