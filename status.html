@@ -35,7 +35,7 @@ async function fetchStatus() {
     cogsList.innerHTML="<li>Načítám cogs...</li>";
 
     try {
-        const res = await fetch("https://rs422cznas.myds.me:5038/status-json");
+        const res = await fetch("https://rs422cznas.myds.me:5038/status");
         const data = await res.json();
         // Uptime
         const uptime_sec = data.uptime_seconds || 0;
