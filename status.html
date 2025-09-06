@@ -1,71 +1,81 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-  <meta charset="UTF-8">
-  <title>Status CZBota</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
-      padding: 20px;
-    }
-    h1 { color: #333; text-align: center; }
-    ul {
-      list-style: none;
-      padding: 0;
-      max-width: 500px;
-      margin: 20px auto;
-    }
-    li {
-      background: #fff;
-      margin-bottom: 10px;
-      padding: 10px 15px;
-      border-radius: 6px;
-      display: flex;
-      justify-content: space-between;
-    }
-    .label { font-weight: bold; }
-    .value { font-weight: normal; }
-    .status-online { color: green; font-weight: bold; }
-    .status-offline { color: red; font-weight: bold; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Status CZBota</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+body { font-family:'Inter',sans-serif; background:#1a202c; color:#e2e8f0; margin:0; padding:20px; display:flex; justify-content:center; }
+.container { background:#2d3748; padding:32px; border-radius:12px; max-width:900px; width:100%; box-shadow:0 10px 15px rgba(0,0,0,0.2);}
+h1,h2 { text-align:center; color:#cbd5e0; }
+.status-online { color:#48bb78; }
+.status-offline { color:#f56565; }
+.status-ok { color:#48bb78; }
+.status-err { color:#f56565; }
+ul { list-style:none; padding:0; }
+li { display:flex; justify-content:space-between; background:#4a5568; padding:12px 16px; margin-bottom:8px; border-radius:8px; word-break:break-word;}
+.label { font-weight:600; }
+.value { font-weight:400; }
+hr { border:0; height:1px; background: linear-gradient(to right, rgba(0,0,0,0), #718096, rgba(0,0,0,0)); margin:20px 0;}
+</style>
 </head>
 <body>
-  <h1>Status CZBota</h1>
-  <ul id="statusList">
-    <li>Načítám data...</li>
-  </ul>
+<div class="container">
+<h1>Status CZBota</h1>
+<ul id="statusList"></ul>
+<hr>
+<h2>Stav Cogs</h2>
+<ul id="cogsList"></ul>
+<script>
+async function fetchStatus() {
+    const statusList = document.getElementById("statusList");
+    const cogsList = document.getElementById("cogsList");
+    statusList.innerHTML="<li>Načítám data...</li>";
+    cogsList.innerHTML="<li>Načítám cogs...</li>";
 
-  <script>
-    async function fetchStatus() {
-      const list = document.getElementById("statusList");
-      list.innerHTML = "<li>Načítám data...</li>";
-
-      try {
-        const res = await fetch("https://rs422cznas.myds.me:5038/status");
+    try {
+        const res = await fetch("https://rs422cznas.myds.me:5038/status-json");
         const data = await res.json();
+        // Uptime
+        const uptime_sec = data.uptime_seconds || 0;
+        const hours = Math.floor(uptime_sec/3600);
+        const minutes = Math.floor((uptime_sec%3600)/60);
+        const seconds = Math.floor(uptime_sec%60);
+        const uptime_str = `${hours}h ${minutes}m ${seconds}s`;
 
-        list.innerHTML = "";
+        function addItem(label,value,cls=""){ 
+            const li=document.createElement("li"); 
+            li.innerHTML=`<span class="label">${label}</span><span class="value ${cls}">${value}</span>`; 
+            return li;
+        }
 
-        const addItem = (label, value, cls="") => {
-          const li = document.createElement("li");
-          li.innerHTML = `<span class="label">${label}</span><span class="value ${cls}">${value}</span>`;
-          list.appendChild(li);
-        };
+        // Stav hlavní
+        statusList.innerHTML="";
+        statusList.appendChild(addItem("Bot status", data.bot_status, data.bot_status==="online"?"status-online":"status-offline"));
+        statusList.appendChild(addItem("Uptime", uptime_str));
+        statusList.appendChild(addItem("Počet serverů", data.guilds));
+        statusList.appendChild(addItem("Počet uživatelů", data.users));
+        statusList.appendChild(addItem("CPU %", data.cpu_percent));
+        statusList.appendChild(addItem("RAM MB", data.ram_mb));
+        statusList.appendChild(addItem("Databáze", data.db_status, data.db_status==="OK"?"status-ok":"status-err"));
 
-        addItem("Bot status", data.bot_status, data.bot_status === "online" ? "status-online" : "status-offline");
-        addItem("Počet serverů", data.guilds);
-        addItem("Počet uživatelů", data.users);
-        addItem("CPU využití (%)", data.cpu_percent !== null ? data.cpu_percent : "N/A");
-        addItem("RAM využití (%)", data.ram_percent !== null ? data.ram_percent : "N/A");
-
-      } catch (err) {
-        list.innerHTML = `<li>Chyba při načítání statusu: ${err}</li>`;
-      }
+        // Cogs
+        cogsList.innerHTML="";
+        for(const [name,status] of Object.entries(data.cogs)){
+            let cls="";
+            if(status==="Funkční") cls="status-ok";
+            else if(status==="Chyba") cls="status-err";
+            cogsList.appendChild(addItem(name,status,cls));
+        }
+    } catch(err){
+        statusList.innerHTML=`<li>Chyba při načítání: ${err}</li>`;
+        cogsList.innerHTML=`<li>Chyba při načítání cogs: ${err}</li>`;
     }
+}
 
-    // Načíst data jen při otevření stránky
-    fetchStatus();
-  </script>
+fetchStatus(); // načíst pouze při otevření
+</script>
+</div>
 </body>
 </html>
