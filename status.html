@@ -60,9 +60,10 @@ async function fetchStatus() {
         statusList.appendChild(addItem("RAM MB", data.ram_mb));
         statusList.appendChild(addItem("Databáze", data.db_status, data.db_status==="OK"?"status-ok":"status-err"));
 
-        // Cogs
+        // Cogs – seřazení abecedně
         cogsList.innerHTML="";
-        for(const [name,status] of Object.entries(data.cogs)){
+        const sortedCogs = Object.entries(data.cogs).sort((a,b) => a[0].localeCompare(b[0], 'cs'));
+        for(const [name,status] of sortedCogs){
             let cls="";
             if(status==="Funkční") cls="status-ok";
             else if(status==="Chyba") cls="status-err";
