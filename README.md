@@ -22,4 +22,5 @@ Díky **aktivnímu vývoji** a neustálým novinkám se czbot stává nepostrada
 ### Přidej czbota na svůj server a objev, jak jednoduchá může být správa Discordu!
 ---
 **Pozvěte bota na server**: K pozvání bota na váš server použijte [pozvánka](https://discord.com/oauth2/authorize?client_id=902877191086420008).
-**Podrobná dokumentace k botovi**:[Odkaz na Wiki](https://github.com/papiscze/czbot/wiki)
+---
+**Podrobná dokumentace k botovi**:[Odkaz na Wiki](https://github.com/papiscze/czbot/wiki).
