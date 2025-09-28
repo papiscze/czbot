@@ -2,12 +2,11 @@
 <html lang="cs">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CZBOT - Moderation Logs</title>
     <style>
         /* Vaše stávající CSS */
         body {
-            font-family: 'Inter', Arial, sans-serif;
+            font-family: Arial, sans-serif;
             max-width: 900px;
             margin: auto;
             background-color: #f8f8f8;
@@ -15,97 +14,79 @@
             transition: background-color 0.3s, color 0.3s;
             position: relative;
             min-height: 100vh;
-            padding-bottom: 60px; /* Přidáváme prostor pro footer */
+            /* Flexbox pro správné uspořádání obsahu */
+            display: flex;
+            flex-direction: column;
+        }
+        main {
+            flex: 1; /* Zajistí, že hlavní obsah zabere veškerý dostupný prostor */
         }
         table {
             width: 100%;
             border-collapse: collapse;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            border-radius: 8px; /* Přidáno zaoblení */
-            overflow: hidden; /* Pro zobrazení zaoblení na tabulce */
         }
         th, td {
             border: 1px solid #ddd;
-            padding: 12px 8px; /* Více paddingu */
+            padding: 8px;
             text-align: left;
-            font-size: 0.9em;
         }
         th {
-            background-color: #e0e0e0;
-            color: #333;
-            font-weight: 600;
+            background-color: #f2f2f2;
         }
         input {
-            padding: 10px;
+            padding: 5px;
             margin-bottom: 10px;
             width: 300px;
             border: 1px solid #ccc;
             background-color: #fff;
             color: #333;
-            border-radius: 6px; /* Přidáno zaoblení */
         }
         button {
-            padding: 10px 18px; /* Větší padding */
+            padding: 8px 15px;
             margin-bottom: 10px;
             cursor: pointer;
             background-color: #007bff;
             color: white;
             border: none;
-            border-radius: 6px;
-            transition: background-color 0.3s, transform 0.1s;
-            margin-right: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+            transition: background-color 0.3s;
+            margin-right: 5px;
         }
         button:hover {
             background-color: #0056b3;
-            transform: translateY(-1px);
         }
-        button:active {
-            transform: translateY(1px);
-        }
-        
-        /* Dark Mode Styling */
         body.dark-mode {
-            background-color: #1e1e1e;
+            background-color: #2b2b2b;
             color: #f0f0f0;
         }
-        body.dark-mode table {
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-        }
+        body.dark-mode table,
         body.dark-mode th,
         body.dark-mode td {
-            border-color: #444;
-            background-color: #2b2b2b; /* Tmavší pozadí pro řádky */
+            border-color: #555;
         }
         body.dark-mode th {
-            background-color: #3a3a3a;
-            color: #ddd;
+            background-color: #444;
         }
         body.dark-mode input {
             background-color: #3a3a3a;
             color: #f0f0f0;
             border-color: #666;
         }
-        
-        /* Spinner */
         #loadingSpinner {
+            display: none;
             position: fixed;
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
+            background-color: rgba(0, 0, 0, 0.5);
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s, visibility 0.3s;
         }
-        #loadingSpinner.visible {
-            opacity: 1;
-            visibility: visible;
+        #loadingSpinner.hidden {
+            display: none;
         }
         .spinner {
             border: 8px solid #f3f3f3;
@@ -113,121 +94,88 @@
             border-radius: 50%;
             width: 60px;
             height: 60px;
-            animation: spin 1.5s linear infinite;
+            animation: spin 2s linear infinite;
         }
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-        
-        /* Content Visibility */
         .content-hidden {
+            visibility: hidden;
             opacity: 0;
-            transition: opacity 0.5s;
         }
-        
-        /* Pagination */
         .pagination {
             margin-top: 20px;
             text-align: center;
         }
+        .pagination button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin: 0 5px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
         .pagination button:disabled {
-            background-color: #555555;
+            background-color: #cccccc;
             cursor: not-allowed;
-            box-shadow: none;
-            transform: none;
         }
         .pagination span {
             font-weight: bold;
             margin: 0 10px;
         }
 
-        /* Footer */
+        /* Nový styl pro footer */
         footer {
             text-align: center;
-            padding: 20px;
+            padding: 20px 0;
             margin-top: 20px;
             border-top: 1px solid #ccc;
             color: #666;
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            max-width: 900px;
-            left: 50%;
-            transform: translateX(-50%);
         }
         body.dark-mode footer {
-            border-top-color: #444;
+            border-top-color: #555;
             color: #aaa;
-        }
-        
-        /* Responsive Table */
-        @media (max-width: 768px) {
-            body { padding: 10px; }
-            input { width: 100%; }
-            table, thead, tbody, th, td, tr {
-                display: block;
-            }
-            thead tr {
-                position: absolute;
-                top: -9999px;
-                left: -9999px;
-            }
-            tr { border: 1px solid #ccc; margin-bottom: 10px; border-radius: 8px; }
-            td {
-                border: none;
-                border-bottom: 1px solid #eee;
-                position: relative;
-                padding-left: 50%;
-                text-align: right;
-            }
-            td::before {
-                content: attr(data-label);
-                position: absolute;
-                left: 6px;
-                width: 45%;
-                padding-right: 10px;
-                white-space: nowrap;
-                text-align: left;
-                font-weight: bold;
-            }
         }
     </style>
 </head>
 <body>
-    <div id="loadingSpinner">
+    <div id="loadingSpinner" class="hidden">
         <div class="spinner"></div>
     </div>
-
-    <h1>CZBOT - Výpis prohřešků uživatelů</h1>
-    <input type="text" id="searchInput" placeholder="Hledat podle ID, jména nebo důvodu..." />
-    <button id="themeToggle">Světlý/Tmavý mód</button>
-    <button id="refreshButton">Aktualizovat</button>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Datum a čas</th>
-                <th>Uživatel</th>
-                <th>Důvod</th>
-                <th>Typ</th>
-                <th>Moderátor</th>
-                <th>Expirace</th>
-                <th>Server</th>
-            </tr>
-        </thead>
-        <tbody id="logTableBody"></tbody>
-    </table>
-
-    <div class="pagination">
-        <button id="prevPage">Předchozí</button>
-        <span id="pageInfo">Stránka 1 z 1</span>
-        <button id="nextPage">Další</button>
-    </div>
+    
+    <main>
+        <h1>CZBOT - Výpis prohřešků uživatelů</h1>
+        <input type="text" id="searchInput" placeholder="Hledat podle uživatele nebo důvodu..." />
+        <button id="themeToggle">Světlý/Tmavý mód</button>
+        <button id="refreshButton">Aktualizovat</button>
+    
+        <table>
+            <thead>
+                <tr>
+                    <th>Datum a čas</th>
+                    <th>Uživatel</th>
+                    <th>Důvod</th>
+                    <th>Typ</th>
+                    <th>Moderátor</th>
+                    <th>Expirace</th>
+                    <th>Server</th>
+                </tr>
+            </thead>
+            <tbody id="logTableBody"></tbody>
+        </table>
+    
+        <div class="pagination">
+            <button id="prevPage">Předchozí</button>
+            <span id="pageInfo">Stránka 1 z 1</span>
+            <button id="nextPage">Další</button>
+        </div>
+    </main>
 
     <script>
-        const API_URL = "/logs"; // Mělo by být relativní k aktuálnímu hostu, pokud běží na stejném serveru, nebo "https://rs422cznas.myds.me:5038/logs"
-        const SIMULATED_DELAY_MS = 300; // Sníženo pro lepší odezvu
+        const API_URL = "https://rs422cznas.myds.me:5038/logs";
+        const SIMULATED_DELAY_MS = 2000;
         const RECORDS_PER_PAGE = 20;
 
         const searchInput = document.getElementById("searchInput");
@@ -236,24 +184,15 @@
         const refreshButton = document.getElementById("refreshButton");
         const body = document.body;
         const loadingSpinner = document.getElementById("loadingSpinner");
-        const contentElements = [document.querySelector('h1'), searchInput, themeToggle, refreshButton, document.querySelector('table'), document.querySelector('.pagination'), document.querySelector('footer')];
+        const contentElements = [document.querySelector('h1'), searchInput, themeToggle, refreshButton, document.querySelector('table'), document.querySelector('.pagination')];
 
         const prevPageButton = document.getElementById("prevPage");
         const nextPageButton = document.getElementById("nextPage");
         const pageInfoSpan = document.getElementById("pageInfo");
 
-        let allLogs = []; // Toto jsou data přijatá z API (již filtrovaná serverem)
+        let allLogs = [];
+        let filteredLogs = [];
         let currentPage = 1;
-
-        // --- Utility Functions ---
-
-        function debounce(func, delay) {
-            let timeout;
-            return function(...args) {
-                clearTimeout(timeout);
-                timeout = setTimeout(() => func.apply(this, args), delay);
-            };
-        }
 
         function loadTheme() {
             const savedTheme = localStorage.getItem('theme');
@@ -270,66 +209,32 @@
         }
 
         function showLoading() {
-            loadingSpinner.classList.add('visible');
+            loadingSpinner.classList.remove('hidden');
             contentElements.forEach(el => el.classList.add('content-hidden'));
         }
 
         function hideLoading() {
-            loadingSpinner.classList.remove('visible');
-            // Zpoždění odstranění třídy content-hidden, aby se eliminovalo CLS (Cumulative Layout Shift)
-            setTimeout(() => {
-                contentElements.forEach(el => el.classList.remove('content-hidden'));
-            }, 300); 
+            loadingSpinner.classList.add('hidden');
+            contentElements.forEach(el => el.classList.remove('content-hidden'));
         }
 
-        // --- Data Fetching and Processing ---
-
-        /**
-         * Načte logy ze serveru, volitelně s vyhledávacím termínem.
-         * Nyní odesílá vyhledávací termín na backend.
-         * @param {string} [searchTerm=''] - Vyhledávací řetězec.
-         */
-        async function fetchLogs(searchTerm = '') {
+        async function fetchLogs() {
             showLoading();
-            
-            // Sestavení URL s parametrem search
-            const url = searchTerm ? `${API_URL}?search=${encodeURIComponent(searchTerm)}` : API_URL;
-
             try {
-                // Přidán umělý delay pro vizualizaci spinneru, který se ale spustí až po odeslání požadavku
-                const [response] = await Promise.all([
-                    fetch(url),
-                    new Promise(resolve => setTimeout(resolve, SIMULATED_DELAY_MS))
-                ]);
-
+                await new Promise(resolve => setTimeout(resolve, SIMULATED_DELAY_MS));
+                const response = await fetch(API_URL);
                 if (!response.ok) {
-                    // Nahrazení alert() neblokujícím zobrazením chyby v tabulce
-                    logTableBody.innerHTML = `<tr><td colspan='7' style="color: red; text-align: center;">Chyba ${response.status}: Nepodařilo se načíst data ze serveru.</td></tr>`;
-                    console.error("Nepodařilo se načíst data:", response.statusText);
+                    alert("Nepodařilo se načíst data: " + response.statusText);
                     return;
                 }
-                
-                // allLogs nyní obsahuje již filtrované záznamy ze serveru
                 allLogs = await response.json();
-                
-                // Místo applyFiltersAndRender nyní jen procesujeme pagination
-                processLogs(); 
-
+                applyFiltersAndRender();
             } catch (error) {
-                logTableBody.innerHTML = `<tr><td colspan='7' style="color: red; text-align: center;">Došlo k chybě při komunikaci se serverem: ${error.message}</td></tr>`;
                 console.error("Chyba při načítání logů:", error);
+                alert("Došlo k chybě při komunikaci se serverem.");
             } finally {
                 hideLoading();
             }
-        }
-
-        /**
-         * Zpracuje stažené logy, resetuje stránku a zobrazí první stránku.
-         */
-        function processLogs() {
-            // Server nyní zajišťuje filtrování podle vyhledávacího pole a filtruje pouze is_czbot_action (viz backend)
-            currentPage = 1;
-            displayCurrentPage();
         }
 
         function renderTable(logsToDisplay) {
@@ -341,46 +246,52 @@
             logsToDisplay.forEach(log => {
                 const tr = document.createElement("tr");
                 const expirationText = log.duration ? log.duration : "N/A";
-                
-                // Přidání data-label pro responzivní zobrazení
                 tr.innerHTML = `
-                    <td data-label="Datum a čas">${new Date(log.timestamp).toLocaleString()}</td>
-                    <td data-label="Uživatel">${log.user_name || log.user_id}</td>
-                    <td data-label="Důvod">${log.reason}</td>
-                    <td data-label="Typ">${log.action}</td>
-                    <td data-label="Moderátor">${log.moderator_name || log.moderator_id}</td>
-                    <td data-label="Expirace">${expirationText}</td>
-                    <td data-label="Server">${log.guild_name || log.guild_id}</td>
+                    <td>${new Date(log.timestamp).toLocaleString()}</td>
+                    <td>${log.user_name || log.user_id}</td>
+                    <td>${log.reason}</td>
+                    <td>${log.action}</td>
+                    <td>${log.moderator_name || log.moderator_id}</td>
+                    <td>${expirationText}</td>
+                    <td>${log.guild_name || log.guild_id}</td>
                 `;
                 logTableBody.appendChild(tr);
             });
         }
 
         function updatePaginationButtons() {
-            const totalPages = Math.ceil(allLogs.length / RECORDS_PER_PAGE);
+            const totalPages = Math.ceil(filteredLogs.length / RECORDS_PER_PAGE);
             pageInfoSpan.textContent = `Stránka ${currentPage} z ${totalPages || 1}`;
 
             prevPageButton.disabled = currentPage === 1;
-            nextPageButton.disabled = currentPage >= totalPages || totalPages === 0;
+            nextPageButton.disabled = currentPage === totalPages || totalPages === 0;
         }
 
         function displayCurrentPage() {
             const startIndex = (currentPage - 1) * RECORDS_PER_PAGE;
             const endIndex = startIndex + RECORDS_PER_PAGE;
-            const logsToDisplay = allLogs.slice(startIndex, endIndex);
+            const logsToDisplay = filteredLogs.slice(startIndex, endIndex);
             renderTable(logsToDisplay);
             updatePaginationButtons();
         }
 
-        // --- Event Listeners ---
+        function applyFiltersAndRender() {
+            const searchQuery = searchInput.value.trim().toLowerCase();
+            
+            filteredLogs = allLogs.filter(log => {
+                const matchesSearch = (log.user_name || log.user_id).toLowerCase().includes(searchQuery) ||
+                                     (log.reason || "").toLowerCase().includes(searchQuery) ||
+                                     (log.moderator_name || log.moderator_id).toLowerCase().includes(searchQuery) ||
+                                     (log.guild_name || log.guild_id).toLowerCase().includes(searchQuery);
 
-        // Debounce pro vyhledávací pole (volá API s novým vyhledávacím dotazem)
-        const debouncedSearch = debounce(() => {
-            const searchQuery = searchInput.value.trim();
-            fetchLogs(searchQuery);
-        }, 500); // 500ms zpoždění
+                return matchesSearch && log.is_czbot_action;
+            });
+            
+            currentPage = 1;
+            displayCurrentPage();
+        }
 
-        searchInput.addEventListener("input", debouncedSearch);
+        searchInput.addEventListener("input", applyFiltersAndRender);
 
         prevPageButton.addEventListener("click", () => {
             if (currentPage > 1) {
@@ -390,7 +301,7 @@
         });
 
         nextPageButton.addEventListener("click", () => {
-            const totalPages = Math.ceil(allLogs.length / RECORDS_PER_PAGE);
+            const totalPages = Math.ceil(filteredLogs.length / RECORDS_PER_PAGE);
             if (currentPage < totalPages) {
                 currentPage++;
                 displayCurrentPage();
@@ -398,24 +309,20 @@
         });
 
         themeToggle.addEventListener('click', toggleTheme);
-        refreshButton.addEventListener('click', () => fetchLogs(searchInput.value.trim()));
-        
+        refreshButton.addEventListener('click', fetchLogs);
         loadTheme();
-
-        // --- Initial Load ---
 
         function getQueryParam(param) {
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get(param);
         }
 
-        const initialSearchFilter = getQueryParam('search') || getQueryParam('user'); // Podpora pro starý 'user' nebo nový 'search'
-        if (initialSearchFilter) {
-            searchInput.value = initialSearchFilter;
+        const initialUserFilter = getQueryParam('user');
+        if (initialUserFilter) {
+            searchInput.value = initialUserFilter;
         }
 
-        // Spustí první načtení s případným filtrem z URL
-        fetchLogs(searchInput.value.trim()); 
+        fetchLogs();
     </script>
 
     <footer>
