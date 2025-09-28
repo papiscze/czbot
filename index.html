@@ -15,18 +15,18 @@
             transition: background-color 0.3s, color 0.3s;
             position: relative;
             min-height: 100vh;
-            padding-bottom: 60px; /* Přidáváme prostor pro footer */
+            padding-bottom: 100px; /* Rezerva pro footer */
         }
         table {
             width: 100%;
             border-collapse: collapse;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            border-radius: 8px; /* Přidáno zaoblení */
-            overflow: hidden; /* Pro zobrazení zaoblení na tabulce */
+            border-radius: 8px; 
+            overflow: hidden; 
         }
         th, td {
             border: 1px solid #ddd;
-            padding: 12px 8px; /* Více paddingu */
+            padding: 12px 8px; 
             text-align: left;
             font-size: 0.9em;
         }
@@ -42,10 +42,10 @@
             border: 1px solid #ccc;
             background-color: #fff;
             color: #333;
-            border-radius: 6px; /* Přidáno zaoblení */
+            border-radius: 6px; 
         }
         button {
-            padding: 10px 18px; /* Větší padding */
+            padding: 10px 18px; 
             margin-bottom: 10px;
             cursor: pointer;
             background-color: #007bff;
@@ -75,7 +75,7 @@
         body.dark-mode th,
         body.dark-mode td {
             border-color: #444;
-            background-color: #2b2b2b; /* Tmavší pozadí pro řádky */
+            background-color: #2b2b2b; 
         }
         body.dark-mode th {
             background-color: #3a3a3a;
@@ -130,6 +130,9 @@
         .pagination {
             margin-top: 20px;
             text-align: center;
+            /* NOVÁ OPRAVA: Zajištění, že je klikatelná a je nad footerem */
+            position: relative; 
+            z-index: 10; 
         }
         .pagination button:disabled {
             background-color: #555555;
@@ -145,8 +148,8 @@
         /* Footer */
         footer {
             text-align: center;
-            padding: 20px;
-            margin-top: 20px;
+            padding: 0px 20px;
+            margin-top: 0px;
             border-top: 1px solid #ccc;
             color: #666;
             position: absolute;
@@ -226,7 +229,7 @@
     </div>
 
     <script>
-        const API_URL = "https://rs422cznas.myds.me:5038/logs"; // Zůstává relativní, pokud běží na stejném hostu
+        const API_URL = "https://rs422cznas.myds.me:5038/logs"; 
         const SIMULATED_DELAY_MS = 300; 
         const RECORDS_PER_PAGE = 20;
 
@@ -236,17 +239,7 @@
         const refreshButton = document.getElementById("refreshButton");
         const body = document.body;
         const loadingSpinner = document.getElementById("loadingSpinner");
-        
-        // Zde definujeme elementy. Všimněte si, že prvky jako searchInput už jsou načteny pomocí ID
-        const contentElements = [
-            document.querySelector('h1'), 
-            searchInput, 
-            themeToggle, 
-            refreshButton, 
-            document.querySelector('table'), 
-            document.querySelector('.pagination'), 
-            document.querySelector('footer')
-        ];
+        const contentElements = [document.querySelector('h1'), searchInput, themeToggle, refreshButton, document.querySelector('table'), document.querySelector('.pagination'), document.querySelector('footer')];
 
         const prevPageButton = document.getElementById("prevPage");
         const nextPageButton = document.getElementById("nextPage");
@@ -281,7 +274,7 @@
 
         function showLoading() {
             loadingSpinner.classList.add('visible');
-            // OPRAVA 1: Přidáno .filter(el => el != null) pro ignorování nenačtených prvků
+            // OPRAVA 1: Zajištění .filter(el => el != null) pro ignorování nenačtených prvků
             contentElements
                 .filter(el => el != null) 
                 .forEach(el => el.classList.add('content-hidden'));
@@ -289,9 +282,8 @@
 
         function hideLoading() {
             loadingSpinner.classList.remove('visible');
-            // Zpoždění odstranění třídy content-hidden
             setTimeout(() => {
-                // OPRAVA 1: Přidáno .filter(el => el != null)
+                // OPRAVA 1: Zajištění .filter(el => el != null)
                 contentElements
                     .filter(el => el != null)
                     .forEach(el => el.classList.remove('content-hidden'));
@@ -342,13 +334,12 @@
             logsToDisplay.forEach(log => {
                 const tr = document.createElement("tr");
                 const expirationText = log.duration ? log.duration : "N/A";
-                
-                // OPRAVA 2: Bezpečné parsování data. Přidání 'Z' pro UTC, které zajišťuje správné formátování.
+
+                // OPRAVA 2: Bezpečné parsování data
                 let formattedDate = 'N/A';
                 if (log.timestamp) {
                     const safeTimestamp = log.timestamp.endsWith('Z') ? log.timestamp : log.timestamp + 'Z';
                     const dateObj = new Date(safeTimestamp);
-                    // Kontrola, zda je datum platné, aby se předešlo chybám
                     formattedDate = isNaN(dateObj.getTime()) ? 'Neplatné datum' : dateObj.toLocaleString();
                 }
                 
@@ -383,7 +374,6 @@
 
         // --- Event Listeners ---
 
-        // Debounce pro vyhledávací pole
         const debouncedSearch = debounce(() => {
             const searchQuery = searchInput.value.trim();
             fetchLogs(searchQuery);
@@ -423,7 +413,6 @@
             searchInput.value = initialSearchFilter;
         }
 
-        // Spustí první načtení s případným filtrem z URL
         fetchLogs(searchInput.value.trim()); 
     </script>
 
