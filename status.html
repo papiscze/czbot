@@ -1,94 +1,424 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Status CZBota</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-<style>
-body { font-family:'Inter',sans-serif; background:#1a202c; color:#e2e8f0; margin:0; padding:20px; display:flex; justify-content:center; }
-.container { background:#2d3748; padding:32px; border-radius:12px; max-width:900px; width:100%; box-shadow:0 10px 15px rgba(0,0,0,0.2);}
-h1,h2 { text-align:center; color:#cbd5e0; }
-.status-online { color:#48bb78; } /* bot online */
-.status-offline { color:#f56565; } /* bot offline text */
-.status-ok { color:#48bb78; } /* funkční cogs */
-.status-err { color:#f56565; } /* chyby cogs */
-.status-offline-cog { color:#f56565; background:#742a2a; padding:2px 6px; border-radius:4px; } /* offline cogs a nedostupný bot/db */
-ul { list-style:none; padding:0; }
-li { display:flex; justify-content:space-between; background:#4a5568; padding:12px 16px; margin-bottom:8px; border-radius:8px; word-break:break-word;}
-.label { font-weight:600; }
-.value { font-weight:400; }
-hr { border:0; height:1px; background: linear-gradient(to right, rgba(0,0,0,0), #718096, rgba(0,0,0,0)); margin:20px 0;}
-</style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CZBOT - Moderation Logs</title>
+    <style>
+        /* Vaše stávající CSS */
+        body {
+            font-family: 'Inter', Arial, sans-serif;
+            max-width: 900px;
+            margin: auto;
+            background-color: #f8f8f8;
+            color: #333;
+            transition: background-color 0.3s, color 0.3s;
+            position: relative;
+            min-height: 100vh;
+            padding-bottom: 100px; /* Rezerva pro footer */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px; 
+            overflow: hidden; 
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px 8px; 
+            text-align: left;
+            font-size: 0.9em;
+        }
+        th {
+            background-color: #e0e0e0;
+            color: #333;
+            font-weight: 600;
+        }
+        input {
+            padding: 10px;
+            margin-bottom: 10px;
+            width: 300px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            color: #333;
+            border-radius: 6px; 
+        }
+        button {
+            padding: 10px 18px; 
+            margin-bottom: 10px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            transition: background-color 0.3s, transform 0.1s;
+            margin-right: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        button:hover {
+            background-color: #0056b3;
+            transform: translateY(-1px);
+        }
+        button:active {
+            transform: translateY(1px);
+        }
+        
+        /* Dark Mode Styling */
+        body.dark-mode {
+            background-color: #1e1e1e;
+            color: #f0f0f0;
+        }
+        body.dark-mode table {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+        body.dark-mode th,
+        body.dark-mode td {
+            border-color: #444;
+            background-color: #2b2b2b; 
+        }
+        body.dark-mode th {
+            background-color: #3a3a3a;
+            color: #ddd;
+        }
+        body.dark-mode input {
+            background-color: #3a3a3a;
+            color: #f0f0f0;
+            border-color: #666;
+        }
+        
+        /* Spinner */
+        #loadingSpinner {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+        #loadingSpinner.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        .spinner {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #3498db;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1.5s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Content Visibility */
+        .content-hidden {
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        
+        /* Pagination */
+        .pagination {
+            margin-top: 20px;
+            text-align: center;
+            /* NOVÁ OPRAVA: Zajištění, že je klikatelná a je nad footerem */
+            position: relative; 
+            z-index: 10; 
+        }
+        .pagination button:disabled {
+            background-color: #555555;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+        .pagination span {
+            font-weight: bold;
+            margin: 0 10px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 0px 20px;
+            margin-top: 0px;
+            border-top: 1px solid #ccc;
+            color: #666;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            max-width: 900px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        body.dark-mode footer {
+            border-top-color: #444;
+            color: #aaa;
+        }
+        
+        /* Responsive Table */
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            input { width: 100%; }
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+            thead tr {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+            tr { border: 1px solid #ccc; margin-bottom: 10px; border-radius: 8px; }
+            td {
+                border: none;
+                border-bottom: 1px solid #eee;
+                position: relative;
+                padding-left: 50%;
+                text-align: right;
+            }
+            td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 6px;
+                width: 45%;
+                padding-right: 10px;
+                white-space: nowrap;
+                text-align: left;
+                font-weight: bold;
+            }
+        }
+    </style>
 </head>
 <body>
-<div class="container">
-<h1>Status CZBota</h1>
-<ul id="statusList"></ul>
-<hr>
-<h2>Stav Cogs</h2>
-<ul id="cogsList"></ul>
-<script>
-const cogs_to_load = ["Administrátorský cog","Administrátorský 2 cog","Pokročilé plánované zprávy","Auditlogger","Automatické publikace zpráv","Automatické role","Dočasné hlasové kanály","Giveaway","Hlasování","Kolo štěstí","Moderátorské příkazy","Narozeniny","Ověřování a Reakční role","Patreon","Počítání","Podcasty","Překlad","RAID ochrana","Reputace","RSS čtečka","Plánované zprávy","Scam ochrana","Statistiky","Tikety","Uvítací/odchodové zprávy","Uživatelské příkazy","Vlákna a reakce na zprávy","Vodoznaky","XP úrovně","AI cog"];
+    <div id="loadingSpinner">
+        <div class="spinner"></div>
+    </div>
 
-async function fetchStatus() {
-    const statusList = document.getElementById("statusList");
-    const cogsList = document.getElementById("cogsList");
-    statusList.innerHTML="<li>Načítám data...</li>";
-    cogsList.innerHTML="<li>Načítám cogs...</li>";
+    <h1>CZBOT - Výpis prohřešků uživatelů</h1>
+    <input type="text" id="searchInput" placeholder="Hledat podle ID, jména nebo důvodu..." />
+    <button id="themeToggle">Světlý/Tmavý mód</button>
+    <button id="refreshButton">Aktualizovat</button>
 
-    function addItem(label,value,cls=""){ 
-        const li=document.createElement("li"); 
-        li.innerHTML=`<span class="label">${label}</span><span class="value ${cls}">${value}</span>`; 
-        return li;
-    }
+    <table>
+        <thead>
+            <tr>
+                <th>Datum a čas</th>
+                <th>Uživatel</th>
+                <th>Důvod</th>
+                <th>Typ</th>
+                <th>Moderátor</th>
+                <th>Expirace</th>
+                <th>Server</th>
+            </tr>
+        </thead>
+        <tbody id="logTableBody"></tbody>
+    </table>
 
-    try {
-        const res = await fetch("https://rs422cznas.myds.me:5038/status");
-        const data = await res.json();
+    <div class="pagination">
+        <button id="prevPage">Předchozí</button>
+        <span id="pageInfo">Stránka 1 z 1</span>
+        <button id="nextPage">Další</button>
+    </div>
 
-        const uptime_sec = data.uptime_seconds || 0;
-        const hours = Math.floor(uptime_sec/3600);
-        const minutes = Math.floor((uptime_sec%3600)/60);
-        const seconds = Math.floor(uptime_sec%60);
-        const uptime_str = `${hours}h ${minutes}m ${seconds}s`;
+    <script>
+        const API_URL = "https://rs422cznas.myds.me:5038/logs"; 
+        const SIMULATED_DELAY_MS = 300; 
+        const RECORDS_PER_PAGE = 20;
 
-        statusList.innerHTML="";
-        statusList.appendChild(addItem("Bot status", data.bot_status, data.bot_status==="online"?"status-online":"status-offline-cog"));
-        statusList.appendChild(addItem("Uptime", uptime_str, data.bot_status==="online"?"":"status-offline-cog"));
-        statusList.appendChild(addItem("Počet serverů", data.guilds, data.bot_status==="online"?"":"status-offline-cog"));
-        statusList.appendChild(addItem("CPU %", data.cpu_percent, data.bot_status==="online"?"":"status-offline-cog"));
-        statusList.appendChild(addItem("RAM MB", data.ram_mb, data.bot_status==="online"?"":"status-offline-cog"));
-        statusList.appendChild(addItem("Databáze", data.db_status, data.db_status==="OK"?"status-ok":"status-offline-cog"));
+        const searchInput = document.getElementById("searchInput");
+        const logTableBody = document.getElementById("logTableBody");
+        const themeToggle = document.getElementById("themeToggle");
+        const refreshButton = document.getElementById("refreshButton");
+        const body = document.body;
+        const loadingSpinner = document.getElementById("loadingSpinner");
+        const contentElements = [document.querySelector('h1'), searchInput, themeToggle, refreshButton, document.querySelector('table'), document.querySelector('.pagination'), document.querySelector('footer')];
 
-        cogsList.innerHTML="";
-        const sortedCogs = Object.entries(data.cogs).sort((a,b) => a[0].localeCompare(b[0], 'cs'));
-        for(const [name,status] of sortedCogs){
-            let cls="";
-            if(status==="Funkční") cls="status-ok";
-            else cls="status-offline-cog";
-            cogsList.appendChild(addItem(name,status,cls));
+        const prevPageButton = document.getElementById("prevPage");
+        const nextPageButton = document.getElementById("nextPage");
+        const pageInfoSpan = document.getElementById("pageInfo");
+
+        let allLogs = []; 
+        let currentPage = 1;
+
+        // --- Utility Functions ---
+
+        function debounce(func, delay) {
+            let timeout;
+            return function(...args) {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(this, args), delay);
+            };
         }
-    } catch(err){
-        // Bot offline → všechny cogy a bot/db jako nedostupné
-        statusList.innerHTML="";
-        statusList.appendChild(addItem("Bot status","offline","status-offline-cog"));
-        statusList.appendChild(addItem("Uptime","-")); // bez podbarvení
-        statusList.appendChild(addItem("Počet serverů","-")); // bez podbarvení
-        statusList.appendChild(addItem("CPU %","-")); // bez podbarvení
-        statusList.appendChild(addItem("RAM MB","-")); // bez podbarvení
-        statusList.appendChild(addItem("Databáze","nedostupná","status-offline-cog"));
 
-        cogsList.innerHTML="";
-        cogs_to_load.forEach(label => {
-            cogsList.appendChild(addItem(label,"nedostupné","status-offline-cog"));
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                body.classList.add('dark-mode');
+            } else {
+                body.classList.remove('dark-mode');
+            }
+        }
+
+        function toggleTheme() {
+            body.classList.toggle('dark-mode');
+            localStorage.setItem('theme', body.classList.contains('dark-mode') ? 'dark' : 'light');
+        }
+
+        function showLoading() {
+            loadingSpinner.classList.add('visible');
+            // OPRAVA 1: Zajištění .filter(el => el != null) pro ignorování nenačtených prvků
+            contentElements
+                .filter(el => el != null) 
+                .forEach(el => el.classList.add('content-hidden'));
+        }
+
+        function hideLoading() {
+            loadingSpinner.classList.remove('visible');
+            setTimeout(() => {
+                // OPRAVA 1: Zajištění .filter(el => el != null)
+                contentElements
+                    .filter(el => el != null)
+                    .forEach(el => el.classList.remove('content-hidden'));
+            }, 300); 
+        }
+
+        // --- Data Fetching and Processing ---
+
+        async function fetchLogs(searchTerm = '') {
+            showLoading();
+            
+            const url = searchTerm ? `${API_URL}?search=${encodeURIComponent(searchTerm)}` : API_URL;
+
+            try {
+                const [response] = await Promise.all([
+                    fetch(url),
+                    new Promise(resolve => setTimeout(resolve, SIMULATED_DELAY_MS))
+                ]);
+
+                if (!response.ok) {
+                    logTableBody.innerHTML = `<tr><td colspan='7' style="color: red; text-align: center;">Chyba ${response.status}: Nepodařilo se načíst data ze serveru.</td></tr>`;
+                    console.error("Nepodařilo se načíst data:", response.statusText);
+                    return;
+                }
+                
+                allLogs = await response.json();
+                processLogs(); 
+
+            } catch (error) {
+                logTableBody.innerHTML = `<tr><td colspan='7' style="color: red; text-align: center;">Došlo k chybě při komunikaci se serverem: ${error.message}</td></tr>`;
+                console.error("Chyba při načítání logů:", error);
+            } finally {
+                hideLoading();
+            }
+        }
+
+        function processLogs() {
+            currentPage = 1;
+            displayCurrentPage();
+        }
+
+        function renderTable(logsToDisplay) {
+            logTableBody.innerHTML = "";
+            if (logsToDisplay.length === 0) {
+                logTableBody.innerHTML = "<tr><td colspan='7'>Žádné výsledky</td></tr>";
+                return;
+            }
+            logsToDisplay.forEach(log => {
+                const tr = document.createElement("tr");
+                const expirationText = log.duration ? log.duration : "N/A";
+
+                // OPRAVA 2: Bezpečné parsování data
+                let formattedDate = 'N/A';
+                if (log.timestamp) {
+                    const safeTimestamp = log.timestamp.endsWith('Z') ? log.timestamp : log.timestamp + 'Z';
+                    const dateObj = new Date(safeTimestamp);
+                    formattedDate = isNaN(dateObj.getTime()) ? 'Neplatné datum' : dateObj.toLocaleString();
+                }
+                
+                tr.innerHTML = `
+                    <td data-label="Datum a čas">${formattedDate}</td>
+                    <td data-label="Uživatel">${log.user_name || log.user_id}</td>
+                    <td data-label="Důvod">${log.reason}</td>
+                    <td data-label="Typ">${log.action}</td>
+                    <td data-label="Moderátor">${log.moderator_name || log.moderator_id}</td>
+                    <td data-label="Expirace">${expirationText}</td>
+                    <td data-label="Server">${log.guild_name || log.guild_id}</td>
+                `;
+                logTableBody.appendChild(tr);
+            });
+        }
+
+        function updatePaginationButtons() {
+            const totalPages = Math.ceil(allLogs.length / RECORDS_PER_PAGE);
+            pageInfoSpan.textContent = `Stránka ${currentPage} z ${totalPages || 1}`;
+
+            prevPageButton.disabled = currentPage === 1;
+            nextPageButton.disabled = currentPage >= totalPages || totalPages === 0;
+        }
+
+        function displayCurrentPage() {
+            const startIndex = (currentPage - 1) * RECORDS_PER_PAGE;
+            const endIndex = startIndex + RECORDS_PER_PAGE;
+            const logsToDisplay = allLogs.slice(startIndex, endIndex);
+            renderTable(logsToDisplay);
+            updatePaginationButtons();
+        }
+
+        // --- Event Listeners ---
+
+        const debouncedSearch = debounce(() => {
+            const searchQuery = searchInput.value.trim();
+            fetchLogs(searchQuery);
+        }, 500); 
+
+        searchInput.addEventListener("input", debouncedSearch);
+
+        prevPageButton.addEventListener("click", () => {
+            if (currentPage > 1) {
+                currentPage--;
+                displayCurrentPage();
+            }
         });
-    }
-}
 
-fetchStatus(); // načíst pouze při otevření
-</script>
+        nextPageButton.addEventListener("click", () => {
+            const totalPages = Math.ceil(allLogs.length / RECORDS_PER_PAGE);
+            if (currentPage < totalPages) {
+                currentPage++;
+                displayCurrentPage();
+            }
+        });
 
-</div>
+        themeToggle.addEventListener('click', toggleTheme);
+        refreshButton.addEventListener('click', () => fetchLogs(searchInput.value.trim()));
+        
+        loadTheme();
+
+        // --- Initial Load ---
+
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        const initialSearchFilter = getQueryParam('search') || getQueryParam('user'); 
+        if (initialSearchFilter) {
+            searchInput.value = initialSearchFilter;
+        }
+
+        fetchLogs(searchInput.value.trim()); 
+    </script>
+
+    <footer>
+        <p>Zde jsou logovány pouze akce provedené pomocí příkazů CZBOTa. Záznamy z jiných botů nebo integrovaných Discord příkazů se zde nezobrazují.</p>
+        <p>Made by papiscze 2025</p>
+    </footer>
 </body>
 </html>
