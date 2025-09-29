@@ -1,370 +1,94 @@
 <!DOCTYPE html>
-<html lang="cs" data-bs-theme="dark">
+<html lang="cs">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Statistiky Discord Serveru</title>
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/countup.js/2.2.0/countUp.min.js"></script>
-
+<title>Status CZBota</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-body { background:#1e1e2d; color:#d1d1d1; font-family:'Poppins',sans-serif; }
-.header-section { background:#2a2a3e; padding:30px 0; border-bottom:2px solid #5a5a7a; box-shadow:0 4px 6px rgba(0,0,0,0.2); position:relative; }
-h2.section-title { font-weight:700; font-size:2rem; background:linear-gradient(90deg,#57F287,#3498db); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:1.5rem; }
-.card { background:rgba(42,42,62,0.65); backdrop-filter:blur(12px); border:1px solid rgba(255,255,255,0.1); border-radius:16px; transition:all 0.3s ease; color:#ffffff; opacity:0; transform:translateY(20px); }
-.card.show { opacity:1; transform:translateY(0); transition:all 0.5s ease; }
-.chart-container { height:350px; }
-.list-group-item.card { border:none; border-radius:12px; margin-bottom:8px; padding:15px; background:rgba(42,42,62,0.5); }
-.form-select, .form-control { border-color:#5a5a7a; background-color:#2a2a3e !important; color:#d1d1d1 !important; }
-.status-online { color:#57F287; } .status-idle { color:#FAA81A; } .status-dnd { color:#F23F43; } .status-offline { color:#747F8D; }
-.animate-spin { animation:spin 1s linear infinite; }
-@keyframes spin { from { transform:rotate(0deg); } to { transform:rotate(360deg); } }
-#authButton { position:absolute; top:15px; right:15px; z-index:10; }
-
-/* Nové styly pro footer */
-.footer { background:#2a2a3e; padding:20px 0; border-top:1px solid #5a5a7a; margin-top:50px; text-align:center; }
-.footer p { margin-bottom:0; font-size:0.9rem; color:#9faab7; }
-
-/* --- SPINNER STYLY (Změněno pro vložení do obsahu) --- */
-#loadingMessage {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    height: 30vh; /* Dostatek místa na obrazovce */
-    color: #3498db;
-    font-size: 1.25rem;
-}
-.loading-hidden {
-    display: none !important;
-}
-
+body { font-family:'Inter',sans-serif; background:#1a202c; color:#e2e8f0; margin:0; padding:20px; display:flex; justify-content:center; }
+.container { background:#2d3748; padding:32px; border-radius:12px; max-width:900px; width:100%; box-shadow:0 10px 15px rgba(0,0,0,0.2);}
+h1,h2 { text-align:center; color:#cbd5e0; }
+.status-online { color:#48bb78; } /* bot online */
+.status-offline { color:#f56565; } /* bot offline text */
+.status-ok { color:#48bb78; } /* funkční cogs */
+.status-err { color:#f56565; } /* chyby cogs */
+.status-offline-cog { color:#f56565; background:#742a2a; padding:2px 6px; border-radius:4px; } /* offline cogs a nedostupný bot/db */
+ul { list-style:none; padding:0; }
+li { display:flex; justify-content:space-between; background:#4a5568; padding:12px 16px; margin-bottom:8px; border-radius:8px; word-break:break-word;}
+.label { font-weight:600; }
+.value { font-weight:400; }
+hr { border:0; height:1px; background: linear-gradient(to right, rgba(0,0,0,0), #718096, rgba(0,0,0,0)); margin:20px 0;}
 </style>
 </head>
 <body>
-
-<header class="header-section text-center">
 <div class="container">
-  <a href="/api/auth/discord" class="btn btn-outline-info rounded-pill" id="authButton" title="Přihlásit znovu přes Discord.">
-    <i class="bi bi-discord me-2"></i> Přihlásit se
-  </a>
-  <h1 id="serverName" class="display-4 fw-bold text-info"><i class="bi bi-disc-fill me-3"></i>Načítání statistik...</h1>
-  <p id="periodDisplay" class="lead text-secondary mt-3">Načítám data...</p>
-</div>
-</header>
-
-<main class="container py-5">
-
-<div class="mb-5 d-flex flex-column flex-md-row align-items-md-center justify-content-between g-3">
-  <div class="d-flex align-items-center flex-wrap mb-3 mb-md-0">
-    <label for="guildSelect" class="form-label mb-0 me-3 fs-5">Zobrazit server:</label>
-    <select id="guildSelect" class="form-select w-auto bg-dark text-light" onchange="handleGuildChange()">
-      <option value="">Načítání serverů...</option>
-    </select>
-  </div>
-  <div class="d-flex align-items-center flex-wrap">
-    <label for="periodSelect" class="form-label mb-0 me-3 fs-5">Zobrazit za:</label>
-    <select id="periodSelect" class="form-select w-auto bg-dark text-light" onchange="loadStats(currentGuildId)">
-      <option value="24h">Posledních 24 hodin</option>
-      <option value="7d" selected>Posledních 7 dní</option>
-      <option value="1m">Poslední měsíc</option>
-      <option value="all">Celková doba</option>
-    </select>
-  </div>
-</div>
-
-<div id="loadingMessage" style="display:none;">
-    <div class="spinner-border text-info mb-3" role="status" style="width: 3rem; height: 3rem;">
-        <span class="visually-hidden">Načítání...</span>
-    </div>
-    <span id="loadingText">Načítám statistiky...</span>
-</div>
-
-<div id="statsContent" class="loading-hidden"> 
-    
-    <h2 class="section-title"><i class="bi bi-activity me-2"></i> Celkový Přehled Aktivity</h2>
-    <div class="row g-4 mb-5" id="overallStatsCards">
-      <div class="col-lg-3 col-md-6"><div class="card p-3"><div class="card-body"><h5 class="card-title text-secondary">Aktivní Členové (Live)</h5><p class="card-text fs-2 fw-bold text-info" id="liveMembers">-</p></div></div></div>
-      <div class="col-lg-3 col-md-6"><div class="card p-3"><div class="card-body"><h5 class="card-title text-secondary">Zpráv Celkem</h5><p class="card-text fs-2 fw-bold text-warning" id="totalMessages">-</p></div></div></div>
-      <div class="col-lg-3 col-md-6"><div class="card p-3"><div class="card-body"><h5 class="card-title text-secondary">Hlasová Aktivita (s)</h5><p class="card-text fs-2 fw-bold text-success" id="totalVoiceDuration">-</p></div></div></div>
-      <div class="col-lg-3 col-md-6"><div class="card p-3"><div class="card-body"><h5 class="card-title text-secondary">Nové Připojení/Odchody</h5><p class="card-text fs-2 fw-bold" id="joinLeaveStats"><span class="text-success" id="joins">-</span> / <span class="text-danger" id="leaves">-</span></p></div></div></div>
-    </div>
-    
-    <h2 class="section-title mt-5"><i class="bi bi-graph-up me-2"></i> Denní aktivita zpráv</h2>
-    <div class="row g-4 mb-5">
-      <div class="col-12">
-        <div class="card p-4 show">
-          <h4 class="card-title mb-4">Zprávy v čase (<span id="dailyChartPeriod"></span>)</h4>
-          <div class="chart-container">
-            <canvas id="dailyMessagesChart"></canvas>
-          </div>
-        </div>
-    </div>
-    </div>
-
-    <h2 class="section-title mt-5"><i class="bi bi-trophy-fill me-2"></i> Top Aktivita</h2>
-
-    <div class="row g-5 mb-5">
-    <div class="col-lg-6">
-      <div class="card p-4 show mb-5">
-          <h4 class="card-title mb-4">👑 Top 10 Uživatelů (Zprávy)</h4>
-          <div class="chart-container" style="height: 250px;">
-            <canvas id="topUsersMessagesChart"></canvas>
-          </div>
-          <small class="text-secondary mt-3">Pozn.: * = Uživatel není na serveru</small>
-      </div>
-
-      <div class="card p-4 show">
-          <h4 class="card-title mb-4">🎤 Top 10 Uživatelů (Hlas)</h4>
-          <div class="chart-container" style="height: 250px;">
-            <canvas id="topUsersVoiceChart"></canvas>
-          </div>
-          <small class="text-secondary mt-3">Celková doba v hlasovém kanále.</small>
-      </div>
-      </div>
-
-    <div class="col-lg-6">
-      <div class="card p-4 show mb-5">
-          <h4 class="card-title mb-4">💬 Top Kanály (Zprávy)</h4>
-          <div class="list-group list-group-flush" id="topChannelsList">
-            <div class="text-center p-5 text-secondary">Načítám kanály...</div>
-          </div>
-      </div>
-    
-      <div class="card p-4 show">
-          <h4 class="card-title mb-4">🟢 Aktuální Online Stavy</h4>
-          <div class="chart-container d-flex justify-content-center" style="height: 250px;">
-            <canvas id="onlineStatusChart" style="max-height:250px;"></canvas>
-          </div>
-      </div>
-      </div>
-    </div>
-</div>
-</main>
-
-<footer class="footer">
-  <div class="container">
-    <p>&copy; 2025 Discord Stats Dashboard. Made by <span class="text-info fw-bold">papiscze</span>.</p>
-  </div>
-</footer>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<h1>Status CZBota</h1>
+<ul id="statusList"></ul>
+<hr>
+<h2>Stav Cogs</h2>
+<ul id="cogsList"></ul>
 <script>
-const API_BASE_URL = window.location.origin;
-const BOT_INVITE_URL = 'https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=0&scope=bot%20applications.commands'; 
-let currentGuildId = null;
-let charts = {};
+const cogs_to_load = ["Administrátorský cog","Administrátorský 2 cog","Pokročilé plánované zprávy","Auditlogger","Automatické publikace zpráv","Automatické role","Dočasné hlasové kanály","Giveaway","Hlasování","Kolo štěstí","Moderátorské příkazy","Narozeniny","Ověřování a Reakční role","Patreon","Počítání","Podcasty","Překlad","RAID ochrana","Reputace","RSS čtečka","Plánované zprávy","Scam ochrana","Statistiky","Tikety","Uvítací/odchodové zprávy","Uživatelské příkazy","Vlákna a reakce na zprávy","Vodoznaky","XP úrovně","AI cog"];
 
-Chart.defaults.color = '#d1d1d1';
-Chart.defaults.borderColor = '#5a5a7a';
+async function fetchStatus() {
+    const statusList = document.getElementById("statusList");
+    const cogsList = document.getElementById("cogsList");
+    statusList.innerHTML="<li>Načítám data...</li>";
+    cogsList.innerHTML="<li>Načítám cogs...</li>";
 
-// Získání elementů
-const statsContent = document.getElementById('statsContent');
-const loadingMessage = document.getElementById('loadingMessage');
-const serverNameElement = document.getElementById('serverName');
-const periodDisplayElement = document.getElementById('periodDisplay');
+    function addItem(label,value,cls=""){ 
+        const li=document.createElement("li"); 
+        li.innerHTML=`<span class="label">${label}</span><span class="value ${cls}">${value}</span>`; 
+        return li;
+    }
 
-// --- Funkce pro spinner ---
-function showLoading(message = "Načítám statistiky...") {
-    // Skryjeme data a zobrazíme spinner
-    statsContent.classList.add('loading-hidden');
-    loadingMessage.style.display = 'flex';
-    document.getElementById('loadingText').textContent = message;
-    
-    // Nastavíme úvodní text v hlavičce
-    serverNameElement.innerHTML = `📊<i class="bi bi-arrow-clockwise me-2 animate-spin"></i>Načítám data...`;
-    periodDisplayElement.textContent = "Čekám na odpověď serveru...";
-}
+    try {
+        const res = await fetch("https://rs422cznas.myds.me:5038/status");
+        const data = await res.json();
 
-function hideLoading(success = true, serverName = null, periodDisplay = null) {
-    loadingMessage.style.display = 'none';
+        const uptime_sec = data.uptime_seconds || 0;
+        const hours = Math.floor(uptime_sec/3600);
+        const minutes = Math.floor((uptime_sec%3600)/60);
+        const seconds = Math.floor(uptime_sec%60);
+        const uptime_str = `${hours}h ${minutes}m ${seconds}s`;
 
-    if (success) {
-        // Zobrazíme data (nastaví se v loadStats)
-        statsContent.classList.remove('loading-hidden');
-        if (serverName) serverNameElement.innerHTML = `📊 Statistiky serveru "${serverName}"`;
-        if (periodDisplay) periodDisplayElement.textContent = periodDisplay;
-        
-        // Znovu-zobrazení všech karet s animací
-    document.querySelectorAll('.card').forEach(c=>c.classList.add('show'));
-    } else {
-        // Pokud chyba, necháme hidden a zobrazíme chybovou zprávu
-        // Chybové hlášky se nastaví přímo ve funkcích loadInitialData/loadStats
+        statusList.innerHTML="";
+        statusList.appendChild(addItem("Bot status", data.bot_status, data.bot_status==="online"?"status-online":"status-offline-cog"));
+        statusList.appendChild(addItem("Uptime", uptime_str, data.bot_status==="online"?"":"status-offline-cog"));
+        statusList.appendChild(addItem("Počet serverů", data.guilds, data.bot_status==="online"?"":"status-offline-cog"));
+        statusList.appendChild(addItem("CPU %", data.cpu_percent, data.bot_status==="online"?"":"status-offline-cog"));
+        statusList.appendChild(addItem("RAM MB", data.ram_mb, data.bot_status==="online"?"":"status-offline-cog"));
+        statusList.appendChild(addItem("Databáze", data.db_status, data.db_status==="OK"?"status-ok":"status-offline-cog"));
+
+        cogsList.innerHTML="";
+        const sortedCogs = Object.entries(data.cogs).sort((a,b) => a[0].localeCompare(b[0], 'cs'));
+        for(const [name,status] of sortedCogs){
+            let cls="";
+            if(status==="Funkční") cls="status-ok";
+            else cls="status-offline-cog";
+            cogsList.appendChild(addItem(name,status,cls));
+        }
+    } catch(err){
+        // Bot offline → všechny cogy a bot/db jako nedostupné
+        statusList.innerHTML="";
+        statusList.appendChild(addItem("Bot status","offline","status-offline-cog"));
+        statusList.appendChild(addItem("Uptime","-")); // bez podbarvení
+        statusList.appendChild(addItem("Počet serverů","-")); // bez podbarvení
+        statusList.appendChild(addItem("CPU %","-")); // bez podbarvení
+        statusList.appendChild(addItem("RAM MB","-")); // bez podbarvení
+        statusList.appendChild(addItem("Databáze","nedostupná","status-offline-cog"));
+
+        cogsList.innerHTML="";
+        cogs_to_load.forEach(label => {
+            cogsList.appendChild(addItem(label,"nedostupné","status-offline-cog"));
+        });
     }
 }
-// --- Konec funkcí pro spinner ---
 
-
-async function handleGuildChange() { 
-  const select=document.getElementById('guildSelect'); 
-  const newId=select.value; 
-  if(newId && newId !== currentGuildId) {
-    currentGuildId=newId; 
-    window.history.pushState({guildId:newId},'',`/stats/${newId}`); 
-    
-    const guildName = select.options[select.selectedIndex].text;
-    await loadStats(newId, guildName);
-  } 
-}
-
-async function loadInitialData() {
-    showLoading("Kontroluji přístup..."); // Zobrazit spinner
-    
-  const select=document.getElementById('guildSelect'), authButton=document.getElementById('authButton');
-  select.innerHTML=`<option value="">Načítám servery...</option>`; select.disabled=true;
-  
-  // Zde nevoláme hideLoading, protože buď přejdeme na loadStats, nebo je chyba
-  document.querySelectorAll('.card').forEach(c => c.classList.remove('show')); 
-  
-  try {
-    const response=await fetch(`${API_BASE_URL}/api/user/authorized_guilds`);
-    
-    if(!response.ok){ 
-      loadingMessage.style.display = 'none'; // Skryjeme spinner
-      authButton.innerHTML=`<i class="bi bi-discord me-2"></i> Přihlásit se`; 
-      authButton.href=`${API_BASE_URL}/api/auth/discord?next=${encodeURIComponent(window.location.pathname)}`; 
-      serverNameElement.innerHTML=`<i class="bi bi-lock-fill me-3"></i>Nepřihlášen.`; 
-      periodDisplayElement.textContent=`Pro zobrazení statistik se prosím přihlaste.`; 
-      select.innerHTML=`<option value="">Nepřihlášen</option>`; 
-      return; 
-    }
-    
-    authButton.innerHTML=`<i class="bi bi-arrow-counterclockwise me-2"></i> Obnovit přístup`; 
-    authButton.href=`${API_BASE_URL}/api/auth/discord?next=${encodeURIComponent(window.location.pathname)}`;
-    
-    const authorizedGuilds=await response.json();
-    
-    if(!authorizedGuilds||authorizedGuilds.length===0){ 
-      loadingMessage.style.display = 'none'; // Skryjeme spinner
-      serverNameElement.innerHTML=`<i class="bi bi-x-octagon-fill me-3"></i>Nemáte přístup.`; 
-      periodDisplayElement.textContent=`Ujistěte se, že jste správce serveru.`; 
-      select.innerHTML=`<option value="">Žádné servery</option>`; 
-      return; 
-    }
-    
-    select.innerHTML=authorizedGuilds.map(g=>`<option value="${g.id}">${g.name}</option>`).join('');
-    select.disabled=false;
-    
-    let initialGuild = authorizedGuilds.find(g=>g.id===window.location.pathname.split('/').pop()) || authorizedGuilds[0];
-    currentGuildId = initialGuild.id; select.value = initialGuild.id;
-    window.history.replaceState({guildId:initialGuild.id},'',`/stats/${initialGuild.id}`);
-    
-    await loadStats(initialGuild.id, initialGuild.name);
-  } catch(e){ 
-    console.error("Chyba:",e); 
-    loadingMessage.style.display = 'none'; // Skryjeme spinner
-    serverNameElement.innerHTML=`<i class="bi bi-x-octagon-fill me-3"></i>Chyba.`; 
-    periodDisplayElement.textContent=`Nepodařilo se načíst servery: ${e.message}`; 
-  }
-}
-
-async function loadStats(guildId, guildName = "Neznámý Server"){
-  if(!guildId) return;
-  showLoading(`Načítám statistiky pro server...`); // Zobrazit spinner a aktualizovat text
-  
-  const period=document.getElementById('periodSelect').value;
-  const url=`${API_BASE_URL}/api/stats/${guildId}?period=${period}`;
-
-  // Důležité: skryjeme karty pro animaci
-  document.querySelectorAll('.card').forEach(c => c.classList.remove('show')); 
-
-  try{
-    const response=await fetch(url); 
-    
-    if(!response.ok) {
-      loadingMessage.style.display = 'none'; // Skryjeme spinner
-
-      // Zobrazení chyby 404 (Bot není na serveru)
-      if (response.status === 404) {
-        serverNameElement.innerHTML = `<i class="bi bi-robot me-3"></i> Bot není na serveru: "${guildName}"`;
-        periodDisplayElement.innerHTML = `
-          <span class="text-danger">Pro zobrazení statistik musí být bot přítomen na serveru.</span><br>
-          <a href="${BOT_INVITE_URL}" target="_blank" class="btn btn-outline-success mt-3">
-            <i class="bi bi-discord me-2"></i> Pozvat Bota na Server
-          </a>
-        `;
-        return; // Zastaví zpracování
-      }
-      throw new Error(`Server: ${response.status}`);
-    }
-    
-    const data=await response.json();
-    
-    // --- ÚSPĚŠNÉ ZOBRAZENÍ DAT ---
-    const statMap = {
-      'liveMembers': 'live_members_count',
-      'totalMessages': 'total_messages',
-      'totalVoiceDuration': 'total_voice_duration_seconds',
-      'joins': 'joins',
-      'leaves': 'leaves'
-    };
-    
-    Object.keys(statMap).forEach(htmlId => {
-      const apiKey = statMap[htmlId];
-      const value = data.overall_stats[apiKey] || 0;
-      
-      if(window.CountUp) {
-        new CountUp(htmlId, value).start();
-      } else {
-        document.getElementById(htmlId).textContent = value;
-      }
-    });
-    
-    const channelList=document.getElementById('topChannelsList');
-    if(data.top_channels_messages.length>0) channelList.innerHTML=data.top_channels_messages.map((item,index)=>`<li class="list-group-item d-flex justify-content-between align-items-center card"><span class="fw-bold text-info">${index+1}. #${item.name}</span><span class="badge bg-primary rounded-pill">${item.count.toLocaleString()} zpráv</span></li>`).join('');
-    else channelList.innerHTML=`<div class="text-center p-3 text-secondary">Žádná data.</div>`;
-
-    renderDailyActivityChart(data.daily_message_activity,data.period_display);
-    renderTopUsersChart(data.top_users_messages,'topUsersMessagesChart','Zprávy','rgba(255,193,7,0.7)');
-    renderTopUsersChart(data.top_users_voice,'topUsersVoiceChart','Hlas (s)','rgba(40,167,69,0.7)',true);
-    renderOnlineStatusChart(data.online_stats);
-    
-    hideLoading(true, data.server_name, `Statistiky za ${data.period_display}.`);
-  } catch(e){ 
-    console.error("Chyba:",e); 
-    loadingMessage.style.display = 'none'; // Skryjeme spinner
-    serverNameElement.innerHTML=`<i class="bi bi-x-octagon-fill me-3"></i>Chyba při načítání dat.`; 
-    periodDisplayElement.textContent=`${e.message}`; 
-  }
-}
-
-function renderTopUsersChart(usersData,canvasId,label,color,isTime=false){
-  if(charts[canvasId]) charts[canvasId].destroy();
-  usersData=usersData.slice(0,10);
-  const ctx=document.getElementById(canvasId).getContext('2d');
-  charts[canvasId]=new Chart(ctx,{type:'bar',data:{labels:usersData.map(u=>u.name+(u.on_server?'':' *')),datasets:[{label,data:usersData.map(u=>isTime?u.duration_seconds:u.count),backgroundColor:color} ]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',scales:{x:{beginAtZero:true,grid:{color:'#3a3a5a'},ticks:{callback:isTime?formatTimeTicks:undefined}},y:{grid:{color:'#3a3a5a'}}},plugins:{legend:{display:false}},animation:{duration:1000,easing:'easeOutQuart'}}});
-}
-
-let dailyMessagesChartInstance=null;
-function renderDailyActivityChart(activityData,periodDisplay){
-  if(dailyMessagesChartInstance) dailyMessagesChartInstance.destroy();
-  const ctx=document.getElementById('dailyMessagesChart').getContext('2d');
-  const labels=activityData.map(item=>item.date), dataCounts=activityData.map(item=>item.count);
-  const gradient=ctx.createLinearGradient(0,0,0,350); gradient.addColorStop(0,'rgba(52,152,219,0.5)'); gradient.addColorStop(1,'rgba(52,152,219,0.05)');
-  dailyMessagesChartInstance=new Chart(ctx,{type:'line',data:{labels,datasets:[{label:'Počet zpráv',data:dataCounts,backgroundColor:gradient,borderColor:'#3498db',borderWidth:3,tension:0.4,fill:true,pointRadius:4,pointHoverRadius:6,pointBackgroundColor:'#3498db'}]},options:{responsive:true,maintainAspectRatio:false,scales:{x:{type:'time',time:{unit:'day',tooltipFormat:'dd. MM. yyyy',displayFormats:{day:'dd. MM.'}},grid:{color:'#3a3a5a'},title:{display:true,text:'Datum'}},y:{beginAtZero:true,grid:{color:'#3a3a5a'},title:{display:true,text:'Počet zpráv'}}},animation:{duration:1200,easing:'easeOutQuart'}}});
-  document.getElementById('dailyChartPeriod').textContent=periodDisplay;
-}
-
-function renderOnlineStatusChart(statusData){
-  const canvasId='onlineStatusChart';
-  if(charts[canvasId]) charts[canvasId].destroy();
-  const statuses=[{key:'online',label:'Online',color:'#57F287'},{key:'idle',label:'Neaktivní',color:'#FAA81A'},{key:'dnd',label:'Nerušit',color:'#F23F43'},{key:'offline',label:'Offline/Neviditelný',color:'#747F8D'}].filter(s=>statusData[s.key]>0);
-  const ctx=document.getElementById(canvasId).getContext('2d');
-  charts[canvasId]=new Chart(ctx,{type:'doughnut',data:{labels:statuses.map(s=>s.label),datasets:[{data:statuses.map(s=>statusData[s.key]),backgroundColor:statuses.map(s=>s.color),hoverOffset:10,borderColor:'#1e1e2d',borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{padding:10}},tooltip:{callbacks:{label:ctx=>{const value=ctx.parsed;const total=ctx.dataset.data.reduce((a,b)=>a+b,0);const percent=total>0?((value/total)*100).toFixed(1)+'%':'0%'; return `${ctx.label}: ${value} (${percent})`;}}}},animation:{duration:1000,easing:'easeOutQuart'}}});
-}
-
-function formatTimeTicks(value){
-  const seconds=Math.floor(value),h=Math.floor(seconds/3600),m=Math.floor((seconds%3600)/60),s=seconds%60;
-  let result=''; if(h>0) result+=`${h}h `; if(m>0) result+=`${m}m `; if(s>0&&h===0&&m===0) result=`${s}s`; return result.trim()||'0s';
-}
-
-document.addEventListener('DOMContentLoaded',loadInitialData);
+fetchStatus(); // načíst pouze při otevření
 </script>
+
+</div>
 </body>
 </html>
