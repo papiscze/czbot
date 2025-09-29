@@ -153,7 +153,7 @@
             border-top: 1px solid #ccc;
             color: #666;
             position: absolute;
-            bottom: 0;
+            bottom: 20;
             width: 100%;
             max-width: 900px;
             left: 50%;
@@ -229,7 +229,7 @@
     </div>
 
     <script>
-        const API_URL = "https://rs422cznas.myds.me:5038/logs"; 
+        const API_URL = "/logs"; 
         const SIMULATED_DELAY_MS = 300; 
         const RECORDS_PER_PAGE = 20;
 
@@ -334,17 +334,14 @@
             logsToDisplay.forEach(log => {
                 const tr = document.createElement("tr");
                 const expirationText = log.duration ? log.duration : "N/A";
-
-                // OPRAVA 2: Bezpečné parsování data
-                let formattedDate = 'N/A';
-                if (log.timestamp) {
-                    const safeTimestamp = log.timestamp.endsWith('Z') ? log.timestamp : log.timestamp + 'Z';
-                    const dateObj = new Date(safeTimestamp);
-                    formattedDate = isNaN(dateObj.getTime()) ? 'Neplatné datum' : dateObj.toLocaleString();
-                }
                 
+                // ZKONTROLUJEME, JESTLI ČAS VŮBEC EXISTUJE
+                const formattedDate = log.timestamp 
+                    ? new Date(log.timestamp).toLocaleString() 
+                    : 'N/A'; // Zobrazíme N/A, pokud timestamp chybí
+        
                 tr.innerHTML = `
-                    <td data-label="Datum a čas">${formattedDate}</td>
+                    <td>${formattedDate}</td>
                     <td data-label="Uživatel">${log.user_name || log.user_id}</td>
                     <td data-label="Důvod">${log.reason}</td>
                     <td data-label="Typ">${log.action}</td>
