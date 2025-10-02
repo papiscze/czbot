@@ -15,34 +15,91 @@
 
 <style>
 body { background:#1e1e2d; color:#d1d1d1; font-family:'Poppins',sans-serif; }
-.header-section { background:#2a2a3e; padding:30px 0; border-bottom:2px solid #5a5a7a; box-shadow:0 4px 6px rgba(0,0,0,0.2); position:relative; }
+.header-section { background:#2a2a3e; padding:40px 0; border-bottom:2px solid #5a5a7a; box-shadow:0 4px 6px rgba(0,0,0,0.2); position:relative; z-index: 100; }
 h2.section-title { font-weight:700; font-size:2rem; background:linear-gradient(90deg,#57F287,#3498db); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:1.5rem; }
 .card { background:rgba(42,42,62,0.65); backdrop-filter:blur(12px); border:1px solid rgba(255,255,255,0.1); border-radius:16px; transition:all 0.3s ease; color:#ffffff; opacity:0; transform:translateY(20px); }
 .card.show { opacity:1; transform:translateY(0); transition:all 0.5s ease; }
 .chart-container { height:350px; }
-.list-group-item.card { border:none; border-radius:12px; margin-bottom:8px; padding:15px; background:rgba(42,42,62,0.5); }
+/* Upravený styl pro seznamy: Kompaktnější zobrazení */
+.list-group-item.card { 
+    border:none; 
+    border-radius:12px; 
+    margin-bottom:4px; /* Zmenšena mezera */
+    padding:10px 15px; /* Zmenšena výška */
+    background:rgba(42,42,62,0.5);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.95rem; /* Mírně menší písmo */
+}
+/* Nový styl pro Reputaci */
+.rep-list-item {
+    padding: 5px 0;
+    display: flex;
+    justify-content: space-between;
+    font-family: 'Roboto Mono', monospace; /* Monospace pro lepší zarovnání čísel */
+}
+.rep-list-item:not(:last-child) {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+.rep-list-item .rank {
+    font-size: 0.8rem;
+    font-weight: 700;
+    width: 20px;
+}
+.rep-list-item .name {
+    flex-grow: 1;
+    margin-left: 10px;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.rep-list-item .value {
+    min-width: 50px;
+    text-align: right;
+    font-weight: 700;
+}
+.rep-list-item .value.positive { color: #57F287; }
+.rep-list-item .value.negative { color: #F23F43; }
+
 .form-select, .form-control { border-color:#5a5a7a; background-color:#2a2a3e !important; color:#d1d1d1 !important; }
 .status-online { color:#57F287; } .status-idle { color:#FAA81A; } .status-dnd { color:#F23F43; } .status-offline { color:#747F8D; }
 .animate-spin { animation:spin 1s linear infinite; }
 @keyframes spin { from { transform:rotate(0deg); } to { transform:rotate(360deg); } }
-#authButton { position:absolute; top:15px; right:15px; z-index:10; }
+#authButton { position:absolute; top:5px; right:15px; z-index:110; }
 
 /* Nové styly pro footer */
 .footer { background:#2a2a3e; padding:20px 0; border-top:1px solid #5a5a7a; margin-top:50px; text-align:center; }
 .footer p { margin-bottom:0; font-size:0.9rem; color:#9faab7; }
 
-/* --- SPINNER STYLY (Změněno pro vložení do obsahu) --- */
+/* --- SPINNER STYLY --- */
 #loadingMessage {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: 30vh; /* Dostatek místa na obrazovce */
+    height: 30vh;
     color: #3498db;
     font-size: 1.25rem;
 }
 .loading-hidden {
     display: none !important;
+}
+
+/* --- CHYBOVÝ PLACEHOLDER STYLY --- */
+.chart-error-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    min-height: 200px; /* Zajištění viditelné výšky, i když chart-container nemá pevnou výšku */
+    border: 2px dashed #FAA81A; /* Upozornění barva */
+    background: rgba(250, 168, 26, 0.1);
+    border-radius: 12px;
+    padding: 20px;
+    color: #FAA81A;
 }
 
 </style>
@@ -90,10 +147,16 @@ h2.section-title { font-weight:700; font-size:2rem; background:linear-gradient(9
     
     <h2 class="section-title"><i class="bi bi-activity me-2"></i> Celkový Přehled Aktivity</h2>
     <div class="row g-4 mb-5" id="overallStatsCards">
-      <div class="col-lg-3 col-md-6"><div class="card p-3"><div class="card-body"><h5 class="card-title text-secondary">Aktivní Členové (Live)</h5><p class="card-text fs-2 fw-bold text-info" id="liveMembers">-</p></div></div></div>
-      <div class="col-lg-3 col-md-6"><div class="card p-3"><div class="card-body"><h5 class="card-title text-secondary">Zpráv Celkem</h5><p class="card-text fs-2 fw-bold text-warning" id="totalMessages">-</p></div></div></div>
-      <div class="col-lg-3 col-md-6"><div class="card p-3"><div class="card-body"><h5 class="card-title text-secondary">Hlasová Aktivita (s)</h5><p class="card-text fs-2 fw-bold text-success" id="totalVoiceDuration">-</p></div></div></div>
-      <div class="col-lg-3 col-md-6"><div class="card p-3"><div class="card-body"><h5 class="card-title text-secondary">Nové Připojení/Odchody</h5><p class="card-text fs-2 fw-bold" id="joinLeaveStats"><span class="text-success" id="joins">-</span> / <span class="text-danger" id="leaves">-</span></p></div></div></div>
+        
+        <div class="col-lg col-md-6"><div class="card p-3"><div class="card-body"><h5 class="card-title text-secondary">Aktivní Členové</h5><p class="card-text fs-2 fw-bold text-info" id="liveMembers">-</p></div></div></div>
+        
+        <div class="col-lg col-md-6"><div class="card p-3"><div class="card-body"><h5 class="card-title text-secondary">Celkem Členů</h5><p class="card-text fs-2 fw-bold text-secondary" id="totalMembers">-</p></div></div></div>
+        
+        <div class="col-lg col-md-6"><div class="card p-3"><div class="card-body"><h5 class="card-title text-secondary">Zpráv Celkem</h5><p class="card-text fs-2 fw-bold text-warning" id="totalMessages">-</p></div></div></div>
+        
+        <div class="col-lg col-md-6"><div class="card p-3"><div class="card-body"><h5 class="card-title text-secondary">Hlasová Aktivita</h5><p class="card-text fs-2 fw-bold text-success" id="totalVoiceDuration">-</p></div></div></div>
+        
+        <div class="col-lg col-md-6"><div class="card p-3"><div class="card-body"><h5 class="card-title text-secondary">Příchody/Odchody</h5><p class="card-text fs-2 fw-bold" id="joinLeaveStats"><span class="text-success" id="joins">-</span> / <span class="text-danger" id="leaves">-</span></p></div></div></div>
     </div>
     
     <h2 class="section-title mt-5"><i class="bi bi-graph-up me-2"></i> Denní aktivita zpráv</h2>
@@ -101,56 +164,93 @@ h2.section-title { font-weight:700; font-size:2rem; background:linear-gradient(9
       <div class="col-12">
         <div class="card p-4 show">
           <h4 class="card-title mb-4">Zprávy v čase (<span id="dailyChartPeriod"></span>)</h4>
-          <div class="chart-container">
+          <div class="chart-container" id="dailyMessagesChartContainer">
             <canvas id="dailyMessagesChart"></canvas>
           </div>
         </div>
     </div>
     </div>
 
-    <h2 class="section-title mt-5"><i class="bi bi-trophy-fill me-2"></i> Top Aktivita</h2>
+        <h2 class="section-title mt-5"><i class="bi bi-people-fill me-2"></i> Vývoj Počtu Členů</h2>
+    <div class="row g-4 mb-5">
+      <div class="col-12">
+        <div class="card p-4 show">
+          <h4 class="card-title mb-4">Historický počet členů (server)</h4>
+          <div class="chart-container" id="memberEvolutionChartContainer">
+            <canvas id="memberEvolutionChart"></canvas>
+          </div>
+          <small class="text-secondary mt-3">Poznámka: Ukládání počtu členů probíhá jednou za 24h..</small>
+        </div>
+      </div>
+    </div>
+<h2 class="section-title mt-5"><i class="bi bi-trophy-fill me-2"></i> Top Aktivita</h2>
 
     <div class="row g-5 mb-5">
     <div class="col-lg-6">
-      <div class="card p-4 show mb-5">
-          <h4 class="card-title mb-4">👑 Top 10 Uživatelů (Zprávy)</h4>
-          <div class="chart-container" style="height: 250px;">
-            <canvas id="topUsersMessagesChart"></canvas>
-          </div>
-          <small class="text-secondary mt-3">Pozn.: * = Uživatel není na serveru</small>
-      </div>
+                <div class="card p-4 show mb-5">
+            <h4 class="card-title mb-4">👑 Top 10 Uživatelů (Zprávy)</h4>
+            <div class="chart-container" id="topUsersMessagesChartContainer" style="height: 250px;">
+                <canvas id="topUsersMessagesChart"></canvas>
+            </div>
+            <small class="text-secondary mt-3">Pozn.: * = Uživatel není na serveru</small>
+        </div>
 
-      <div class="card p-4 show">
-          <h4 class="card-title mb-4">🎤 Top 10 Uživatelů (Hlas)</h4>
-          <div class="chart-container" style="height: 250px;">
-            <canvas id="topUsersVoiceChart"></canvas>
-          </div>
-          <small class="text-secondary mt-3">Celková doba v hlasovém kanále.</small>
-      </div>
-      </div>
+                <div class="card p-4 show mb-5">
+            <h4 class="card-title mb-4">🎤 Top 10 Uživatelů (Hlas)</h4>
+            <div class="chart-container" id="topUsersVoiceChartContainer" style="height: 250px;">
+                <canvas id="topUsersVoiceChart"></canvas>
+            </div>
+            <small class="text-secondary mt-3">Celková doba v hlasovém kanále.</small>
+        </div>
 
-    <div class="col-lg-6">
-      <div class="card p-4 show mb-5">
-          <h4 class="card-title mb-4">💬 Top Kanály (Zprávy)</h4>
-          <div class="list-group list-group-flush" id="topChannelsList">
-            <div class="text-center p-5 text-secondary">Načítám kanály...</div>
-          </div>
-      </div>
+                <div class="card p-4 show mb-5">
+            <h4 class="card-title mb-4">⭐ Top 10 Uživatelů (XP)</h4>
+            <div class="chart-container" id="topUsersXPChartContainer" style="height: 250px;">
+                <canvas id="topUsersXPChart"></canvas>
+            </div>
+            <small class="text-secondary mt-3">Celková získaná zkušenost (XP).</small>
+        </div>
+        
+                <div class="card p-4 show mb-5">
+            <h4 class="card-title mb-4">✨ Top 10 Uživatelů (Reputace +)</h4>
+            <div id="topUsersPositiveRepChartContainer" class="list-group list-group-flush">
+                            </div>
+            <small class="text-secondary mt-3">Uživatelé s nejvyšší celkovou reputací.</small>
+        </div>
+
+            </div> 
+        <div class="col-lg-6">
+                <div class="card p-4 show mb-5">
+            <h4 class="card-title mb-4">💬 Top Kanály (Zprávy)</h4>
+            <div class="list-group list-group-flush" id="topChannelsList">
+                <div class="text-center p-5 text-secondary">Načítám kanály...</div>
+            </div>
+        </div>
     
-      <div class="card p-4 show">
-          <h4 class="card-title mb-4">🟢 Aktuální Online Stavy</h4>
-          <div class="chart-container d-flex justify-content-center" style="height: 250px;">
-            <canvas id="onlineStatusChart" style="max-height:250px;"></canvas>
-          </div>
-      </div>
-      </div>
+                        <div class="card p-4 show mb-5"> 
+            <h4 class="card-title mb-4">🟢 Aktuální Online Stavy</h4>
+            <div class="chart-container d-flex justify-content-center" id="onlineStatusChartContainer" style="height: 250px;">
+                <canvas id="onlineStatusChart" style="max-height:250px;"></canvas>
+            </div>
+        </div>
+        
+                <div class="card p-4 show mb-5">
+            <h4 class="card-title mb-4">💣 Top 10 Uživatelů (Reputace -)</h4>
+            <div id="topUsersNegativeRepChartContainer" class="list-group list-group-flush">
+                            </div>
+            <small class="text-secondary mt-3">Uživatelé s nejnižší celkovou reputací. * = Uživatel není na serveru</small>
+        </div>
+        
     </div>
+        </div>
 </div>
 </main>
 
 <footer class="footer">
   <div class="container">
     <p>&copy; 2025 Discord Stats Dashboard. Made by <span class="text-info fw-bold">papiscze</span>.</p>
+    <p>Dashboard Version: 1.2</p>
+    <p>Dashboard Update: 1.3 (Reputation Charts)</p>
   </div>
 </footer>
 
@@ -170,7 +270,7 @@ const loadingMessage = document.getElementById('loadingMessage');
 const serverNameElement = document.getElementById('serverName');
 const periodDisplayElement = document.getElementById('periodDisplay');
 
-// --- Funkce pro spinner ---
+// --- Funkce pro spinner (beze změny) ---
 function showLoading(message = "Načítám statistiky...") {
     // Skryjeme data a zobrazíme spinner
     statsContent.classList.add('loading-hidden');
@@ -194,11 +294,39 @@ function hideLoading(success = true, serverName = null, periodDisplay = null) {
         // Znovu-zobrazení všech karet s animací
     document.querySelectorAll('.card').forEach(c=>c.classList.add('show'));
     } else {
-        // Pokud chyba, necháme hidden a zobrazíme chybovou zprávu
         // Chybové hlášky se nastaví přímo ve funkcích loadInitialData/loadStats
     }
 }
 // --- Konec funkcí pro spinner ---
+
+// --- Funkce pro zobrazení chyby v grafu (beze změny) ---
+/**
+ * Vytvoří HTML placeholder pro chybu v grafu.
+ * @param {string} message - Konkrétní chybová zpráva.
+ * @returns {string} HTML řetězec.
+ */
+function renderErrorPlaceholder(message) {
+    return `
+        <div class="chart-error-placeholder">
+            <i class="bi bi-exclamation-triangle-fill fs-3 mb-2"></i>
+            <p class="fw-bold mb-1">DATA NEDOSTUPNÁ</p>
+            <p class="text-center text-sm">${message}</p>
+        </div>
+    `;
+}
+
+/**
+ * Resetuje kontejner a vrátí HTML pro nový canvas.
+ * @param {string} containerId - ID kontejneru (např. 'dailyMessagesChartContainer').
+ * @param {string} canvasId - ID canvasu (např. 'dailyMessagesChart').
+ * @returns {HTMLElement} Nově vytvořený canvas element.
+ */
+function resetChartContainer(containerId, canvasId) {
+    const container = document.getElementById(containerId);
+    container.innerHTML = `<canvas id="${canvasId}"></canvas>`;
+    return document.getElementById(canvasId);
+}
+// --- Konec funkcí pro zobrazení chyby v grafu ---
 
 
 async function handleGuildChange() { 
@@ -296,9 +424,10 @@ async function loadStats(guildId, guildName = "Neznámý Server"){
     
     const data=await response.json();
     
-    // --- ÚSPĚŠNÉ ZOBRAZENÍ DAT ---
+    // --- ÚSPĚŠNÉ ZOBRAZENÍ DAT (beze změny) ---
     const statMap = {
       'liveMembers': 'live_members_count',
+      'totalMembers': 'member_count',
       'totalMessages': 'total_messages',
       'totalVoiceDuration': 'total_voice_duration_seconds',
       'joins': 'joins',
@@ -309,20 +438,41 @@ async function loadStats(guildId, guildName = "Neznámý Server"){
       const apiKey = statMap[htmlId];
       const value = data.overall_stats[apiKey] || 0;
       
-      if(window.CountUp) {
-        new CountUp(htmlId, value).start();
+      // Speciální zpracování pro Hlasovou aktivitu, aby se zobrazilo formátování
+      if (htmlId === 'totalVoiceDuration') {
+        // Zobrazíme formátovaný čas, ne jen sekundy
+        document.getElementById(htmlId).textContent = formatTimeTicks(value); 
+        // Animujeme jen, pokud máme countUp
+        if (window.CountUp) new CountUp(htmlId, value).start();
+      } else if (htmlId === 'joins' || htmlId === 'leaves') {
+        // Připojení/Odchody se animují ve své vlastní sekci
+        if(window.CountUp) new CountUp(htmlId, value).start();
+        else document.getElementById(htmlId).textContent = value;
       } else {
-        document.getElementById(htmlId).textContent = value;
+        // Standardní čítače
+        if(window.CountUp) new CountUp(htmlId, value).start();
+        else document.getElementById(htmlId).textContent = value;
       }
     });
     
     const channelList=document.getElementById('topChannelsList');
-    if(data.top_channels_messages.length>0) channelList.innerHTML=data.top_channels_messages.map((item,index)=>`<li class="list-group-item d-flex justify-content-between align-items-center card"><span class="fw-bold text-info">${index+1}. #${item.name}</span><span class="badge bg-primary rounded-pill">${item.count.toLocaleString()} zpráv</span></li>`).join('');
-    else channelList.innerHTML=`<div class="text-center p-3 text-secondary">Žádná data.</div>`;
+    if(data.top_channels_messages && data.top_channels_messages.length>0) channelList.innerHTML=data.top_channels_messages.map((item,index)=>`<li class="list-group-item d-flex justify-content-between align-items-center card"><span class="fw-bold text-info">${index+1}. #${item.name}</span><span class="badge bg-primary rounded-pill">${item.count.toLocaleString()} zpráv (s)</span></li>`).join('');
+    else channelList.innerHTML=`<div class="text-center p-3 text-secondary">Žádná data pro kanály.</div>`;
 
-    renderDailyActivityChart(data.daily_message_activity,data.period_display);
-    renderTopUsersChart(data.top_users_messages,'topUsersMessagesChart','Zprávy','rgba(255,193,7,0.7)');
-    renderTopUsersChart(data.top_users_voice,'topUsersVoiceChart','Hlas (s)','rgba(40,167,69,0.7)',true);
+    // --- ZAVOLÁNÍ FUNKCÍ PRO VYKRESLENÍ GRAFŮ S KONTROLOU CHYB (beze změny) ---
+    renderDailyActivityChart(data.daily_message_activity, data.period_display);
+    renderMemberEvolutionChart(data.member_evolution); 
+    
+    renderTopUsersChart(data.top_users_messages, 'topUsersMessagesChart', 'topUsersMessagesChartContainer', 'Zprávy', 'rgba(255,193,7,0.7)', false, 'count');
+    renderTopUsersChart(data.top_users_voice, 'topUsersVoiceChart', 'topUsersVoiceChartContainer', 'Hlas (s)', 'rgba(40,167,69,0.7)', true, 'duration_seconds');
+    // Zde voláme XP graf, data musí obsahovat property 'xp' a 'level'
+    renderTopUsersChart(data.xp_leaderboard, 'topUsersXPChart', 'topUsersXPChartContainer', 'XP', 'rgba(175, 87, 242, 0.7)', false, 'xp');
+
+    // === NOVÁ VOLÁNÍ PRO REPUTACI - NYNÍ JAKO KOMPAKTNÍ LISTY ===
+    renderReputationList(data.rep_positive_leaderboard, 'topUsersPositiveRepChartContainer', '+');
+    renderReputationList(data.rep_negative_leaderboard, 'topUsersNegativeRepChartContainer', '-');
+    // ================================================
+
     renderOnlineStatusChart(data.online_stats);
     
     hideLoading(true, data.server_name, `Statistiky za ${data.period_display}.`);
@@ -334,34 +484,245 @@ async function loadStats(guildId, guildName = "Neznámý Server"){
   }
 }
 
-function renderTopUsersChart(usersData,canvasId,label,color,isTime=false){
-  if(charts[canvasId]) charts[canvasId].destroy();
-  usersData=usersData.slice(0,10);
-  const ctx=document.getElementById(canvasId).getContext('2d');
-  charts[canvasId]=new Chart(ctx,{type:'bar',data:{labels:usersData.map(u=>u.name+(u.on_server?'':' *')),datasets:[{label,data:usersData.map(u=>isTime?u.duration_seconds:u.count),backgroundColor:color} ]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',scales:{x:{beginAtZero:true,grid:{color:'#3a3a5a'},ticks:{callback:isTime?formatTimeTicks:undefined}},y:{grid:{color:'#3a3a5a'}}},plugins:{legend:{display:false}},animation:{duration:1000,easing:'easeOutQuart'}}});
+// === AKTUALIZOVANÁ FUNKCE PRO VYKRESLENÍ REPUTACE JAKO KOMPAKTNÍHO SEZNAMU ===
+/**
+ * Vykreslí data reputace jako kompaktní seznam (rank, jméno, hodnota na jednom řádku).
+ * @param {Array} repData - Data žebříčku reputace.
+ * @param {string} containerId - ID kontejneru pro vložení seznamu.
+ * @param {string} repType - Typ reputace (+ nebo -) pro formátování.
+ */
+function renderReputationList(repData, containerId, repType) {
+    const container = document.getElementById(containerId);
+    
+    // Zničení existujících grafů, pokud náhodou existují (prevence)
+    const chartId = containerId.replace('Container', '');
+    if (charts[chartId]) charts[chartId].destroy();
+
+    if (!repData || !Array.isArray(repData) || repData.length === 0) {
+        container.innerHTML = renderErrorPlaceholder(`Žádná data o reputaci ${repType} k zobrazení.`);
+        return;
+    }
+
+    const valueClass = repType === '+' ? 'positive' : 'negative';
+    const repPrefix = repType === '+' ? '+' : ''; 
+
+    // Generování HTML pro kompaktní seznam
+    const listHtml = repData.map((item) => {
+        const isOffServer = item.on_server === false ? ' *' : '';
+        const nameText = `${item.name}${isOffServer}`;
+
+        return `
+            <div class="rep-list-item">
+                <span class="rank text-secondary">${item.rank}.</span>
+                <span class="name text-light">${nameText}</span>
+                <span class="value ${valueClass}">${repPrefix}${item.rep.toLocaleString()}</span>
+            </div>
+        `;
+    }).join('');
+
+    // Vložení seznamu do kontejneru
+    container.innerHTML = `<div>${listHtml}</div>`;
+}
+// =========================================================
+
+// Ostatní funkce beze změny (renderTopUsersChart, renderDailyActivityChart, renderMemberEvolutionChart, renderOnlineStatusChart, formatTimeTicks)
+function renderTopUsersChart(usersData, canvasId, containerId, label, color, isTime = false, valueKey = 'count'){
+    const container = document.getElementById(containerId);
+    
+    if (!usersData || !Array.isArray(usersData) || usersData.length === 0) {
+        if (charts[canvasId]) charts[canvasId].destroy();
+        container.innerHTML = renderErrorPlaceholder(`Žádná data pro top uživatele v kategorii ${label}.`);
+        return;
+    }
+    
+    // Reset kontejneru a získání nového canvas elementu
+    const ctx = resetChartContainer(containerId, canvasId).getContext('2d');
+
+    if(charts[canvasId]) charts[canvasId].destroy();
+    usersData=usersData.slice(0,10);
+    
+    // Zjistíme, jestli se jedná o XP žebříček
+    const isXPChart = canvasId === 'topUsersXPChart';
+
+    // Vytvoříme popisky, které pro XP žebříček zahrnou i úroveň
+    const labels = usersData.map(u => {
+        let name = u.name + (u.on_server ? '' : ' *');
+        
+        // Pokud je to XP žebříček a data obsahují 'level', přidáme ho k popisku
+        if (isXPChart && u.level !== undefined) {
+            name += ` (Lvl ${u.level})`;
+        }
+        return name;
+    });
+
+    charts[canvasId]=new Chart(ctx,{
+        type:'bar',
+        data:{
+            labels: labels, // Použití upravených popisků, které zahrnují i úroveň
+            datasets:[{
+                label,
+                data:usersData.map(u=>u[valueKey]),
+                backgroundColor:color
+            }]
+        },
+        options:{
+            responsive:true,
+            maintainAspectRatio:false,
+            indexAxis:'y',
+            scales:{
+                x:{
+                    beginAtZero:true,
+                    grid:{color:'#3a3a5a'},
+                    ticks:{callback:isTime?formatTimeTicks:undefined}
+                },
+                y:{
+                    grid:{color:'#3a3a5a'}
+                }
+            },
+            plugins:{
+                legend:{display:false}
+            },
+            animation:{
+                duration:1000,
+                easing:'easeOutQuart'
+            }
+        }
+    });
 }
 
 let dailyMessagesChartInstance=null;
 function renderDailyActivityChart(activityData,periodDisplay){
-  if(dailyMessagesChartInstance) dailyMessagesChartInstance.destroy();
-  const ctx=document.getElementById('dailyMessagesChart').getContext('2d');
-  const labels=activityData.map(item=>item.date), dataCounts=activityData.map(item=>item.count);
-  const gradient=ctx.createLinearGradient(0,0,0,350); gradient.addColorStop(0,'rgba(52,152,219,0.5)'); gradient.addColorStop(1,'rgba(52,152,219,0.05)');
-  dailyMessagesChartInstance=new Chart(ctx,{type:'line',data:{labels,datasets:[{label:'Počet zpráv',data:dataCounts,backgroundColor:gradient,borderColor:'#3498db',borderWidth:3,tension:0.4,fill:true,pointRadius:4,pointHoverRadius:6,pointBackgroundColor:'#3498db'}]},options:{responsive:true,maintainAspectRatio:false,scales:{x:{type:'time',time:{unit:'day',tooltipFormat:'dd. MM. yyyy',displayFormats:{day:'dd. MM.'}},grid:{color:'#3a3a5a'},title:{display:true,text:'Datum'}},y:{beginAtZero:true,grid:{color:'#3a3a5a'},title:{display:true,text:'Počet zpráv'}}},animation:{duration:1200,easing:'easeOutQuart'}}});
-  document.getElementById('dailyChartPeriod').textContent=periodDisplay;
+    const containerId = 'dailyMessagesChartContainer';
+    const canvasId = 'dailyMessagesChart';
+    const container = document.getElementById(containerId);
+
+    if (!activityData || !Array.isArray(activityData) || activityData.length === 0) {
+        if (dailyMessagesChartInstance) dailyMessagesChartInstance.destroy();
+        container.innerHTML = renderErrorPlaceholder("Žádná data o denní aktivitě zpráv v tomto období.");
+        document.getElementById('dailyChartPeriod').textContent = periodDisplay;
+        return;
+    }
+
+    // Reset kontejneru a získání nového canvas elementu
+    const ctx = resetChartContainer(containerId, canvasId).getContext('2d');
+
+    if(dailyMessagesChartInstance) dailyMessagesChartInstance.destroy();
+    const labels=activityData.map(item=>item.date), dataCounts=activityData.map(item=>item.count);
+    const gradient=ctx.createLinearGradient(0,0,0,350); gradient.addColorStop(0,'rgba(52,152,219,0.5)'); gradient.addColorStop(1,'rgba(52,152,219,0.05)');
+    dailyMessagesChartInstance=new Chart(ctx,{type:'line',data:{labels,datasets:[{label:'Počet zpráv',data:dataCounts,backgroundColor:gradient,borderColor:'#3498db',borderWidth:3,tension:0.4,fill:true,pointRadius:4,pointHoverRadius:6,pointBackgroundColor:'#3498db'}]},options:{responsive:true,maintainAspectRatio:false,scales:{x:{type:'time',time:{unit:'day',tooltipFormat:'dd. MM. yyyy',displayFormats:{day:'dd. MM.'}},grid:{color:'#3a3a5a'},title:{display:true,text:'Datum'}},y:{beginAtZero:true,grid:{color:'#3a3a5a'},title:{display:true,text:'Počet zpráv'}}},animation:{duration:1200,easing:'easeOutQuart'}}});
+    document.getElementById('dailyChartPeriod').textContent=periodDisplay;
 }
 
+// NOVÁ FUNKCE PRO VÝVOJ POČTU ČLENŮ 
+let memberEvolutionChartInstance=null;
+function renderMemberEvolutionChart(evolutionData){
+    const containerId = 'memberEvolutionChartContainer';
+    const canvasId = 'memberEvolutionChart';
+    const container = document.getElementById(containerId);
+
+    if (!evolutionData || !Array.isArray(evolutionData) || evolutionData.length === 0) {
+        if (memberEvolutionChartInstance) memberEvolutionChartInstance.destroy();
+        container.innerHTML = renderErrorPlaceholder("Historická data o počtu členů nejsou k dispozici.");
+        return;
+    }
+
+    // Reset kontejneru a získání nového canvas elementu
+    const ctx = resetChartContainer(containerId, canvasId).getContext('2d');
+    
+    if(memberEvolutionChartInstance) memberEvolutionChartInstance.destroy();
+    const labels = evolutionData.map(item => item.date);
+    const dataCounts = evolutionData.map(item => item.count);
+     
+    const gradient=ctx.createLinearGradient(0,0,0,350); 
+    gradient.addColorStop(0,'rgba(87,242,135,0.5)'); 
+    gradient.addColorStop(1,'rgba(87,242,135,0.05)');
+
+    memberEvolutionChartInstance=new Chart(ctx,{
+        type:'line',
+        data:{
+          labels,
+          datasets:[{
+            label:'Počet Členů',
+            data:dataCounts,
+            backgroundColor:gradient,
+            borderColor:'#57F287',
+            borderWidth:3,
+            tension:0.4,
+            fill:true,
+            pointRadius:4,
+            pointHoverRadius:6,
+            pointBackgroundColor:'#57F287'
+          }]
+        },
+        options:{
+          responsive:true,
+          maintainAspectRatio:false,
+          scales:{
+            x:{
+              type:'time',
+              time:{
+                unit:'day',
+                tooltipFormat:'dd. MM. yyyy',
+                displayFormats:{day:'dd. MM.'}
+              },
+              grid:{color:'#3a3a5a'},
+              title:{display:true,text:'Datum'}
+            },
+            y:{
+              beginAtZero:true, 
+              grid:{color:'#3a3a5a'},
+              title:{display:true,text:'Počet Členů'},
+              // Zajištění celých čísel na ose Y pro počet členů
+              ticks: {
+                precision: 0 
+              }
+            }
+          },
+          plugins:{
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  return ' ' + context.dataset.label + ': ' + context.parsed.y.toLocaleString();
+                }
+              }
+            }
+          },
+          animation:{duration:1200,easing:'easeOutQuart'}
+        }
+     });
+}
+
+
 function renderOnlineStatusChart(statusData){
-  const canvasId='onlineStatusChart';
-  if(charts[canvasId]) charts[canvasId].destroy();
-  const statuses=[{key:'online',label:'Online',color:'#57F287'},{key:'idle',label:'Neaktivní',color:'#FAA81A'},{key:'dnd',label:'Nerušit',color:'#F23F43'},{key:'offline',label:'Offline/Neviditelný',color:'#747F8D'}].filter(s=>statusData[s.key]>0);
-  const ctx=document.getElementById(canvasId).getContext('2d');
-  charts[canvasId]=new Chart(ctx,{type:'doughnut',data:{labels:statuses.map(s=>s.label),datasets:[{data:statuses.map(s=>statusData[s.key]),backgroundColor:statuses.map(s=>s.color),hoverOffset:10,borderColor:'#1e1e2d',borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{padding:10}},tooltip:{callbacks:{label:ctx=>{const value=ctx.parsed;const total=ctx.dataset.data.reduce((a,b)=>a+b,0);const percent=total>0?((value/total)*100).toFixed(1)+'%':'0%'; return `${ctx.label}: ${value} (${percent})`;}}}},animation:{duration:1000,easing:'easeOutQuart'}}});
+    const canvasId='onlineStatusChart';
+    const containerId = 'onlineStatusChartContainer';
+    const container = document.getElementById(containerId);
+    
+    // Kontrola, zda data existují a mají alespoň jednu kladnou hodnotu
+    const hasData = statusData && Object.values(statusData).some(count => count > 0);
+
+    if (!hasData) {
+        if (charts[canvasId]) charts[canvasId].destroy();
+        container.innerHTML = renderErrorPlaceholder("Žádná data o online stavech členů.");
+        return;
+    }
+
+    // Reset kontejneru (pouze pokud existuje) a získání nového canvas elementu
+    const ctx = resetChartContainer(containerId, canvasId).getContext('2d');
+    
+    if(charts[canvasId]) charts[canvasId].destroy();
+    const statuses=[{key:'online',label:'Online',color:'#57F287'},{key:'idle',label:'Neaktivní',color:'#FAA81A'},{key:'dnd',label:'Nerušit',color:'#F23F43'},{key:'offline',label:'Offline/Neviditelný',color:'#747F8D'}].filter(s=>statusData[s.key]>0);
+    charts[canvasId]=new Chart(ctx,{type:'doughnut',data:{labels:statuses.map(s=>s.label),datasets:[{data:statuses.map(s=>statusData[s.key]),backgroundColor:statuses.map(s=>s.color),hoverOffset:10,borderColor:'#1e1e2d',borderWidth:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{padding:10}},tooltip:{callbacks:{label:ctx=>{const value=ctx.parsed;const total=ctx.dataset.data.reduce((a,b)=>a+b,0);const percent=total>0?((value/total)*100).toFixed(1)+'%':'0%'; return `${ctx.label}: ${value} (${percent})`;}}}},animation:{duration:1000,easing:'easeOutQuart'}}});
 }
 
 function formatTimeTicks(value){
-  const seconds=Math.floor(value),h=Math.floor(seconds/3600),m=Math.floor((seconds%3600)/60),s=seconds%60;
-  let result=''; if(h>0) result+=`${h}h `; if(m>0) result+=`${m}m `; if(s>0&&h===0&&m===0) result=`${s}s`; return result.trim()||'0s';
+  const seconds=Math.floor(value),d=Math.floor(seconds/(3600*24)),h=Math.floor((seconds%(3600*24))/3600),m=Math.floor((seconds%3600)/60),s=seconds%60;
+  let result=''; 
+  if(d>0) result+=`${d}d `; 
+  if(h>0) result+=`${h}h `; 
+  if(m>0) result+=`${m}m `; 
+  if(s>0&&d===0&&h===0&&m===0) result=`${s}s`; 
+  return result.trim()||'0s';
 }
 
 document.addEventListener('DOMContentLoaded',loadInitialData);
