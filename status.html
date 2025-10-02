@@ -37,9 +37,9 @@ async function fetchStatus() {
     statusList.innerHTML="<li>Načítám data...</li>";
     cogsList.innerHTML="<li>Načítám cogs...</li>";
 
-    function addItem(label,value,cls=""){ 
-        const li=document.createElement("li"); 
-        li.innerHTML=`<span class="label">${label}</span><span class="value ${cls}">${value}</span>`; 
+    function addItem(label, value, unit="", cls=""){ 
+        const li = document.createElement("li"); 
+        li.innerHTML = `<span class="label">${label}</span><span class="value ${cls}">${value} ${unit}</span>`; 
         return li;
     }
 
