@@ -18,8 +18,8 @@ Díky **aktivnímu vývoji** a neustálým novinkám se czbot stává nepostrada
 * 🔑  **Globální databáze trestaných uživatelů:** Pro extra vrstvu bezpečí na serverech s czbotem.
 * 🎁 **Giveaway systém a Patreon modul:** Odměňuj a podporuj svou komunitu!
 * 🧮 **Detailní statistiky serveru:** Měj přehled o aktivitě a vývoji tvé komunity jak v aplikaci tak i díky přehledným webovým stránkám.
-* 🖥️ ** Postupné zavádění nových funkcí:** czbot má veřejnou roadmapu, kde každý uživatel může vidět budoucí plány.
-...a mnoho dalšího!
+* 🖥️ **Postupné zavádění nových funkcí:** czbot má veřejnou roadmapu, kde každý uživatel může vidět budoucí plány.
+* ...a mnoho dalšího!
 ---
 ### Přidej czbota na svůj server a objev, jak jednoduchá může být správa Discordu!
 ---
