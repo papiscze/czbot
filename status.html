@@ -54,13 +54,13 @@ async function fetchStatus() {
         const uptime_str = `${hours}h ${minutes}m ${seconds}s`;
 
         statusList.innerHTML="";
-        statusList.appendChild(addItem("Bot status", data.bot_status, data.bot_status==="online"?"status-online":"status-offline-cog"));
-        statusList.appendChild(addItem("Uptime", uptime_str, data.bot_status==="online"?"":"status-offline-cog"));
-        statusList.appendChild(addItem("Počet serverů", data.guilds, data.bot_status==="online"?"":"status-offline-cog"));
-        statusList.appendChild(addItem("CPU", data.cpu_percent, "%", data.bot_status==="online"?"":"status-offline-cog"));
-        statusList.appendChild(addItem("RAM", data.ram_mb, "MB", data.bot_status==="online"?"":"status-offline-cog"));
-        statusList.appendChild(addItem("API", data.api_db_status, data.api_db_status==="OK"?"status-ok":"status-offline-cog"));        
-        statusList.appendChild(addItem("Databáze", data.api_db_status, data.api_db_status==="OK"?"status-ok":"status-offline-cog"));
+        statusList.appendChild(addItem("Bot status", data.bot_status, "", data.bot_status==="online"?"status-online":"status-offline-cog"));
+        statusList.appendChild(addItem("Uptime", uptime_str, "", data.bot_status==="online"?"status-ok":"status-offline-cog"));
+        statusList.appendChild(addItem("Počet serverů", data.guilds, "", data.bot_status==="online"?"status-ok":"status-offline-cog"));
+        statusList.appendChild(addItem("CPU", data.cpu_percent, "%", data.bot_status==="online"?"status-ok":"status-offline-cog"));
+        statusList.appendChild(addItem("RAM", data.ram_mb, "MB", data.bot_status==="online"?"status-ok":"status-offline-cog"));
+        statusList.appendChild(addItem("API", data.api_db_status, "", data.api_db_status==="OK"?"status-ok":"status-offline-cog"));        
+        statusList.appendChild(addItem("Databáze", data.api_db_status, "", data.api_db_status==="OK"?"status-ok":"status-offline-cog"));
 
         cogsList.innerHTML="";
         const sortedCogs = Object.entries(data.cogs).sort((a,b) => a[0].localeCompare(b[0], 'cs'));
