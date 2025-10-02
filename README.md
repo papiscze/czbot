@@ -8,8 +8,9 @@ Díky **aktivnímu vývoji** a neustálým novinkám se czbot stává nepostrada
 
 * 🔐 **Kompletní moderace a zábava:** Základní nástroje pro správu komunity, **pokročilý AutoMod** pro čistší chat (blokování slov, timeouty) a hromada zábavných příkazů, které oživí konverzace.
 * 🪤 **Ochrana proti podvodným odkazům, tzv scamům!**
-* 🗞️ **Inteligentní RSS/Podcast čtečka:** Automatické publikování obsahu z webů, RSS feedů i YouTube kanálů (bez otravných Shorts!) přímo do tvých kanálů.
+* 🗞️ **Inteligentní RSS čtečka:** Automatické publikování obsahu z webů, RSS feedů i YouTube kanálů (bez otravných Shorts!) přímo do tvých kanálů.
 * 🤖 **Automatizace pro pořádek:** Usnadni si život s automatickým publikováním oznámení, tvorbou vláken a moderací příspěvků pro přehledné kanály (např. fotogalerie).
+* 🔎 **Audit log:** Moderátoři si mohou nastavit zobrazování různých akcí provedených na serveru - Použití příkazů, smazání zpráv, přesuny uživatelů, změny a mnoho dalšího.
 * 📊  **Komunitní interakce na maximum:** Zapoj uživatele s reputačním a XP systémem s ranky, sbírej anonymní zpětnou vazbu a dávej prostor pro návrhy.
 * 🎙️  **Efektivní správa hlasových kanálů:** Vytvářej dočasné hlasové kanály s plnými oprávněními, které se samy uklidí po použití.
 * 📬  **Role a Tikety:** Automatické přidělování rolí, reakční role a snadná komunikace s uživateli přes tikety.
@@ -17,6 +18,7 @@ Díky **aktivnímu vývoji** a neustálým novinkám se czbot stává nepostrada
 * 🔑  **Globální databáze trestaných uživatelů:** Pro extra vrstvu bezpečí na serverech s czbotem.
 * 🎁 **Giveaway systém a Patreon modul:** Odměňuj a podporuj svou komunitu!
 * 🧮 **Detailní statistiky serveru:** Měj přehled o aktivitě a vývoji tvé komunity jak v aplikaci tak i díky přehledným webovým stránkám.
+* 🖥️ ** Postupné zavádění nových funkcí:** czbot má veřejnou roadmapu, kde každý uživatel může vidět budoucí plány.
 ...a mnoho dalšího!
 ---
 ### Přidej czbota na svůj server a objev, jak jednoduchá může být správa Discordu!
