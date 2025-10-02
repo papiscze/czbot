@@ -59,8 +59,8 @@ async function fetchStatus() {
         statusList.appendChild(addItem("Počet serverů", data.guilds, data.bot_status==="online"?"":"status-offline-cog"));
         statusList.appendChild(addItem("CPU %", data.cpu_percent, data.bot_status==="online"?"":"status-offline-cog"));
         statusList.appendChild(addItem("RAM MB", data.ram_mb, data.bot_status==="online"?"":"status-offline-cog"));
+        statusList.appendChild(addItem("API", data.api_db_status, data.api_db_status==="OK"?"status-ok":"status-offline-cog"));        
         statusList.appendChild(addItem("Databáze", data.api_db_status, data.api_db_status==="OK"?"status-ok":"status-offline-cog"));
-        statusList.appendChild(addItem("API", data.api_db_status, data.api_db_status==="OK"?"status-ok":"status-offline-cog"));
 
         cogsList.innerHTML="";
         const sortedCogs = Object.entries(data.cogs).sort((a,b) => a[0].localeCompare(b[0], 'cs'));
@@ -78,8 +78,8 @@ async function fetchStatus() {
         statusList.appendChild(addItem("Počet serverů","-")); // bez podbarvení
         statusList.appendChild(addItem("CPU %","-")); // bez podbarvení
         statusList.appendChild(addItem("RAM MB","-")); // bez podbarvení
-        statusList.appendChild(addItem("Databáze","nedostupná","status-offline-cog"));
         statusList.appendChild(addItem("API","nedostupná","status-offline-cog"));
+        statusList.appendChild(addItem("Databáze","nedostupná","status-offline-cog"));
 
         cogsList.innerHTML="";
         cogs_to_load.forEach(label => {
