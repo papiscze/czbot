@@ -67,8 +67,9 @@ async function fetchStatus() {
         for(const [name,status] of sortedCogs){
             let cls="";
             if(status==="Funkční") cls="status-ok";
+            else if(status.toLowerCase()==="chyba" || status.toLowerCase()==="error") cls="status-err";
             else cls="status-offline-cog";
-            cogsList.appendChild(addItem(name,status,cls));
+            cogsList.appendChild(addItem(name,status,"",cls));
         }
     } catch(err){
         // Bot offline → všechny cogy a bot/db jako nedostupné
