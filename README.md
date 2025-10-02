@@ -16,7 +16,7 @@ Díky **aktivnímu vývoji** a neustálým novinkám se czbot stává nepostrada
 * 🌐  **Překlady a vodoznaky:** Překládej zprávy a chraň svůj obsah automatickými vodoznaky na obrázky.
 * 🔑  **Globální databáze trestaných uživatelů:** Pro extra vrstvu bezpečí na serverech s czbotem.
 * 🎁 **Giveaway systém a Patreon modul:** Odměňuj a podporuj svou komunitu!
-* 🧮 **Detailní statistiky serveru:** Měj přehled o aktivitě a vývoji tvé komunity.
+* 🧮 **Detailní statistiky serveru:** Měj přehled o aktivitě a vývoji tvé komunity jak v aplikaci tak i díky přehledným webovým stránkám.
 ...a mnoho dalšího!
 ---
 ### Přidej czbota na svůj server a objev, jak jednoduchá může být správa Discordu!
