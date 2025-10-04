@@ -61,7 +61,7 @@ async function fetchStatus() {
         statusList.appendChild(addItem("RAM", data.ram_mb, "MB")); // bez barvy
         statusList.appendChild(addItem("API", data.api_db_status, "", data.api_db_status==="OK"?"status-ok":"status-offline-cog"));        
         statusList.appendChild(addItem("Databáze", data.api_db_status, "", data.api_db_status==="OK"?"status-ok":"status-offline-cog"));
-        statusList.appendChild(addItem("HTTP server", data.web_status, "", data.web_status==="OK"?"status-ok":"status-offline-cog"));
+        statusList.appendChild(addItem("HTTP server", data.webserver_status, "", data.webserver_status==="OK"?"status-ok":"status-offline-cog"));
 
         cogsList.innerHTML="";
         const sortedCogs = Object.entries(data.cogs).sort((a,b) => a[0].localeCompare(b[0], 'cs'));
