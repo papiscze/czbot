@@ -9,31 +9,62 @@
 body { font-family:'Inter',sans-serif; background:#1a202c; color:#e2e8f0; margin:0; padding:20px; display:flex; justify-content:center; }
 .container { background:#2d3748; padding:32px; border-radius:12px; max-width:900px; width:100%; box-shadow:0 10px 15px rgba(0,0,0,0.2);}
 h1,h2 { text-align:center; color:#cbd5e0; }
-.status-online { color:#48bb78; } /* bot online */
-.status-offline { color:#f56565; } /* bot offline text */
-.status-ok { color:#48bb78; } /* funkční cogs */
-.status-err { color:#f56565; } /* chyby cogs */
-.status-offline-cog { color:#f56565; background:#742a2a; padding:2px 6px; border-radius:4px; } /* offline cogs a nedostupný bot/db */
+.status-online { color:#48bb78; }
+.status-offline { color:#f56565; }
+.status-ok { color:#48bb78; }
+.status-err { color:#f56565; }
+.status-offline-cog { color:#f56565; background:#742a2a; padding:2px 6px; border-radius:4px; }
 ul { list-style:none; padding:0; }
 li { display:flex; justify-content:space-between; background:#4a5568; padding:12px 16px; margin-bottom:8px; border-radius:8px; word-break:break-word;}
 .label { font-weight:600; }
 .value { font-weight:400; }
 hr { border:0; height:1px; background: linear-gradient(to right, rgba(0,0,0,0), #718096, rgba(0,0,0,0)); margin:20px 0;}
+
+/* ⚠️ Styl pro varovný box */
+.warn-box {
+    background: #dd6b20; /* oranžová */
+    color: #fff;
+    padding: 14px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
 </style>
 </head>
 <body>
 <div class="container">
-<h1>Status CZBota</h1>
-<ul id="statusList"></ul>
-<hr>
-<h2>Stav Cogs</h2>
-<ul id="cogsList"></ul>
+
+    <!-- ⚠️ Volitelný varovný box -->
+    <div id="warnBox" style="display:none;"></div>
+
+    <h1>Status CZBota</h1>
+    <ul id="statusList"></ul>
+    <hr>
+    <h2>Stav Cogs</h2>
+    <ul id="cogsList"></ul>
+
 <script>
 const cogs_to_load = ["Administrátorský cog","Administrátorský 2 cog","Pokročilé plánované zprávy","Auditlogger","Automatické publikace zpráv","Automatické role","Dočasné hlasové kanály","Giveaway","Hlasování","Kolo štěstí","Lokalizace","Moderátorské příkazy","Narozeniny","Ověřování a Reakční role","Patreon","Počítání","Podcasty","Překlad","RAID ochrana","Reputace","RSS čtečka","Plánované zprávy","Scam ochrana","Statistiky","Svátky","Tikety","Uvítací/odchodové zprávy","Uživatelské příkazy","Vlákna a reakce na zprávy","Vodoznaky","XP úrovně","AI cog", "Zpovědi"];
 
 async function fetchStatus() {
     const statusList = document.getElementById("statusList");
     const cogsList = document.getElementById("cogsList");
+    const warnBox = document.getElementById("warnBox");
+
+    // 🟠 sem napiš vlastní status zprávu (pokud nechceš žádnou, nech to prázdné)
+    const warn_message = ⚠️"V současné době jsou problémy s API daty"; 
+
+    // zobrazení nebo skrytí varovného boxu
+    if (warn_message && warn_message.trim() !== "") {
+        warnBox.textContent = warn_message;
+        warnBox.classList.add("warn-box");
+        warnBox.style.display = "block";
+    } else {
+        warnBox.style.display = "none";
+    }
+
     statusList.innerHTML="<li>Načítám data...</li>";
     cogsList.innerHTML="<li>Načítám cogs...</li>";
 
@@ -55,10 +86,10 @@ async function fetchStatus() {
 
         statusList.innerHTML="";
         statusList.appendChild(addItem("Bot status", data.bot_status, "", data.bot_status==="online"?"status-online":"status-offline-cog"));
-        statusList.appendChild(addItem("Uptime", uptime_str)); // bez barvy
-        statusList.appendChild(addItem("Počet serverů", data.guilds)); // bez barvy
-        statusList.appendChild(addItem("CPU", data.cpu_percent, "%")); // bez barvy
-        statusList.appendChild(addItem("RAM", data.ram_mb, "MB")); // bez barvy
+        statusList.appendChild(addItem("Uptime", uptime_str));
+        statusList.appendChild(addItem("Počet serverů", data.guilds));
+        statusList.appendChild(addItem("CPU", data.cpu_percent, "%"));
+        statusList.appendChild(addItem("RAM", data.ram_mb, "MB"));
         statusList.appendChild(addItem("API", data.api_db_status, "", data.api_db_status==="OK"?"status-ok":"status-offline-cog"));        
         statusList.appendChild(addItem("Databáze", data.api_db_status, "", data.api_db_status==="OK"?"status-ok":"status-offline-cog"));
 
@@ -72,13 +103,12 @@ async function fetchStatus() {
             cogsList.appendChild(addItem(name,status,"",cls));
         }
     } catch(err){
-        // Bot offline → všechny cogy a bot/db jako nedostupné
         statusList.innerHTML="";
         statusList.appendChild(addItem("Bot status","offline","status-offline-cog"));
-        statusList.appendChild(addItem("Uptime","-")); // bez podbarvení
-        statusList.appendChild(addItem("Počet serverů","-")); // bez podbarvení
-        statusList.appendChild(addItem("CPU %","-")); // bez podbarvení
-        statusList.appendChild(addItem("RAM MB","-")); // bez podbarvení
+        statusList.appendChild(addItem("Uptime","-"));
+        statusList.appendChild(addItem("Počet serverů","-"));
+        statusList.appendChild(addItem("CPU %","-"));
+        statusList.appendChild(addItem("RAM MB","-"));
         statusList.appendChild(addItem("API","nedostupná","status-offline-cog"));
         statusList.appendChild(addItem("Databáze","nedostupná","status-offline-cog"));
 
@@ -89,9 +119,8 @@ async function fetchStatus() {
     }
 }
 
-fetchStatus(); // načíst pouze při otevření
+fetchStatus();
 </script>
-
 </div>
 </body>
 </html>
