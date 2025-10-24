@@ -46,7 +46,7 @@ hr { border:0; height:1px; background: linear-gradient(to right, rgba(0,0,0,0), 
     <ul id="cogsList"></ul>
 
 <script>
-const cogs_to_load = ["Administrátorský cog","Administrátorský 2 cog","Pokročilé plánované zprávy","Auditlogger","Automatické publikace zpráv","Automatické role","Dočasné hlasové kanály","Giveaway","Hlasování","Kolo štěstí","Lokalizace","Moderátorské příkazy","Narozeniny","Ověřování a Reakční role","Patreon","Počítání","Podcasty","Překlad","RAID ochrana","Reputace","RSS čtečka","Plánované zprávy","Scam ochrana","Statistiky","Svátky","Tikety","Uvítací/odchodové zprávy","Uživatelské příkazy","Vlákna a reakce na zprávy","Vodoznaky","XP úrovně","AI cog", "Zpovědi"];
+const cogs_to_load = ["Audio Streaming","Administrátorský cog","Administrátorský 2 cog","Pokročilé plánované zprávy","Auditlogger","Automatické publikace zpráv","Automatické role","Dočasné hlasové kanály","Giveaway","Hlasování","Kolo štěstí","Lokalizace","Moderátorské příkazy","Narozeniny","Ověřování a Reakční role","Patreon","Počítání","Podcasty","Překlad","RAID ochrana","Reputace","RSS čtečka","Plánované zprávy","Scam ochrana","Statistiky","Svátky","Tikety","Uvítací/odchodové zprávy","Uživatelské příkazy","Vlákna a reakce na zprávy","Vodoznaky","XP úrovně","AI cog", "Zpovědi"];
 
 async function fetchStatus() {
     const statusList = document.getElementById("statusList");
@@ -54,7 +54,7 @@ async function fetchStatus() {
     const warnBox = document.getElementById("warnBox");
 
     // 🟠 sem napiš vlastní status zprávu (pokud nechceš žádnou, nech to prázdné)
-    const warn_message = ""; 
+    const warn_message = "⚠️V současné době jsou problémy s API daty"; 
 
     // zobrazení nebo skrytí varovného boxu
     if (warn_message && warn_message.trim() !== "") {
