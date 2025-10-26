@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CRON Generator</title>
-<script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRON Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-900 text-white p-8 flex flex-col min-h-screen">
 
@@ -20,7 +20,7 @@
 
     <!-- Popis * -->
     <div class="bg-gray-700 p-4 rounded-md text-gray-300">
-        <p id="label-star-description">* znamená "každou hodnotu"</p>
+        <p id="label-star-description">* znamená "každou hodnotu" (např. každou minutu, každý den, každý měsíc...)</p>
     </div>
 
     <!-- Předpřipravené příklady -->
@@ -36,7 +36,6 @@
             <option value="0 10 1,15 * *">1. a 15. den v měsíci v 10:00</option>
             <option value="59 11 1-7 * 2">První středa v měsíci v 11:59</option>
             <option value="0 12 * 10 2">Každá středa v říjnu ve 12:00</option>
-            <option value="custom">Vlastní</option>
         </select>
     </div>
 
@@ -71,15 +70,21 @@
     </div>
 
     <!-- Výstup CRON -->
-    <div class="flex gap-2 items-center">
-        <input type="text" id="cron-output" readonly class="mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white font-mono">
-        <button id="copy-cron" class="bg-green-600 px-3 py-2 rounded-md hover:bg-green-500">Kopírovat</button>
+    <div class="flex gap-2">
+        <div class="flex-1">
+            <label id="label-output" class="block text-sm font-medium text-gray-400">Generovaný CRON výraz</label>
+            <input type="text" id="cron-output" readonly class="mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white font-mono">
+        </div>
+        <button id="copy-cron" class="bg-green-600 px-3 py-2 rounded-md hover:bg-green-500 self-end">Kopírovat</button>
     </div>
 
     <!-- Výstup kompletního příkazu pro Discord -->
-    <div class="flex gap-2 items-center">
-        <textarea id="cron-command" rows="3" readonly class="mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white font-mono"></textarea>
-        <button id="copy-command" class="bg-blue-600 px-3 py-2 rounded-md hover:bg-blue-500">Kopírovat</button>
+    <div class="flex gap-2">
+        <div class="flex-1">
+            <label id="label-command" class="block text-sm font-medium text-gray-400">Připravený Discord příkaz</label>
+            <textarea id="cron-command" rows="3" readonly class="mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white font-mono"></textarea>
+        </div>
+        <button id="copy-command" class="bg-blue-600 px-3 py-2 rounded-md hover:bg-blue-500 self-end">Kopírovat</button>
     </div>
 
 </div>
@@ -89,129 +94,135 @@
 </footer>
 
 <script>
-const translations = {
-    cs: {
-        title: "CRON Generator",
-        labelPreset: "Předpřipravené příklady",
-        labelMinute: "Minuta",
-        labelHour: "Hodina",
-        labelDay: "Den v měsíci",
-        labelMonth: "Měsíc",
-        labelWeekday: "Den v týdnu",
-        labelOutput: "Generovaný CRON výraz",
-        labelMessage: "Zpráva (| = nový řádek)",
-        labelCommand: "Připravený Discord příkaz",
-        starDescription: "* znamená 'každou hodnotu' (např. každou minutu, každý den, každý měsíc...)",
-        copyCron: "Kopírovat",
-        copyCommand: "Kopírovat"
-    },
-    en: {
-        title: "CRON Generator",
-        labelPreset: "Preset Examples",
-        labelMinute: "Minute",
-        labelHour: "Hour",
-        labelDay: "Day of Month",
-        labelMonth: "Month",
-        labelWeekday: "Day of Week",
-        labelOutput: "Generated CRON Expression",
-        labelMessage: "Message (| = new line)",
-        labelCommand: "Prepared Discord Command",
-        starDescription: "* means 'every value' (e.g., every minute, every day, every month...)",
-        copyCron: "Copy",
-        copyCommand: "Copy"
+    const translations = {
+        cs: {
+            title: "CRON Generator",
+            labelPreset: "Předpřipravené příklady",
+            labelMinute: "Minuta",
+            labelHour: "Hodina",
+            labelDay: "Den v měsíci",
+            labelMonth: "Měsíc",
+            labelWeekday: "Den v týdnu",
+            labelOutput: "Generovaný CRON výraz",
+            labelMessage: "Zpráva (| = nový řádek)",
+            labelCommand: "Připravený Discord příkaz",
+            starDescription: "* znamená 'každou hodnotu' (např. každou minutu, každý den, každý měsíc...)",
+            copyCron: "Kopírovat",
+            copyCommand: "Kopírovat"
+        },
+        en: {
+            title: "CRON Generator",
+            labelPreset: "Preset Examples",
+            labelMinute: "Minute",
+            labelHour: "Hour",
+            labelDay: "Day of Month",
+            labelMonth: "Month",
+            labelWeekday: "Day of Week",
+            labelOutput: "Generated CRON Expression",
+            labelMessage: "Message (| = new line)",
+            labelCommand: "Prepared Discord Command",
+            starDescription: "* means 'every value' (e.g., every minute, every day, every month...)",
+            copyCron: "Copy",
+            copyCommand: "Copy"
+        }
+    };
+
+    const langSwitcher = document.getElementById('cron-lang-switcher');
+    const cronPresets = document.getElementById('cron-presets');
+    const cronMinute = document.getElementById('cron-minute');
+    const cronHour = document.getElementById('cron-hour');
+    const cronDay = document.getElementById('cron-day');
+    const cronMonth = document.getElementById('cron-month');
+    const cronWeekday = document.getElementById('cron-weekday');
+    const cronOutput = document.getElementById('cron-output');
+    const cronMessage = document.getElementById('cron-message');
+    const cronCommand = document.getElementById('cron-command');
+    const starDesc = document.getElementById('label-star-description');
+    const copyCronBtn = document.getElementById('copy-cron');
+    const copyCommandBtn = document.getElementById('copy-command');
+
+    function updateLanguage() {
+        const lang = langSwitcher.value;
+        const t = translations[lang];
+        document.getElementById('cron-title').textContent = t.title;
+        document.getElementById('label-presets').textContent = t.labelPreset;
+        document.getElementById('label-minute').textContent = t.labelMinute;
+        document.getElementById('label-hour').textContent = t.labelHour;
+        document.getElementById('label-day').textContent = t.labelDay;
+        document.getElementById('label-month').textContent = t.labelMonth;
+        document.getElementById('label-weekday').textContent = t.labelWeekday;
+        document.getElementById('label-output').textContent = t.labelOutput;
+        document.getElementById('label-message').textContent = t.labelMessage;
+        document.getElementById('label-command').textContent = t.labelCommand;
+        starDesc.textContent = t.starDescription;
+
+        copyCronBtn.textContent = t.copyCron;
+        copyCommandBtn.textContent = t.copyCommand;
     }
-};
 
-const langSwitcher = document.getElementById('cron-lang-switcher');
-const cronPresets = document.getElementById('cron-presets');
-const cronMinute = document.getElementById('cron-minute');
-const cronHour = document.getElementById('cron-hour');
-const cronDay = document.getElementById('cron-day');
-const cronMonth = document.getElementById('cron-month');
-const cronWeekday = document.getElementById('cron-weekday');
-const cronOutput = document.getElementById('cron-output');
-const cronMessage = document.getElementById('cron-message');
-const cronCommand = document.getElementById('cron-command');
-const starDesc = document.getElementById('label-star-description');
-const copyCronBtn = document.getElementById('copy-cron');
-const copyCommandBtn = document.getElementById('copy-command');
+    function updateCron() {
+        let minute = cronMinute.value || '*';
+        let hour = cronHour.value || '*';
+        let day = cronDay.value || '*';
+        let month = cronMonth.value || '*';
+        let weekday = cronWeekday.value || '*';
 
-function updateLanguage() {
-    const lang = langSwitcher.value;
-    const t = translations[lang];
-    document.getElementById('cron-title').textContent = t.title;
-    document.getElementById('label-presets').textContent = t.labelPreset;
-    document.getElementById('label-minute').textContent = t.labelMinute;
-    document.getElementById('label-hour').textContent = t.labelHour;
-    document.getElementById('label-day').textContent = t.labelDay;
-    document.getElementById('label-month').textContent = t.labelMonth;
-    document.getElementById('label-weekday').textContent = t.labelWeekday;
-    document.getElementById('label-output').textContent = t.labelOutput;
-    document.getElementById('label-message').textContent = t.labelMessage;
-    document.getElementById('label-command').textContent = t.labelCommand;
-    starDesc.textContent = t.starDescription;
-    copyCronBtn.textContent = t.copyCron;
-    copyCommandBtn.textContent = t.copyCommand;
-}
+        if(cronPresets.value) {
+            const parts = cronPresets.value.split(' ');
+            if(parts.length === 5){
+                minute = parts[0];
+                hour = parts[1];
+                day = parts[2];
+                month = parts[3];
+                weekday = parts[4];
 
-// validace
-function isValidNumber(value, min, max) {
-    if(value.trim() === '*' || value.includes(',')) return true;
-    const parts = value.split('-');
-    return parts.every(p => {
-        const n = parseInt(p);
-        return !isNaN(n) && n >= min && n <= max;
-    });
-}
+                // vyplnění polí
+                cronMinute.value = minute;
+                cronHour.value = hour;
+                cronDay.value = day;
+                cronMonth.value = month;
+                cronWeekday.value = weekday;
+            }
+        }
 
-function updateCron() {
-    let minute = cronMinute.value || '*';
-    let hour = cronHour.value || '*';
-    let day = cronDay.value || '*';
-    let month = cronMonth.value || '*';
-    let weekday = cronWeekday.value || '*';
+        cronOutput.value = `${minute} ${hour} ${day} ${month} ${weekday}`;
+        const channelPlaceholder = "#kanal"; 
+        const message = cronMessage.value.replace(/\n/g, '|');
+        cronCommand.value = `/pridat_cron cron_vyraz="${cronOutput.value}" channel=${channelPlaceholder} zprava="${message}"`;
 
-    if(cronPresets.value && cronPresets.value !== 'custom') {
-        const parts = cronPresets.value.split(' ');
-        if(parts.length === 5){
-            minute = parts[0];
-            hour = parts[1];
-            day = parts[2];
-            month = parts[3];
-            weekday = parts[4];
-            cronMinute.value = minute;
-            cronHour.value = hour;
-            cronDay.value = day;
-            cronMonth.value = month;
-            cronWeekday.value = weekday;
+        // Pokud uživatel změní libovolné pole, resetuje se výběr šablony
+        if(cronPresets.value && (
+            cronMinute.value !== parts[0] || 
+            cronHour.value !== parts[1] ||
+            cronDay.value !== parts[2] ||
+            cronMonth.value !== parts[3] ||
+            cronWeekday.value !== parts[4])) {
+            cronPresets.value = "";
         }
     }
 
-    [cronMinute, cronHour, cronDay, cronMonth, cronWeekday].forEach(input => {
-        input.oninput = () => { cronPresets.value='custom'; updateCron(); };
+    cronPresets.addEventListener('change', updateCron);
+    cronMinute.addEventListener('input', updateCron);
+    cronHour.addEventListener('input', updateCron);
+    cronDay.addEventListener('input', updateCron);
+    cronMonth.addEventListener('input', updateCron);
+    cronWeekday.addEventListener('input', updateCron);
+    cronMessage.addEventListener('input', updateCron);
+
+    copyCronBtn.addEventListener('click', () => {
+        cronOutput.select();
+        document.execCommand('copy');
     });
 
-    cronMinute.style.borderColor = isValidNumber(minute,0,59)? '#4B5563':'red';
-    cronHour.style.borderColor = isValidNumber(hour,0,23)? '#4B5563':'red';
-    cronDay.style.borderColor = isValidNumber(day,1,31)? '#4B5563':'red';
-    cronMonth.style.borderColor = isValidNumber(month,1,12)? '#4B5563':'red';
-    cronWeekday.style.borderColor = isValidNumber(weekday,0,6)? '#4B5563':'red';
+    copyCommandBtn.addEventListener('click', () => {
+        cronCommand.select();
+        document.execCommand('copy');
+    });
 
-    cronOutput.value = `${minute} ${hour} ${day} ${month} ${weekday}`;
-    const channelPlaceholder = "#kanal"; 
-    const message = cronMessage.value.replace(/\n/g, '|');
-    cronCommand.value = `/pridat_cron cron_vyraz="${cronOutput.value}" channel=${channelPlaceholder} zprava="${message}"`;
-}
+    langSwitcher.addEventListener('change', () => { updateLanguage(); updateCron(); });
 
-cronPresets.addEventListener('change', updateCron);
-cronMessage.addEventListener('input', updateCron);
-langSwitcher.addEventListener('change', () => { updateLanguage(); updateCron(); });
-
-copyCronBtn.addEventListener('click', ()=> { navigator.clipboard.writeText(cronOutput.value); });
-copyCommandBtn.addEventListener('click', ()=> { navigator.clipboard.writeText(cronCommand.value); });
-
-updateLanguage();
-updateCron();
+    updateLanguage();
+    updateCron();
 </script>
 
 </body>
