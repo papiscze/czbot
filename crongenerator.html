@@ -20,7 +20,7 @@
 
     <!-- Popis * -->
     <div class="bg-gray-700 p-4 rounded-md text-gray-300">
-        <p id="label-star-description" title="* znamená každou hodnotu (např. každou minutu, každý den, každý měsíc)">* znamená "každou hodnotu"</p>
+        <p id="label-star-description">* znamená "každou hodnotu"</p>
     </div>
 
     <!-- Předpřipravené příklady -->
@@ -43,23 +43,23 @@
     <!-- CRON části -->
     <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
         <div>
-            <label id="label-minute" class="block text-sm font-medium text-gray-400" title="0-59 nebo *">Minuta</label>
+            <label id="label-minute" class="block text-sm font-medium text-gray-400">Minuta</label>
             <input type="text" id="cron-minute" placeholder="0-59 nebo *" class="mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white font-mono">
         </div>
         <div>
-            <label id="label-hour" class="block text-sm font-medium text-gray-400" title="0-23 nebo *">Hodina</label>
+            <label id="label-hour" class="block text-sm font-medium text-gray-400">Hodina</label>
             <input type="text" id="cron-hour" placeholder="0-23 nebo *" class="mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white font-mono">
         </div>
         <div>
-            <label id="label-day" class="block text-sm font-medium text-gray-400" title="1-31 nebo *">Den v měsíci</label>
+            <label id="label-day" class="block text-sm font-medium text-gray-400">Den v měsíci</label>
             <input type="text" id="cron-day" placeholder="1-31 nebo *" class="mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white font-mono">
         </div>
         <div>
-            <label id="label-month" class="block text-sm font-medium text-gray-400" title="1-12 nebo *">Měsíc</label>
+            <label id="label-month" class="block text-sm font-medium text-gray-400">Měsíc</label>
             <input type="text" id="cron-month" placeholder="1-12 nebo *" class="mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white font-mono">
         </div>
         <div>
-            <label id="label-weekday" class="block text-sm font-medium text-gray-400" title="0-6 (Ne-Po) nebo *">Den v týdnu</label>
+            <label id="label-weekday" class="block text-sm font-medium text-gray-400">Den v týdnu</label>
             <input type="text" id="cron-weekday" placeholder="0-6 (Ne-Po) nebo *" class="mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white font-mono">
         </div>
     </div>
@@ -101,7 +101,9 @@ const translations = {
         labelOutput: "Generovaný CRON výraz",
         labelMessage: "Zpráva (| = nový řádek)",
         labelCommand: "Připravený Discord příkaz",
-        starDescription: "* znamená 'každou hodnotu' (např. každou minutu, každý den, každý měsíc...)"
+        starDescription: "* znamená 'každou hodnotu' (např. každou minutu, každý den, každý měsíc...)",
+        copyCron: "Kopírovat",
+        copyCommand: "Kopírovat"
     },
     en: {
         title: "CRON Generator",
@@ -114,7 +116,9 @@ const translations = {
         labelOutput: "Generated CRON Expression",
         labelMessage: "Message (| = new line)",
         labelCommand: "Prepared Discord Command",
-        starDescription: "* means 'every value' (e.g., every minute, every day, every month...)"
+        starDescription: "* means 'every value' (e.g., every minute, every day, every month...)",
+        copyCron: "Copy",
+        copyCommand: "Copy"
     }
 };
 
@@ -132,7 +136,6 @@ const starDesc = document.getElementById('label-star-description');
 const copyCronBtn = document.getElementById('copy-cron');
 const copyCommandBtn = document.getElementById('copy-command');
 
-// přepínání jazyků
 function updateLanguage() {
     const lang = langSwitcher.value;
     const t = translations[lang];
@@ -147,6 +150,8 @@ function updateLanguage() {
     document.getElementById('label-message').textContent = t.labelMessage;
     document.getElementById('label-command').textContent = t.labelCommand;
     starDesc.textContent = t.starDescription;
+    copyCronBtn.textContent = t.copyCron;
+    copyCommandBtn.textContent = t.copyCommand;
 }
 
 // validace
@@ -166,7 +171,6 @@ function updateCron() {
     let month = cronMonth.value || '*';
     let weekday = cronWeekday.value || '*';
 
-    // vyplnění polí z šablony
     if(cronPresets.value && cronPresets.value !== 'custom') {
         const parts = cronPresets.value.split(' ');
         if(parts.length === 5){
@@ -175,7 +179,6 @@ function updateCron() {
             day = parts[2];
             month = parts[3];
             weekday = parts[4];
-
             cronMinute.value = minute;
             cronHour.value = hour;
             cronDay.value = day;
@@ -184,12 +187,10 @@ function updateCron() {
         }
     }
 
-    // pokud uživatel upraví pole, přepni šablonu na vlastní
     [cronMinute, cronHour, cronDay, cronMonth, cronWeekday].forEach(input => {
         input.oninput = () => { cronPresets.value='custom'; updateCron(); };
     });
 
-    // validace
     cronMinute.style.borderColor = isValidNumber(minute,0,59)? '#4B5563':'red';
     cronHour.style.borderColor = isValidNumber(hour,0,23)? '#4B5563':'red';
     cronDay.style.borderColor = isValidNumber(day,1,31)? '#4B5563':'red';
@@ -202,16 +203,13 @@ function updateCron() {
     cronCommand.value = `/pridat_cron cron_vyraz="${cronOutput.value}" channel=${channelPlaceholder} zprava="${message}"`;
 }
 
-// eventy
 cronPresets.addEventListener('change', updateCron);
 cronMessage.addEventListener('input', updateCron);
 langSwitcher.addEventListener('change', () => { updateLanguage(); updateCron(); });
 
-// kopírování
 copyCronBtn.addEventListener('click', ()=> { navigator.clipboard.writeText(cronOutput.value); });
 copyCommandBtn.addEventListener('click', ()=> { navigator.clipboard.writeText(cronCommand.value); });
 
-// inicializace
 updateLanguage();
 updateCron();
 </script>
