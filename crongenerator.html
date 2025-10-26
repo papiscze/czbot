@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRON Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white p-8 flex flex-col min-h-screen">
+
+<div class="flex justify-end mb-4">
+    <select id="cron-lang-switcher" class="bg-gray-700 text-white p-2 rounded-md">
+        <option value="cs">Čeština</option>
+        <option value="en">English</option>
+    </select>
+</div>
+
+<div class="flex-1 max-w-4xl mx-auto bg-gray-800 p-8 rounded-xl shadow-lg space-y-6">
+    <h1 id="cron-title" class="text-3xl font-bold">Robustní CRON Generator</h1>
+
+    <!-- Popis * -->
+    <div class="bg-gray-700 p-4 rounded-md text-gray-300">
+        <p id="label-star-description">* znamená "každou hodnotu" (např. každou minutu, každý den, každý měsíc...)</p>
+    </div>
+
+    <!-- Předpřipravené příklady -->
+    <div>
+        <label id="label-presets" class="block text-sm font-medium text-gray-400">Předpřipravené příklady</label>
+        <select id="cron-presets" class="mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white">
+            <option value="">-- vyber --</option>
+            <option value="0 10 * * *">Každý den v 10:00</option>
+            <option value="0 12 * * 0-4">Každý pracovní den v 12:00</option>
+            <option value="0 8 * * 6">Každou neděli v 8:00</option>
+            <option value="*/15 * * * *">Každých 15 minut</option>
+            <option value="0 10 1 * *">První den v měsíci v 10:00</option>
+            <option value="0 10 1,15 * *">1. a 15. den v měsíci v 10:00</option>
+            <option value="59 11 1-7 * 2">První středa v měsíci v 11:59</option>
+            <option value="0 12 * 10 2">Každá středa v říjnu ve 12:00</option>
+        </select>
+    </div>
+
+    <!-- CRON části -->
+    <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+        <div>
+            <label id="label-minute" class="block text-sm font-medium text-gray-400">Minuta</label>
+            <input type="text" id="cron-minute" placeholder="0-59 nebo *" class="mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white font-mono">
+        </div>
+        <div>
+            <label id="label-hour" class="block text-sm font-medium text-gray-400">Hodina</label>
+            <input type="text" id="cron-hour" placeholder="0-23 nebo *" class="mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white font-mono">
+        </div>
+        <div>
+            <label id="label-day" class="block text-sm font-medium text-gray-400">Den v měsíci</label>
+            <input type="text" id="cron-day" placeholder="1-31 nebo *" class="mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white font-mono">
+        </div>
+        <div>
+            <label id="label-month" class="block text-sm font-medium text-gray-400">Měsíc</label>
+            <input type="text" id="cron-month" placeholder="1-12 nebo *" class="mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white font-mono">
+        </div>
+        <div>
+            <label id="label-weekday" class="block text-sm font-medium text-gray-400">Den v týdnu</label>
+            <input type="text" id="cron-weekday" placeholder="0-6 (Ne-Po) nebo *" class="mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white font-mono">
+        </div>
+    </div>
+
+    <!-- Text zprávy -->
+    <div>
+        <label id="label-message" class="block text-sm font-medium text-gray-400">Zpráva (| = nový řádek)</label>
+        <textarea id="cron-message" rows="3" placeholder="Napiš zprávu..." class="mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white font-mono"></textarea>
+    </div>
+
+    <!-- Výstup CRON -->
+    <div>
+        <label id="label-output" class="block text-sm font-medium text-gray-400">Generovaný CRON výraz</label>
+        <input type="text" id="cron-output" readonly class="mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white font-mono">
+    </div>
+
+    <!-- Výstup kompletního příkazu pro Discord -->
+    <div>
+        <label id="label-command" class="block text-sm font-medium text-gray-400">Připravený Discord příkaz</label>
+        <textarea id="cron-command" rows="3" readonly class="mt-1 block w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white font-mono"></textarea>
+    </div>
+
+</div>
+
+<footer class="mt-8 text-center text-sm text-gray-500">
+    <p>Vytvořeno 2025, autor Papiscze</p>
+</footer>
+
+<script>
+    const translations = {
+        cs: {
+            title: "Robustní CRON Generator",
+            labelPreset: "Předpřipravené příklady",
+            labelMinute: "Minuta",
+            labelHour: "Hodina",
+            labelDay: "Den v měsíci",
+            labelMonth: "Měsíc",
+            labelWeekday: "Den v týdnu",
+            labelOutput: "Generovaný CRON výraz",
+            labelMessage: "Zpráva (| = nový řádek)",
+            labelCommand: "Připravený Discord příkaz",
+            starDescription: "* znamená 'každou hodnotu' (např. každou minutu, každý den, každý měsíc...)"
+        },
+        en: {
+            title: "Robust CRON Generator",
+            labelPreset: "Preset Examples",
+            labelMinute: "Minute",
+            labelHour: "Hour",
+            labelDay: "Day of Month",
+            labelMonth: "Month",
+            labelWeekday: "Day of Week",
+            labelOutput: "Generated CRON Expression",
+            labelMessage: "Message (| = new line)",
+            labelCommand: "Prepared Discord Command",
+            starDescription: "* means 'every value' (e.g., every minute, every day, every month...)"
+        }
+    };
+
+    const langSwitcher = document.getElementById('cron-lang-switcher');
+    const cronPresets = document.getElementById('cron-presets');
+    const cronMinute = document.getElementById('cron-minute');
+    const cronHour = document.getElementById('cron-hour');
+    const cronDay = document.getElementById('cron-day');
+    const cronMonth = document.getElementById('cron-month');
+    const cronWeekday = document.getElementById('cron-weekday');
+    const cronOutput = document.getElementById('cron-output');
+    const cronMessage = document.getElementById('cron-message');
+    const cronCommand = document.getElementById('cron-command');
+    const starDesc = document.getElementById('label-star-description');
+
+    function updateLanguage() {
+        const lang = langSwitcher.value;
+        const t = translations[lang];
+        document.getElementById('cron-title').textContent = t.title;
+        document.getElementById('label-presets').textContent = t.labelPreset;
+        document.getElementById('label-minute').textContent = t.labelMinute;
+        document.getElementById('label-hour').textContent = t.labelHour;
+        document.getElementById('label-day').textContent = t.labelDay;
+        document.getElementById('label-month').textContent = t.labelMonth;
+        document.getElementById('label-weekday').textContent = t.labelWeekday;
+        document.getElementById('label-output').textContent = t.labelOutput;
+        document.getElementById('label-message').textContent = t.labelMessage;
+        document.getElementById('label-command').textContent = t.labelCommand;
+        starDesc.textContent = t.starDescription;
+    }
+
+    function updateCron() {
+        let minute = cronMinute.value || '*';
+        let hour = cronHour.value || '*';
+        let day = cronDay.value || '*';
+        let month = cronMonth.value || '*';
+        let weekday = cronWeekday.value || '*';
+
+        // pokud je vybrán preset, přepíše se
+        if(cronPresets.value) {
+            cronOutput.value = cronPresets.value;
+        } else {
+            cronOutput.value = `${minute} ${hour} ${day} ${month} ${weekday}`;
+        }
+
+        // Generovaný Discord příkaz
+        const channelPlaceholder = "#kanal"; // uživatel si pak změní kanál
+        const message = cronMessage.value.replace(/\n/g, '|');
+        cronCommand.value = `/pridat_cron cron_vyraz="${cronOutput.value}" channel=${channelPlaceholder} zprava="${message}"`;
+    }
+
+    [cronMinute, cronHour, cronDay, cronMonth, cronWeekday, cronMessage].forEach(el => el.addEventListener('input', updateCron));
+    cronPresets.addEventListener('change', updateCron);
+    langSwitcher.addEventListener('change', () => { updateLanguage(); updateCron(); });
+
+    updateLanguage();
+    updateCron();
+</script>
+
+</body>
+</html>
