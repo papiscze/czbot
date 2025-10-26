@@ -132,6 +132,7 @@ const starDesc = document.getElementById('label-star-description');
 const copyCronBtn = document.getElementById('copy-cron');
 const copyCommandBtn = document.getElementById('copy-command');
 
+// přepínání jazyků
 function updateLanguage() {
     const lang = langSwitcher.value;
     const t = translations[lang];
@@ -148,6 +149,7 @@ function updateLanguage() {
     starDesc.textContent = t.starDescription;
 }
 
+// validace
 function isValidNumber(value, min, max) {
     if(value.trim() === '*' || value.includes(',')) return true;
     const parts = value.split('-');
@@ -164,7 +166,7 @@ function updateCron() {
     let month = cronMonth.value || '*';
     let weekday = cronWeekday.value || '*';
 
-    // kontrola, zda šablona není custom
+    // vyplnění polí z šablony
     if(cronPresets.value && cronPresets.value !== 'custom') {
         const parts = cronPresets.value.split(' ');
         if(parts.length === 5){
@@ -174,7 +176,6 @@ function updateCron() {
             month = parts[3];
             weekday = parts[4];
 
-            // vyplnění polí
             cronMinute.value = minute;
             cronHour.value = hour;
             cronDay.value = day;
@@ -183,19 +184,17 @@ function updateCron() {
         }
     }
 
-    // pokud uživatel změní pole ručně, přepne se šablona na Vlastní
-    cronMinute.addEventListener('input', () => { cronPresets.value='custom'; updateCron(); });
-    cronHour.addEventListener('input', () => { cronPresets.value='custom'; updateCron(); });
-    cronDay.addEventListener('input', () => { cronPresets.value='custom'; updateCron(); });
-    cronMonth.addEventListener('input', () => { cronPresets.value='custom'; updateCron(); });
-    cronWeekday.addEventListener('input', () => { cronPresets.value='custom'; updateCron(); });
+    // pokud uživatel upraví pole, přepni šablonu na vlastní
+    [cronMinute, cronHour, cronDay, cronMonth, cronWeekday].forEach(input => {
+        input.oninput = () => { cronPresets.value='custom'; updateCron(); };
+    });
 
     // validace
-    if(!isValidNumber(minute,0,59)) cronMinute.style.borderColor='red'; else cronMinute.style.borderColor='#4B5563';
-    if(!isValidNumber(hour,0,23)) cronHour.style.borderColor='red'; else cronHour.style.borderColor='#4B5563';
-    if(!isValidNumber(day,1,31)) cronDay.style.borderColor='red'; else cronDay.style.borderColor='#4B5563';
-    if(!isValidNumber(month,1,12)) cronMonth.style.borderColor='red'; else cronMonth.style.borderColor='#4B5563';
-    if(!isValidNumber(weekday,0,6)) cronWeekday.style.borderColor='red'; else cronWeekday.style.borderColor='#4B5563';
+    cronMinute.style.borderColor = isValidNumber(minute,0,59)? '#4B5563':'red';
+    cronHour.style.borderColor = isValidNumber(hour,0,23)? '#4B5563':'red';
+    cronDay.style.borderColor = isValidNumber(day,1,31)? '#4B5563':'red';
+    cronMonth.style.borderColor = isValidNumber(month,1,12)? '#4B5563':'red';
+    cronWeekday.style.borderColor = isValidNumber(weekday,0,6)? '#4B5563':'red';
 
     cronOutput.value = `${minute} ${hour} ${day} ${month} ${weekday}`;
     const channelPlaceholder = "#kanal"; 
@@ -203,14 +202,16 @@ function updateCron() {
     cronCommand.value = `/pridat_cron cron_vyraz="${cronOutput.value}" channel=${channelPlaceholder} zprava="${message}"`;
 }
 
+// eventy
 cronPresets.addEventListener('change', updateCron);
 cronMessage.addEventListener('input', updateCron);
 langSwitcher.addEventListener('change', () => { updateLanguage(); updateCron(); });
 
-// Kopírování
+// kopírování
 copyCronBtn.addEventListener('click', ()=> { navigator.clipboard.writeText(cronOutput.value); });
 copyCommandBtn.addEventListener('click', ()=> { navigator.clipboard.writeText(cronCommand.value); });
 
+// inicializace
 updateLanguage();
 updateCron();
 </script>
