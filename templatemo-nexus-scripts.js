@@ -348,109 +348,116 @@ https://templatemo.com/tm-594-nexus-flow
             });
         });
 
-        // Stats counter animation
-        const animateStats = () => {
-            const stats = document.querySelectorAll('.stat-number');
-            stats.forEach(stat => {
-                const target = parseInt(stat.textContent.replace(/[^\d]/g, ''));
-                let count = 0;
-                const increment = target / 100;
-                const timer = setInterval(() => {
-                    count += increment;
-                    if (count >= target) {
-                        clearInterval(timer);
-                        count = target;
-                    }
-                    const suffix = stat.textContent.replace(/[\d]/g, '');
-                    stat.textContent = Math.floor(count) + suffix;
-                }, 20);
-            });
-        };
+    // Stats counter animation
+    const animateStats = () => {
+        const stats = document.querySelectorAll('.stat-number');
+        stats.forEach(stat => {
+            // Přeskočíme botStatus, protože má text "Online/Offline" a ne číslo
+            if (stat.id === 'botStatus') return;
 
-        // Trigger stats animation when section is visible
-        const statsObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    animateStats();
-                    statsObserver.unobserve(entry.target);
+            const target = parseInt(stat.textContent.replace(/[^\d]/g, ''));
+            if (isNaN(target)) return; // Pokud není číslo, ignorujeme
+
+            let count = 0;
+            const increment = target / 100;
+            const timer = setInterval(() => {
+                count += increment;
+                if (count >= target) {
+                    clearInterval(timer);
+                    count = target;
                 }
-            });
-        }, { threshold: 0.5 });
-
-        const statsSection = document.querySelector('.stats');
-        if (statsSection) {
-            statsObserver.observe(statsSection);
-        }
-
-        // Glitch effect on hover for feature cards
-        document.querySelectorAll('.feature-card').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.animation = 'glitch1 0.3s ease-in-out';
-                setTimeout(() => {
-                    this.style.animation = '';
-                }, 300);
-            });
+                const suffix = stat.textContent.replace(/[\d]/g, '');
+                stat.textContent = Math.floor(count) + suffix;
+            }, 20);
         });
+    };
 
-        // Random cyber text effects
-        const cyberTexts = ['CONNECTING...', 'NEURAL LINK ESTABLISHED', 'QUANTUM SYNC ACTIVE', 'REALITY MATRIX LOADED'];
-        
-        setInterval(() => {
-            const randomText = cyberTexts[Math.floor(Math.random() * cyberTexts.length)];
-            const tempElement = document.createElement('div');
-            tempElement.textContent = randomText;
-            tempElement.style.cssText = `
-                position: fixed;
-                top: ${Math.random() * 100}vh;
-                left: ${Math.random() * 100}vw;
-                color: var(--primary-cyan);
-                font-size: 0.8rem;
-                font-weight: 700;
-                z-index: 1000;
-                opacity: 0.7;
-                pointer-events: none;
-                animation: fadeOut 3s ease-out forwards;
-                text-shadow: 0 0 10px var(--primary-cyan);
-            `;
-            document.body.appendChild(tempElement);
-            
-            setTimeout(() => {
-                document.body.removeChild(tempElement);
-            }, 3000);
-        }, 5000);
-
-        // Add fadeOut animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes fadeOut {
-                0% { opacity: 0.7; transform: translateY(0); }
-                100% { opacity: 0; transform: translateY(-50px); }
+    // Trigger stats animation when section is visible
+    const statsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateStats();
+                statsObserver.unobserve(entry.target);
             }
-        `;
-        document.head.appendChild(style);
+        });
+    }, { threshold: 0.5 });
 
-        // Contact form submission
-        document.querySelector('.btn-submit').addEventListener('click', function(e) {
+    const statsSection = document.querySelector('.stats');
+    if (statsSection) {
+        statsObserver.observe(statsSection);
+    }
+
+    // Glitch effect on hover for feature cards
+    document.querySelectorAll('.feature-card').forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.animation = 'glitch1 0.3s ease-in-out';
+            setTimeout(() => {
+                this.style.animation = '';
+            }, 300);
+        });
+    });
+
+    // Random cyber text effects
+    const cyberTexts = ['CONNECTING...', 'NEURAL LINK ESTABLISHED', 'QUANTUM SYNC ACTIVE', 'REALITY MATRIX LOADED'];
+
+    setInterval(() => {
+        const randomText = cyberTexts[Math.floor(Math.random() * cyberTexts.length)];
+        const tempElement = document.createElement('div');
+        tempElement.textContent = randomText;
+        tempElement.style.cssText = `
+            position: fixed;
+            top: ${Math.random() * 100}vh;
+            left: ${Math.random() * 100}vw;
+            color: var(--primary-cyan);
+            font-size: 0.8rem;
+            font-weight: 700;
+            z-index: 1000;
+            opacity: 0.7;
+            pointer-events: none;
+            animation: fadeOut 3s ease-out forwards;
+            text-shadow: 0 0 10px var(--primary-cyan);
+        `;
+        document.body.appendChild(tempElement);
+
+        setTimeout(() => {
+            document.body.removeChild(tempElement);
+        }, 3000);
+    }, 5000);
+
+    // Add fadeOut animation
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes fadeOut {
+            0% { opacity: 0.7; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-50px); }
+        }
+    `;
+    document.head.appendChild(style);
+
+    // Contact form submission
+    const submitButton = document.querySelector('.btn-submit');
+    if (submitButton) {
+        submitButton.addEventListener('click', function(e) {
             e.preventDefault();
-            
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('message').value;
-            
+
+            const name = document.getElementById('name')?.value;
+            const email = document.getElementById('email')?.value;
+            const message = document.getElementById('message')?.value;
+
             if (name && email && message) {
                 // Simulate form submission
                 this.textContent = 'TRANSMITTING...';
                 this.style.background = 'linear-gradient(135deg, var(--primary-cyan), var(--primary-pink))';
-                
+
                 setTimeout(() => {
                     this.textContent = 'TRANSMISSION COMPLETE';
                     this.style.background = 'var(--primary-cyan)';
-                    
+
                     // Clear form
-                    document.getElementById('name').value = '';
-                    document.getElementById('email').value = '';
-                    document.getElementById('message').value = '';
-                    
+                    if (document.getElementById('name')) document.getElementById('name').value = '';
+                    if (document.getElementById('email')) document.getElementById('email').value = '';
+                    if (document.getElementById('message')) document.getElementById('message').value = '';
+
                     // Reset button after 3 seconds
                     setTimeout(() => {
                         this.textContent = 'Transmit Message';
@@ -459,3 +466,4 @@ https://templatemo.com/tm-594-nexus-flow
                 }, 2000);
             }
         });
+    }
