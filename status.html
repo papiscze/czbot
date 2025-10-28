@@ -104,17 +104,17 @@ async function fetchStatus() {
         }
     } catch(err){
         statusList.innerHTML="";
-        statusList.appendChild(addItem("Bot status","offline","status-offline-cog"));
+        statusList.appendChild(addItem("Bot status","offline","", "status-offline-cog"));
         statusList.appendChild(addItem("Uptime","-"));
         statusList.appendChild(addItem("Počet serverů","-"));
-        statusList.appendChild(addItem("CPU %","-"));
-        statusList.appendChild(addItem("RAM MB","-"));
-        statusList.appendChild(addItem("API","nedostupná","status-offline-cog"));
-        statusList.appendChild(addItem("Databáze","nedostupná","status-offline-cog"));
+        statusList.appendChild(addItem("CPU","-","%"));
+        statusList.appendChild(addItem("RAM","-","MB"));
+        statusList.appendChild(addItem("API","nedostupná","", "status-offline-cog"));
+        statusList.appendChild(addItem("Databáze","nedostupná","", "status-offline-cog"));
 
         cogsList.innerHTML="";
         cogs_to_load.forEach(label => {
-            cogsList.appendChild(addItem(label,"nedostupné","status-offline-cog"));
+            cogsList.appendChild(addItem(label,"nedostupné","", "status-offline-cog"));
         });
     }
 }
