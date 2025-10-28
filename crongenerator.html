@@ -216,35 +216,24 @@
         
         /* **OPRAVA PRO MOBILNÍ MENU (HAMBURGER)** */
         @media (max-width: 992px) {
-            /* **TOTO BYLO CHYBNÉ: Skrývalo dropdown v mobilním menu** */
-            /* .dropdown-link .dropdown-content { display: none; } */
-            /* Ponecháme to na logice, která otevírá celé mobilní menu. 
-               Pokud je mobilní menu otevřené, dropdown se má zobrazit. 
-               Stačí jen změnit jeho pozici. */
             
             .dropdown-link {
                 display: block; /* Aby zabíral celou šířku v mobilním menu */
             }
 
+            /* *Opraveno: Základní styl pro mobilní dropdown* */
             .dropdown-link .dropdown-content {
                 position: static; /* Důležité: Mění pozici na statickou, aby se menu zobrazilo v toku dokumentu */
-                display: none; /* Skryje ho v klidovém stavu - zobrazí ho JavaScript při kliku, nebo pokud ho otevírá JS pro celý nav */
+                display: none; /* Standardně skryje, dokud se neklikne */
+                min-width: auto; /* Zruší pevnou šířku pro mobil */
                 box-shadow: none;
                 border: none;
                 padding: 0;
                 background-color: transparent;
-                margin-top: 5px; /* Trochu prostoru */
+                margin-top: 5px; 
             }
             
-            /* **ZÁKLADNÍ PŘÍSTUP:** V mobilním menu se dropdown standardně zobrazuje, pokud je mobilní menu otevřené.
-               Pokud je mobilní menu otevřené, stačí zajistit, aby třída pro dropdown content byla viditelná.
-               Pro jednoduchost se předpokládá, že JS, který otevírá mobilní menu, dělá viditelným celý kontejner `.nav-links`.
-               Pro explicitní kontrolu mobilního dropdownu přidáme třídu, kterou přepíná JS při kliknutí na `dropbtn`. 
-               Pokud JS toto přepínání nedělá, musí se řešit tam, nebo použít jinou metodu pro zobrazení dropdownu v mobilu.
-               Pro účely opravy zajistíme, aby se **dropdown-content** zobrazoval, pokud má třídu **.show-mobile**.
-            */
-            
-            /* **Přidáme třídu, kterou bude přepínat JavaScript** */
+            /* *Opraveno: Třída pro zobrazení, kterou přepíná JavaScript* */
             .dropdown-link.show-mobile .dropdown-content {
                 display: block; 
             }

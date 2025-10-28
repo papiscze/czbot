@@ -39,6 +39,18 @@
             background-color: var(--color-primary);
             transition: all 0.3s ease;
         }
+        
+        /* Animace hamburgeru na "X" (volitelné) */
+        .mobile-menu-button.active .hamburger span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+        .mobile-menu-button.active .hamburger span:nth-child(2) {
+            opacity: 0;
+        }
+        .mobile-menu-button.active .hamburger span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
 
         /* KONTEJNER PRO EFEKT ZATŘESENÍ (SHAKE) */
         .nav-container.shake {
@@ -126,25 +138,30 @@
                 padding: 10px 20px 20px;
                 background-color: rgba(10, 10, 20, 0.95);
                 position: absolute;
-                top: 100%; /* Pod nav-links */
+                /* Původní top: 100% je chybné, protože by se překrývalo s nav-links. 
+                   Je lepší ho mít jako poslední flex položku a zobrazit ho s menu. */
+                top: 100%;
                 left: 0;
                 border-top: 1px solid var(--color-border);
             }
 
-            /* Aby nav-bottom byl pod nav-links, je třeba ho zobrazit spolu s ním */
-            .nav-links.active + .nav-bottom.active {
-                display: block; 
-                position: relative;
-                top: 0;
+            /* Správné zobrazení nav-bottom v mobilním menu (když je nav-links aktivní) */
+            .nav-links.active ~ .nav-bottom {
+                display: block;
+                /* Přesuneme nav-bottom vizuálně pod nav-links, i když je v DOMu hned za ním,
+                   jednodušší je ho umístit pod nav-links, pokud je v kontejneru */
+                /* Alternativně, pokud je .nav-bottom v .nav-container, je třeba upravit JS */
             }
-            
+            /* Upravujeme JS, aby se .nav-bottom zobrazilo/skrylo zároveň s .nav-links */
+
+
             /* Opravené styly pro Dropdown v mobilním menu */
             .dropdown-link:hover .dropdown-content {
                 display: none; /* Zruší hover efekt pro mobilní zobrazení */
             }
             .dropdown-link .dropdown-content {
                 display: none !important; /* Skryje podmenu ve výchozím stavu */
-                position: static;
+                position: static; /* Aby bylo pod hlavní položkou */
                 box-shadow: none;
                 border: none;
                 padding: 0;
@@ -153,9 +170,12 @@
             /* Použijeme JS pro zobrazení dropdownu na mobilu */
             .dropdown-link.open .dropdown-content {
                 display: block !important;
+                background-color: rgba(0, 0, 0, 0.2); /* Mírně odlišené pozadí pro sub-menu */
+                padding: 5px 0;
             }
             .dropdown-content a {
-                padding-left: 40px !important;
+                padding-left: 40px !important; /* Odsazení pro podmenu */
+                font-size: 1rem;
             }
         }
         /* Konec media query */
@@ -440,7 +460,7 @@
             <a href="index.html" class="logo">CZbot</a> 
             <ul class="nav-links">
                 <li class="dropdown-link">
-                    <a href="#" class="dropbtn">Funkce ▼</a>
+                    <a href="#" class="dropbtn">Funkce <span class="dropdown-arrow">▼</span></a> 
                     <div class="dropdown-content">
                         <a href="crongenerator.html">CRON Generator</a>
                         <a href="embedgenerator.html">Embed Generator</a>
@@ -621,11 +641,16 @@
             if (menuButton && navLinks) {
                 // 1. Logika pro hlavní hamburger tlačítko
                 menuButton.addEventListener('click', () => {
-                    navLinks.classList.toggle('active');
+                    const isActive = navLinks.classList.toggle('active');
                     if (navBottom) {
-                        navBottom.classList.toggle('active');
+                        navBottom.classList.toggle('active', isActive); // Synchronizace s navLinks
                     }
-                    menuButton.classList.toggle('active'); // Může být použito pro animaci X/Hamburger
+                    menuButton.classList.toggle('active', isActive); 
+
+                    // Pokud menu zavíráme, zavřeme i všechny otevřené dropdowny
+                    if (!isActive) {
+                        dropdownLinks.forEach(link => link.classList.remove('open'));
+                    }
 
                     // Volitelný "shake" efekt pro vizuální ověření
                     if (navContainer) {
@@ -639,12 +664,22 @@
                 // 2. Logika pro mobilní dropdown (podmenu Funkce)
                 dropdownLinks.forEach(link => {
                     const dropbtn = link.querySelector('.dropbtn');
+                    
+                    // Nastavíme, aby se po kliknutí v mobilním zobrazení jen rozbalilo, ne přesměrovalo
                     dropbtn.addEventListener('click', (e) => {
-                        // Zabránění přesměrování (pokud a href="#" nebo prázdný)
-                        e.preventDefault(); 
-                        
-                        // Přepínání třídy 'open' pro zobrazení podmenu
+                        // Kontrola šířky obrazovky - aktivovat pouze na mobilu
                         if (window.innerWidth <= 992) {
+                            e.preventDefault(); 
+                            e.stopPropagation(); // Zabraňuje zavření menu po kliknutí na dropbtn
+                            
+                            // Zavřít ostatní otevřené dropdowny (pokud byste jich měli víc)
+                            dropdownLinks.forEach(otherLink => {
+                                if (otherLink !== link) {
+                                    otherLink.classList.remove('open');
+                                }
+                            });
+                            
+                            // Přepínání třídy 'open' pro zobrazení podmenu
                             link.classList.toggle('open');
                         }
                     });
@@ -733,6 +768,25 @@
                 if (allTab) allTab.classList.add('active');
             }
             filterCommands();
+        });
+
+        // Přidáme listener pro případ změny velikosti okna (přechod z mobilu na desktop a naopak)
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 992) {
+                // Zajistí, že se mobilní třídy vypnou, pokud se změní na desktop
+                const navLinks = document.querySelector('.nav-links');
+                const navBottom = document.querySelector('.nav-bottom');
+                const menuButton = document.getElementById('mobileMenuBtn');
+                
+                if (navLinks) navLinks.classList.remove('active');
+                if (navBottom) navBottom.classList.remove('active');
+                if (menuButton) menuButton.classList.remove('active');
+
+                // Zavře otevřené mobilní dropdowny
+                document.querySelectorAll('.dropdown-link.open').forEach(link => {
+                    link.classList.remove('open');
+                });
+            }
         });
     </script>
 </body>

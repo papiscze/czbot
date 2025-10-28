@@ -213,7 +213,7 @@
     <div class="grid-overlay">
         <div class="grid-lines"></div>
         <div class="grid-glow"></div>
-    </div>
+        </div>
     <div class="scanlines"></div>
     <div class="noise-overlay"></div>
 
@@ -351,7 +351,7 @@
                 statusList.appendChild(addItem("Počet uživatelů", data.users.toLocaleString()));
                 statusList.appendChild(addItem("CPU využití", data.cpu_percent, "%"));
                 statusList.appendChild(addItem("RAM využití", data.ram_mb.toFixed(2), "MB"));
-                statusList.appendChild(addItem("API Status", data.api_db_status, "", data.api_db_status==="OK"?"status-ok":"status-offline-cog"));        
+                statusList.appendChild(addItem("API Status", data.api_db_status, "", data.api_db_status==="OK"?"status-ok":"status-offline-cog"));        
                 statusList.appendChild(addItem("Databáze Status", data.api_db_status, "", data.api_db_status==="OK"?"status-ok":"status-offline-cog"));
 
                 cogsList.innerHTML="";
@@ -405,6 +405,34 @@
         fetchStatus();
         // Nastavit automatické obnovování statusu každých 30 sekund
         setInterval(fetchStatus, 30000); 
+    </script>
+
+                <script>
+        // ZAJISTI FUNKČNOST NAVIGACE (MOBILNÍ A DROPDOWN)
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const body = document.body;
+
+        // 1. Logika pro Mobilní menu (Hamburger)
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', () => {
+                // Přidá/Odebere třídu pro zobrazení/skrytí menu v mobilu (záleží na CSS definovaném v templatemo-nexus-style.css)
+                body.classList.toggle('nav-active');
+            });
+        }
+
+        // 2. Logika pro Dropdown na mobilu (aby se rozbalil na kliknutí)
+        const dropdownButtons = document.querySelectorAll('.dropdown-link > .dropbtn');
+        dropdownButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                // Zabraň výchozí akci, protože odkaz má prázdný href
+                e.preventDefault(); 
+                
+                const parentLi = button.closest('.dropdown-link');
+                
+                // Přepíná třídu 'open' pro zobrazení dropdownu uvnitř mobilního menu (vyžaduje CSS pravidlo)
+                parentLi.classList.toggle('open');
+            });
+        });
     </script>
 </body>
 </html>

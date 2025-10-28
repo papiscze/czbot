@@ -157,6 +157,10 @@
             font-size: 1rem;
             cursor: pointer;
             transition: color 0.3s;
+            /* DŮLEŽITÉ: Zajištění, že šipka je vždy viditelná */
+            display: block;
+            width: 100%;
+            text-align: left;
         }
         .dropbtn:hover {
             color: var(--color-primary);
@@ -167,7 +171,6 @@
             background-color: rgba(30, 30, 50, 0.95);
             min-width: 200px;
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
-            /* Snížený Z-INDEX a odstranění !important */
             z-index: 1000; 
             border: 1px solid var(--color-border);
             border-radius: 6px;
@@ -188,21 +191,108 @@
             background-color: var(--color-input-bg);
             color: var(--color-primary);
         }
-        /* KLÍČOVÁ OPRAVA: Vynucené zobrazení na hover */
+        /* KLÍČOVÁ OPRAVA: Vynucené zobrazení na hover (pro desktop) */
         .dropdown-link:hover .dropdown-content {
             display: block;
         }
-        /* Ponecháme zde jen to, co je nezbytně nutné, zbytek necháme na hlavním CSS */
+        
+        /* ==================================== */
+        /* OPRAVY PRO MOBILNÍ MENU - NOVÉ STYLY */
+        /* ==================================== */
+        
+        /* Vzhled navigace - předpokládáme, že nav-links je flex/block */
         @media (max-width: 992px) {
+            .nav-links {
+                display: none; /* Skryjeme v mobilu */
+                /* Předpokládáme styly z templatemo-nexus-style.css pro full-screen */
+                position: absolute;
+                top: 70px; /* Upravte podle výšky Vašeho navigace */
+                left: 0;
+                width: 100%;
+                background-color: rgba(10, 10, 20, 0.95); /* Tmavé pozadí */
+                flex-direction: column;
+                padding: 20px 0;
+                border-top: 1px solid rgba(100, 200, 255, 0.1);
+            }
+            
+            .nav-links.active {
+                display: flex; /* Zobrazíme po kliknutí */
+            }
+
+            .nav-links li {
+                width: 100%;
+                text-align: left;
+            }
+
+            .nav-links a {
+                padding: 10px 20px;
+                display: block;
+            }
+
+            /* Oprava mobilního dropdownu */
             .dropdown-link .dropdown-content {
                 position: static;
                 box-shadow: none;
                 border: none;
                 padding: 0;
                 background-color: transparent;
+                /* KLÍČOVÉ: Skrytí a zobrazení na mobilu */
+                display: none; 
             }
-            .dropdown-link a {
-                padding-left: 30px;
+            
+            .dropdown-link.open-mobile .dropdown-content {
+                display: block; /* Zobrazení po kliknutí na mobilu */
+            }
+
+            .dropdown-link .dropdown-content a {
+                padding-left: 40px; /* Odsazení pro pod-položky */
+            }
+            
+            /* Hamburger ikona - zajištění viditelnosti v mobilu */
+            .mobile-menu-button {
+                display: block; 
+                background: none;
+                border: none;
+                cursor: pointer;
+                padding: 10px;
+            }
+            
+            .hamburger span {
+                display: block;
+                width: 25px;
+                height: 3px;
+                margin: 5px 0;
+                background-color: var(--color-primary, #64c8ff);
+                transition: all 0.3s ease-in-out;
+            }
+            
+            .mobile-menu-button.open .hamburger span:nth-child(1) {
+                transform: rotate(-45deg) translate(-5px, 6px);
+            }
+            
+            .mobile-menu-button.open .hamburger span:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .mobile-menu-button.open .hamburger span:nth-child(3) {
+                transform: rotate(45deg) translate(-5px, -6px);
+            }
+
+            /* Zajištění, že tlačítko pro přidání na server je také v menu */
+            .nav-bottom {
+                padding: 20px;
+                border-top: 1px solid rgba(100, 200, 255, 0.1);
+                text-align: center;
+            }
+        }
+        
+        /* Desktop: Skrytí hamburgeru */
+        @media (min-width: 993px) {
+            .mobile-menu-button {
+                display: none;
+            }
+            .nav-bottom {
+                display: block; /* Předpokládáme původní desktopové zobrazení */
             }
         }
     </style>
@@ -229,8 +319,7 @@
             <a href="index.html" class="logo">CZbot</a> 
             <ul class="nav-links">
                 <li class="dropdown-link">
-                    <a href="" class="dropbtn">Funkce ▼</a>
-                    <div class="dropdown-content">
+                    <a href="#" class="dropbtn" onclick="return false;">Funkce ▼</a>                     <div class="dropdown-content">
                         <a href="crongenerator.html">CRON Generator</a>
                         <a href="embedgenerator.html">Embed Generator</a>
                         <a href="stats.html">Status bota</a> 
@@ -241,6 +330,9 @@
                 <li><a href="warns.html">Moderátorské záznamy</a></li> 
                 <li><a href="https://rs422cznas.myds.me:5038/stats/">Webové statistiky serverů</a></li>
                 <li><a href="https://discord.gg/hk6PdtVxbm" target="_blank">Support server</a></li>
+                <li class="nav-bottom-mobile"> 
+                    <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Přidat na server</a>
+                </li>
             </ul>
             <div class="nav-bottom">
                 <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Přidat na server</a>
@@ -465,41 +557,54 @@
     </script>
 
     <script>
-    // 🌟 NOVÝ KÓD: Aktivace hlavního mobilního menu po kliknutí na hamburger ikonu
+    // 🌟 NOVÝ KÓD: Aktivace hlavního mobilního menu po kliknutí na hamburger ikonu a oprava dropdownu
     document.addEventListener('DOMContentLoaded', () => {
         const navLinks = document.querySelector('.nav-links');
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         
+        // 1. Hlavní mobilní menu (Hamburger)
         mobileMenuBtn.addEventListener('click', () => {
             navLinks.classList.toggle('active');
             mobileMenuBtn.classList.toggle('open');
         });
 
-        // Logika pro rozbalovací menu (převzata z předchozího souboru)
+        // 2. Logika pro rozbalovací menu (dropdown) v mobilním menu
         const dropdownLinks = document.querySelectorAll('.dropdown-link');
         dropdownLinks.forEach(link => {
             const dropbtn = link.querySelector('.dropbtn');
-            const dropdownContent = link.querySelector('.dropdown-content');
 
             if (dropbtn) {
                 dropbtn.addEventListener('click', function(e) {
-                    if (window.innerWidth <= 992 && dropdownContent) {
+                    // Aktivujeme pouze na mobilu (<= 992px)
+                    if (window.innerWidth <= 992) {
                         e.preventDefault(); 
-                        dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+                        // Přepínáme třídu, která zobrazuje dropdown content
+                        link.classList.toggle('open-mobile');
                     }
                 });
             }
+        });
 
-            // Zavření menu po kliknutí na libovolný odkaz
-            const allNavLinks = document.querySelectorAll('.nav-links a');
-            allNavLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    if (window.innerWidth <= 992 && navLinks.classList.contains('active')) {
-                        navLinks.classList.remove('active');
-                        mobileMenuBtn.classList.remove('open');
-                    }
-                });
+        // 3. Zavření menu po kliknutí na libovolný odkaz v mobilním zobrazení
+        const allNavLinks = document.querySelectorAll('.nav-links a:not(.dropbtn)'); // Nechceme zavřít po kliknutí na dropbtn
+        allNavLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 992 && navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                    mobileMenuBtn.classList.remove('open');
+                    // Zavření případných otevřených dropdownů
+                    dropdownLinks.forEach(dLink => dLink.classList.remove('open-mobile'));
+                }
             });
+        });
+        
+        // Zajištění, že se menu uzavře při změně velikosti (z mobilu na desktop)
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 992 && navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+                mobileMenuBtn.classList.remove('open');
+                dropdownLinks.forEach(dLink => dLink.classList.remove('open-mobile'));
+            }
         });
     });
     </script>
