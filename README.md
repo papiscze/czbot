@@ -1,27 +1,36 @@
-## czbot: Vše, co tvůj Discord server potřebuje, v jednom botovi!
 
-Už tě nebaví žonglovat s desítkami botů, aby tvůj Discord server šlapal, jak má? **czbot je konečně řešení!** Nejde jen o dalšího bota – je to **komplexní asistent** navržený pro moderátory i běžné uživatele. S czbotem získáš to nejlepší a nejvyužívanější, všechno na jednom místě.
+## czbot: Vše, co tvůj Discord server potřebuje, v jednom botovi! :rocket:
 
-Díky **aktivnímu vývoji** a neustálým novinkám se czbot stává nepostradatelným pomocníkem pro každou komunitu.
+Už tě nebaví žonglovat s desítkami botů a složitým nastavováním? **czbot je komplexní a neustále se vyvíjející asistent**, který ti uvolní ruce. Nabízí **všechny základní i pokročilé nástroje** pro moderátory i běžné uživatele – **vše v jednom balíčku!**
+
+Díky **aktivnímu vývoji** a unikátním funkcím je czbot nepostradatelný pro každou komunitu.
+***
+## Proč je czbot tvůj ideální parťák? :gem:
+
+### :shield: **GLOBÁLNÍ BEZPEČNOST A LOKALIZACE**
+:key: **Crossban & Scam Prevence:** Bezpečí na prvním místě! **Sdílej zabanované uživatele** (Crossban) a získej **inteligentní ochranu** proti podvodům.
+:globe_with_meridians: **Plná Lokalizace a Překlady (Deepl):** czbot mluví tvým jazykem! **Překládej zprávy** a nastav si **komunikaci serveru v různých jazycích**.
+:closed_lock_with_key: **Kompletní Moderace:** Všechny běžné nástroje, **pokročilý AutoMod** a **detailní Audit Log.**
+
 ---
-### Proč je czbot tvůj ideální parťák?
+### :gear:**AUTOMATIZACE, STREAM A ZÁLOHY**
 
-* 🔐 **Kompletní moderace a zábava:** Základní nástroje pro správu komunity, **pokročilý AutoMod** pro čistší chat (blokování slov, timeouty) a hromada zábavných příkazů, které oživí konverzace.
-* 🪤 **Ochrana proti podvodným odkazům, tzv scamům!**
-* 🗞️ **Inteligentní RSS čtečka:** Automatické publikování obsahu z webů, RSS feedů i YouTube kanálů (bez otravných Shorts!) přímo do tvých kanálů.
-* 🤖 **Automatizace pro pořádek:** Usnadni si život s automatickým publikováním oznámení, tvorbou vláken a moderací příspěvků pro přehledné kanály (např. fotogalerie).
-* 🔎 **Audit log:** Moderátoři si mohou nastavit zobrazování různých akcí provedených na serveru - Použití příkazů, smazání zpráv, přesuny uživatelů, změny a mnoho dalšího.
-* 📊  **Komunitní interakce na maximum:** Zapoj uživatele s reputačním a XP systémem s ranky, sbírej anonymní zpětnou vazbu a dávej prostor pro návrhy.
-* 🎙️  **Efektivní správa hlasových kanálů:** Vytvářej dočasné hlasové kanály s plnými oprávněními, které se samy uklidí po použití.
-* 📬  **Role a Tikety:** Automatické přidělování rolí, reakční role a snadná komunikace s uživateli přes tikety.
-* 🌐  **Překlady a vodoznaky:** Překládej zprávy a chraň svůj obsah automatickými vodoznaky na obrázky.
-* 🔑  **Globální databáze trestaných uživatelů:** Pro extra vrstvu bezpečí na serverech s czbotem.
-* 🎁 **Giveaway systém a Patreon modul:** Odměňuj a podporuj svou komunitu!
-* 🧮 **Detailní statistiky serveru:** Měj přehled o aktivitě a vývoji tvé komunity jak v aplikaci tak i díky přehledným webovým stránkám.
-* 🖥️ **Postupné zavádění nových funkcí:** czbot má veřejnou roadmapu, kde každý uživatel může vidět budoucí plány.
-* ...a mnoho dalšího!
+:floppy_disk: **Zálohování a Obnova Serverů:** Už žádné ztracené nastavení! **Zálohuj šablony** serverů a v případě potřeby je obnov.
+:robot: **Automatizace pro Pořádek:** Usnadni si život **automatickou tvorbou vláken** na příspěvky (pro přehledné galerie) a publikováním oznámení.
+:newspaper2: **Inteligentní RSS/Podcast Čtečka:** Automatické publikování obsahu z webů, RSS feedů i **YouTube kanálů (bez Shorts!)**.
+:microphone2: **Správa Hlasových Kanálů a Stream:** Vytvářej **dočasné hlasové kanály**, které se samy uklidí, plus **streamování audia**.
+
 ---
+### :sparkles: **KOMUNITNÍ INTERAKCE A SYSTÉMY**
+
+:bar_chart: **Reputace a XP Systém:** Zapoj uživatele s reputačním a **XP systémem s úrovněmi a odměnami.**
+:mailbox_with_mail: **Role a Tikety:** Automatické přidělování rolí (Autorole), Reakční role a **diskrétní komunikace** přes profesionální **Tikety**.
+:abacus: **Detailní Statistiky a Dashboard:** Měj perfektní přehled o aktivitě serveru na **webovém dashboardu**.
+:gift: **Patreon Modul a Giveawaye:** Odměňuj a podporuj svou komunitu.
+:camera_with_flash: **Ochrana Obsahu:** Chraň své obrázky automatickými **vodoznaky s vlastním textem.**
+
+***
 ### Přidej czbota na svůj server a objev, jak jednoduchá může být správa Discordu!
 ---
-* **Pozvěte bota na server**: K pozvání bota na váš server použijte [pozvánka](https://discord.com/oauth2/authorize?client_id=902877191086420008).
-* **Podrobná dokumentace k botovi**: [Odkaz na Wiki](https://github.com/papiscze/czbot/wiki).
+**Podrobná dokumentace na GitHubu:** https://github.com/papiscze/czbot/wiki
+**Přidej czbota hned:** https://discord.com/oauth2/authorize?client_id=902877191086420008
