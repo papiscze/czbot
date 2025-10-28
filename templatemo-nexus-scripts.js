@@ -24,20 +24,58 @@ https://templatemo.com/tm-594-nexus-flow
                 return;
             }
 
+            // Logika pro Dropdown v mobilním menu (NOVÝ KÓD)
+            const dropdownLinks = document.querySelectorAll('.dropdown-link');
+            
+            dropdownLinks.forEach(dropdown => {
+                const dropBtn = dropdown.querySelector('.dropbtn');
+                const dropdownContent = dropdown.querySelector('.dropdown-content');
+
+                if (dropBtn && dropdownContent) {
+                    dropBtn.addEventListener('click', function(e) {
+                        // Zabrání navigaci na '#' a zabrání zavření hlavního menu
+                        e.preventDefault(); 
+                        e.stopPropagation();
+
+                        // Skryje všechny ostatní otevřené dropdowny
+                        document.querySelectorAll('.dropdown-link .dropdown-content').forEach(content => {
+                            if (content !== dropdownContent) {
+                                content.style.display = 'none';
+                            }
+                        });
+
+                        // Přepne zobrazení aktuálního dropdownu
+                        const isCurrentlyHidden = dropdownContent.style.display === 'block';
+                        dropdownContent.style.display = isCurrentlyHidden ? 'none' : 'block';
+                    });
+                    
+                    // Zajistí, že kliknutí na pododkaz dropdownu menu zavře
+                    dropdownContent.querySelectorAll('a').forEach(link => {
+                        link.addEventListener('click', () => {
+                            closeMobileMenu();
+                            // Dodatečně skryje i samotný podmenu
+                            dropdownContent.style.display = 'none'; 
+                        });
+                    });
+                }
+            });
+            // Konec NOVÉHO KÓDU pro Dropdown
+
+
             function openMobileMenu() {
                 mobileMenuBtn.classList.add('active');
                 mobileMenu.classList.add('active');
                 mobileMenuOverlay.classList.add('active');
                 document.body.style.overflow = 'hidden';
                 
-                // Reset and trigger animations for links
+                // Reset a trigger animace pro odkazy
                 mobileMenuLinks.forEach((link, index) => {
                     if (link) {
                         link.style.animation = 'none';
                         link.style.opacity = '0';
                         link.style.transform = 'translateX(20px)';
                         
-                        // Apply animation with delay
+                        // Aplikace animace se zpožděním
                         setTimeout(() => {
                             if (link) {
                                 link.style.animation = `slideInLeft 0.4s ease forwards`;
@@ -46,7 +84,7 @@ https://templatemo.com/tm-594-nexus-flow
                     }
                 });
                 
-                // Animate CTA button
+                // Animace CTA tlačítka
                 if (mobileMenuCta) {
                     mobileMenuCta.style.animation = 'none';
                     mobileMenuCta.style.opacity = '0';
@@ -65,9 +103,14 @@ https://templatemo.com/tm-594-nexus-flow
                 mobileMenu.classList.remove('active');
                 mobileMenuOverlay.classList.remove('active');
                 document.body.style.overflow = '';
+                
+                // Zajistí, že se zavřou i všechny otevřené dropdowny při zavření celého menu
+                document.querySelectorAll('.dropdown-link .dropdown-content').forEach(content => {
+                    content.style.display = 'none';
+                });
             }
 
-            // Toggle mobile menu
+            // Přepínání mobilního menu
             mobileMenuBtn.addEventListener('click', (e) => {
                 e.preventDefault();
                 e.stopPropagation();
@@ -78,7 +121,7 @@ https://templatemo.com/tm-594-nexus-flow
                 }
             });
 
-            // Close mobile menu
+            // Zavření mobilního menu
             mobileMenuClose.addEventListener('click', (e) => {
                 e.preventDefault();
                 e.stopPropagation();
@@ -90,16 +133,20 @@ https://templatemo.com/tm-594-nexus-flow
                 closeMobileMenu();
             });
 
-            // Close menu when clicking on navigation links
+            // Zavření menu při kliknutí na navigační odkazy
             mobileMenuLinks.forEach(link => {
                 if (link) {
                     link.addEventListener('click', () => {
-                        closeMobileMenu();
+                        // Tuto logiku už zpracovává kód dropdownu pro pododkazy,
+                        // ale necháváme to zde pro klasické odkazy
+                        if (!link.closest('.dropdown-link')) { 
+                            closeMobileMenu();
+                        }
                     });
                 }
             });
 
-            // Close menu when clicking on CTA button
+            // Zavření menu při kliknutí na CTA tlačítko
             if (mobileMenuCtaButton) {
                 mobileMenuCtaButton.addEventListener('click', (e) => {
                     if (mobileMenuCtaButton.getAttribute('href') === '#') {
@@ -109,21 +156,21 @@ https://templatemo.com/tm-594-nexus-flow
                 });
             }
 
-            // Close menu when clicking on logo
+            // Zavření menu při kliknutí na logo
             if (mobileMenuLogo) {
                 mobileMenuLogo.addEventListener('click', () => {
                     closeMobileMenu();
                 });
             }
 
-            // Close mobile menu on escape key
+            // Zavření mobilního menu na klávesu Escape
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
                     closeMobileMenu();
                 }
             });
 
-            // Prevent body scroll when menu is open
+            // Zamezení scrollování těla stránky, když je menu otevřené
             if (mobileMenu) {
                 mobileMenu.addEventListener('touchmove', (e) => {
                     e.stopPropagation();
@@ -131,19 +178,25 @@ https://templatemo.com/tm-594-nexus-flow
             }
         }
 
-        // Initialize mobile menu when DOM is ready
+        // Inicializace mobilního menu, když je DOM připraven
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', initializeMobileMenu);
         } else {
             initializeMobileMenu();
         }
 
-        // Generate Matrix Rain Effect
+        // Generování Matrix Rain efektu
         function generateMatrixRain() {
             const matrixRain = document.getElementById('matrixRain');
+            // Zajištění, že element existuje před spuštěním
+            if (!matrixRain) return;
+
             const characters = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
             const columns = Math.floor(window.innerWidth / 20);
             
+            // Vyčistí staré sloupce, pokud už existují
+            matrixRain.innerHTML = '';
+
             for (let i = 0; i < columns; i++) {
                 const column = document.createElement('div');
                 column.className = 'matrix-column';
@@ -151,7 +204,7 @@ https://templatemo.com/tm-594-nexus-flow
                 column.style.animationDuration = `${Math.random() * 5 + 10}s`;
                 column.style.animationDelay = `${Math.random() * 5}s`;
                 
-                // Generate random characters for the column
+                // Generování náhodných znaků pro sloupec
                 let text = '';
                 const charCount = Math.floor(Math.random() * 20 + 10);
                 for (let j = 0; j < charCount; j++) {
@@ -163,9 +216,11 @@ https://templatemo.com/tm-594-nexus-flow
             }
         }
 
-        // Generate Floating Particles
+        // Generování plovoucích částic
         function generateParticles() {
             const particlesContainer = document.getElementById('particlesContainer');
+            if (!particlesContainer) return;
+            
             const particleCount = 50;
             
             for (let i = 0; i < particleCount; i++) {
@@ -179,9 +234,11 @@ https://templatemo.com/tm-594-nexus-flow
             }
         }
 
-        // Generate Data Streams
+        // Generování datových proudů
         function generateDataStreams() {
             const dataStreams = document.getElementById('dataStreams');
+            if (!dataStreams) return;
+
             const streamCount = 10;
             
             for (let i = 0; i < streamCount; i++) {
@@ -196,23 +253,23 @@ https://templatemo.com/tm-594-nexus-flow
             }
         }
 
-        // Initialize background effects
-        generateMatrixRain();
-        generateParticles();
-        generateDataStreams();
+        // Inicializace pozadí efektů
+        document.addEventListener('DOMContentLoaded', () => {
+            generateMatrixRain();
+            generateParticles();
+            generateDataStreams();
+        });
 
-        // Regenerate matrix rain on window resize
+        // Regenerace matrix rain při změně velikosti okna
         let resizeTimer;
         window.addEventListener('resize', () => {
             clearTimeout(resizeTimer);
             resizeTimer = setTimeout(() => {
-                const matrixRain = document.getElementById('matrixRain');
-                matrixRain.innerHTML = '';
                 generateMatrixRain();
             }, 250);
         });
 
-        // Interactive mouse glow effect (throttled for performance)
+        // Interaktivní efekt myši (throttle pro výkon)
         let mouseTimer;
         document.addEventListener('mousemove', (e) => {
             if (!mouseTimer) {
@@ -220,7 +277,7 @@ https://templatemo.com/tm-594-nexus-flow
                     const mouseX = e.clientX;
                     const mouseY = e.clientY;
                     
-                    // Move orbs slightly based on mouse position
+                    // Pohyb orbů
                     const orbs = document.querySelectorAll('.orb');
                     orbs.forEach((orb, index) => {
                         const speed = (index + 1) * 0.02;
@@ -229,7 +286,7 @@ https://templatemo.com/tm-594-nexus-flow
                         orb.style.transform = `translate(${x}px, ${y}px)`;
                     });
                     
-                    // Make nearby particles glow brighter (desktop only)
+                    // Rozjasnění okolních částic (pouze desktop)
                     if (window.innerWidth > 768) {
                         const particles = document.querySelectorAll('.particle');
                         particles.forEach(particle => {
@@ -254,7 +311,7 @@ https://templatemo.com/tm-594-nexus-flow
             }
         });
 
-        // Add a glow that follows the cursor (desktop only)
+        // Přidání záře, která sleduje kurzor (pouze desktop)
         if (window.innerWidth > 768) {
             const cursorGlow = document.createElement('div');
             cursorGlow.style.cssText = `
@@ -282,11 +339,11 @@ https://templatemo.com/tm-594-nexus-flow
             });
         }
 
-        // Smooth scrolling
+        // Plynulé scrollování
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 const href = this.getAttribute('href');
-                // Only prevent default and scroll if href is more than just '#'
+                // Zabrání defaultní akci a scrolluje, jen pokud href není jen '#'
                 if (href && href.length > 1) {
                     e.preventDefault();
                     if (href === '#top') {
@@ -307,9 +364,10 @@ https://templatemo.com/tm-594-nexus-flow
             });
         });
 
-        // Navbar scroll effect
+        // Efekt navigace při scrollování
         window.addEventListener('scroll', () => {
             const nav = document.querySelector('nav');
+            if (!nav) return;
             if (window.scrollY > 100) {
                 nav.style.background = 'rgba(15, 15, 35, 0.95)';
                 nav.style.boxShadow = '0 0 30px rgba(0, 255, 255, 0.2)';
@@ -319,7 +377,7 @@ https://templatemo.com/tm-594-nexus-flow
             }
         });
 
-        // Scroll animations
+        // Animace při scrollování (fade-up)
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -100px 0px'
@@ -337,7 +395,7 @@ https://templatemo.com/tm-594-nexus-flow
             observer.observe(el);
         });
 
-        // Button effects
+        // Efekty tlačítek
         document.querySelectorAll('.btn-primary, .btn-secondary').forEach(button => {
             button.addEventListener('mouseenter', function() {
                 this.style.boxShadow = '0 0 30px rgba(0, 255, 255, 0.6)';
@@ -348,122 +406,132 @@ https://templatemo.com/tm-594-nexus-flow
             });
         });
 
-    // Stats counter animation
-    const animateStats = () => {
-        const stats = document.querySelectorAll('.stat-number');
-        stats.forEach(stat => {
-            // Přeskočíme botStatus, protože má text "Online/Offline" a ne číslo
-            if (stat.id === 'botStatus') return;
+        // Animace počítadla statistik
+        const animateStats = () => {
+            const stats = document.querySelectorAll('.stat-number');
+            stats.forEach(stat => {
+                // Přeskočí botStatus
+                if (stat.id === 'botStatus') return;
 
-            const target = parseInt(stat.textContent.replace(/[^\d]/g, ''));
-            if (isNaN(target)) return; // Pokud není číslo, ignorujeme
+                const initialText = stat.textContent;
+                const target = parseInt(initialText.replace(/[^\d]/g, ''));
+                if (isNaN(target)) return;
 
-            let count = 0;
-            const increment = target / 100;
-            const timer = setInterval(() => {
-                count += increment;
-                if (count >= target) {
-                    clearInterval(timer);
-                    count = target;
-                }
-                const suffix = stat.textContent.replace(/[\d]/g, '');
-                stat.textContent = Math.floor(count) + suffix;
-            }, 20);
-        });
-    };
+                let count = 0;
+                const increment = target / 100;
+                const timer = setInterval(() => {
+                    count += increment;
+                    if (count >= target) {
+                        clearInterval(timer);
+                        count = target;
+                    }
+                    const suffix = initialText.replace(/[\d\s,.]/g, ''); // Uchová jen nečísla
+                    // Použijeme localeString pro formátování velkých čísel
+                    stat.textContent = Math.floor(count).toLocaleString('cs-CZ') + suffix;
+                }, 20);
+            });
+        };
 
-    // Trigger stats animation when section is visible
-    const statsObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                animateStats();
-                statsObserver.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.5 });
-
-    const statsSection = document.querySelector('.stats');
-    if (statsSection) {
-        statsObserver.observe(statsSection);
-    }
-
-    // Glitch effect on hover for feature cards
-    document.querySelectorAll('.feature-card').forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            this.style.animation = 'glitch1 0.3s ease-in-out';
-            setTimeout(() => {
-                this.style.animation = '';
-            }, 300);
-        });
-    });
-
-    // Random cyber text effects
-    const cyberTexts = ['CONNECTING...', 'NEURAL LINK ESTABLISHED', 'QUANTUM SYNC ACTIVE', 'REALITY MATRIX LOADED'];
-
-    setInterval(() => {
-        const randomText = cyberTexts[Math.floor(Math.random() * cyberTexts.length)];
-        const tempElement = document.createElement('div');
-        tempElement.textContent = randomText;
-        tempElement.style.cssText = `
-            position: fixed;
-            top: ${Math.random() * 100}vh;
-            left: ${Math.random() * 100}vw;
-            color: var(--primary-cyan);
-            font-size: 0.8rem;
-            font-weight: 700;
-            z-index: 1000;
-            opacity: 0.7;
-            pointer-events: none;
-            animation: fadeOut 3s ease-out forwards;
-            text-shadow: 0 0 10px var(--primary-cyan);
-        `;
-        document.body.appendChild(tempElement);
-
-        setTimeout(() => {
-            document.body.removeChild(tempElement);
-        }, 3000);
-    }, 5000);
-
-    // Add fadeOut animation
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes fadeOut {
-            0% { opacity: 0.7; transform: translateY(0); }
-            100% { opacity: 0; transform: translateY(-50px); }
+        // Spuštění animace statistik, když je sekce viditelná
+        const statsSection = document.querySelector('.stats');
+        if (statsSection) {
+            const statsObserver = new IntersectionObserver((entries, observerInstance) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateStats();
+                        observerInstance.unobserve(entry.target); // Zastaví pozorování po spuštění
+                    }
+                });
+            }, { threshold: 0.5 });
+            statsObserver.observe(statsSection);
         }
-    `;
-    document.head.appendChild(style);
 
-    // Contact form submission
-    const submitButton = document.querySelector('.btn-submit');
-    if (submitButton) {
-        submitButton.addEventListener('click', function(e) {
-            e.preventDefault();
-
-            const name = document.getElementById('name')?.value;
-            const email = document.getElementById('email')?.value;
-            const message = document.getElementById('message')?.value;
-
-            if (name && email && message) {
-                // Simulate form submission
-                this.textContent = 'TRANSMITTING...';
-                this.style.background = 'linear-gradient(135deg, var(--primary-cyan), var(--primary-pink))';
-
+        // Glitch efekt při najetí na feature karty
+        document.querySelectorAll('.feature-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.animation = 'glitch1 0.3s ease-in-out';
                 setTimeout(() => {
-                    this.textContent = 'TRANSMISSION COMPLETE';
-                    this.style.background = 'var(--primary-cyan)';
+                    this.style.animation = '';
+                }, 300);
+            });
+        });
 
-                    // Clear form
-                    if (document.getElementById('name')) document.getElementById('name').value = '';
-                    if (document.getElementById('email')) document.getElementById('email').value = '';
-                    if (document.getElementById('message')) document.getElementById('message').value = '';
+        // Náhodné cyber textové efekty
+        const cyberTexts = ['CONNECTING...', 'NEURAL LINK ESTABLISHED', 'QUANTUM SYNC ACTIVE', 'REALITY MATRIX LOADED'];
 
-                    // Reset button after 3 seconds
-                    setTimeout(() => {
-                        this.textContent = 'Transmit Message';
-                        this.style.background = '';
-                    }, 3000);
-                }, 2000);
+        setInterval(() => {
+            const randomText = cyberTexts[Math.floor(Math.random() * cyberTexts.length)];
+            const tempElement = document.createElement('div');
+            tempElement.textContent = randomText;
+            tempElement.style.cssText = `
+                position: fixed;
+                top: ${Math.random() * 100}vh;
+                left: ${Math.random() * 100}vw;
+                color: var(--color-primary); /* Používáme CSS proměnnou, pokud existuje */
+                font-size: 0.8rem;
+                font-weight: 700;
+                z-index: 1000;
+                opacity: 0.7;
+                pointer-events: none;
+                animation: fadeOut 3s ease-out forwards;
+                text-shadow: 0 0 10px var(--color-primary);
+            `;
+            document.body.appendChild(tempElement);
+
+            setTimeout(() => {
+                if (tempElement.parentNode) {
+                    document.body.removeChild(tempElement);
+                }
+            }, 3000);
+        }, 5000);
+
+        // Přidání fadeOut animace (CSS Keyframes)
+        document.addEventListener('DOMContentLoaded', () => {
+            const style = document.createElement('style');
+            // Zajištění, že se keyframes definují jen jednou
+            if (!document.querySelector('style[data-keyframes="fadeOut"]')) {
+                style.textContent = `
+                    @keyframes fadeOut {
+                        0% { opacity: 0.7; transform: translateY(0); }
+                        100% { opacity: 0; transform: translateY(-50px); }
+                    }
+                `;
+                style.setAttribute('data-keyframes', 'fadeOut');
+                document.head.appendChild(style);
             }
         });
-    }
+
+
+        // Odeslání kontaktního formuláře
+        const submitButton = document.querySelector('.btn-submit');
+        if (submitButton) {
+            submitButton.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                const name = document.getElementById('name')?.value;
+                const email = document.getElementById('email')?.value;
+                const message = document.getElementById('message')?.value;
+
+                if (name && email && message) {
+                    // Simulace odeslání formuláře
+                    this.textContent = 'TRANSMITTING...';
+                    this.style.background = 'linear-gradient(135deg, var(--primary-cyan), var(--primary-pink))';
+
+                    setTimeout(() => {
+                        this.textContent = 'TRANSMISSION COMPLETE';
+                        this.style.background = 'var(--primary-cyan)';
+
+                        // Vyčištění formuláře
+                        if (document.getElementById('name')) document.getElementById('name').value = '';
+                        if (document.getElementById('email')) document.getElementById('email').value = '';
+                        if (document.getElementById('message')) document.getElementById('message').value = '';
+
+                        // Reset tlačítka po 3 sekundách
+                        setTimeout(() => {
+                            this.textContent = 'Transmit Message';
+                            this.style.background = '';
+                        }, 3000);
+                    }, 2000);
+                }
+            });
+        }
