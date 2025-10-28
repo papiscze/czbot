@@ -1,421 +1,312 @@
 <!DOCTYPE html>
 <html lang="cs">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CZBOT - Moderation Logs</title>
-    <style>
-        /* Vaše stávající CSS */
-        body {
-            font-family: 'Inter', Arial, sans-serif;
-            max-width: 900px;
-            margin: auto;
-            background-color: #f8f8f8;
-            color: #333;
-            transition: background-color 0.3s, color 0.3s;
+    <title>CZbot - Inteligentní Discord bot</title>
+    <link href="templatemo-nexus-style.css" rel="stylesheet">
+<style>
+        /* ==================================== */
+        /* DROPDOWN MENU STYLY (pro navigaci) */
+        /* OPRAVENO: Odstranění kolidujících mobilních stylů */
+        /* ==================================== */
+
+        .dropdown-link {
             position: relative;
-            min-height: 100vh;
-            padding-bottom: 100px; /* Rezerva pro footer */
+            display: inline-block;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            border-radius: 8px; 
-            overflow: hidden; 
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 12px 8px; 
-            text-align: left;
-            font-size: 0.9em;
-        }
-        th {
-            background-color: #e0e0e0;
-            color: #333;
-            font-weight: 600;
-        }
-        input {
-            padding: 10px;
-            margin-bottom: 10px;
-            width: 300px;
-            border: 1px solid #ccc;
-            background-color: #fff;
-            color: #333;
-            border-radius: 6px; 
-        }
-        button {
-            padding: 10px 18px; 
-            margin-bottom: 10px;
+        .dropbtn {
+            padding: 10px 15px;
+            background-color: transparent;
+            color: var(--color-text-light);
+            text-decoration: none;
+            font-size: 1rem;
             cursor: pointer;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            transition: background-color 0.3s, transform 0.1s;
-            margin-right: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: color 0.3s;
         }
-        button:hover {
-            background-color: #0056b3;
-            transform: translateY(-1px);
+        .dropbtn:hover {
+            color: var(--color-primary);
         }
-        button:active {
-            transform: translateY(1px);
-        }
-        
-        /* Dark Mode Styling */
-        body.dark-mode {
-            background-color: #1e1e1e;
-            color: #f0f0f0;
-        }
-        body.dark-mode table {
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-        }
-        body.dark-mode th,
-        body.dark-mode td {
-            border-color: #444;
-            background-color: #2b2b2b; 
-        }
-        body.dark-mode th {
-            background-color: #3a3a3a;
-            color: #ddd;
-        }
-        body.dark-mode input {
-            background-color: #3a3a3a;
-            color: #f0f0f0;
-            border-color: #666;
-        }
-        
-        /* Spinner */
-        #loadingSpinner {
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s, visibility 0.3s;
-        }
-        #loadingSpinner.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-        .spinner {
-            border: 8px solid #f3f3f3;
-            border-top: 8px solid #3498db;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            animation: spin 1.5s linear infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        /* Content Visibility */
-        .content-hidden {
-            opacity: 0;
-            transition: opacity 0.5s;
-        }
-        
-        /* Pagination */
-        .pagination {
-            margin-top: 20px;
-            text-align: center;
-            /* NOVÁ OPRAVA: Zajištění, že je klikatelná a je nad footerem */
-            position: relative; 
-            z-index: 10; 
-        }
-        .pagination button:disabled {
-            background-color: #555555;
-            cursor: not-allowed;
-            box-shadow: none;
-            transform: none;
-        }
-        .pagination span {
-            font-weight: bold;
-            margin: 0 10px;
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 0px 20px;
-            margin-top: 0px;
-            border-top: 1px solid #ccc;
-            color: #666;
+        .dropdown-content {
+            display: none;
             position: absolute;
-            bottom: 20;
-            width: 100%;
-            max-width: 900px;
-            left: 50%;
-            transform: translateX(-50%);
+            background-color: rgba(30, 30, 50, 0.95);
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
+            z-index: 1000;
+            border: 1px solid var(--color-border);
+            border-radius: 6px;
+            padding: 5px 0;
+            backdrop-filter: blur(5px);
+            top: 100%;
+            left: 0;
         }
-        body.dark-mode footer {
-            border-top-color: #444;
-            color: #aaa;
+        .dropdown-content a {
+            color: var(--color-text-light);
+            padding: 10px 16px;
+            text-decoration: none;
+            display: block;
+            font-size: 0.95rem;
+            transition: background-color 0.3s, color 0.3s;
         }
-        
-        /* Responsive Table */
-        @media (max-width: 768px) {
-            body { padding: 10px; }
-            input { width: 100%; }
-            table, thead, tbody, th, td, tr {
-                display: block;
-            }
-            thead tr {
-                position: absolute;
-                top: -9999px;
-                left: -9999px;
-            }
-            tr { border: 1px solid #ccc; margin-bottom: 10px; border-radius: 8px; }
-            td {
+        .dropdown-content a:hover {
+            background-color: var(--color-input-bg);
+            color: var(--color-primary);
+        }
+        .dropdown-link:hover .dropdown-content {
+            display: block;
+        }
+        /* Ponecháme zde jen to, co je nezbytně nutné, zbytek necháme na hlavním CSS */
+        @media (max-width: 992px) {
+            .dropdown-link .dropdown-content {
+                position: static;
+                /* display: none; -- TOTO JSME ODEBRALI, aby se menu zobrazilo uvnitř mobilního menu */
+                box-shadow: none;
                 border: none;
-                border-bottom: 1px solid #eee;
-                position: relative;
-                padding-left: 50%;
-                text-align: right;
+                padding: 0;
+                background-color: transparent;
             }
-            td::before {
-                content: attr(data-label);
-                position: absolute;
-                left: 6px;
-                width: 45%;
-                padding-right: 10px;
-                white-space: nowrap;
-                text-align: left;
-                font-weight: bold;
+            .dropdown-link a {
+                padding-left: 30px;
             }
         }
-    </style>
+
+</style>  
 </head>
-<body>
-    <div id="loadingSpinner">
-        <div class="spinner"></div>
+<body id="top">
+    <!-- Pozadí -->
+    <div class="cyber-bg">
+        <div class="cyber-gradient"></div>
+        <div class="matrix-rain" id="matrixRain"></div>
     </div>
-
-    <h1>CZBOT - Výpis prohřešků uživatelů</h1>
-    <input type="text" id="searchInput" placeholder="Hledat podle ID, jména nebo důvodu..." />
-    <button id="themeToggle">Světlý/Tmavý mód</button>
-    <button id="refreshButton">Aktualizovat</button>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Datum a čas</th>
-                <th>Uživatel</th>
-                <th>Důvod</th>
-                <th>Typ</th>
-                <th>Moderátor</th>
-                <th>Expirace</th>
-                <th>Server</th>
-            </tr>
-        </thead>
-        <tbody id="logTableBody"></tbody>
-    </table>
-
-    <div class="pagination">
-        <button id="prevPage">Předchozí</button>
-        <span id="pageInfo">Stránka 1 z 1</span>
-        <button id="nextPage">Další</button>
+    <div class="particles" id="particlesContainer"></div>
+    <div class="data-streams" id="dataStreams"></div>
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+    <div class="grid-overlay">
+        <div class="grid-lines"></div>
+        <div class="grid-glow"></div>
     </div>
+    <div class="scanlines"></div>
+    <div class="noise-overlay"></div>
 
-    <script>
-        const API_URL = "https://rs422cznas.myds.me:5038/logs"; 
-        const SIMULATED_DELAY_MS = 300; 
-        const RECORDS_PER_PAGE = 20;
+    <!-- Navigace -->
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">CZbot</a> 
+            <ul class="nav-links">
+                <li class="dropdown-link">
+                    <a href="index.html#features" class="dropbtn">Funkce ▼</a>
+                    <div class="dropdown-content">
+                        <a href="crongenerator.html">CRON Generator</a>
+                        <a href="embedgenerator.html">Embed Generator</a>
+                        <a href="stats.html">Status bota</a>                        
+                    </div>
+                </li>
+                
+                <li><a href="commands.html">Příkazy</a></li>
+                <li><a href="warns.html">Moderátorské záznamy</a></li> 
+                <li><a href="https://rs422cznas.myds.me:5038/stats/">Webové statistiky serverů</a></li>
+                <li><a href="https://discord.gg/hk6PdtVxbm" target="_blank">Support server</a></li>
+            </ul>
+            <div class="nav-bottom">
+                <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Přidat na server</a>
+            </div>
+            <button class="mobile-menu-button" id="mobileMenuBtn">
+                <div class="hamburger">
+                    <span></span><span></span><span></span>
+                </div>
+            </button>
+        </div>
+    </nav>
 
-        const searchInput = document.getElementById("searchInput");
-        const logTableBody = document.getElementById("logTableBody");
-        const themeToggle = document.getElementById("themeToggle");
-        const refreshButton = document.getElementById("refreshButton");
-        const body = document.body;
-        const loadingSpinner = document.getElementById("loadingSpinner");
-        const contentElements = [document.querySelector('h1'), searchInput, themeToggle, refreshButton, document.querySelector('table'), document.querySelector('.pagination'), document.querySelector('footer')];
+    <!-- Hero sekce -->
+    <section class="hero">
+        <div class="hero-container">
+            <h1 class="hero-title">
+                <span class="hero-nexus">CZ</span><span class="hero-flow">bot</span>
+            </h1>
+            <p class="hero-subtitle">
+                Inteligentní Discord bot s automatizací, moderací a pokročilými funkcemi pro každý server.
+            </p>
+            <div class="hero-buttons">
+                <a href="https://github.com/papiscze/czbot/wiki" class="btn-primary">GitHub Wiki</a>
+                <a href="https://discord.gg/hk6PdtVxbm" target="_blank" class="btn-secondary">Support server</a>
+            </div>
+        </div>
+    </section>
 
-        const prevPageButton = document.getElementById("prevPage");
-        const nextPageButton = document.getElementById("nextPage");
-        const pageInfoSpan = document.getElementById("pageInfo");
+    <!-- Statistiky -->
+    <section class="stats fade-up" id="stats">
+        <div class="stats-container">
+            <div class="section-header">
+                <h2 class="section-title">Statistiky Bota</h2>
+            </div>
 
-        let allLogs = []; 
-        let currentPage = 1;
+            <div class="stats-grid" id="statsGrid">
+                <div class="stat-item">
+                    <span class="stat-number" id="botStatus">—</span>
+                    <span class="stat-label">Status bota</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="guilds">—</span>
+                    <span class="stat-label">Serverů</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="users">—</span>
+                    <span class="stat-label">Uživatelů</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="uptime">—</span>
+                    <span class="stat-label">Uptime</span>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        // --- Utility Functions ---
-
-        function debounce(func, delay) {
-            let timeout;
-            return function(...args) {
-                clearTimeout(timeout);
-                timeout = setTimeout(() => func.apply(this, args), delay);
-            };
-        }
-
-        function loadTheme() {
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme === 'dark') {
-                body.classList.add('dark-mode');
-            } else {
-                body.classList.remove('dark-mode');
-            }
-        }
-
-        function toggleTheme() {
-            body.classList.toggle('dark-mode');
-            localStorage.setItem('theme', body.classList.contains('dark-mode') ? 'dark' : 'light');
-        }
-
-        function showLoading() {
-            loadingSpinner.classList.add('visible');
-            // OPRAVA 1: Zajištění .filter(el => el != null) pro ignorování nenačtených prvků
-            contentElements
-                .filter(el => el != null) 
-                .forEach(el => el.classList.add('content-hidden'));
-        }
-
-        function hideLoading() {
-            loadingSpinner.classList.remove('visible');
-            setTimeout(() => {
-                // OPRAVA 1: Zajištění .filter(el => el != null)
-                contentElements
-                    .filter(el => el != null)
-                    .forEach(el => el.classList.remove('content-hidden'));
-            }, 300); 
-        }
-
-        // --- Data Fetching and Processing ---
-
-        async function fetchLogs(searchTerm = '') {
-            showLoading();
+    <!-- Funkce -->
+    <section class="features fade-up" id="features">
+        <div class="features-container">
+            <div class="section-header">
+                <h2 class="section-title">Klíčové Funkce</h2>
+                <p class="section-subtitle">CZbot přináší špičkové nástroje pro automatizaci, správu komunity a bezpečnost.</p>
+            </div>
             
-            const url = searchTerm ? `${API_URL}?search=${encodeURIComponent(searchTerm)}` : API_URL;
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>Ochrana serverů</h3>
+                    <p>Inteligentní ochrana proti spamům, scamům.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <h3>Lokalizace</h3>
+                    <p>Podpora překládání zpráv a komunikace od bota v požadované lokalizaci.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎟️</div>
+                    <h3>Tvorba vláken</h3>
+                    <p>Automatické vytváření vláken na zprávy v definovaných kanálech pro přehlednost kanálů.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📰</div>
+                    <h3>RSS a Changelog notifikace</h3>
+                    <p>Automatický odběr novinek z RSS kanálů a odesílání z kanálů oznámení na jiné servery.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚙️</div>
+                    <h3>Plánovač a reakční role</h3>
+                    <p>Naplánuj zprávy, připomeň akce nebo přiřazuj role reakcemi – vše přímo z Discordu bez externích nástrojů.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎡</div>
+                    <h3>Zábavné moduly</h3>
+                    <p>Kolo štěstí, reputační systém, AFK zprávy a další interaktivní funkce pro aktivní komunitu.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-            try {
-                const [response] = await Promise.all([
-                    fetch(url),
-                    new Promise(resolve => setTimeout(resolve, SIMULATED_DELAY_MS))
-                ]);
+    <!-- Invite sekce -->
+    <section class="pricing fade-up" id="invite">
+        <div class="pricing-container">
+            <div class="section-header">
+                <h2 class="section-title">Přidej si CZbota</h2>
+                <p class="section-subtitle">Začni využívat pokročilé funkce zdarma.</p>
+            </div>
+            
+            <div class="pricing-grid">
+                <div class="pricing-card featured">
+                    <div class="plan-name">CZbot</div>
+                    <div class="plan-price">Zdarma</div>
+                    <div class="plan-period">bez omezení</div>
+                    <ul class="plan-features">
+                        <li>Audio Stream</li>
+                        <li>Auditlogger</li>
+                        <li>Automatické publikování zpráv z kanálů oznámení</li>
+                        <li>Autorole, Ověřování uživatelů a Reakční role</li>
+                        <li>Běžné moderátorské příkazy</li>
+                        <li>Běžné uživatelské a zábavné příkazy</li>
+                        <li>Crossban</li>
+                        <li>Dočasné hlasové kanály</li>
+                        <li>GDPR</li>
+                        <li>Giveaway(e)</li>
+                        <li>Narozeniny</li>
+                        <li>Patreon</li>
+                        <li>Pokročilé plánované zprávy</li>
+                        <li>Počítání</li>
+                        <li>Reakce smajlíky na zprávy</li>
+                        <li>Reputace</li>
+                        <li>RSS Čtečka</li>
+                        <li>Scam Prevence</li>
+                        <li>Schedules - Plánované zprávy</li>
+                        <li>Statistiky serveru</li>
+                        <li>Svátky (CZ SK)</li>
+                        <li>Systém zpětné vazby a návrhů</li>
+                        <li>Tikety</li>
+                        <li>Translate modul</li>
+                        <li>Tvorba vláken na zprávy</li>
+                        <li>Uvítací a odchodové zprávy (Welcome Leave)</li>
+                        <li>Vodoznak s vlastním textem na obrázky</li>
+                        <li>Vote - Hlasování</li>
+                        <li>XP systém a úrovně</li>
+                        <li>Zpovědi (Anonymní Zprávy)</li>
+                        <li>Zálohování a Obnova Serverů</li>
+                    </ul>
+                    <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="btn-primary" target="_blank">Přidat na Discord</a>
+                    <a href="https://discord.gg/hk6PdtVxbm" class="btn-secondary" target="_blank">Support server</a>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                if (!response.ok) {
-                    logTableBody.innerHTML = `<tr><td colspan='7' style="color: red; text-align: center;">Chyba ${response.status}: Nepodařilo se načíst data ze serveru.</td></tr>`;
-                    console.error("Nepodařilo se načíst data:", response.statusText);
-                    return;
-                }
-                
-                allLogs = await response.json();
-                processLogs(); 
-
-            } catch (error) {
-                logTableBody.innerHTML = `<tr><td colspan='7' style="color: red; text-align: center;">Došlo k chybě při komunikaci se serverem: ${error.message}</td></tr>`;
-                console.error("Chyba při načítání logů:", error);
-            } finally {
-                hideLoading();
-            }
-        }
-
-        function processLogs() {
-            currentPage = 1;
-            displayCurrentPage();
-        }
-
-        function renderTable(logsToDisplay) {
-            logTableBody.innerHTML = "";
-            if (logsToDisplay.length === 0) {
-                logTableBody.innerHTML = "<tr><td colspan='7'>Žádné výsledky</td></tr>";
-                return;
-            }
-            logsToDisplay.forEach(log => {
-                const tr = document.createElement("tr");
-                const expirationText = log.duration ? log.duration : "N/A";
-                
-                // ZKONTROLUJEME, JESTLI ČAS VŮBEC EXISTUJE
-                const formattedDate = log.timestamp 
-                    ? new Date(log.timestamp).toLocaleString() 
-                    : 'N/A'; // Zobrazíme N/A, pokud timestamp chybí
-        
-                tr.innerHTML = `
-                    <td>${formattedDate}</td>
-                    <td data-label="Uživatel">${log.user_name || log.user_id}</td>
-                    <td data-label="Důvod">${log.reason}</td>
-                    <td data-label="Typ">${log.action}</td>
-                    <td data-label="Moderátor">${log.moderator_name || log.moderator_id}</td>
-                    <td data-label="Expirace">${expirationText}</td>
-                    <td data-label="Server">${log.guild_name || log.guild_id}</td>
-                `;
-                logTableBody.appendChild(tr);
-            });
-        }
-
-        function updatePaginationButtons() {
-            const totalPages = Math.ceil(allLogs.length / RECORDS_PER_PAGE);
-            pageInfoSpan.textContent = `Stránka ${currentPage} z ${totalPages || 1}`;
-
-            prevPageButton.disabled = currentPage === 1;
-            nextPageButton.disabled = currentPage >= totalPages || totalPages === 0;
-        }
-
-        function displayCurrentPage() {
-            const startIndex = (currentPage - 1) * RECORDS_PER_PAGE;
-            const endIndex = startIndex + RECORDS_PER_PAGE;
-            const logsToDisplay = allLogs.slice(startIndex, endIndex);
-            renderTable(logsToDisplay);
-            updatePaginationButtons();
-        }
-
-        // --- Event Listeners ---
-
-        const debouncedSearch = debounce(() => {
-            const searchQuery = searchInput.value.trim();
-            fetchLogs(searchQuery);
-        }, 500); 
-
-        searchInput.addEventListener("input", debouncedSearch);
-
-        prevPageButton.addEventListener("click", () => {
-            if (currentPage > 1) {
-                currentPage--;
-                displayCurrentPage();
-            }
-        });
-
-        nextPageButton.addEventListener("click", () => {
-            const totalPages = Math.ceil(allLogs.length / RECORDS_PER_PAGE);
-            if (currentPage < totalPages) {
-                currentPage++;
-                displayCurrentPage();
-            }
-        });
-
-        themeToggle.addEventListener('click', toggleTheme);
-        refreshButton.addEventListener('click', () => fetchLogs(searchInput.value.trim()));
-        
-        loadTheme();
-
-        // --- Initial Load ---
-
-        function getQueryParam(param) {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(param);
-        }
-
-        const initialSearchFilter = getQueryParam('search') || getQueryParam('user'); 
-        if (initialSearchFilter) {
-            searchInput.value = initialSearchFilter;
-        }
-
-        fetchLogs(searchInput.value.trim()); 
-    </script>
-
-    <footer>
-        <p>Zde jsou logovány pouze akce provedené pomocí příkazů CZBOTa. Záznamy z jiných botů nebo integrovaných Discord příkazů se zde nezobrazují.</p>
-        <p>Made by papiscze 2025</p>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="https://github.com/papiscze/czbot" target="_blank">GitHub</a>
+                <span class="footer-separator">•</span>
+                <a href="https://discord.gg/hk6PdtVxbm" target="_blank">Support server</a>
+                <span class="footer-separator">•</span>
+                <a href="#features">Funkce</a>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 CZbot. Všechna práva vyhrazena.</p>
+                <p class="footer-credit">Šablona inspirována <a href="https://templatemo.com/tm-594-nexus-flow" target="_blank" rel="noopener nofollow">TemplateMo Nexus Flow</a></p>
+            </div>
+        </div>
     </footer>
+
+    <script src="templatemo-nexus-scripts.js"></script>
+    <script>
+        function formatUptime(seconds) {
+            const days = Math.floor(seconds / 86400);
+            const hours = Math.floor((seconds % 86400) / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
+            return `${days}d ${hours}h ${minutes}m`;
+        }
+
+        async function loadStats() {
+            try {
+                const res = await fetch('https://rs422cznas.myds.me:5038/status');
+                const data = await res.json();
+                
+                document.getElementById('botStatus').textContent = data.bot_status === 'online' ? '🟢 Online' : '🔴 Offline';
+                document.getElementById('uptime').textContent = formatUptime(data.uptime_seconds);
+                document.getElementById('guilds').textContent = data.guilds.toLocaleString();
+                document.getElementById('users').textContent = data.users.toLocaleString();
+                document.getElementById('cpu').textContent = data.cpu_percent + '%';
+                document.getElementById('ram').textContent = data.ram_mb.toFixed(2) + ' MB';
+                document.getElementById('dbStatus').textContent = data.api_db_status === 'OK' ? '✅ OK' : '⚠️ Chyba';
+            } catch (e) {
+                console.error(e);
+                document.getElementById('statsGrid').innerHTML = '<p style="color:#f55;">Chyba při načítání statistik.</p>';
+            }
+        }
+
+        loadStats();
+        setInterval(loadStats, 30000);
+    </script>
 </body>
 </html>
