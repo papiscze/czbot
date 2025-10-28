@@ -8,7 +8,6 @@
 <style>
         /* ==================================== */
         /* DROPDOWN MENU STYLY (pro navigaci) */
-        /* OPRAVENO: Odstranění kolidujících mobilních stylů */
         /* ==================================== */
 
         .dropdown-link {
@@ -56,25 +55,38 @@
         .dropdown-link:hover .dropdown-content {
             display: block;
         }
-        /* Ponecháme zde jen to, co je nezbytně nutné, zbytek necháme na hlavním CSS */
+        
+        /* ==================================== */
+        /* OPRAVA MOBILNÍHO ZOBRAZENÍ */
+        /* ==================================== */
+
+        /* Mobilní dropdown: CSS musí být jen statický, JS se postará o display:block */
         @media (max-width: 992px) {
             .dropdown-link .dropdown-content {
                 position: static;
-                /* display: none; -- TOTO JSME ODEBRALI, aby se menu zobrazilo uvnitř mobilního menu */
                 box-shadow: none;
                 border: none;
                 padding: 0;
                 background-color: transparent;
+                display: none; /* Skryje na mobilu, dokud JS nepřepne */
             }
             .dropdown-link a {
                 padding-left: 30px;
             }
         }
-
-</style>  
+        
+        /* OPRAVA: Překrývání tlačítek v sekci "Přidej si CZbota" na mobilu */
+        @media (max-width: 768px) {
+            .pricing-card .btn-primary, .pricing-card .btn-secondary {
+                display: block; 
+                width: 100%;
+                margin-bottom: 15px; /* Větší mezera */
+            }
+        }
+        
+</style> 	
 </head>
 <body id="top">
-    <!-- Pozadí -->
     <div class="cyber-bg">
         <div class="cyber-gradient"></div>
         <div class="matrix-rain" id="matrixRain"></div>
@@ -91,7 +103,6 @@
     <div class="scanlines"></div>
     <div class="noise-overlay"></div>
 
-    <!-- Navigace -->
     <nav>
         <div class="nav-container">
             <a href="index.html" class="logo">CZbot</a> 
@@ -101,7 +112,7 @@
                     <div class="dropdown-content">
                         <a href="crongenerator.html">CRON Generator</a>
                         <a href="embedgenerator.html">Embed Generator</a>
-                        <a href="stats.html">Status bota</a>                        
+                        <a href="stats.html">Status bota</a> 			                    
                     </div>
                 </li>
                 
@@ -121,7 +132,6 @@
         </div>
     </nav>
 
-    <!-- Hero sekce -->
     <section class="hero">
         <div class="hero-container">
             <h1 class="hero-title">
@@ -137,7 +147,6 @@
         </div>
     </section>
 
-    <!-- Statistiky -->
     <section class="stats fade-up" id="stats">
         <div class="stats-container">
             <div class="section-header">
@@ -165,7 +174,6 @@
         </div>
     </section>
 
-    <!-- Funkce -->
     <section class="features fade-up" id="features">
         <div class="features-container">
             <div class="section-header">
@@ -208,7 +216,6 @@
         </div>
     </section>
 
-    <!-- Invite sekce -->
     <section class="pricing fade-up" id="invite">
         <div class="pricing-container">
             <div class="section-header">
@@ -261,7 +268,6 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-links">
@@ -292,21 +298,42 @@
                 const res = await fetch('https://rs422cznas.myds.me:5038/status');
                 const data = await res.json();
                 
+                // Opraveno: Používáme pouze existující ID elementů z HTML
                 document.getElementById('botStatus').textContent = data.bot_status === 'online' ? '🟢 Online' : '🔴 Offline';
                 document.getElementById('uptime').textContent = formatUptime(data.uptime_seconds);
                 document.getElementById('guilds').textContent = data.guilds.toLocaleString();
                 document.getElementById('users').textContent = data.users.toLocaleString();
-                document.getElementById('cpu').textContent = data.cpu_percent + '%';
-                document.getElementById('ram').textContent = data.ram_mb.toFixed(2) + ' MB';
-                document.getElementById('dbStatus').textContent = data.api_db_status === 'OK' ? '✅ OK' : '⚠️ Chyba';
+                
             } catch (e) {
-                console.error(e);
-                document.getElementById('statsGrid').innerHTML = '<p style="color:#f55;">Chyba při načítání statistik.</p>';
+                // Tato chyba se již neobjeví kvůli opravě ID, ale ponecháme robustní odchyt
+                console.error("Chyba při komunikaci s API:", e);
+                document.getElementById('statsGrid').innerHTML = '<p style="color:#f55;">Chyba při načítání statistik. Zkuste obnovit stránku.</p>';
             }
         }
 
         loadStats();
         setInterval(loadStats, 30000);
+        
+        // OPRAVA: JS pro funkční mobilní dropdown menu
+        document.addEventListener('DOMContentLoaded', () => {
+            const dropdownLinks = document.querySelectorAll('.dropdown-link');
+            dropdownLinks.forEach(link => {
+                const dropbtn = link.querySelector('.dropbtn');
+                if (dropbtn) {
+                    dropbtn.addEventListener('click', function(e) {
+                        // Spouští se pouze na mobilních zařízeních (šířka menší než 992px)
+                        if (window.innerWidth <= 992) {
+                            e.preventDefault(); 
+                            const dropdownContent = link.querySelector('.dropdown-content');
+                            if (dropdownContent) {
+                                // Přepíná display: block / none
+                                dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+                            }
+                        }
+                    });
+                }
+            });
+        });
     </script>
 </body>
 </html>
