@@ -61,6 +61,12 @@
 /* ==================================== */
 
 @media (max-width: 992px) {
+    /* Ujistěte se, že tato pravidla jsou funkční s CSS v templatemo-nexus-style.css */
+    /* PŘIDÁNÍ KLÍČOVÉHO STYLU pro rozbalení mobilního menu - tento kód MUSÍ být v templatemo-nexus-style.css */
+    /* .nav-links { transform: translateX(100%); transition: transform 0.3s ease; } */
+    /* .nav-links.active { transform: translateX(0); } */
+
+
     .dropdown-link .dropdown-content {
         position: static;
         box-shadow: none;
@@ -81,7 +87,7 @@
         margin-bottom: 15px;
     }
 }
-</style>    
+</style>    
 </head>
 <body id="top">
     <div class="cyber-bg">
@@ -109,7 +115,7 @@
                     <div class="dropdown-content">
                         <a href="crongenerator.html">CRON Generator</a>
                         <a href="embedgenerator.html">Embed Generator</a>
-                        <a href="stats.html">Status bota</a>                                
+                        <a href="stats.html">Status bota</a>                                
                     </div>
                 </li>
                 
@@ -328,6 +334,13 @@
     document.addEventListener('DOMContentLoaded', () => {
         const navLinks = document.querySelector('.nav-links');
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        
+        // 🌟 NOVÝ KÓD: Aktivace hlavního mobilního menu po kliknutí na hamburger ikonu
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileMenuBtn.classList.toggle('open');
+        });
+        // ------------------------------------------------------------------------
 
         const dropdownLinks = document.querySelectorAll('.dropdown-link');
         dropdownLinks.forEach(link => {
@@ -338,6 +351,7 @@
                 dropbtn.addEventListener('click', function(e) {
                     if (window.innerWidth <= 992 && dropdownContent) {
                         e.preventDefault(); 
+                        // Tato logika by Nyní měla fungovat, protože hlavní menu je OTEVŘENÉ
                         dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
                     }
                 });
@@ -347,6 +361,7 @@
                 const linksInDropdown = dropdownContent.querySelectorAll('a');
                 linksInDropdown.forEach(link => {
                     link.addEventListener('click', () => {
+                        // Tato část zavírá HLAVNÍ menu po kliknutí na položku z rozbalovacího menu
                         if (window.innerWidth <= 992 && navLinks.classList.contains('active')) {
                             navLinks.classList.remove('active');
                             mobileMenuBtn.classList.remove('open');

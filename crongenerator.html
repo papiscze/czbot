@@ -166,7 +166,6 @@
 
         /* ==================================== */
         /* DROPDOWN MENU STYLY (pro navigaci) */
-        /* OPRAVENO: Odstranění kolidujících mobilních stylů */
         /* ==================================== */
 
         .dropdown-link {
@@ -214,18 +213,44 @@
         .dropdown-link:hover .dropdown-content {
             display: block;
         }
-        /* Ponecháme zde jen to, co je nezbytně nutné, zbytek necháme na hlavním CSS */
+        
+        /* **OPRAVA PRO MOBILNÍ MENU (HAMBURGER)** */
         @media (max-width: 992px) {
+            /* **TOTO BYLO CHYBNÉ: Skrývalo dropdown v mobilním menu** */
+            /* .dropdown-link .dropdown-content { display: none; } */
+            /* Ponecháme to na logice, která otevírá celé mobilní menu. 
+               Pokud je mobilní menu otevřené, dropdown se má zobrazit. 
+               Stačí jen změnit jeho pozici. */
+            
+            .dropdown-link {
+                display: block; /* Aby zabíral celou šířku v mobilním menu */
+            }
+
             .dropdown-link .dropdown-content {
-                position: static;
-                /* display: none; -- TOTO JSME ODEBRALI, aby se menu zobrazilo uvnitř mobilního menu */
+                position: static; /* Důležité: Mění pozici na statickou, aby se menu zobrazilo v toku dokumentu */
+                display: none; /* Skryje ho v klidovém stavu - zobrazí ho JavaScript při kliku, nebo pokud ho otevírá JS pro celý nav */
                 box-shadow: none;
                 border: none;
                 padding: 0;
                 background-color: transparent;
+                margin-top: 5px; /* Trochu prostoru */
             }
-            .dropdown-link a {
-                padding-left: 30px;
+            
+            /* **ZÁKLADNÍ PŘÍSTUP:** V mobilním menu se dropdown standardně zobrazuje, pokud je mobilní menu otevřené.
+               Pokud je mobilní menu otevřené, stačí zajistit, aby třída pro dropdown content byla viditelná.
+               Pro jednoduchost se předpokládá, že JS, který otevírá mobilní menu, dělá viditelným celý kontejner `.nav-links`.
+               Pro explicitní kontrolu mobilního dropdownu přidáme třídu, kterou přepíná JS při kliknutí na `dropbtn`. 
+               Pokud JS toto přepínání nedělá, musí se řešit tam, nebo použít jinou metodu pro zobrazení dropdownu v mobilu.
+               Pro účely opravy zajistíme, aby se **dropdown-content** zobrazoval, pokud má třídu **.show-mobile**.
+            */
+            
+            /* **Přidáme třídu, kterou bude přepínat JavaScript** */
+            .dropdown-link.show-mobile .dropdown-content {
+                display: block; 
+            }
+            
+            .dropdown-content a {
+                padding-left: 30px; /* Odsazení pro položky v mobilním dropdownu */
             }
         }
 
@@ -252,12 +277,11 @@
         <div class="nav-container">
             <a href="index.html" class="logo">CZbot</a> 
             <ul class="nav-links">
-                <li class="dropdown-link">
-                    <a href="" class="dropbtn">Funkce ▼</a>
-                    <div class="dropdown-content">
+                <li class="dropdown-link" id="nav-dropdown-link">
+                    <a href="#" class="dropbtn" id="nav-dropbtn">Funkce ▼</a> <div class="dropdown-content">
                         <a href="crongenerator.html">CRON Generator</a>
                         <a href="embedgenerator.html">Embed Generator</a>
-                        <a href="stats.html">Status bota</a>                        
+                        <a href="stats.html">Status bota</a>                          
                     </div>
                 </li>
                 
@@ -303,7 +327,9 @@
                     <select id="cron-presets" class="cron-select">
                         <option value="">-- vyber --</option>
                         <option value="0 10 * * *">Každý den v 10:00</option>
-                        <option value="0 12 * * 1-5">Každý pracovní den v 12:00</option> <option value="0 8 * * 0">Každou neděli v 8:00</option> <option value="*/15 * * * *">Každých 15 minut</option>
+                        <option value="0 12 * * 1-5">Každý pracovní den v 12:00</option> 
+                        <option value="0 8 * * 0">Každou neděli v 8:00</option> 
+                        <option value="*/15 * * * *">Každých 15 minut</option>
                         <option value="0 10 1 * *">První den v měsíci v 10:00</option>
                         <option value="0 10 1,15 * *">1. a 15. den v měsíci v 10:00</option>
                         <option value="59 11 1-7 * 3">První středa v měsíci v 11:59</option> 
@@ -443,6 +469,10 @@
             month: document.getElementById('error-month'),
             weekday: document.getElementById('error-weekday')
         };
+        
+        // Nové prvky pro opravu mobilního dropdownu
+        const navDropbtn = document.getElementById('nav-dropbtn');
+        const navDropdownLink = document.getElementById('nav-dropdown-link');
 
         function updateLanguage() {
             const lang = langSwitcher.value;
@@ -464,14 +494,11 @@
             copyCommandBtn.textContent = t.copyCommand;
             
             // Překlad placeholderů
-            cronMinute.placeholder = t.labelMinute;
-            cronHour.placeholder = t.labelHour;
-            cronDay.placeholder = t.labelDay;
-            cronMonth.placeholder = t.labelMonth;
-            cronWeekday.placeholder = t.labelWeekday;
-            
-            // Musíme přeložit i texty v selectu, ale pro jednoduchost jen přeskládáme, pokud jsou v pevném HTML
-            // Pro složitější řešení by bylo potřeba měnit i options v JS. Zde je nutné to řešit ručně v HTML.
+            cronMinute.placeholder = `0-59 ${lang === 'cs' ? 'nebo' : 'or'} *`;
+            cronHour.placeholder = `0-23 ${lang === 'cs' ? 'nebo' : 'or'} *`;
+            cronDay.placeholder = `1-31 ${lang === 'cs' ? 'nebo' : 'or'} *`;
+            cronMonth.placeholder = `1-12 ${lang === 'cs' ? 'nebo' : 'or'} *`;
+            cronWeekday.placeholder = `0-6 (${lang === 'cs' ? 'Ne-So' : 'Sun-Sat'}) ${lang === 'cs' ? 'nebo' : 'or'} *`;
         }
 
         function validateInput(value, min, max){
@@ -492,13 +519,15 @@
                         const [start,end]=rangeParts.map(Number);
                         if(isNaN(start)||isNaN(end)||start<min||end>max) return {valid:false,val:value,msg:translations[langSwitcher.value].errorMsg};
                     } else if(p.includes('*/')){
+                        // Zjednodušená kontrola kroku */N
                         const n = Number(p.split('/')[1]);
                         if(isNaN(n) || n<=0) return {valid:false,val:value,msg:translations[langSwitcher.value].errorMsg};
                     } else if(/^\d+$/.test(p)){
                         const n = Number(p);
                         if(isNaN(n)||n<min||n>max) return {valid:false,val:value,msg:translations[langSwitcher.value].errorMsg};
-                    } 
-                    // Ponecháme volné pro ostatní CRON symboly jako L, W, #, které se validují obtížně
+                    } else {
+                        // Přeskočíme složité CRON symboly (L, W, #), ale ponecháme je validní, protože se složitě validují.
+                    }
                 }
                 return {valid:true,val:normalizedValue,msg:''};
             }
@@ -508,34 +537,29 @@
         function updateCron(){
             const presetValue = cronPresets.value;
             const fields = [
-                {el: cronMinute, obj: validateInput(cronMinute.value,0,59), error: errorFields.minute},
-                {el: cronHour, obj: validateInput(cronHour.value,0,23), error: errorFields.hour},
-                {el: cronDay, obj: validateInput(cronDay.value,1,31), error: errorFields.day},
-                {el: cronMonth, obj: validateInput(cronMonth.value,1,12), error: errorFields.month},
-                {el: cronWeekday, obj: validateInput(cronWeekday.value,0,6), error: errorFields.weekday}
+                {el: cronMinute, min: 0, max: 59, error: errorFields.minute},
+                {el: cronHour, min: 0, max: 23, error: errorFields.hour},
+                {el: cronDay, min: 1, max: 31, error: errorFields.day},
+                {el: cronMonth, min: 1, max: 12, error: errorFields.month},
+                {el: cronWeekday, min: 0, max: 6, error: errorFields.weekday}
             ];
 
             let error = false;
+            const validatedValues = [];
+            
+            // 1. Validace a zobrazení chyb
             for(const f of fields){
-                // Změna barvy borderu
+                const validationResult = validateInput(f.el.value, f.min, f.max);
+                validatedValues.push(validationResult);
+
                 f.el.classList.remove('input-error');
-                if(!f.obj.valid){
+                if(!validationResult.valid){
                     f.el.classList.add('input-error');
-                    f.error.textContent = f.obj.msg;
+                    f.error.textContent = validationResult.msg;
                     f.error.classList.remove('hidden');
                     error=true;
                 } else {
                     f.error.classList.add('hidden');
-                }
-            }
-
-            // Kontrola, zda uživatel ručně nezměnil hodnoty
-            if(presetValue!=='custom'&&presetValue!==''){
-                const parts=presetValue.split(' ');
-                if(parts.length===5){
-                    if(cronMinute.value.trim()!==parts[0]||cronHour.value.trim()!==parts[1]||cronDay.value.trim()!==parts[2]||cronMonth.value.trim()!==parts[3]||cronWeekday.value.trim()!==parts[4]){
-                        cronPresets.value='custom';
-                    }
                 }
             }
 
@@ -545,42 +569,37 @@
                 return;
             }
 
-            let [minute,hour,day,month,weekday]=fields.map(f=>f.obj.val);
-
-            // Přepsání hodnot z presetů, pokud je vybrán
+            // 2. Nastavení hodnot z presetů
             if(presetValue && presetValue!=='custom'){
                 const parts = presetValue.split(' ');
                 if(parts.length===5){
-                    [minute,hour,day,month,weekday]=parts;
-                    
-                    // Nastavíme hodnoty i do inputů, aby odpovídaly presetům
-                    cronMinute.value = minute;
-                    cronHour.value = hour;
-                    cronDay.value = day;
-                    cronMonth.value = month;
-                    cronWeekday.value = weekday;
+                    cronMinute.value = parts[0];
+                    cronHour.value = parts[1];
+                    cronDay.value = parts[2];
+                    cronMonth.value = parts[3];
+                    cronWeekday.value = parts[4];
                 }
             } else {
-                // Pokud je Custom, ale vstup je prázdný, nastavíme na '*'
-                cronMinute.value = minute === '' ? '*' : minute;
-                cronHour.value = hour === '' ? '*' : hour;
-                cronDay.value = day === '' ? '*' : day;
-                cronMonth.value = month === '' ? '*' : month;
-                cronWeekday.value = weekday === '' ? '*' : weekday;
+                // 3. Doplnění prázdných polí na '*' pro Custom
+                fields.forEach(f => {
+                    if (f.el.value.trim() === '') {
+                        f.el.value = '*';
+                    }
+                });
             }
             
-            // Znovu přečteme upravené/doplněné hodnoty
-            minute = cronMinute.value;
-            hour = cronHour.value;
-            day = cronDay.value;
-            month = cronMonth.value;
-            weekday = cronWeekday.value;
+            // 4. Generování CRON a příkazu
+            const minute = cronMinute.value;
+            const hour = cronHour.value;
+            const day = cronDay.value;
+            const month = cronMonth.value;
+            const weekday = cronWeekday.value;
             
             cronOutput.value = `${minute} ${hour} ${day} ${month} ${weekday}`;
-            const channelPlaceholder="#kanal";
-            const message = cronMessage.value.replace(/\n/g,'|');
             
-            // Ujistíme se, že příkaz začíná '/'
+            const channelPlaceholder="#kanal";
+            const message = cronMessage.value.replace(/\n/g,'|'); // Nahrazení nového řádku za |
+            
             cronCommand.value = `/pridat_cron cron_vyraz="${cronOutput.value}" channel=${channelPlaceholder} zprava="${message}"`;
         }
         
@@ -589,13 +608,20 @@
             element.select();
             element.setSelectionRange(0, 99999); // Pro mobilní zařízení
             try {
-                document.execCommand('copy');
+                navigator.clipboard.writeText(element.value);
                 // Volitelné: Změnit text tlačítka na "Zkopírováno!" na krátkou dobu
             } catch (err) {
                 console.error('Failed to copy text: ', err);
             }
         }
-
+        
+        // === Mobilní menu ===
+        function toggleMobileDropdown(event) {
+            // Zabraňte přesměrování při kliknutí na odkaz s #
+            event.preventDefault(); 
+            // Přepne třídu .show-mobile na kontejneru <li>
+            navDropdownLink.classList.toggle('show-mobile');
+        }
 
         // Listenery
         cronPresets.addEventListener('change', updateCron);
@@ -606,6 +632,9 @@
         copyCommandBtn.addEventListener('click',() => copyToClipboard(cronCommand));
         langSwitcher.addEventListener('change',()=>{updateLanguage();updateCron();});
         
+        // Nový listener pro mobilní dropdown
+        navDropbtn.addEventListener('click', toggleMobileDropdown);
+
         // Původní nastavení při načtení
         updateLanguage();
         updateCron();

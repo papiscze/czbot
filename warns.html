@@ -143,7 +143,6 @@
         
         /* ==================================== */
         /* DROPDOWN MENU STYLY (pro navigaci) */
-        /* OPRAVENO: Extrémní z-index a !important */
         /* ==================================== */
 
         .dropdown-link {
@@ -168,8 +167,8 @@
             background-color: rgba(30, 30, 50, 0.95);
             min-width: 200px;
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
-            /* ZVÝŠENÝ Z-INDEX A !important pro desktop funčnost */
-            z-index: 999999 !important; 
+            /* Snížený Z-INDEX a odstranění !important */
+            z-index: 1000; 
             border: 1px solid var(--color-border);
             border-radius: 6px;
             padding: 5px 0;
@@ -191,7 +190,7 @@
         }
         /* KLÍČOVÁ OPRAVA: Vynucené zobrazení na hover */
         .dropdown-link:hover .dropdown-content {
-            display: block !important;
+            display: block;
         }
         /* Ponecháme zde jen to, co je nezbytně nutné, zbytek necháme na hlavním CSS */
         @media (max-width: 992px) {
@@ -317,9 +316,7 @@
         const searchInput = document.getElementById("searchInput");
         const logTableBody = document.getElementById("logTableBody");
         const refreshButton = document.getElementById("refreshButton");
-        // const loadingSpinner = document.getElementById("loadingSpinner"); - ODEBRÁNO
         
-        // Zde odstraníme i loadingSpinner z pole
         const contentElements = [document.querySelector('h1'), searchInput, refreshButton, document.querySelector('table'), document.querySelector('.pagination'), document.querySelector('.footer')];
 
         const prevPageButton = document.getElementById("prevPage");
@@ -339,10 +336,6 @@
             };
         }
         
-        // --- FUNKCE PRO SPINNER BYLY ODSTRANĚNY ---
-        // Vzhledem k odstranění spinneru, místo funkcí showLoading a hideLoading 
-        // pouze přidáme/odebereme třídu "content-hidden" přímo v fetchLogs.
-
         // --- Data Fetching and Processing ---
 
         async function fetchLogs(searchTerm = '') {
@@ -469,6 +462,46 @@
         }
 
         fetchLogs(searchInput.value.trim()); 
+    </script>
+
+    <script>
+    // 🌟 NOVÝ KÓD: Aktivace hlavního mobilního menu po kliknutí na hamburger ikonu
+    document.addEventListener('DOMContentLoaded', () => {
+        const navLinks = document.querySelector('.nav-links');
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileMenuBtn.classList.toggle('open');
+        });
+
+        // Logika pro rozbalovací menu (převzata z předchozího souboru)
+        const dropdownLinks = document.querySelectorAll('.dropdown-link');
+        dropdownLinks.forEach(link => {
+            const dropbtn = link.querySelector('.dropbtn');
+            const dropdownContent = link.querySelector('.dropdown-content');
+
+            if (dropbtn) {
+                dropbtn.addEventListener('click', function(e) {
+                    if (window.innerWidth <= 992 && dropdownContent) {
+                        e.preventDefault(); 
+                        dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+                    }
+                });
+            }
+
+            // Zavření menu po kliknutí na libovolný odkaz
+            const allNavLinks = document.querySelectorAll('.nav-links a');
+            allNavLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (window.innerWidth <= 992 && navLinks.classList.contains('active')) {
+                        navLinks.classList.remove('active');
+                        mobileMenuBtn.classList.remove('open');
+                    }
+                });
+            });
+        });
+    });
     </script>
 </body>
 </html>

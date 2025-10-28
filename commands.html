@@ -6,13 +6,209 @@
     <title>CZbot - Příkazy</title>
     <link href="templatemo-nexus-style.css" rel="stylesheet"> 
     <style>
-        /* Specifické styly pro Commands Page */
+        /* ==================================== */
+        /* DROPDOWN MENU STYLY (pro navigaci) */
+        /* ==================================== */
         :root {
             /* PŘEDPOKLÁDANÉ PROMENNÉ Z VAŠEHO CSS SOUBORU */
             --color-primary: #64c8ff; /* Světle modrá (Nexus Flow styl) */
             --color-secondary: #fff; /* Bílá */
+            --color-text-light: #f0f0f0;
+            --color-border: rgba(100, 200, 255, 0.2);
+            --color-input-bg: rgba(100, 200, 255, 0.1);
         }
+
+        /* --- STYLY PRO HAMBURGER IKONU A MOBILNÍ MENU --- */
         
+        /* Skryje Hamburger tlačítko na desktopu */
+        .mobile-menu-button {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            z-index: 1001; /* Vždy nad obsahem */
+        }
+
+        /* Vzhled ikony (tři čárky) */
+        .hamburger span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            margin: 5px 0;
+            background-color: var(--color-primary);
+            transition: all 0.3s ease;
+        }
+
+        /* KONTEJNER PRO EFEKT ZATŘESENÍ (SHAKE) */
+        .nav-container.shake {
+            animation: shake 0.5s;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-5px); }
+            40%, 80% { transform: translateX(5px); }
+        }
+
+        /* --- CSS pro rozvržení navigace na desktopu (předpoklad) --- */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+        }
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: auto;
+            padding: 10px 20px;
+        }
+        .nav-links {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .nav-links li {
+            margin: 0 10px;
+        }
+        .nav-links a {
+            color: var(--color-text-light);
+            text-decoration: none;
+            padding: 10px 15px;
+            display: block;
+            transition: color 0.3s;
+        }
+        /* --- Konec předpokladu --- */
+
+        /* --- MEDIA QUERY PRO MOBILNÍ ZAŘÍZENÍ --- */
+        @media (max-width: 992px) {
+            .mobile-menu-button {
+                display: block; /* Zobrazí hamburger na mobilu */
+            }
+
+            .nav-container {
+                flex-wrap: wrap;
+                align-items: flex-start;
+            }
+
+            .nav-links {
+                display: none; /* Skryje menu ve výchozím stavu */
+                flex-direction: column;
+                width: 100%;
+                background-color: rgba(10, 10, 20, 0.95); 
+                position: absolute;
+                top: 100%; /* Pod navigaci */
+                left: 0;
+                padding: 10px 0;
+                border-top: 1px solid var(--color-border);
+            }
+            .nav-links.active {
+                display: flex; /* Zobrazí menu při aktivaci JS */
+            }
+            
+            .nav-links li {
+                margin: 0;
+            }
+            .nav-links a {
+                padding: 15px 20px;
+                width: 100%;
+            }
+
+            .nav-bottom {
+                display: none; /* Skryje tlačítko "Přidat na server" ve výchozím stavu */
+                width: 100%;
+                padding: 10px 20px 20px;
+                background-color: rgba(10, 10, 20, 0.95);
+                position: absolute;
+                top: 100%; /* Pod nav-links */
+                left: 0;
+                border-top: 1px solid var(--color-border);
+            }
+
+            /* Aby nav-bottom byl pod nav-links, je třeba ho zobrazit spolu s ním */
+            .nav-links.active + .nav-bottom.active {
+                display: block; 
+                position: relative;
+                top: 0;
+            }
+            
+            /* Opravené styly pro Dropdown v mobilním menu */
+            .dropdown-link:hover .dropdown-content {
+                display: none; /* Zruší hover efekt pro mobilní zobrazení */
+            }
+            .dropdown-link .dropdown-content {
+                display: none !important; /* Skryje podmenu ve výchozím stavu */
+                position: static;
+                box-shadow: none;
+                border: none;
+                padding: 0;
+                background-color: transparent;
+            }
+            /* Použijeme JS pro zobrazení dropdownu na mobilu */
+            .dropdown-link.open .dropdown-content {
+                display: block !important;
+            }
+            .dropdown-content a {
+                padding-left: 40px !important;
+            }
+        }
+        /* Konec media query */
+
+        /* --- DROPDOWN (DESKTOP) --- */
+        .dropdown-link {
+            position: relative;
+            display: inline-block;
+        }
+        /* ... ostatní dropdown styly (zde ponechány) ... */
+        .dropbtn {
+            padding: 10px 15px;
+            background-color: transparent;
+            color: var(--color-text-light);
+            text-decoration: none;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .dropbtn:hover {
+            color: var(--color-primary);
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: rgba(30, 30, 50, 0.95);
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
+            z-index: 1000;
+            border: 1px solid var(--color-border);
+            border-radius: 6px;
+            padding: 5px 0;
+            backdrop-filter: blur(5px);
+            top: 100%;
+            left: 0;
+        }
+        .dropdown-content a {
+            color: var(--color-text-light);
+            padding: 10px 16px;
+            text-decoration: none;
+            display: block;
+            font-size: 0.95rem;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .dropdown-content a:hover {
+            background-color: var(--color-input-bg);
+            color: var(--color-primary);
+        }
+        .dropdown-link:hover .dropdown-content {
+            display: block;
+        }
+        /* ... zbytek CSS kódů pro commands-section ... */
+        /* Specifické styly pro Commands Page */
         .commands-section {
             padding-top: 150px; /* Aby nebyly pod navigací */
             padding-bottom: 80px;
@@ -220,71 +416,6 @@
                 order: 1;
             }
         }
-        /* ==================================== */
-        /* DROPDOWN MENU STYLY (pro navigaci) */
-        /* OPRAVENO: Odstranění kolidujících mobilních stylů */
-        /* ==================================== */
-
-        .dropdown-link {
-            position: relative;
-            display: inline-block;
-        }
-        .dropbtn {
-            padding: 10px 15px;
-            background-color: transparent;
-            color: var(--color-text-light);
-            text-decoration: none;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-        .dropbtn:hover {
-            color: var(--color-primary);
-        }
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: rgba(30, 30, 50, 0.95);
-            min-width: 200px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
-            z-index: 1000;
-            border: 1px solid var(--color-border);
-            border-radius: 6px;
-            padding: 5px 0;
-            backdrop-filter: blur(5px);
-            top: 100%;
-            left: 0;
-        }
-        .dropdown-content a {
-            color: var(--color-text-light);
-            padding: 10px 16px;
-            text-decoration: none;
-            display: block;
-            font-size: 0.95rem;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        .dropdown-content a:hover {
-            background-color: var(--color-input-bg);
-            color: var(--color-primary);
-        }
-        .dropdown-link:hover .dropdown-content {
-            display: block;
-        }
-        /* Ponecháme zde jen to, co je nezbytně nutné, zbytek necháme na hlavním CSS */
-        @media (max-width: 992px) {
-            .dropdown-link .dropdown-content {
-                position: static;
-                /* display: none; -- TOTO JSME ODEBRALI, aby se menu zobrazilo uvnitř mobilního menu */
-                box-shadow: none;
-                border: none;
-                padding: 0;
-                background-color: transparent;
-            }
-            .dropdown-link a {
-                padding-left: 30px;
-            }
-        }
-
     </style>
 </head>
 <body id="top">
@@ -309,11 +440,11 @@
             <a href="index.html" class="logo">CZbot</a> 
             <ul class="nav-links">
                 <li class="dropdown-link">
-                    <a href="" class="dropbtn">Funkce ▼</a>
+                    <a href="#" class="dropbtn">Funkce ▼</a>
                     <div class="dropdown-content">
                         <a href="crongenerator.html">CRON Generator</a>
                         <a href="embedgenerator.html">Embed Generator</a>
-                        <a href="stats.html">Status bota</a>                        
+                        <a href="stats.html">Status bota</a>                        
                     </div>
                 </li>
                 
@@ -325,7 +456,7 @@
             <div class="nav-bottom">
                 <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Přidat na server</a>
             </div>
-            <button class="mobile-menu-button" id="mobileMenuBtn">
+            <button class="mobile-menu-button" id="mobileMenuBtn" aria-label="Otevřít mobilní menu">
                 <div class="hamburger">
                     <span></span><span></span><span></span>
                 </div>
@@ -476,7 +607,55 @@
 
     <script src="templatemo-nexus-scripts.js"></script> 
     <script>
-        // Logika pro rozbalování detailů příkazů
+        // =========================================================
+        // 🚀 OPRAVENÁ LOGIKA PRO MOBILNÍ MENU (Hamburger a Dropdown)
+        // =========================================================
+
+        const mobileMenuInit = () => {
+            const menuButton = document.getElementById('mobileMenuBtn');
+            const navLinks = document.querySelector('.nav-links');
+            const navBottom = document.querySelector('.nav-bottom');
+            const navContainer = document.querySelector('.nav-container');
+            const dropdownLinks = document.querySelectorAll('.nav-links .dropdown-link');
+
+            if (menuButton && navLinks) {
+                // 1. Logika pro hlavní hamburger tlačítko
+                menuButton.addEventListener('click', () => {
+                    navLinks.classList.toggle('active');
+                    if (navBottom) {
+                        navBottom.classList.toggle('active');
+                    }
+                    menuButton.classList.toggle('active'); // Může být použito pro animaci X/Hamburger
+
+                    // Volitelný "shake" efekt pro vizuální ověření
+                    if (navContainer) {
+                        navContainer.classList.add('shake');
+                        setTimeout(() => {
+                            navContainer.classList.remove('shake');
+                        }, 500);
+                    }
+                });
+
+                // 2. Logika pro mobilní dropdown (podmenu Funkce)
+                dropdownLinks.forEach(link => {
+                    const dropbtn = link.querySelector('.dropbtn');
+                    dropbtn.addEventListener('click', (e) => {
+                        // Zabránění přesměrování (pokud a href="#" nebo prázdný)
+                        e.preventDefault(); 
+                        
+                        // Přepínání třídy 'open' pro zobrazení podmenu
+                        if (window.innerWidth <= 992) {
+                            link.classList.toggle('open');
+                        }
+                    });
+                });
+            }
+        };
+
+        // =========================================================
+        // Původní Logika pro rozbalování detailů příkazů (zachována)
+        // =========================================================
+        
         document.querySelectorAll('.command-item').forEach(item => {
             const summary = item.querySelector('.command-summary');
             if (summary) {
@@ -485,7 +664,6 @@
                     
                     item.classList.toggle('open');
                     
-                    // (Volitelné) Zavře ostatní, pokud nechcete mít otevřeno více najednou
                     document.querySelectorAll('.command-item.open').forEach(other => {
                         if (other !== item) {
                             other.classList.remove('open');
@@ -496,20 +674,18 @@
         });
 
         // =========================================================
-        // OPRAVENÁ LOGIKA PRO FILTROVÁNÍ A VYHLEDÁVÁNÍ
+        // Původní Logika pro Filtrování a Vyhledávání (zachována)
         // =========================================================
 
         const tabs = document.querySelectorAll('.command-tab');
         const searchInput = document.getElementById('commandSearch');
         const commandItems = document.querySelectorAll('.command-item');
 
-        // Funkce pro získání aktuálně aktivní kategorie
         function getActiveCategory() {
             const activeTab = document.querySelector('.command-tab.active');
             return activeTab ? activeTab.getAttribute('data-category') : 'ALL';
         }
 
-        // Hlavní funkce pro filtrování
         function filterCommands() {
             const category = getActiveCategory();
             const searchTerm = searchInput.value.toLowerCase().trim();
@@ -520,47 +696,38 @@
                 const nameElement = item.querySelector('.command-name');
                 const descElement = item.querySelector('.command-description');
                 
-                // Zajištění, že se hledá ve správných textových polích
                 const itemName = nameElement ? nameElement.textContent.toLowerCase() : '';
                 const itemDescription = descElement ? descElement.textContent.toLowerCase() : '';
 
-                // 1. Filtr podle kategorie
                 const categoryMatch = category === 'ALL' || itemCategory === category;
-                
-                // 2. Filtr podle vyhledávání (hledáme v názvu nebo popisu)
                 const searchMatch = !searchTerm || itemName.includes(searchTerm) || itemDescription.includes(searchTerm);
 
-                // Zobrazení/Skrytí
                 if (categoryMatch && searchMatch) {
                     item.style.display = 'block';
                 } else {
                     item.style.display = 'none';
-                    // Zavřít rozbalený příkaz, pokud je skrytý
                     item.classList.remove('open'); 
                 }
             });
         }
         
-        // Listener pro záložky
         tabs.forEach(tab => {
             tab.addEventListener('click', () => {
-                // Nastaví aktivní záložku
                 tabs.forEach(t => t.classList.remove('active'));
                 tab.classList.add('active');
-                
-                // Spustí filtrování
                 filterCommands();
             });
         });
 
-        // Listener pro vyhledávání (spouští filtrování při každé změně)
         searchInput.addEventListener('input', () => {
             filterCommands();
         });
 
-        // Po načtení stránky aplikuje výchozí filtr (ALL)
         document.addEventListener('DOMContentLoaded', () => {
-            // Zajistí, že záložka "ALL" je aktivní na začátku, pokud nebyla
+            // Inicializace mobilního menu
+            mobileMenuInit();
+            
+            // Inicializace filtrů příkazů
             if (!document.querySelector('.command-tab.active')) {
                 const allTab = document.querySelector('.command-tab[data-category="ALL"]');
                 if (allTab) allTab.classList.add('active');
