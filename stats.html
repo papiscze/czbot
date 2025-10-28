@@ -6,6 +6,7 @@
     <title>CZbot - Status Bota</title>
     <link href="templatemo-nexus-style.css" rel="stylesheet"> 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="dropdown-styles.css" rel="stylesheet"> 
     
     <style>
         /* ==================================== */
@@ -132,72 +133,7 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
             border: 2px solid #ff914d;
         }
-
-        /* ==================================== */
-        /* DROPDOWN MENU STYLY (pro navigaci) */
-        /* OPRAVENO: Odstranění kolidujících mobilních stylů */
-        /* ==================================== */
-
-        .dropdown-link {
-            position: relative;
-            display: inline-block;
-        }
-        .dropbtn {
-            padding: 10px 15px;
-            background-color: transparent;
-            color: var(--color-text-light);
-            text-decoration: none;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-        .dropbtn:hover {
-            color: var(--color-primary);
-        }
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: rgba(30, 30, 50, 0.95);
-            min-width: 200px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
-            z-index: 1000;
-            border: 1px solid var(--color-border);
-            border-radius: 6px;
-            padding: 5px 0;
-            backdrop-filter: blur(5px);
-            top: 100%;
-            left: 0;
-        }
-        .dropdown-content a {
-            color: var(--color-text-light);
-            padding: 10px 16px;
-            text-decoration: none;
-            display: block;
-            font-size: 0.95rem;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        .dropdown-content a:hover {
-            background-color: var(--color-input-bg);
-            color: var(--color-primary);
-        }
-        .dropdown-link:hover .dropdown-content {
-            display: block;
-        }
-        /* Ponecháme zde jen to, co je nezbytně nutné, zbytek necháme na hlavním CSS */
-        @media (max-width: 992px) {
-            .dropdown-link .dropdown-content {
-                position: static;
-                /* display: none; -- TOTO JSME ODEBRALI, aby se menu zobrazilo uvnitř mobilního menu */
-                box-shadow: none;
-                border: none;
-                padding: 0;
-                background-color: transparent;
-            }
-            .dropdown-link a {
-                padding-left: 30px;
-            }
-        }
-
+        /* Původní CSS pro Dropdown menu ZDE BYLO ODSTRANĚNO A PŘESUNUTO DO dropdown-styles.css */
     </style>
 </head>
 <body id="top">
@@ -226,12 +162,12 @@
                     <div class="dropdown-content">
                         <a href="crongenerator.html">CRON Generator</a>
                         <a href="embedgenerator.html">Embed Generator</a>
-                        <a href="stats.html">Status bota</a>                        
+                        <a href="stats.html">Status bota</a> 
                     </div>
                 </li>
                 
                 <li><a href="commands.html">Příkazy</a></li>
-                <li><a href="logs.html">Moderátorské záznamy</a></li> 
+                <li><a href="warns.html">Moderátorské záznamy</a></li> 
                 <li><a href="https://rs422cznas.myds.me:5038/stats/">Webové statistiky serverů</a></li>
                 <li><a href="https://discord.gg/hk6PdtVxbm" target="_blank">Support server</a></li>
             </ul>
@@ -348,7 +284,7 @@
                 statusList.appendChild(addItem("Bot status", data.bot_status, "", data.bot_status==="online"?"status-online":"status-offline-cog"));
                 statusList.appendChild(addItem("Uptime", uptime_str));
                 statusList.appendChild(addItem("Počet serverů", data.guilds.toLocaleString()));
-                statusList.appendChild(addItem("Počet uživatelů", data.users.toLocaleString()));
+                statusList.appendChild(addItem(new Intl.NumberFormat('cs-CZ').format(data.users), "Počet uživatelů"));
                 statusList.appendChild(addItem("CPU využití", data.cpu_percent, "%"));
                 statusList.appendChild(addItem("RAM využití", data.ram_mb.toFixed(2), "MB"));
                 statusList.appendChild(addItem("API Status", data.api_db_status, "", data.api_db_status==="OK"?"status-ok":"status-offline-cog"));        
@@ -407,7 +343,7 @@
         setInterval(fetchStatus, 30000); 
     </script>
 
-                <script>
+    <script>
         // ZAJISTI FUNKČNOST NAVIGACE (MOBILNÍ A DROPDOWN)
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const body = document.body;
@@ -429,7 +365,7 @@
                 
                 const parentLi = button.closest('.dropdown-link');
                 
-                // Přepíná třídu 'open' pro zobrazení dropdownu uvnitř mobilního menu (vyžaduje CSS pravidlo)
+                // Přepíná třídu 'open' pro zobrazení dropdownu uvnitř mobilního menu
                 parentLi.classList.toggle('open');
             });
         });

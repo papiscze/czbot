@@ -267,10 +267,10 @@
             <a href="index.html" class="logo">CZbot</a> 
             <ul class="nav-links">
                 <li class="dropdown-link" id="nav-dropdown-link">
-                    <a href="#" class="dropbtn" id="nav-dropbtn">Funkce ▼</a> <div class="dropdown-content">
-                        <a href="crongenerator.html">CRON Generator</a>
+                    <a href="#" class="dropbtn" id="nav-dropbtn">Funkce ▼</a> 
+                    <div class="dropdown-content" id="nav-dropdown-content"> <a href="crongenerator.html">CRON Generator</a>
                         <a href="embedgenerator.html">Embed Generator</a>
-                        <a href="stats.html">Status bota</a>                          
+                        <a href="stats.html">Status bota</a> 
                     </div>
                 </li>
                 
@@ -459,9 +459,11 @@
             weekday: document.getElementById('error-weekday')
         };
         
-        // Nové prvky pro opravu mobilního dropdownu
+        // Prvky pro mobilní dropdown
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn'); // Tlačítko hamburgeru
         const navDropbtn = document.getElementById('nav-dropbtn');
         const navDropdownLink = document.getElementById('nav-dropdown-link');
+        const navDropdownContent = document.getElementById('nav-dropdown-content');
 
         function updateLanguage() {
             const lang = langSwitcher.value;
@@ -611,6 +613,18 @@
             // Přepne třídu .show-mobile na kontejneru <li>
             navDropdownLink.classList.toggle('show-mobile');
         }
+        
+        // **NOVÁ FUNKCE** pro zavření mobilního menu (dropdownu a celého menu)
+        function closeMobileMenu() {
+            // Skryje mobilní dropdown
+            navDropdownLink.classList.remove('show-mobile');
+            // Uzavře celé hamburger menu (předpokládáme, že mobilMenuBtn přepíná třídu menu-open na body nebo nav)
+            // Třída menu-open je obvykle řízena externím souborem templatemo-nexus-scripts.js, 
+            // ale pro jistotu ji explicitně odebereme z body, pokud ji používá.
+            document.body.classList.remove('menu-open'); 
+            // Odebereme třídu pro animaci hamburgeru, pokud ji používá
+            mobileMenuBtn.classList.remove('active'); 
+        }
 
         // Listenery
         cronPresets.addEventListener('change', updateCron);
@@ -623,6 +637,13 @@
         
         // Nový listener pro mobilní dropdown
         navDropbtn.addEventListener('click', toggleMobileDropdown);
+
+        // **NOVÝ LISTENER** pro zavření dropdownu a celého menu po kliknutí na libovolný odkaz uvnitř dropdownu
+        // Tím se zajistí, že se menu uzavře, jakmile uživatel vybere cílovou stránku.
+        const dropdownLinks = navDropdownContent.querySelectorAll('a');
+        dropdownLinks.forEach(link => {
+            link.addEventListener('click', closeMobileMenu);
+        });
 
         // Původní nastavení při načtení
         updateLanguage();
