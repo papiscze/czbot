@@ -27,6 +27,8 @@ Díky **aktivnímu vývoji** a unikátním funkcím je czbot nepostradatelný pr
 ***
 ### Přidej czbota na svůj server a objev, jak jednoduchá může být správa Discordu!
 ---
+**Webová stránka:** https://papiscze.github.io/czbot/
+
 **Podrobná dokumentace na GitHubu:** https://github.com/papiscze/czbot/wiki
 
 **Přidej czbota hned:** https://discord.com/oauth2/authorize?client_id=902877191086420008
