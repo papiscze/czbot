@@ -6,84 +6,81 @@
     <title>CZbot - Inteligentní Discord bot</title>
     <link href="templatemo-nexus-style.css" rel="stylesheet">
 <style>
-        /* ==================================== */
-        /* DROPDOWN MENU STYLY (pro navigaci) */
-        /* ==================================== */
+/* ==================================== */
+/* DROPDOWN MENU STYLY (pro navigaci) */
+/* ==================================== */
 
-        .dropdown-link {
-            position: relative;
-            display: inline-block;
-        }
-        .dropbtn {
-            padding: 10px 15px;
-            background-color: transparent;
-            color: var(--color-text-light);
-            text-decoration: none;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-        .dropbtn:hover {
-            color: var(--color-primary);
-        }
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: rgba(30, 30, 50, 0.95);
-            min-width: 200px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
-            z-index: 1000;
-            border: 1px solid var(--color-border);
-            border-radius: 6px;
-            padding: 5px 0;
-            backdrop-filter: blur(5px);
-            top: 100%;
-            left: 0;
-        }
-        .dropdown-content a {
-            color: var(--color-text-light);
-            padding: 10px 16px;
-            text-decoration: none;
-            display: block;
-            font-size: 0.95rem;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        .dropdown-content a:hover {
-            background-color: var(--color-input-bg);
-            color: var(--color-primary);
-        }
-        .dropdown-link:hover .dropdown-content {
-            display: block;
-        }
-        
-        /* ==================================== */
-        /* OPRAVA MOBILNÍHO ZOBRAZENÍ */
-        /* ==================================== */
+.dropdown-link {
+    position: relative;
+    display: inline-block;
+}
+.dropbtn {
+    padding: 10px 15px;
+    background-color: transparent;
+    color: var(--color-text-light);
+    text-decoration: none;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+.dropbtn:hover {
+    color: var(--color-primary);
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: rgba(30, 30, 50, 0.95);
+    min-width: 200px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
+    z-index: 1000;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    padding: 5px 0;
+    backdrop-filter: blur(5px);
+    top: 100%;
+    left: 0;
+}
+.dropdown-content a {
+    color: var(--color-text-light);
+    padding: 10px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 0.95rem;
+    transition: background-color 0.3s, color 0.3s;
+}
+.dropdown-content a:hover {
+    background-color: var(--color-input-bg);
+    color: var(--color-primary);
+}
+.dropdown-link:hover .dropdown-content {
+    display: block;
+}
 
-        /* Mobilní dropdown: CSS musí být jen statický, JS se postará o display:block */
-        @media (max-width: 992px) {
-            .dropdown-link .dropdown-content {
-                position: static;
-                box-shadow: none;
-                border: none;
-                padding: 0;
-                background-color: transparent;
-                display: none; /* Skryje na mobilu, dokud JS nepřepne */
-            }
-            .dropdown-link a {
-                padding-left: 30px;
-            }
-        }
-        
-        /* OPRAVA: Překrývání tlačítek v sekci "Přidej si CZbota" na mobilu */
-        @media (max-width: 768px) {
-            .pricing-card .btn-primary, .pricing-card .btn-secondary {
-                display: block; 
-                width: 100%;
-                margin-bottom: 15px; /* Větší mezera */
-            }
-        }
-        
+/* ==================================== */
+/* OPRAVA MOBILNÍHO ZOBRAZENÍ */
+/* ==================================== */
+
+@media (max-width: 992px) {
+    .dropdown-link .dropdown-content {
+        position: static;
+        box-shadow: none;
+        border: none;
+        padding: 0;
+        background-color: transparent;
+        display: none;
+    }
+    .dropdown-link a {
+        padding-left: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .pricing-card .btn-primary, .pricing-card .btn-secondary {
+        display: block; 
+        width: 100%;
+        margin-bottom: 15px;
+    }
+}
 </style>    
 </head>
 <body id="top">
@@ -154,6 +151,10 @@
             </div>
 
             <div class="stats-grid" id="statsGrid">
+                <div class="stat-item">
+                    <span class="stat-number" id="botStatus">—</span>
+                    <span class="stat-label">Status bota</span>
+                </div>
                 <div class="stat-item">
                     <span class="stat-number" id="guilds">—</span>
                     <span class="stat-label">Serverů</span>
@@ -282,97 +283,99 @@
 
     <script src="templatemo-nexus-scripts.js"></script>
     <script>
-        // Funkce pro bezpečné a ZJEDNODUŠENÉ formátování uptime - zobrazuje POUZE celé hodiny
-        function formatUptime(seconds) {
-            if (isNaN(seconds) || seconds < 0) {
-                return "N/A";
+    function formatUptime(seconds) {
+        if (isNaN(seconds) || seconds < 0) return "N/A";
+        const totalHours = Math.floor(seconds / 3600);
+        return `${totalHours}h`;
+    }
+
+    async function loadStats() {
+        try {
+            const res = await fetch('https://rs422cznas.myds.me:5038/status');
+            const data = await res.json();
+
+            const botStatusElement = document.getElementById('botStatus');
+            const uptimeElement = document.getElementById('uptime');
+            const guildsElement = document.getElementById('guilds');
+            const usersElement = document.getElementById('users');
+
+            // ✅ Opravený status bota – bezpečná kontrola typu
+            let statusText = 'Offline';
+            if (typeof data.bot_status === 'string') {
+                statusText = data.bot_status.toLowerCase() === 'online' ? 'Online' : 'Offline';
+            } else if (data.bot_status === true) {
+                statusText = 'Online';
             }
-            const totalHours = Math.floor(seconds / 3600);
-            return `${totalHours}h`;
-        }
+            botStatusElement.textContent = statusText;
 
-        // Funkce pro načítání statistik
-        async function loadStats() {
-            try {
-                const res = await fetch('https://rs422cznas.myds.me:5038/status');
-                const data = await res.json();
-                
-                // OPRAVENÁ ČÁST: Nastaví jen čistý text bez emoji/tříd               
-                document.getElementById('uptime').textContent = formatUptime(data.uptime_seconds);
-                document.getElementById('guilds').textContent = data.guilds.toLocaleString();
-                document.getElementById('users').textContent = data.users.toLocaleString();
-                
-            } catch (e) {
-                console.error("Chyba při komunikaci s API:", e);
-                const defaultErrorText = '—';
-                // Chyba API by měla zobrazit, že status není k dispozici
-                document.getElementById('uptime').textContent = 'N/A';
-                document.getElementById('guilds').textContent = defaultErrorText;
-                document.getElementById('users').textContent = defaultErrorText;
+            // Zbytek statistik bezpečně
+            uptimeElement.textContent = formatUptime(Number(data.uptime_seconds));
+            guildsElement.textContent = Number(data.guilds) ? Number(data.guilds).toLocaleString() : '—';
+            usersElement.textContent = Number(data.users) ? Number(data.users).toLocaleString() : '—';
+
+        } catch (e) {
+            console.error("Chyba při komunikaci s API:", e);
+            document.getElementById('botStatus').textContent = 'Není dostupné';
+            document.getElementById('uptime').textContent = 'N/A';
+            document.getElementById('guilds').textContent = '—';
+            document.getElementById('users').textContent = '—';
+        }
+    }
+
+    loadStats();
+    setInterval(loadStats, 30000);
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const navLinks = document.querySelector('.nav-links');
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+
+        const dropdownLinks = document.querySelectorAll('.dropdown-link');
+        dropdownLinks.forEach(link => {
+            const dropbtn = link.querySelector('.dropbtn');
+            const dropdownContent = link.querySelector('.dropdown-content');
+
+            if (dropbtn) {
+                dropbtn.addEventListener('click', function(e) {
+                    if (window.innerWidth <= 992 && dropdownContent) {
+                        e.preventDefault(); 
+                        dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+                    }
+                });
             }
-        }
 
-        loadStats();
-        setInterval(loadStats, 30000);
-        
-        // OPRAVA: JS pro funkční mobilní dropdown menu a zavření menu po kliku
-        document.addEventListener('DOMContentLoaded', () => {
-            const navLinks = document.querySelector('.nav-links'); // Hlavní menu
-            const mobileMenuBtn = document.getElementById('mobileMenuBtn'); // Tlačítko pro menu
-
-            // Logika pro mobilní dropdown (sekce "Funkce")
-            const dropdownLinks = document.querySelectorAll('.dropdown-link');
-            dropdownLinks.forEach(link => {
-                const dropbtn = link.querySelector('.dropbtn');
-                const dropdownContent = link.querySelector('.dropdown-content');
-
-                if (dropbtn) {
-                    dropbtn.addEventListener('click', function(e) {
-                        // Spouští se pouze na mobilních zařízeních (šířka menší než 992px)
-                        if (window.innerWidth <= 992 && dropdownContent) {
-                            e.preventDefault(); 
-                            // Přepíná display: block / none
-                            dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+            if (dropdownContent) {
+                const linksInDropdown = dropdownContent.querySelectorAll('a');
+                linksInDropdown.forEach(link => {
+                    link.addEventListener('click', () => {
+                        if (window.innerWidth <= 992 && navLinks.classList.contains('active')) {
+                            navLinks.classList.remove('active');
+                            mobileMenuBtn.classList.remove('open');
                         }
                     });
-                }
-
-                // NOVÁ LOGIKA: Zavření mobilního menu po kliknutí na jakýkoli odkaz uvnitř dropdownu
-                if (dropdownContent) {
-                    const linksInDropdown = dropdownContent.querySelectorAll('a');
-                    linksInDropdown.forEach(link => {
-                        link.addEventListener('click', () => {
-                            if (window.innerWidth <= 992 && navLinks.classList.contains('active')) {
-                                navLinks.classList.remove('active');
-                                mobileMenuBtn.classList.remove('open');
-                            }
-                        });
-                    });
-                }
-            });
-
-            // Původní logika pro zavření menu po kliknutí na "Přidat na server"
-            const navBottomLink = document.querySelector('.nav-bottom a');
-            if (navBottomLink) {
-                navBottomLink.addEventListener('click', () => {
-                    if (window.innerWidth <= 992 && navLinks.classList.contains('active')) {
-                        navLinks.classList.remove('active');
-                        mobileMenuBtn.classList.remove('open');
-                    }
                 });
             }
+        });
 
-            // Původní logika pro zavření menu po kliknutí na přímý odkaz (Příkazy, atd.)
-            const directLinks = document.querySelectorAll('.nav-links > li > a:not(.dropbtn)');
-            directLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    if (window.innerWidth <= 992 && navLinks.classList.contains('active')) {
-                        navLinks.classList.remove('active');
-                        mobileMenuBtn.classList.remove('open');
-                    }
-                });
+        const navBottomLink = document.querySelector('.nav-bottom a');
+        if (navBottomLink) {
+            navBottomLink.addEventListener('click', () => {
+                if (window.innerWidth <= 992 && navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                    mobileMenuBtn.classList.remove('open');
+                }
+            });
+        }
+
+        const directLinks = document.querySelectorAll('.nav-links > li > a:not(.dropbtn)');
+        directLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 992 && navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                    mobileMenuBtn.classList.remove('open');
+                }
             });
         });
+    });
     </script>
 </body>
 </html>
