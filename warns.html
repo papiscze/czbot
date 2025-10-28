@@ -134,39 +134,77 @@
             color: #ddd;
         }
         
-        /* Loading Spinner */
-        #loadingSpinner {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            z-index: 10000;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(5px);
-        }
-        #loadingSpinner.visible {
-            display: flex;
-        }
-        .spinner {
-            border: 8px solid rgba(100, 200, 255, 0.1);
-            border-top: 8px solid var(--color-primary, #64c8ff);
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+        /* STYLY PRO LOADING (zůstaly jen placeholder, ale kód byl odstraněn) */
         .content-hidden {
             opacity: 0.1;
             pointer-events: none;
             transition: opacity 0.3s;
+        }
+        
+        /* ==================================== */
+        /* DROPDOWN MENU STYLY (pro navigaci) */
+        /* OPRAVENO: Extrémní z-index a !important */
+        /* ==================================== */
+
+        .dropdown-link {
+            position: relative;
+            display: inline-block;
+        }
+        .dropbtn {
+            padding: 10px 15px;
+            background-color: transparent;
+            color: var(--color-text-light);
+            text-decoration: none;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .dropbtn:hover {
+            color: var(--color-primary);
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: rgba(30, 30, 50, 0.95);
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
+            /* ZVÝŠENÝ Z-INDEX A !important pro desktop funčnost */
+            z-index: 999999 !important; 
+            border: 1px solid var(--color-border);
+            border-radius: 6px;
+            padding: 5px 0;
+            backdrop-filter: blur(5px);
+            top: 100%;
+            left: 0;
+        }
+        .dropdown-content a {
+            color: var(--color-text-light);
+            padding: 10px 16px;
+            text-decoration: none;
+            display: block;
+            font-size: 0.95rem;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .dropdown-content a:hover {
+            background-color: var(--color-input-bg);
+            color: var(--color-primary);
+        }
+        /* KLÍČOVÁ OPRAVA: Vynucené zobrazení na hover */
+        .dropdown-link:hover .dropdown-content {
+            display: block !important;
+        }
+        /* Ponecháme zde jen to, co je nezbytně nutné, zbytek necháme na hlavním CSS */
+        @media (max-width: 992px) {
+            .dropdown-link .dropdown-content {
+                position: static;
+                box-shadow: none;
+                border: none;
+                padding: 0;
+                background-color: transparent;
+            }
+            .dropdown-link a {
+                padding-left: 30px;
+            }
         }
     </style>
 </head>
@@ -186,10 +224,6 @@
     </div>
     <div class="scanlines"></div>
     <div class="noise-overlay"></div>
-
-    <div id="loadingSpinner">
-        <div class="spinner"></div>
-    </div>
 
     <nav>
         <div class="nav-container">
@@ -283,9 +317,9 @@
         const searchInput = document.getElementById("searchInput");
         const logTableBody = document.getElementById("logTableBody");
         const refreshButton = document.getElementById("refreshButton");
-        const body = document.body;
-        const loadingSpinner = document.getElementById("loadingSpinner");
+        // const loadingSpinner = document.getElementById("loadingSpinner"); - ODEBRÁNO
         
+        // Zde odstraníme i loadingSpinner z pole
         const contentElements = [document.querySelector('h1'), searchInput, refreshButton, document.querySelector('table'), document.querySelector('.pagination'), document.querySelector('.footer')];
 
         const prevPageButton = document.getElementById("prevPage");
@@ -305,26 +339,17 @@
             };
         }
         
-        function showLoading() {
-            loadingSpinner.classList.add('visible');
-            contentElements
-                .filter(el => el != null) 
-                .forEach(el => el.classList.add('content-hidden'));
-        }
-
-        function hideLoading() {
-            loadingSpinner.classList.remove('visible');
-            setTimeout(() => {
-                contentElements
-                    .filter(el => el != null)
-                    .forEach(el => el.classList.remove('content-hidden'));
-            }, 300); 
-        }
+        // --- FUNKCE PRO SPINNER BYLY ODSTRANĚNY ---
+        // Vzhledem k odstranění spinneru, místo funkcí showLoading a hideLoading 
+        // pouze přidáme/odebereme třídu "content-hidden" přímo v fetchLogs.
 
         // --- Data Fetching and Processing ---
 
         async function fetchLogs(searchTerm = '') {
-            showLoading();
+            // Nahrazujeme showLoading()
+            contentElements
+                .filter(el => el != null) 
+                .forEach(el => el.classList.add('content-hidden'));
             
             const url = searchTerm ? `${API_URL}?search=${encodeURIComponent(searchTerm)}` : API_URL;
 
@@ -347,7 +372,12 @@
                 logTableBody.innerHTML = `<tr><td colspan='7' style="color: red; text-align: center;">Došlo k chybě při komunikaci se serverem: ${error.message}</td></tr>`;
                 console.error("Chyba při načítání logů:", error);
             } finally {
-                hideLoading();
+                // Nahrazujeme hideLoading()
+                setTimeout(() => {
+                    contentElements
+                        .filter(el => el != null)
+                        .forEach(el => el.classList.remove('content-hidden'));
+                }, 300); 
             }
         }
 
