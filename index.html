@@ -301,7 +301,9 @@
                 const res = await fetch('https://rs422cznas.myds.me:5038/status');
                 const data = await res.json();
                 
+                // OPRAVENÁ ČÁST: Nastaví jen text bez emoji/tříd
                 document.getElementById('botStatus').textContent = data.bot_status === 'online' ? 'Online' : 'Offline';
+                
                 document.getElementById('uptime').textContent = formatUptime(data.uptime_seconds);
                 document.getElementById('guilds').textContent = data.guilds.toLocaleString();
                 document.getElementById('users').textContent = data.users.toLocaleString();
@@ -309,7 +311,8 @@
             } catch (e) {
                 console.error("Chyba při komunikaci s API:", e);
                 const defaultErrorText = '—';
-                document.getElementById('botStatus').textContent = 'Chyba';
+                // Chyba API by měla zobrazit, že status není k dispozici
+                document.getElementById('botStatus').textContent = 'Není dostupné';
                 document.getElementById('uptime').textContent = 'N/A';
                 document.getElementById('guilds').textContent = defaultErrorText;
                 document.getElementById('users').textContent = defaultErrorText;
