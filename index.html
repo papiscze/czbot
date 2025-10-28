@@ -108,7 +108,7 @@
             <a href="" class="logo">CZbot</a> 
             <ul class="nav-links">
                 <li class="dropdown-link">
-                    <a href="#features" class="dropbtn">Funkce ▼</a>
+                    <a href="" class="dropbtn">Funkce ▼</a>
                     <div class="dropdown-content">
                         <a href="crongenerator.html">CRON Generator</a>
                         <a href="embedgenerator.html">Embed Generator</a>
@@ -284,37 +284,52 @@
         </div>
     </footer>
 
-    <script src="templatemo-nexus-scripts.js"></script>
+<script src="templatemo-nexus-scripts.js"></script>
     <script>
+        // Funkce pro bezpečné formátování uptime
         function formatUptime(seconds) {
-            const days = Math.floor(seconds / 86400);
-            const hours = Math.floor((seconds % 86400) / 3600);
-            const minutes = Math.floor((seconds % 3600) / 60);
+            // Zajištění, že vstup je validní číslo.
+            if (isNaN(seconds) || seconds < 0) {
+                return "N/A";
+            }
+
+            // KLÍČOVÁ ZMĚNA: Zaokrouhlení na celé sekundy
+            const totalSeconds = Math.floor(seconds); 
+            
+            const days = Math.floor(totalSeconds / 86400);
+            const hours = Math.floor((totalSeconds % 86400) / 3600);
+            const minutes = Math.floor((totalSeconds % 3600) / 60);
+
+            // Zobrazujeme dny, hodiny a minuty
             return `${days}d ${hours}h ${minutes}m`;
         }
 
+        // Funkce pro načítání statistik
         async function loadStats() {
             try {
                 const res = await fetch('https://rs422cznas.myds.me:5038/status');
                 const data = await res.json();
                 
-                // Opraveno: Používáme pouze existující ID elementů z HTML
+                // Úspěšné načtení
                 document.getElementById('botStatus').textContent = data.bot_status === 'online' ? '🟢 Online' : '🔴 Offline';
                 document.getElementById('uptime').textContent = formatUptime(data.uptime_seconds);
                 document.getElementById('guilds').textContent = data.guilds.toLocaleString();
                 document.getElementById('users').textContent = data.users.toLocaleString();
                 
             } catch (e) {
-                // Tato chyba se již neobjeví kvůli opravě ID, ale ponecháme robustní odchyt
                 console.error("Chyba při komunikaci s API:", e);
-                document.getElementById('statsGrid').innerHTML = '<p style="color:#f55;">Chyba při načítání statistik. Zkuste obnovit stránku.</p>';
+                // OPRAVA: Při chybě se vyplní každý prvek zvlášť zástupnou hodnotou
+                document.getElementById('botStatus').textContent = '🔴 Chyba';
+                document.getElementById('uptime').textContent = 'N/A';
+                document.getElementById('guilds').textContent = '—';
+                document.getElementById('users').textContent = '—';
             }
         }
 
         loadStats();
         setInterval(loadStats, 30000);
         
-        // OPRAVA: JS pro funkční mobilní dropdown menu
+        // OPRAVA: JS pro funkční mobilní dropdown menu (ponecháno beze změny)
         document.addEventListener('DOMContentLoaded', () => {
             const dropdownLinks = document.querySelectorAll('.dropdown-link');
             dropdownLinks.forEach(link => {
