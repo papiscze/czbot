@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CZBOT - Výpis prohřešků uživatelů</title>
+    <link href="templatemo-nexus-style.css" rel="stylesheet"> 
+    <style>
+        /* ==================================== */
+        /* STYLY PŘIZPŮSOBENÉ PRO LOGOVACÍ TABULKU */
+        /* ==================================== */
+
+        /* Základní rozložení */
+        .logs-section {
+            padding-top: 150px; 
+            padding-bottom: 80px;
+            min-height: 100vh;
+        }
+
+        .logs-container {
+            max-width: 1400px;
+            margin: auto;
+            padding: 0 20px;
+        }
+
+        /* Sekce hlavičky */
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            color: var(--color-primary, #64c8ff);
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(100, 200, 255, 0.5);
+        }
+
+        .section-subtitle {
+            color: #aaa;
+            font-size: 1.1rem;
+        }
+
+        /* Kontejner pro ovládací prvky */
+        .controls-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        /* Vzhled inputu */
+        #searchInput { 
+            flex-grow: 1;
+            max-width: 400px;
+            padding: 10px 15px;
+            background-color: rgba(30, 30, 50, 0.7);
+            border: 1px solid rgba(100, 200, 255, 0.3);
+            border-radius: 6px;
+            color: #ddd;
+            font-family: inherit;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        #searchInput:focus {
+            border-color: var(--color-primary, #64c8ff);
+            box-shadow: 0 0 5px rgba(100, 200, 255, 0.5);
+            outline: none;
+        }
+
+        /* Tlačítka */
+        .action-button {
+            padding: 10px 15px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s, transform 0.1s;
+            white-space: nowrap;
+            border: none;
+            background-color: rgba(100, 200, 255, 0.15);
+            color: var(--color-primary, #64c8ff);
+            border: 1px solid var(--color-primary, #64c8ff);
+        }
+        .action-button:hover {
+            background-color: rgba(100, 200, 255, 0.3);
+        }
+        .action-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Tabulka */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: rgba(10, 10, 20, 0.7);
+            color: #ddd;
+            border: 1px solid rgba(100, 200, 255, 0.1);
+            border-radius: 12px;
+            overflow: hidden; 
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(100, 200, 255, 0.1);
+        }
+
+        th {
+            background-color: rgba(100, 200, 255, 0.1);
+            color: var(--color-primary, #64c8ff);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+        }
+
+        tr:hover {
+            background-color: rgba(100, 200, 255, 0.05);
+        }
+        
+        /* Paginace */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 30px;
+            gap: 20px;
+        }
+
+        #pageInfo {
+            font-weight: 600;
+            color: #ddd;
+        }
+        
+        /* Loading Spinner */
+        #loadingSpinner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 10000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(5px);
+        }
+        #loadingSpinner.visible {
+            display: flex;
+        }
+        .spinner {
+            border: 8px solid rgba(100, 200, 255, 0.1);
+            border-top: 8px solid var(--color-primary, #64c8ff);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .content-hidden {
+            opacity: 0.1;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+    </style>
+</head>
+<body id="top">
+    <div class="cyber-bg">
+        <div class="cyber-gradient"></div>
+        <div class="matrix-rain" id="matrixRain"></div>
+    </div>
+    <div class="particles" id="particlesContainer"></div>
+    <div class="data-streams" id="dataStreams"></div>
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+    <div class="grid-overlay">
+        <div class="grid-lines"></div>
+        <div class="grid-glow"></div>
+    </div>
+    <div class="scanlines"></div>
+    <div class="noise-overlay"></div>
+
+    <div id="loadingSpinner">
+        <div class="spinner"></div>
+    </div>
+
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">CZbot</a> 
+            <ul class="nav-links">
+                <li class="dropdown-link">
+                    <a href="index.html#features" class="dropbtn">Funkce ▼</a>
+                    <div class="dropdown-content">
+                        <a href="crongenerator.html">CRON Generator</a>
+                        <a href="embedgenerator.html">Embed Generator</a>
+                        <a href="stats.html">Status bota</a> 
+                    </div>
+                </li>
+                
+                <li><a href="commands.html">Příkazy</a></li>
+                <li><a href="warns.html">Moderátorské záznamy</a></li> 
+                <li><a href="https://rs422cznas.myds.me:5038/stats/">Webové statistiky serverů</a></li>
+                <li><a href="https://discord.gg/hk6PdtVxbm" target="_blank">Support server</a></li>
+            </ul>
+            <div class="nav-bottom">
+                <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Přidat na server</a>
+            </div>
+            <button class="mobile-menu-button" id="mobileMenuBtn">
+                <div class="hamburger">
+                    <span></span><span></span><span></span>
+                </div>
+            </button>
+        </div>
+    </nav>
+    
+    <section class="logs-section">
+        <div class="logs-container">
+            <div class="section-header">
+                <h1 class="section-title">CZBOT - Výpis prohřešků uživatelů</h1>
+                <p class="section-subtitle">Záznam všech prohřešků (Ban, Mute, Warn) na serverech.</p>
+            </div>
+
+            <div class="controls-container">
+                <input type="text" id="searchInput" placeholder="Hledat podle ID, jména nebo důvodu..." />
+                <button id="refreshButton" class="action-button">Aktualizovat</button>
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Datum a čas</th>
+                        <th>Uživatel</th>
+                        <th>Důvod</th>
+                        <th>Typ</th>
+                        <th>Moderátor</th>
+                        <th>Expirace</th>
+                        <th>Server</th>
+                    </tr>
+                </thead>
+                <tbody id="logTableBody"></tbody>
+            </table>
+
+            <div class="pagination">
+                <button id="prevPage" class="action-button">Předchozí</button>
+                <span id="pageInfo">Stránka 1 z 1</span>
+                <button id="nextPage" class="action-button">Další</button>
+            </div>
+            
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="https://github.com/papiscze/czbot" target="_blank">GitHub</a>
+                <span class="footer-separator">•</span>
+                <a href="https://discord.gg/hk6PdtVxbm" target="_blank">Support server</a>
+                <span class="footer-separator">•</span>
+                <a href="index.html#features">Funkce</a>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 CZbot. Všechna práva vyhrazena.</p>
+                <p class="footer-credit">Šablona inspirována <a href="https://templatemo.com/tm-594-nexus-flow" target="_blank" rel="noopener nofollow">TemplateMo Nexus Flow</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="templatemo-nexus-scripts.js"></script> 
+    
+    <script>
+        const API_URL = "https://rs422cznas.myds.me:5038/logs"; 
+        
+        const SIMULATED_DELAY_MS = 300; 
+        const RECORDS_PER_PAGE = 20;
+
+        const searchInput = document.getElementById("searchInput");
+        const logTableBody = document.getElementById("logTableBody");
+        const refreshButton = document.getElementById("refreshButton");
+        const body = document.body;
+        const loadingSpinner = document.getElementById("loadingSpinner");
+        
+        const contentElements = [document.querySelector('h1'), searchInput, refreshButton, document.querySelector('table'), document.querySelector('.pagination'), document.querySelector('.footer')];
+
+        const prevPageButton = document.getElementById("prevPage");
+        const nextPageButton = document.getElementById("nextPage");
+        const pageInfoSpan = document.getElementById("pageInfo");
+
+        let allLogs = []; 
+        let currentPage = 1;
+
+        // --- Utility Functions ---
+
+        function debounce(func, delay) {
+            let timeout;
+            return function(...args) {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(this, args), delay);
+            };
+        }
+        
+        function showLoading() {
+            loadingSpinner.classList.add('visible');
+            contentElements
+                .filter(el => el != null) 
+                .forEach(el => el.classList.add('content-hidden'));
+        }
+
+        function hideLoading() {
+            loadingSpinner.classList.remove('visible');
+            setTimeout(() => {
+                contentElements
+                    .filter(el => el != null)
+                    .forEach(el => el.classList.remove('content-hidden'));
+            }, 300); 
+        }
+
+        // --- Data Fetching and Processing ---
+
+        async function fetchLogs(searchTerm = '') {
+            showLoading();
+            
+            const url = searchTerm ? `${API_URL}?search=${encodeURIComponent(searchTerm)}` : API_URL;
+
+            try {
+                const [response] = await Promise.all([
+                    fetch(url),
+                    new Promise(resolve => setTimeout(resolve, SIMULATED_DELAY_MS))
+                ]);
+
+                if (!response.ok) {
+                    logTableBody.innerHTML = `<tr><td colspan='7' style="color: red; text-align: center;">Chyba ${response.status}: Nepodařilo se načíst data ze serveru.</td></tr>`;
+                    console.error("Nepodařilo se načíst data:", response.statusText);
+                    return;
+                }
+                
+                allLogs = await response.json();
+                processLogs(); 
+
+            } catch (error) {
+                logTableBody.innerHTML = `<tr><td colspan='7' style="color: red; text-align: center;">Došlo k chybě při komunikaci se serverem: ${error.message}</td></tr>`;
+                console.error("Chyba při načítání logů:", error);
+            } finally {
+                hideLoading();
+            }
+        }
+
+        function processLogs() {
+            currentPage = 1;
+            displayCurrentPage();
+        }
+
+        function renderTable(logsToDisplay) {
+            logTableBody.innerHTML = "";
+            const totalCols = 7; 
+            if (logsToDisplay.length === 0) {
+                logTableBody.innerHTML = `<tr><td colspan='${totalCols}'>Žádné výsledky</td></tr>`;
+                return;
+            }
+            logsToDisplay.forEach(log => {
+                const tr = document.createElement("tr");
+                const expirationText = log.duration ? log.duration : "N/A"; 
+                
+                const formattedDate = log.timestamp 
+                    ? new Date(log.timestamp).toLocaleString() 
+                    : 'N/A';
+        
+                tr.innerHTML = `
+                    <td>${formattedDate}</td>
+                    <td data-label="Uživatel">${log.user_name || log.user_id}</td>
+                    <td data-label="Důvod">${log.reason}</td>
+                    <td data-label="Typ">${log.action}</td>
+                    <td data-label="Moderátor">${log.moderator_name || log.moderator_id}</td>
+                    <td data-label="Expirace">${expirationText}</td>
+                    <td data-label="Server">${log.guild_name || log.guild_id}</td>
+                `;
+                logTableBody.appendChild(tr);
+            });
+        }
+
+        function updatePaginationButtons() {
+            const totalPages = Math.ceil(allLogs.length / RECORDS_PER_PAGE);
+            pageInfoSpan.textContent = `Stránka ${currentPage} z ${totalPages || 1}`;
+
+            prevPageButton.disabled = currentPage === 1;
+            nextPageButton.disabled = currentPage >= totalPages || totalPages === 0;
+        }
+
+        function displayCurrentPage() {
+            const startIndex = (currentPage - 1) * RECORDS_PER_PAGE;
+            const endIndex = startIndex + RECORDS_PER_PAGE;
+            const logsToDisplay = allLogs.slice(startIndex, endIndex);
+            renderTable(logsToDisplay);
+            updatePaginationButtons();
+        }
+
+        // --- Event Listeners ---
+
+        const debouncedSearch = debounce(() => {
+            const searchQuery = searchInput.value.trim();
+            fetchLogs(searchQuery);
+        }, 500); 
+
+        searchInput.addEventListener("input", debouncedSearch);
+
+        prevPageButton.addEventListener("click", () => {
+            if (currentPage > 1) {
+                currentPage--;
+                displayCurrentPage();
+            }
+        });
+
+        nextPageButton.addEventListener("click", () => {
+            const totalPages = Math.ceil(allLogs.length / RECORDS_PER_PAGE);
+            if (currentPage < totalPages) {
+                currentPage++;
+                displayCurrentPage();
+            }
+        });
+
+        refreshButton.addEventListener('click', () => fetchLogs(searchInput.value.trim()));
+        
+        // --- Initial Load ---
+
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        const initialSearchFilter = getQueryParam('search') || getQueryParam('user'); 
+        if (initialSearchFilter) {
+            searchInput.value = initialSearchFilter;
+        }
+
+        fetchLogs(searchInput.value.trim()); 
+    </script>
+</body>
+</html>

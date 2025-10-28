@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CZbot - Příkazy</title>
+    <link href="templatemo-nexus-style.css" rel="stylesheet"> 
+    <style>
+        /* Specifické styly pro Commands Page */
+        :root {
+            /* PŘEDPOKLÁDANÉ PROMENNÉ Z VAŠEHO CSS SOUBORU */
+            --color-primary: #64c8ff; /* Světle modrá (Nexus Flow styl) */
+            --color-secondary: #fff; /* Bílá */
+        }
+        
+        .commands-section {
+            padding-top: 150px; /* Aby nebyly pod navigací */
+            padding-bottom: 80px;
+            min-height: 100vh; /* Zajistí, že sekce pokryje celou výšku */
+        }
+
+        .commands-container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 20px;
+        }
+
+        .commands-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .commands-title {
+            font-size: 3rem;
+            color: var(--color-primary); 
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(100, 200, 255, 0.5);
+        }
+
+        .commands-subtitle {
+            color: #aaa;
+            font-size: 1.1rem;
+        }
+
+        /* Navigace záložek (inspirováno obrázkem) */
+        .command-tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(100, 200, 255, 0.2);
+            padding-bottom: 10px;
+        }
+
+        .command-tab {
+            background: none;
+            border: none;
+            color: #aaa;
+            padding: 10px 20px;
+            margin: 0 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: color 0.3s, background-color 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: inherit; /* Zajistí, že font je konzistentní */
+        }
+
+        .command-tab:hover, .command-tab.active {
+            color: var(--color-primary);
+            background-color: rgba(100, 200, 255, 0.1);
+            border-radius: 5px;
+        }
+
+        .command-tab.active {
+            font-weight: bold;
+            border-bottom: 2px solid var(--color-primary);
+        }
+
+        /* Vyhledávání */
+        .search-bar {
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .search-bar input {
+            padding: 12px 20px 12px 40px;
+            border-radius: 5px;
+            border: 1px solid rgba(100, 200, 255, 0.3);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            width: 100%;
+            max-width: 600px;
+            font-size: 1rem;
+            /* Ikonka lupy přes Data URI, aby se zobrazil symbol lupy */
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%23aaa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>');
+            background-repeat: no-repeat;
+            background-position: 10px center;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        
+        .search-bar input:focus {
+            border-color: var(--color-primary);
+        }
+
+
+        .search-bar input::placeholder {
+            color: #666;
+        }
+
+        /* Seznam příkazů */
+        .commands-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .command-item {
+            background-color: rgba(10, 10, 20, 0.7);
+            border: 1px solid rgba(100, 200, 255, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .command-item:hover {
+            border-color: rgba(100, 200, 255, 0.3);
+        }
+
+        .command-summary {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            cursor: pointer; /* Zůstává cursor pointer */
+        }
+        
+        .command-summary:hover {
+             background-color: rgba(10, 10, 20, 0.9);
+        }
+
+
+        .command-name {
+            font-size: 1.2rem;
+            color: var(--color-primary); /* Barva pro název příkazu */
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .command-description {
+            color: #aaa;
+            margin: 0 20px;
+            flex-grow: 1;
+            /* Zkrátí dlouhé popisy, aby se vešly na jednu řádku */
+            overflow: hidden;
+            text-overflow: ellipsis; 
+            white-space: nowrap;
+        }
+
+        .command-icon {
+            color: var(--color-primary);
+            font-size: 1.5rem;
+            transition: transform 0.3s;
+            margin-left: 10px;
+        }
+        
+        /* Animace šipky */
+        .command-item.open .command-icon {
+            transform: rotate(180deg);
+        }
+
+        .command-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+            background-color: rgba(0, 0, 0, 0.4);
+            border-top: 1px solid rgba(100, 200, 255, 0.1);
+            padding: 0 20px; /* Počáteční padding 0 */
+        }
+        
+        .command-item.open .command-details {
+            max-height: 500px; /* Dostatečně velká hodnota pro rozbalení */
+            padding: 15px 20px;
+        }
+
+        .command-details p {
+            margin-bottom: 10px;
+            line-height: 1.6;
+            color: #ddd;
+        }
+
+        .command-details strong {
+            color: var(--color-primary);
+        }
+
+        .command-details code {
+            background-color: rgba(100, 200, 255, 0.1);
+            padding: 3px 6px;
+            border-radius: 3px;
+            color: #fff;
+            font-family: monospace;
+        }
+
+        @media (max-width: 768px) {
+            .command-summary {
+                flex-wrap: wrap;
+            }
+            .command-description {
+                flex-basis: 100%;
+                margin: 5px 0 0 0;
+                order: 3;
+                white-space: normal;
+            }
+            .command-icon {
+                order: 2;
+            }
+            .command-name {
+                order: 1;
+            }
+        }
+        /* ==================================== */
+        /* DROPDOWN MENU STYLY (pro navigaci) */
+        /* OPRAVENO: Odstranění kolidujících mobilních stylů */
+        /* ==================================== */
+
+        .dropdown-link {
+            position: relative;
+            display: inline-block;
+        }
+        .dropbtn {
+            padding: 10px 15px;
+            background-color: transparent;
+            color: var(--color-text-light);
+            text-decoration: none;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .dropbtn:hover {
+            color: var(--color-primary);
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: rgba(30, 30, 50, 0.95);
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
+            z-index: 1000;
+            border: 1px solid var(--color-border);
+            border-radius: 6px;
+            padding: 5px 0;
+            backdrop-filter: blur(5px);
+            top: 100%;
+            left: 0;
+        }
+        .dropdown-content a {
+            color: var(--color-text-light);
+            padding: 10px 16px;
+            text-decoration: none;
+            display: block;
+            font-size: 0.95rem;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .dropdown-content a:hover {
+            background-color: var(--color-input-bg);
+            color: var(--color-primary);
+        }
+        .dropdown-link:hover .dropdown-content {
+            display: block;
+        }
+        /* Ponecháme zde jen to, co je nezbytně nutné, zbytek necháme na hlavním CSS */
+        @media (max-width: 992px) {
+            .dropdown-link .dropdown-content {
+                position: static;
+                /* display: none; -- TOTO JSME ODEBRALI, aby se menu zobrazilo uvnitř mobilního menu */
+                box-shadow: none;
+                border: none;
+                padding: 0;
+                background-color: transparent;
+            }
+            .dropdown-link a {
+                padding-left: 30px;
+            }
+        }
+
+    </style>
+</head>
+<body id="top">
+    <div class="cyber-bg">
+        <div class="cyber-gradient"></div>
+        <div class="matrix-rain" id="matrixRain"></div>
+    </div>
+    <div class="particles" id="particlesContainer"></div>
+    <div class="data-streams" id="dataStreams"></div>
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+    <div class="grid-overlay">
+        <div class="grid-lines"></div>
+        <div class="grid-glow"></div>
+    </div>
+    <div class="scanlines"></div>
+    <div class="noise-overlay"></div>
+
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">CZbot</a> 
+            <ul class="nav-links">
+                <li class="dropdown-link">
+                    <a href="index.html#features" class="dropbtn">Funkce ▼</a>
+                    <div class="dropdown-content">
+                        <a href="crongenerator.html">CRON Generator</a>
+                        <a href="embedgenerator.html">Embed Generator</a>
+                        <a href="stats.html">Status bota</a>                        
+                    </div>
+                </li>
+                
+                <li><a href="commands.html">Příkazy</a></li>
+                <li><a href="warns.html">Moderátorské záznamy</a></li> 
+                <li><a href="https://rs422cznas.myds.me:5038/stats/">Webové statistiky serverů</a></li>
+                <li><a href="https://discord.gg/hk6PdtVxbm" target="_blank">Support server</a></li>
+            </ul>
+            <div class="nav-bottom">
+                <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Přidat na server</a>
+            </div>
+            <button class="mobile-menu-button" id="mobileMenuBtn">
+                <div class="hamburger">
+                    <span></span><span></span><span></span>
+                </div>
+            </button>
+        </div>
+    </nav>
+    
+    <section class="commands-section">
+        <div class="commands-container">
+            <div class="commands-header">
+                <h1 class="commands-title">Všechny Příkazy</h1>
+                <p class="commands-subtitle">Zde najdete všechny příkazy poskytované botem CZbot.</p>
+            </div>
+            
+            <div class="command-tabs">
+                <button class="command-tab active" data-category="ALL">ALL</button>
+                <button class="command-tab" data-category="GENERAL">GENERAL</button>
+                <button class="command-tab" data-category="MODERATION">MODERATION</button>
+                <button class="command-tab" data-category="UTILITY">UTILITY</button>
+                <button class="command-tab" data-category="FUN">FUN</button>
+                <button class="command-tab" data-category="SETTINGS">SETTINGS</button>
+                <button class="command-tab" data-category="PLUS">PLUS</button>
+            </div>
+
+            <div class="search-bar">
+                <input type="text" id="commandSearch" placeholder="🔍 Vyhledat příkaz...">
+            </div>
+
+            <div class="commands-list" id="commandsList">
+                
+                <div class="command-item" data-category="GENERAL">
+                    <div class="command-summary">
+                        <span class="command-name">/server</span>
+                        <span class="command-description">Zobrazí informace o serveru</span>
+                        <span class="command-icon">v</span>
+                    </div>
+                    <div class="command-details">
+                        <p><strong>Použití:</strong> <code>/server info</code></p>
+                        <p><strong>Popis:</strong> Vypíše detailní statistiky a informace o aktuálním Discord serveru (počet členů, kanálů, region atd.).</p>
+                    </div>
+                </div>
+
+                <div class="command-item" data-category="GENERAL">
+                    <div class="command-summary">
+                        <span class="command-name">/avatar</span>
+                        <span class="command-description">Zobrazí avatar uživatele nebo serveru</span>
+                        <span class="command-icon">v</span>
+                    </div>
+                    <div class="command-details">
+                        <p><strong>Použití:</strong> <code>/avatar user:@uživatel</code> nebo <code>/avatar server</code></p>
+                        <p><strong>Popis:</strong> Rychlé zobrazení profilového obrázku (avatara) vámi zvoleného uživatele nebo ikony serveru ve vysoké kvalitě.</p>
+                    </div>
+                </div>
+                
+                <div class="command-item" data-category="GENERAL">
+                    <div class="command-summary">
+                        <span class="command-name">/banner</span>
+                        <span class="command-description">Zobrazí banner uživatele nebo serveru</span>
+                        <span class="command-icon">v</span>
+                    </div>
+                    <div class="command-details">
+                        <p><strong>Použití:</strong> <code>/banner user:@uživatel</code> nebo <code>/banner server</code></p>
+                        <p><strong>Popis:</strong> Zobrazí banner (pozadí profilu/serveru) ve vysoké kvalitě.</p>
+                    </div>
+                </div>
+
+                <div class="command-item" data-category="MODERATION">
+                    <div class="command-summary">
+                        <span class="command-name">/ban</span>
+                        <span class="command-description">Zabanuje uživatele ze serveru</span>
+                        <span class="command-icon">v</span>
+                    </div>
+                    <div class="command-details">
+                        <p><strong>Použití:</strong> <code>/ban user:@uživatel reason:důvod</code></p>
+                        <p><strong>Popis:</strong> Trvalé zablokování přístupu uživatele na server. Vyžaduje oprávnění *Ban Members*.</p>
+                        <p><strong>Alias:</strong> <code>/zabanovat</code></p>
+                    </div>
+                </div>
+                
+                <div class="command-item" data-category="MODERATION">
+                    <div class="command-summary">
+                        <span class="command-name">/mute</span>
+                        <span class="command-description">Ztiší uživatele na určenou dobu</span>
+                        <span class="command-icon">v</span>
+                    </div>
+                    <div class="command-details">
+                        <p><strong>Použití:</strong> <code>/mute user:@uživatel time:30m reason:spam</code></p>
+                        <p><strong>Popis:</strong> Omezí uživatele v psaní a mluvení na serveru. Využívá Discord timeout funkci.</p>
+                    </div>
+                </div>
+
+                <div class="command-item" data-category="UTILITY">
+                    <div class="command-summary">
+                        <span class="command-name">/translate</span>
+                        <span class="command-description">Přeloží text do jiného jazyka</span>
+                        <span class="command-icon">v</span>
+                    </div>
+                    <div class="command-details">
+                        <p><strong>Použití:</strong> <code>/translate text:ahoj lang:en</code></p>
+                        <p><strong>Popis:</strong> Využívá překladač k rychlému překladu textu. Podporuje mnoho jazyků, včetně CZ a SK.</p>
+                    </div>
+                </div>
+
+                <div class="command-item" data-category="FUN">
+                    <div class="command-summary">
+                        <span class="command-name">/rep</span>
+                        <span class="command-description">Dá reputační bod uživateli</span>
+                        <span class="command-icon">v</span>
+                    </div>
+                    <div class="command-details">
+                        <p><strong>Použití:</strong> <code>/rep user:@uživatel</code></p>
+                        <p><strong>Popis:</strong> Udělení jednoho bodu reputace uživateli. Lze použít jednou za 12 hodin.</p>
+                    </div>
+                </div>
+
+                <div class="command-item" data-category="SETTINGS">
+                    <div class="command-summary">
+                        <span class="command-name">/welcome</span>
+                        <span class="command-description">Nastaví uvítací zprávy</span>
+                        <span class="command-icon">v</span>
+                    </div>
+                    <div class="command-details">
+                        <p><strong>Použití:</strong> <code>/welcome setup channel:#kanál</code></p>
+                        <p><strong>Popis:</strong> Konfigurace zpráv, které se automaticky pošlou novým členům při vstupu na server.</p>
+                    </div>
+                </div>
+                
+            </div>
+            
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="https://github.com/papiscze/czbot" target="_blank">GitHub</a>
+                <span class="footer-separator">•</span>
+                <a href="https://discord.gg/hk6PdtVxbm" target="_blank">Support server</a>
+                <span class="footer-separator">•</span>
+                <a href="#features">Funkce</a>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 CZbot. Všechna práva vyhrazena.</p>
+                <p class="footer-credit">Šablona inspirována <a href="https://templatemo.com/tm-594-nexus-flow" target="_blank" rel="noopener nofollow">TemplateMo Nexus Flow</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="templatemo-nexus-scripts.js"></script> 
+    <script>
+        // Logika pro rozbalování detailů příkazů
+        document.querySelectorAll('.command-item').forEach(item => {
+            const summary = item.querySelector('.command-summary');
+            if (summary) {
+                summary.addEventListener('click', (e) => {
+                    e.stopPropagation(); 
+                    
+                    item.classList.toggle('open');
+                    
+                    // (Volitelné) Zavře ostatní, pokud nechcete mít otevřeno více najednou
+                    document.querySelectorAll('.command-item.open').forEach(other => {
+                        if (other !== item) {
+                            other.classList.remove('open');
+                        }
+                    });
+                });
+            }
+        });
+
+        // =========================================================
+        // OPRAVENÁ LOGIKA PRO FILTROVÁNÍ A VYHLEDÁVÁNÍ
+        // =========================================================
+
+        const tabs = document.querySelectorAll('.command-tab');
+        const searchInput = document.getElementById('commandSearch');
+        const commandItems = document.querySelectorAll('.command-item');
+
+        // Funkce pro získání aktuálně aktivní kategorie
+        function getActiveCategory() {
+            const activeTab = document.querySelector('.command-tab.active');
+            return activeTab ? activeTab.getAttribute('data-category') : 'ALL';
+        }
+
+        // Hlavní funkce pro filtrování
+        function filterCommands() {
+            const category = getActiveCategory();
+            const searchTerm = searchInput.value.toLowerCase().trim();
+
+            commandItems.forEach(item => {
+                const itemCategory = item.getAttribute('data-category');
+                
+                const nameElement = item.querySelector('.command-name');
+                const descElement = item.querySelector('.command-description');
+                
+                // Zajištění, že se hledá ve správných textových polích
+                const itemName = nameElement ? nameElement.textContent.toLowerCase() : '';
+                const itemDescription = descElement ? descElement.textContent.toLowerCase() : '';
+
+                // 1. Filtr podle kategorie
+                const categoryMatch = category === 'ALL' || itemCategory === category;
+                
+                // 2. Filtr podle vyhledávání (hledáme v názvu nebo popisu)
+                const searchMatch = !searchTerm || itemName.includes(searchTerm) || itemDescription.includes(searchTerm);
+
+                // Zobrazení/Skrytí
+                if (categoryMatch && searchMatch) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                    // Zavřít rozbalený příkaz, pokud je skrytý
+                    item.classList.remove('open'); 
+                }
+            });
+        }
+        
+        // Listener pro záložky
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Nastaví aktivní záložku
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // Spustí filtrování
+                filterCommands();
+            });
+        });
+
+        // Listener pro vyhledávání (spouští filtrování při každé změně)
+        searchInput.addEventListener('input', () => {
+            filterCommands();
+        });
+
+        // Po načtení stránky aplikuje výchozí filtr (ALL)
+        document.addEventListener('DOMContentLoaded', () => {
+            // Zajistí, že záložka "ALL" je aktivní na začátku, pokud nebyla
+            if (!document.querySelector('.command-tab.active')) {
+                const allTab = document.querySelector('.command-tab[data-category="ALL"]');
+                if (allTab) allTab.classList.add('active');
+            }
+            filterCommands();
+        });
+    </script>
+</body>
+</html>
