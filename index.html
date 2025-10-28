@@ -1,345 +1,345 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="cs">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CZbot - Inteligentní Discord bot</title>
-    <link href="templatemo-nexus-style.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CZbot - Inteligentní Discord bot</title>
+    <link href="templatemo-nexus-style.css" rel="stylesheet">
 <style>
-        /* ==================================== */
-        /* DROPDOWN MENU STYLY (pro navigaci) */
-        /* ==================================== */
+        /* ==================================== */
+        /* DROPDOWN MENU STYLY (pro navigaci) */
+        /* ==================================== */
 
-        .dropdown-link {
-            position: relative;
-            display: inline-block;
-        }
-        .dropbtn {
-            padding: 10px 15px;
-            background-color: transparent;
-            color: var(--color-text-light);
-            text-decoration: none;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-        .dropbtn:hover {
-            color: var(--color-primary);
-        }
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: rgba(30, 30, 50, 0.95);
-            min-width: 200px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
-            z-index: 1000;
-            border: 1px solid var(--color-border);
-            border-radius: 6px;
-            padding: 5px 0;
-            backdrop-filter: blur(5px);
-            top: 100%;
-            left: 0;
-        }
-        .dropdown-content a {
-            color: var(--color-text-light);
-            padding: 10px 16px;
-            text-decoration: none;
-            display: block;
-            font-size: 0.95rem;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        .dropdown-content a:hover {
-            background-color: var(--color-input-bg);
-            color: var(--color-primary);
-        }
-        .dropdown-link:hover .dropdown-content {
-            display: block;
-        }
-        
-        /* ==================================== */
-        /* OPRAVA MOBILNÍHO ZOBRAZENÍ */
-        /* ==================================== */
+        .dropdown-link {
+            position: relative;
+            display: inline-block;
+        }
+        .dropbtn {
+            padding: 10px 15px;
+            background-color: transparent;
+            color: var(--color-text-light);
+            text-decoration: none;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .dropbtn:hover {
+            color: var(--color-primary);
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: rgba(30, 30, 50, 0.95);
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
+            z-index: 1000;
+            border: 1px solid var(--color-border);
+            border-radius: 6px;
+            padding: 5px 0;
+            backdrop-filter: blur(5px);
+            top: 100%;
+            left: 0;
+        }
+        .dropdown-content a {
+            color: var(--color-text-light);
+            padding: 10px 16px;
+            text-decoration: none;
+            display: block;
+            font-size: 0.95rem;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .dropdown-content a:hover {
+            background-color: var(--color-input-bg);
+            color: var(--color-primary);
+        }
+        .dropdown-link:hover .dropdown-content {
+            display: block;
+        }
+        
+        /* ==================================== */
+        /* OPRAVA MOBILNÍHO ZOBRAZENÍ */
+        /* ==================================== */
 
-        /* Mobilní dropdown: CSS musí být jen statický, JS se postará o display:block */
-        @media (max-width: 992px) {
-            .dropdown-link .dropdown-content {
-                position: static;
-                box-shadow: none;
-                border: none;
-                padding: 0;
-                background-color: transparent;
-                display: none; /* Skryje na mobilu, dokud JS nepřepne */
-            }
-            .dropdown-link a {
-                padding-left: 30px;
-            }
-        }
-        
-        /* OPRAVA: Překrývání tlačítek v sekci "Přidej si CZbota" na mobilu */
-        @media (max-width: 768px) {
-            .pricing-card .btn-primary, .pricing-card .btn-secondary {
-                display: block; 
-                width: 100%;
-                margin-bottom: 15px; /* Větší mezera */
-            }
-        }
-        
-</style>    
+        /* Mobilní dropdown: CSS musí být jen statický, JS se postará o display:block */
+        @media (max-width: 992px) {
+            .dropdown-link .dropdown-content {
+                position: static;
+                box-shadow: none;
+                border: none;
+                padding: 0;
+                background-color: transparent;
+                display: none; /* Skryje na mobilu, dokud JS nepřepne */
+            }
+            .dropdown-link a {
+                padding-left: 30px;
+            }
+        }
+        
+        /* OPRAVA: Překrývání tlačítek v sekci "Přidej si CZbota" na mobilu */
+        @media (max-width: 768px) {
+            .pricing-card .btn-primary, .pricing-card .btn-secondary {
+                display: block; 
+                width: 100%;
+                margin-bottom: 15px; /* Větší mezera */
+            }
+        }
+        
+</style>    
 </head>
 <body id="top">
-    <div class="cyber-bg">
-        <div class="cyber-gradient"></div>
-        <div class="matrix-rain" id="matrixRain"></div>
-    </div>
-    <div class="particles" id="particlesContainer"></div>
-    <div class="data-streams" id="dataStreams"></div>
-    <div class="orb orb1"></div>
-    <div class="orb orb2"></div>
-    <div class="orb orb3"></div>
-    <div class="grid-overlay">
-        <div class="grid-lines"></div>
-        <div class="grid-glow"></div>
-    </div>
-    <div class="scanlines"></div>
-    <div class="noise-overlay"></div>
+    <div class="cyber-bg">
+        <div class="cyber-gradient"></div>
+        <div class="matrix-rain" id="matrixRain"></div>
+    </div>
+    <div class="particles" id="particlesContainer"></div>
+    <div class="data-streams" id="dataStreams"></div>
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+    <div class="grid-overlay">
+        <div class="grid-lines"></div>
+        <div class="grid-glow"></div>
+    </div>
+    <div class="scanlines"></div>
+    <div class="noise-overlay"></div>
 
-    <nav>
-        <div class="nav-container">
-            <a href="" class="logo">CZbot</a> 
-            <ul class="nav-links">
-                <li class="dropdown-link">
-                    <a href="" class="dropbtn">Funkce ▼</a>
-                    <div class="dropdown-content">
-                        <a href="crongenerator.html">CRON Generator</a>
-                        <a href="embedgenerator.html">Embed Generator</a>
-                        <a href="stats.html">Status bota</a>                                
-                    </div>
-                </li>
-                
-                <li><a href="commands.html">Příkazy</a></li>
-                <li><a href="warns.html">Moderátorské záznamy</a></li> 
-                <li><a href="https://rs422cznas.myds.me:5038/stats/">Webové statistiky serverů</a></li>
-                <li><a href="https://discord.gg/hk6PdtVxbm" target="_blank">Support server</a></li>
-            </ul>
-            <div class="nav-bottom">
-                <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Přidat na server</a>
-            </div>
-            <button class="mobile-menu-button" id="mobileMenuBtn">
-                <div class="hamburger">
-                    <span></span><span></span><span></span>
-                </div>
-            </button>
-        </div>
-    </nav>
+    <nav>
+        <div class="nav-container">
+            <a href="" class="logo">CZbot</a> 
+            <ul class="nav-links">
+                <li class="dropdown-link">
+                    <a href="" class="dropbtn">Funkce ▼</a>
+                    <div class="dropdown-content">
+                        <a href="crongenerator.html">CRON Generator</a>
+                        <a href="embedgenerator.html">Embed Generator</a>
+                        <a href="stats.html">Status bota</a>                                
+                    </div>
+                </li>
+                
+                <li><a href="commands.html">Příkazy</a></li>
+                <li><a href="warns.html">Moderátorské záznamy</a></li> 
+                <li><a href="https://rs422cznas.myds.me:5038/stats/">Webové statistiky serverů</a></li>
+                <li><a href="https://discord.gg/hk6PdtVxbm" target="_blank">Support server</a></li>
+            </ul>
+            <div class="nav-bottom">
+                <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Přidat na server</a>
+            </div>
+            <button class="mobile-menu-button" id="mobileMenuBtn">
+                <div class="hamburger">
+                    <span></span><span></span><span></span>
+                </div>
+            </button>
+        </div>
+    </nav>
 
-    <section class="hero">
-        <div class="hero-container">
-            <h1 class="hero-title">
-                <span class="hero-nexus">CZ</span><span class="hero-flow">bot</span>
-            </h1>
-            <p class="hero-subtitle">
-                Inteligentní Discord bot s automatizací, moderací a pokročilými funkcemi pro každý server.
-            </p>
-            <div class="hero-buttons">
-                <a href="https://github.com/papiscze/czbot/wiki" class="btn-primary">GitHub Wiki</a>
-                <a href="https://discord.gg/hk6PdtVxbm" target="_blank" class="btn-secondary">Support server</a>
-            </div>
-        </div>
-    </section>
+    <section class="hero">
+        <div class="hero-container">
+            <h1 class="hero-title">
+                <span class="hero-nexus">CZ</span><span class="hero-flow">bot</span>
+            </h1>
+            <p class="hero-subtitle">
+                Inteligentní Discord bot s automatizací, moderací a pokročilými funkcemi pro každý server.
+            </p>
+            <div class="hero-buttons">
+                <a href="https://github.com/papiscze/czbot/wiki" class="btn-primary">GitHub Wiki</a>
+                <a href="https://discord.gg/hk6PdtVxbm" target="_blank" class="btn-secondary">Support server</a>
+            </div>
+        </div>
+    </section>
 
-    <section class="stats fade-up" id="stats">
-        <div class="stats-container">
-            <div class="section-header">
-                <h2 class="section-title">Statistiky Bota</h2>
-            </div>
+    <section class="stats fade-up" id="stats">
+        <div class="stats-container">
+            <div class="section-header">
+                <h2 class="section-title">Statistiky Bota</h2>
+            </div>
 
-            <div class="stats-grid" id="statsGrid">
-                <div class="stat-item">
-                    <span class="stat-number" id="botStatus">—</span>
-                    <span class="stat-label">Status bota</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number" id="guilds">—</span>
-                    <span class="stat-label">Serverů</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number" id="users">—</span>
-                    <span class="stat-label">Uživatelů</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number" id="uptime">—</span>
-                    <span class="stat-label">Uptime</span>
-                </div>
-            </div>
-        </div>
-    </section>
+            <div class="stats-grid" id="statsGrid">
+                <div class="stat-item">
+                    <span class="stat-number" id="botStatus">—</span>
+                    <span class="stat-label">Status bota</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="guilds">—</span>
+                    <span class="stat-label">Serverů</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="users">—</span>
+                    <span class="stat-label">Uživatelů</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="uptime">—</span>
+                    <span class="stat-label">Uptime</span>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <section class="features fade-up" id="features">
-        <div class="features-container">
-            <div class="section-header">
-                <h2 class="section-title">Klíčové Funkce</h2>
-                <p class="section-subtitle">CZbot přináší špičkové nástroje pro automatizaci, správu komunity a bezpečnost.</p>
-            </div>
-            
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">🛡️</div>
-                    <h3>Ochrana serverů</h3>
-                    <p>Inteligentní ochrana proti spamům, scamům.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🌍</div>
-                    <h3>Lokalizace</h3>
-                    <p>Podpora překládání zpráv a komunikace od bota v požadované lokalizaci.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🎟️</div>
-                    <h3>Tvorba vláken</h3>
-                    <p>Automatické vytváření vláken na zprávy v definovaných kanálech pro přehlednost kanálů.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📰</div>
-                    <h3>RSS a Changelog notifikace</h3>
-                    <p>Automatický odběr novinek z RSS kanálů a odesílání z kanálů oznámení na jiné servery.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">⚙️</div>
-                    <h3>Plánovač a reakční role</h3>
-                    <p>Naplánuj zprávy, připomeň akce nebo přiřazuj role reakcemi – vše přímo z Discordu bez externích nástrojů.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🎡</div>
-                    <h3>Zábavné moduly</h3>
-                    <p>Kolo štěstí, reputační systém, AFK zprávy a další interaktivní funkce pro aktivní komunitu.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+    <section class="features fade-up" id="features">
+        <div class="features-container">
+            <div class="section-header">
+                <h2 class="section-title">Klíčové Funkce</h2>
+                <p class="section-subtitle">CZbot přináší špičkové nástroje pro automatizaci, správu komunity a bezpečnost.</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>Ochrana serverů</h3>
+                    <p>Inteligentní ochrana proti spamům, scamům.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <h3>Lokalizace</h3>
+                    <p>Podpora překládání zpráv a komunikace od bota v požadované lokalizaci.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎟️</div>
+                    <h3>Tvorba vláken</h3>
+                    <p>Automatické vytváření vláken na zprávy v definovaných kanálech pro přehlednost kanálů.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📰</div>
+                    <h3>RSS a Changelog notifikace</h3>
+                    <p>Automatický odběr novinek z RSS kanálů a odesílání z kanálů oznámení na jiné servery.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚙️</div>
+                    <h3>Plánovač a reakční role</h3>
+                    <p>Naplánuj zprávy, připomeň akce nebo přiřazuj role reakcemi – vše přímo z Discordu bez externích nástrojů.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎡</div>
+                    <h3>Zábavné moduly</h3>
+                    <p>Kolo štěstí, reputační systém, AFK zprávy a další interaktivní funkce pro aktivní komunitu.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <section class="pricing fade-up" id="invite">
-        <div class="pricing-container">
-            <div class="section-header">
-                <h2 class="section-title">Přidej si CZbota</h2>
-                <p class="section-subtitle">Začni využívat pokročilé funkce zdarma.</p>
-            </div>
-            
-            <div class="pricing-grid">
-                <div class="pricing-card featured">
-                    <div class="plan-name">CZbot</div>
-                    <div class="plan-price">Zdarma</div>
-                    <div class="plan-period">bez omezení</div>
-                    <ul class="plan-features">
-                        <li>Audio Stream</li>
-                        <li>Auditlogger</li>
-                        <li>Automatické publikování zpráv z kanálů oznámení</li>
-                        <li>Autorole, Ověřování uživatelů a Reakční role</li>
-                        <li>Běžné moderátorské příkazy</li>
-                        <li>Běžné uživatelské a zábavné příkazy</li>
-                        <li>Crossban</li>
-                        <li>Dočasné hlasové kanály</li>
-                        <li>GDPR</li>
-                        <li>Giveaway(e)</li>
-                        <li>Narozeniny</li>
-                        <li>Patreon</li>
-                        <li>Pokročilé plánované zprávy</li>
-                        <li>Počítání</li>
-                        <li>Reakce smajlíky na zprávy</li>
-                        <li>Reputace</li>
-                        <li>RSS Čtečka</li>
-                        <li>Scam Prevence</li>
-                        <li>Schedules - Plánované zprávy</li>
-                        <li>Statistiky serveru</li>
-                        <li>Svátky (CZ SK)</li>
-                        <li>Systém zpětné vazby a návrhů</li>
-                        <li>Tikety</li>
-                        <li>Translate modul</li>
-                        <li>Tvorba vláken na zprávy</li>
-                        <li>Uvítací a odchodové zprávy (Welcome Leave)</li>
-                        <li>Vodoznak s vlastním textem na obrázky</li>
-                        <li>Vote - Hlasování</li>
-                        <li>XP systém a úrovně</li>
-                        <li>Zpovědi (Anonymní Zprávy)</li>
-                        <li>Zálohování a Obnova Serverů</li>
-                    </ul>
-                    <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="btn-primary" target="_blank">Přidat na Discord</a>
-                    <a href="https://discord.gg/hk6PdtVxbm" class="btn-secondary" target="_blank">Support server</a>
-                </div>
-            </div>
-        </div>
-    </section>
+    <section class="pricing fade-up" id="invite">
+        <div class="pricing-container">
+            <div class="section-header">
+                <h2 class="section-title">Přidej si CZbota</h2>
+                <p class="section-subtitle">Začni využívat pokročilé funkce zdarma.</p>
+            </div>
+            
+            <div class="pricing-grid">
+                <div class="pricing-card featured">
+                    <div class="plan-name">CZbot</div>
+                    <div class="plan-price">Zdarma</div>
+                    <div class="plan-period">bez omezení</div>
+                    <ul class="plan-features">
+                        <li>Audio Stream</li>
+                        <li>Auditlogger</li>
+                        <li>Automatické publikování zpráv z kanálů oznámení</li>
+                        <li>Autorole, Ověřování uživatelů a Reakční role</li>
+                        <li>Běžné moderátorské příkazy</li>
+                        <li>Běžné uživatelské a zábavné příkazy</li>
+                        <li>Crossban</li>
+                        <li>Dočasné hlasové kanály</li>
+                        <li>GDPR</li>
+                        <li>Giveaway(e)</li>
+                        <li>Narozeniny</li>
+                        <li>Patreon</li>
+                        <li>Pokročilé plánované zprávy</li>
+                        <li>Počítání</li>
+                        <li>Reakce smajlíky na zprávy</li>
+                        <li>Reputace</li>
+                        <li>RSS Čtečka</li>
+                        <li>Scam Prevence</li>
+                        <li>Schedules - Plánované zprávy</li>
+                        <li>Statistiky serveru</li>
+                        <li>Svátky (CZ SK)</li>
+                        <li>Systém zpětné vazby a návrhů</li>
+                        <li>Tikety</li>
+                        <li>Translate modul</li>
+                        <li>Tvorba vláken na zprávy</li>
+                        <li>Uvítací a odchodové zprávy (Welcome Leave)</li>
+                        <li>Vodoznak s vlastním textem na obrázky</li>
+                        <li>Vote - Hlasování</li>
+                        <li>XP systém a úrovně</li>
+                        <li>Zpovědi (Anonymní Zprávy)</li>
+                        <li>Zálohování a Obnova Serverů</li>
+                    </ul>
+                    <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="btn-primary" target="_blank">Přidat na Discord</a>
+                    <a href="https://discord.gg/hk6PdtVxbm" class="btn-secondary" target="_blank">Support server</a>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-links">
-                <a href="https://github.com/papiscze/czbot" target="_blank">GitHub</a>
-                <span class="footer-separator">•</span>
-                <a href="https://discord.gg/hk6PdtVxbm" target="_blank">Support server</a>
-                <span class="footer-separator">•</span>
-                <a href="#features">Funkce</a>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 CZbot. Všechna práva vyhrazena.</p>
-                <p class="footer-credit">Šablona inspirována <a href="https://templatemo.com/tm-594-nexus-flow" target="_blank" rel="noopener nofollow">TemplateMo Nexus Flow</a></p>
-            </div>
-        </div>
-    </footer>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="https://github.com/papiscze/czbot" target="_blank">GitHub</a>
+                <span class="footer-separator">•</span>
+                <a href="https://discord.gg/hk6PdtVxbm" target="_blank">Support server</a>
+                <span class="footer-separator">•</span>
+                <a href="#features">Funkce</a>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 CZbot. Všechna práva vyhrazena.</p>
+                <p class="footer-credit">Šablona inspirována <a href="https://templatemo.com/tm-594-nexus-flow" target="_blank" rel="noopener nofollow">TemplateMo Nexus Flow</a></p>
+            </div>
+        </div>
+    </footer>
 
-    <script src="templatemo-nexus-scripts.js"></script>
-    <script>
-        // Funkce pro bezpečné a ZJEDNODUŠENÉ formátování uptime - zobrazuje POUZE celé hodiny
-        function formatUptime(seconds) {
-            if (isNaN(seconds) || seconds < 0) {
-                return "N/A";
-            }
-            const totalHours = Math.floor(seconds / 3600);
-            return `${totalHours}h`;
-        }
+    <script src="templatemo-nexus-scripts.js"></script>
+    <script>
+        // Funkce pro bezpečné a ZJEDNODUŠENÉ formátování uptime - zobrazuje POUZE celé hodiny
+        function formatUptime(seconds) {
+            if (isNaN(seconds) || seconds < 0) {
+                return "N/A";
+            }
+            const totalHours = Math.floor(seconds / 3600);
+            return `${totalHours}h`;
+        }
 
-        // Funkce pro načítání statistik
-        async function loadStats() {
-            try {
-                const res = await fetch('https://rs422cznas.myds.me:5038/status');
-                const data = await res.json();
-                
-                document.getElementById('botStatus').textContent = data.bot_status === 'online' ? '🟢 Online' : '🔴 Offline';
-                document.getElementById('uptime').textContent = formatUptime(data.uptime_seconds);
-                document.getElementById('guilds').textContent = data.guilds.toLocaleString();
-                document.getElementById('users').textContent = data.users.toLocaleString();
-                
-            } catch (e) {
-                console.error("Chyba při komunikaci s API:", e);
-                const defaultErrorText = '—';
-                document.getElementById('botStatus').textContent = '🔴 Chyba';
-                document.getElementById('uptime').textContent = 'N/A';
-                document.getElementById('guilds').textContent = defaultErrorText;
-                document.getElementById('users').textContent = defaultErrorText;
-            }
-        }
+        // Funkce pro načítání statistik
+        async function loadStats() {
+            try {
+                const res = await fetch('https://rs422cznas.myds.me:5038/status');
+                const data = await res.json();
+                
+                document.getElementById('botStatus').textContent = data.bot_status === 'online' ? '🟢 Online' : '🔴 Offline';
+                document.getElementById('uptime').textContent = formatUptime(data.uptime_seconds);
+                document.getElementById('guilds').textContent = data.guilds.toLocaleString();
+                document.getElementById('users').textContent = data.users.toLocaleString();
+                
+            } catch (e) {
+                console.error("Chyba při komunikaci s API:", e);
+                const defaultErrorText = '—';
+                document.getElementById('botStatus').textContent = '🔴 Chyba';
+                document.getElementById('uptime').textContent = 'N/A';
+                document.getElementById('guilds').textContent = defaultErrorText;
+                document.getElementById('users').textContent = defaultErrorText;
+            }
+        }
 
-        loadStats();
-        setInterval(loadStats, 30000);
-        
-        // OPRAVA: JS pro funkční mobilní dropdown menu a zavření menu po kliku
-        document.addEventListener('DOMContentLoaded', () => {
-            const navLinks = document.querySelector('.nav-links'); // Hlavní menu
-            const mobileMenuBtn = document.getElementById('mobileMenuBtn'); // Tlačítko pro menu
+        loadStats();
+        setInterval(loadStats, 30000);
+        
+        // OPRAVA: JS pro funkční mobilní dropdown menu a zavření menu po kliku
+        document.addEventListener('DOMContentLoaded', () => {
+            const navLinks = document.querySelector('.nav-links'); // Hlavní menu
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn'); // Tlačítko pro menu
 
-            // Logika pro mobilní dropdown (sekce "Funkce")
-            const dropdownLinks = document.querySelectorAll('.dropdown-link');
-            dropdownLinks.forEach(link => {
-                const dropbtn = link.querySelector('.dropbtn');
-                const dropdownContent = link.querySelector('.dropdown-content');
+            // Logika pro mobilní dropdown (sekce "Funkce")
+            const dropdownLinks = document.querySelectorAll('.dropdown-link');
+            dropdownLinks.forEach(link => {
+                const dropbtn = link.querySelector('.dropbtn');
+                const dropdownContent = link.querySelector('.dropdown-content');
 
-                if (dropbtn) {
-                    dropbtn.addEventListener('click', function(e) {
-                        // Spouští se pouze na mobilních zařízeních (šířka menší než 992px)
-                        if (window.innerWidth <= 992 && dropdownContent) {
-                            e.preventDefault(); 
-                            // Přepíná display: block / none
-                            dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
-                        }
-                    });
-                }
+                if (dropbtn) {
+                    dropbtn.addEventListener('click', function(e) {
+                        // Spouští se pouze na mobilních zařízeních (šířka menší než 992px)
+                        if (window.innerWidth <= 992 && dropdownContent) {
+                            e.preventDefault(); 
+                            // Přepíná display: block / none
+                            dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+                        }
+                    });
+                }
 
                 // NOVÁ LOGIKA: Zavření mobilního menu po kliknutí na jakýkoli odkaz uvnitř dropdownu
                 if (dropdownContent) {
@@ -353,7 +353,7 @@
                         });
                     });
                 }
-            });
+            });
 
             // Původní logika pro zavření menu po kliknutí na "Přidat na server"
             const navBottomLink = document.querySelector('.nav-bottom a');
@@ -376,7 +376,7 @@
                     }
                 });
             });
-        });
-    </script>
+        });
+    </script>
 </body>
 </html>
