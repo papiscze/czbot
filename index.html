@@ -105,10 +105,10 @@
 
     <nav>
         <div class="nav-container">
-            <a href="index.html" class="logo">CZbot</a> 
+            <a href="" class="logo">CZbot</a> 
             <ul class="nav-links">
                 <li class="dropdown-link">
-                    <a href="index.html#features" class="dropbtn">Funkce ▼</a>
+                    <a href="#features" class="dropbtn">Funkce ▼</a>
                     <div class="dropdown-content">
                         <a href="crongenerator.html">CRON Generator</a>
                         <a href="embedgenerator.html">Embed Generator</a>
@@ -284,27 +284,13 @@
         </div>
     </footer>
 
-<script src="templatemo-nexus-scripts.js"></script>
+    <script src="templatemo-nexus-scripts.js"></script>
     <script>
         function formatUptime(seconds) {
-            // Zajištění, že vstup je validní číslo. Pokud ne, vrátíme zástupný text.
-            if (isNaN(seconds) || seconds < 0) {
-                return "N/A";
-            }
-
-            const totalSeconds = Math.floor(seconds);
-            const days = Math.floor(totalSeconds / 86400);
-            const hours = Math.floor((totalSeconds % 86400) / 3600);
-            const minutes = Math.floor((totalSeconds % 3600) / 60);
-
-            // Zobrazíme jen ty části, které jsou > 0 (kromě minut, které zobrazíme vždy, pokud jsou dny/hodiny 0)
-            if (days > 0) {
-                return `${days}d ${hours}h ${minutes}m`;
-            } else if (hours > 0) {
-                return `${hours}h ${minutes}m`;
-            } else {
-                return `${minutes}m`;
-            }
+            const days = Math.floor(seconds / 86400);
+            const hours = Math.floor((seconds % 86400) / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
+            return `${days}d ${hours}h ${minutes}m`;
         }
 
         async function loadStats() {
@@ -319,15 +305,9 @@
                 document.getElementById('users').textContent = data.users.toLocaleString();
                 
             } catch (e) {
+                // Tato chyba se již neobjeví kvůli opravě ID, ale ponecháme robustní odchyt
                 console.error("Chyba při komunikaci s API:", e);
-                // Zobrazíme chybu a zástupný text pro všechny statistiky
-                document.getElementById('botStatus').textContent = '🔴 Chyba';
-                document.getElementById('uptime').textContent = 'N/A';
-                document.getElementById('guilds').textContent = '—';
-                document.getElementById('users').textContent = '—';
-                
-                // Alternativně můžete zobrazit zprávu o chybě, jak jste to měl původně:
-                // document.getElementById('statsGrid').innerHTML = '<p style="color:#f55;">Chyba při načítání statistik. Zkuste obnovit stránku.</p>';
+                document.getElementById('statsGrid').innerHTML = '<p style="color:#f55;">Chyba při načítání statistik. Zkuste obnovit stránku.</p>';
             }
         }
 
