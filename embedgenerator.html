@@ -5,7 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CZBOT - Embed Generátor</title>
     <link href="templatemo-nexus-style.css" rel="stylesheet">
-    <link href="embed-generator.css" rel="stylesheet"> 
+    <style>
+        /* Styl pro zobrazení stavu odesílání */
+        .webhook-status {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none; /* Ve výchozím nastavení skryté */
+            font-weight: bold;
+        }
+        .webhook-status.success {
+            background-color: rgba(50, 205, 50, 0.2); /* Lime Green */
+            color: #32cd32;
+            border: 1px solid #32cd32;
+        }
+        .webhook-status.error {
+            background-color: rgba(255, 69, 0, 0.2); /* Red Orange */
+            color: #ff4500;
+            border: 1px solid #ff4500;
+        }
+    </style>
 </head>
 <body id="top">
     <div class="cyber-bg">
@@ -30,134 +49,632 @@
     <div class="noise-overlay"></div>
     
     <nav>
-        </nav>
-    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
-    <div class="mobile-menu" id="mobileMenu">
-        </div>
-    
-    <main class="content-section">
-        <div class="container embed-generator-container">
-            <section class="section-title fade-up">
-                <h1>Embed Generátor</h1>
-                <p class="subtitle">Vytvořte a přizpůsobte si vlastní Discord Embed zprávu.</p>
-            </section>
+        <div class="nav-container">
+            <a href="index.html" class="logo">CZbot</a>
+            
+            <ul class="nav-links">
+                <li><a href="commands.html">Příkazy</a></li>
 
-            <div class="embed-layout">
-                <div class="embed-control-panel fade-up">
-                    <h2 class="section-heading">Nastavení Embedu</h2>
-                    
-                    <form id="embedForm">
-                        <div class="control-group">
-                            <label for="embedTitle">Titulek (Title)</label>
-                            <input type="text" id="embedTitle" maxlength="256" placeholder="Maximálně 256 znaků">
-                        </div>
-                        
-                        <div class="control-group">
-                            <label for="embedDescription">Popis (Description)</label>
-                            <textarea id="embedDescription" rows="5" maxlength="4096" placeholder="Maximálně 4096 znaků"></textarea>
-                        </div>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Moduly ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="modules/auditlogger.html">Auditlogger</a></li>
+                        <li><a href="modules/audio_stream.html">Audio Stream</a></li>
+                        <li><a href="modules/autopublish.html">Automatické publikování zpráv z kanálů oznámení</a></li>
+                        <li><a href="modules/autorole.html">Autorole, Ověřování uživatelů a Reakční role</a></li>
+                        <li><a href="modules/basic_user_commands.html">Běžné uživatelské a zábavné příkazy</a></li>
+                        <li><a href="modules/basic_mod_commands.html">Běžné moderátorské příkazy</a></li>
+                        <li><a href="modules/bot_localization.html">Bot localization and Language Settings</a></li>
+                        <li><a href="modules/modules/crossban.html">Crossban</a></li>
+                        <li><a href="modules/temp_voice.html">Dočasné hlasové kanály</a></li>
+                        <li><a href="modules/giveaway.html">Giveaway(e)</a></li>
+                        <li><a href="modules/birthdays.html">Narozeniny</a></li>
+                        <li><a href="modules/patreon.html">Patreon</a></li>
+                        <li><a href="modules/counting.html">Počítání</a></li>
+                        <li><a href="modules/advanced_schedules.html">Pokročilé plánované zprávy</a></li>
+                        <li><a href="modules/reactions.html">Reakce smajlíky na zprávy</a></li>
+                        <li><a href="modules/reputation.html">Reputace</a></li>
+                        <li><a href="modules/rss_reader.html">RSS Čtečka</a></li>
+                        <li><a href="modules/scam_prevence.html">Scam Prevence</a></li>
+                        <li><a href="modules/schedules.html">Schedules ‐ Plánované zprávy</a></li>
+                        <li><a href="modules/stats.html">Statistiky serveru</a></li>
+                        <li><a href="modules/holidays.html">Svátky (CZ SK)</a></li>
+                        <li><a href="modules/feedback.html">Systém zpětné vazby a návrhů</a></li>
+                        <li><a href="modules/tickets.html">Tikety</a></li>
+                        <li><a href="modules/translate.html">Translate modul</a></li>
+                        <li><a href="modules/threads.html">Tvorba vláken na zprávy</a></li>
+                        <li><a href="modules/welcome_leave.html">Uvítací a odchodové zprávy (Welcome Leave)</a></li>
+                        <li><a href="modules/vote.html">Vote ‐ Hlasování</a></li>
+                        <li><a href="modules/watermark.html">Vodoznak s vlastním textem na obrázky</a></li>
+                        <li><a href="modules/xp.html">XP systém a úrovně</a></li>
+                        <li><a href="modules/backup.html">Zálohování a Obnova Serverů</a></li>
+                        <li><a href="modules/confessions.html">Zpovědi (Anonymní Zprávy)</a></li>
+                    </ul>
+                </li>
 
-                        <div class="control-group">
-                            <label for="embedColor">Barva (Color)</label>
-                            <input type="color" id="embedColor" value="#00ffff" class="color-picker">
-                            <span class="color-value">#00ffff</span>
-                        </div>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Nástroje ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="crongenerator.html">Cron Generátor</a></li>
+                        <li><a href="embedgenerator.html">Embed Generátor</a></li>
+                        <li><a href="https://github.com/users/papiscze/projects/9">Roadmapa</a></li>
+                        <li><a href="stats.html">Statistiky bota</a></li>
+                    </ul>
+                </li>
 
-                        <h3 class="subsection-heading">Autor & Patička</h3>
-                        
-                        <div class="control-group">
-                            <label for="authorName">Jméno autora</label>
-                            <input type="text" id="authorName" maxlength="256" placeholder="Nepovinné">
-                        </div>
-                        <div class="control-group">
-                            <label for="authorIconUrl">URL ikony autora</label>
-                            <input type="url" id="authorIconUrl" placeholder="https://...">
-                        </div>
-                        
-                        <div class="control-group">
-                            <label for="footerText">Text patičky (Footer)</label>
-                            <input type="text" id="footerText" maxlength="2048" placeholder="Maximálně 2048 znaků">
-                        </div>
-                        <div class="control-group">
-                            <label for="footerIconUrl">URL ikony patičky</label>
-                            <input type="url" id="footerIconUrl" placeholder="https://...">
-                        </div>
-                        
-                        <h3 class="subsection-heading">Obrázky</h3>
+                <li><a href="warns.html">Moderátorské záznamy</a></li>
+                <li><a href="https://rs422cznas.myds.me:5038/stats/">Statistiky serveru</a></li>
+                <li><a href="privacy.html">GDPR / ToS</a></li>
+            </ul>
 
-                        <div class="control-group">
-                            <label for="imageUrl">URL hlavního obrázku (Image)</label>
-                            <input type="url" id="imageUrl" placeholder="Větší obrázek pod popisem">
-                        </div>
-                        <div class="control-group">
-                            <label for="thumbnailUrl">URL náhledu (Thumbnail)</label>
-                            <input type="url" id="thumbnailUrl" placeholder="Malý obrázek v rohu">
-                        </div>
-
-                        <h3 class="subsection-heading">Pole (Fields)</h3>
-                        <div id="embedFieldsContainer">
-                            </div>
-                        <button type="button" id="addFieldBtn" class="cyber-button secondary-btn small-btn">Přidat pole</button>
-
-                    </form>
-                </div>
-
-                <div class="embed-preview-output fade-up">
-                    <h2 class="section-heading">Náhled Discord Embedu</h2>
-
-                    <div class="discord-mockup">
-                        <div class="mockup-header">
-                            <img src="https://cdn.discordapp.com/embed/avatars/0.png" alt="Bot Avatar" class="bot-avatar">
-                            <span class="bot-name">CZbot</span>
-                            <span class="bot-tag">BOT</span>
-                            <span class="timestamp">Dnes v 16:20</span>
-                        </div>
-                        
-                        <div class="embed-box" id="embedPreview">
-                            <div class="embed-color-bar" id="previewColorBar"></div>
-                            <div class="embed-content">
-                                
-                                <div class="embed-author" id="previewAuthor">
-                                    </div>
-                                
-                                <div class="embed-thumbnail-container" id="previewThumbnail">
-                                    </div>
-                                
-                                <h3 class="embed-title" id="previewTitle"></h3>
-                                <p class="embed-description" id="previewDescription"></p>
-
-                                <div class="embed-fields-preview" id="previewFieldsContainer">
-                                    </div>
-                                
-                                <div class="embed-image-container" id="previewImage">
-                                    </div>
-                                
-                                <div class="embed-footer" id="previewFooter">
-                                    </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <h2 class="section-heading output-heading">Výstup</h2>
-                    <div class="output-wrapper">
-                        <select id="outputFormat" class="select-format">
-                            <option value="json">JSON (Discord Webhook)</option>
-                            <option value="js">JavaScript (Discord.js)</option>
-                            <option value="python">Python (Disnake/Pycord)</option>
-                        </select>
-                        <button class="cyber-button copy-btn" id="copyOutputBtn">Kopírovat</button>
-                    </div>
-                    <pre><code id="embedOutputCode" class="language-json">Váš kód se vygeneruje zde...</code></pre>
-                </div>
+            <div class="nav-bottom">
+                <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Pozvat bota</a>
             </div>
+
+            <button class="mobile-menu-button" id="mobileMenuBtn">
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </button>
         </div>
-    </main>
+    </nav>
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <a href="index.html" class="mobile-menu-logo">CZbot</a>
+            <button class="mobile-menu-close" id="mobileMenuClose">✕</button>
+        </div>
+        <div class="mobile-menu-cta">
+            <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Přidat bota</a>
+        </div>
+        <nav class="mobile-menu-nav">
+            <ul>
+                <li><a href="commands.html">Příkazy</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Nástroje ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="crongenerator.html">Cron Generátor</a></li>
+                        <li><a href="embedgenerator.html">Embed Generátor</a></li>
+                        <li><a href="https://github.com/users/papiscze/projects/9">Roadmapa</a></li>
+                        <li><a href="stats.html">Statistiky bota</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="warns.html">Moderátorské záznamy</a></li>
+                <li><a href="https://rs422cznas.myds.me:5038/stats/">Statistiky serveru</a></li>
+                <li><a href="privacy.html">GDPR / ToS</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Moduly ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="modules/auditlogger.html">Auditlogger</a></li>
+                        <li><a href="modules/audio_stream.html">Audio Stream</a></li>
+                        <li><a href="modules/autopublish.html">Automatické publikování zpráv z kanálů oznámení</a></li>
+                        <li><a href="modules/autorole.html">Autorole, Ověřování uživatelů a Reakční role</a></li>
+                        <li><a href="modules/basic_user_commands.html">Běžné uživatelské a zábavné příkazy</a></li>
+                        <li><a href="modules/basic_mod_commands.html">Běžné moderátorské příkazy</a></li>
+                        <li><a href="modules/bot_localization.html">Bot localization and Language Settings</a></li>
+                        <li><a href="modules/modules/crossban.html">Crossban</a></li>
+                        <li><a href="modules/temp_voice.html">Dočasné hlasové kanály</a></li>
+                        <li><a href="modules/giveaway.html">Giveaway(e)</a></li>
+                        <li><a href="modules/birthdays.html">Narozeniny</a></li>
+                        <li><a href="modules/patreon.html">Patreon</a></li>
+                        <li><a href="modules/counting.html">Počítání</a></li>
+                        <li><a href="modules/advanced_schedules.html">Pokročilé plánované zprávy</a></li>
+                        <li><a href="modules/reactions.html">Reakce smajlíky na zprávy</a></li>
+                        <li><a href="modules/reputation.html">Reputace</a></li>
+                        <li><a href="modules/rss_reader.html">RSS Čtečka</a></li>
+                        <li><a href="modules/scam_prevence.html">Scam Prevence</a></li>
+                        <li><a href="modules/schedules.html">Schedules ‐ Plánované zprávy</a></li>
+                        <li><a href="modules/stats.html">Statistiky serveru</a></li>
+                        <li><a href="modules/holidays.html">Svátky (CZ SK)</a></li>
+                        <li><a href="modules/feedback.html">Systém zpětné vazby a návrhů</a></li>
+                        <li><a href="modules/tickets.html">Tikety</a></li>
+                        <li><a href="modules/translate.html">Translate modul</a></li>
+                        <li><a href="modules/threads.html">Tvorba vláken na zprávy</a></li>
+                        <li><a href="modules/welcome_leave.html">Uvítací a odchodové zprávy (Welcome Leave)</a></li>
+                        <li><a href="modules/vote.html">Vote ‐ Hlasování</a></li>
+                        <li><a href="modules/watermark.html">Vodoznak s vlastním textem na obrázky</a></li>
+                        <li><a href="modules/xp.html">XP systém a úrovně</a></li>
+                        <li><a href="modules/backup.html">Zálohování a Obnova Serverů</a></li>
+                        <li><a href="modules/confessions.html">Zpovědi (Anonymní Zprávy)</a></li>
+                    </ul>
+                </li>           
+            </ul>
+        </nav>
+    </div>
+
+    <div class="content-section">
+        <div class="content-container">
+
+            <h1 class="page-title">Embed Generátor</h1>
+            <p class="page-subtitle">Vytvořte si pokročilou formátovanou zprávu (Embed) pro Discord.</p>
+
+            <div class="embed-generator-main">
+                
+                <div class="embed-form">
+                    <h2>Vlastnosti Embedu</h2>
+                    
+                    <div class="form-group color-input-wrapper">
+                        <label for="embedColor">Barva postranní čáry (Hex kód)</label>
+                        <input type="text" id="embedColorHex" value="#7289da" placeholder="#RRGGBB" data-target="color">
+                        <input type="color" id="embedColor" value="#7289da" data-target="color">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="embedTitle">Název (Title)</label>
+                        <input type="text" id="embedTitle" placeholder="Např. Nová událost!" data-target="title">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="embedDescription">Popis (Description) <small>(Použijte \n pro nový řádek)</small></label>
+                        <textarea id="embedDescription" placeholder="Zde uveďte text zprávy. Můžete použít Markdown." data-target="description"></textarea>
+                    </div>
+                    
+                    <hr style="border-color: var(--primary-magenta-transparent); margin: 20px 0;">
+
+                    <h3>Autor (Horní sekce)</h3>
+                    <div class="form-group">
+                        <label for="authorName">Jméno autora</label>
+                        <input type="text" id="authorName" placeholder="Jméno (nepovinné)" data-target="author-name">
+                    </div>
+                    <div class="form-group">
+                        <label for="authorIcon">URL ikony autora</label>
+                        <input type="url" id="authorIcon" placeholder="https://..." data-target="author-icon">
+                    </div>
+
+                    <hr style="border-color: var(--primary-magenta-transparent); margin: 20px 0;">
+
+                    <h3>Pole (Fields)</h3>
+                    <div class="fields-container" id="fieldsContainer">
+                        <p id="noFieldsMessage" style="color: var(--text-muted); text-align: center;">Zatím nemáte žádná pole.</p>
+                    </div>
+                    
+                    <button class="cyber-button small-button add-field-btn" id="addFieldBtn">
+                        Přidat nové pole
+                    </button>
+                    
+                    <hr style="border-color: var(--primary-magenta-transparent); margin: 20px 0;">
+
+                    <h3>Patička (Footer)</h3>
+                    <div class="form-group">
+                        <label for="footerText">Text patičky</label>
+                        <input type="text" id="footerText" placeholder="Např. Odesláno CZbotem v 2025" data-target="footer-text">
+                    </div>
+                    <div class="form-group">
+                        <label for="footerIcon">URL ikony patičky</label>
+                        <input type="url" id="footerIcon" placeholder="https://..." data-target="footer-icon">
+                    </div>
+
+                </div>
+                
+                <div class="embed-preview">
+                    <h2>Náhled</h2>
+                    
+                    <div class="discord-message-container">
+                        <div class="bot-avatar" style="background-color: #2f3136; color: #dcddde; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">CZ</div>
+                        <div class="message-content">
+                            <div class="message-header">
+                                <span class="bot-name">CZbot</span>
+                                <span class="timestamp">Dnes</span>
+                            </div>
+                            
+                            <div class="embed-wrapper">
+                                <div class="embed-color-bar" id="previewColorBar"></div>
+                                <div class="embed-content">
+                                    
+                                    <div class="embed-author" id="previewAuthor" style="display: none;">
+                                        <img class="embed-author-icon" id="previewAuthorIcon" src="" alt="Author Icon">
+                                        <span id="previewAuthorName"></span>
+                                    </div>
+                                    
+                                    <div class="embed-title" id="previewTitle" style="display: none;"></div>
+                                    
+                                    <div class="embed-description" id="previewDescription" style="display: none;"></div>
+                                    
+                                    <div class="embed-fields" id="previewFields">
+                                        </div>
+
+                                    <div class="embed-footer" id="previewFooter" style="display: none;">
+                                        <img class="embed-footer-icon" id="previewFooterIcon" src="" alt="Footer Icon">
+                                        <span id="previewFooterText"></span>
+                                    </div>
+
+                                </div>
+                            </div>
+                            </div>
+                    </div>
+                    </div>
+            </div>
+
+            <div class="json-output-box">
+                <h3>Odeslat na Discord</h3>
+                <div class="form-group">
+                    <label for="webhookUrl">Discord WebHook URL</label>
+                    <input type="url" id="webhookUrl" placeholder="Vložte sem URL vašeho WebHooku (https://discord.com/api/webhooks/...)">
+                </div>
+                <button class="cyber-button full-width-button" id="sendWebhookBtn" disabled>
+                    Odeslat Embed Zprávu
+                </button>
+                <div id="webhookStatus" class="webhook-status" style="display: none;"></div>
+            </div>
+
+        </div>
+    </div>
 
     <footer class="footer">
-        </footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="https://github.com/papiscze/czbot">GitHub</a>
+                <span class="footer-separator">•</span>
+                <a href="https://discord.gg/hk6PdtVxbm">Support Server</a>
+                <span class="footer-separator">•</span>
+                <a href="https://github.com/papiscze/czbot/wiki">GitHub dokumentace</a>
+                <span class="footer-separator">•</span>
+                <a href="mailto:admin@ofpmafia.eu">Kontakt</a>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 CZbot. Verze webu 1.0. Všechna práva vyhrazena</p>
+                <p class="footer-credit">Šablona inspirována <a href="https://templatemo.com" target="_blank" rel="noopener nofollow">TemplateMo</a></p>
+            </div>
+        </div>
+    </footer>
 
-    <script src="templatemo-nexus-scripts.js"></script>
-    <script src="embed-generator.js"></script>
+    <script>
+        // -----------------------------------------------------
+        // 1. LOGIKA NAVIGACE (Zůstává beze změny)
+        // -----------------------------------------------------
+        
+        function initNavigation() {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const mobileMenuClose = document.getElementById('mobileMenuClose');
+            const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+            
+            if (mobileMenuBtn && mobileMenuOverlay && mobileMenu && mobileMenuClose) {
+                mobileMenuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.add('active');
+                    mobileMenuOverlay.classList.add('active');
+                });
+
+                const closeMenu = () => {
+                    mobileMenu.classList.remove('active');
+                    mobileMenuOverlay.classList.remove('active');
+                };
+
+                mobileMenuClose.addEventListener('click', closeMenu);
+                mobileMenuOverlay.addEventListener('click', closeMenu);
+            }
+
+            dropdownToggles.forEach(toggle => {
+                toggle.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const parentLi = toggle.closest('li.dropdown');
+                    if (parentLi) {
+                        parentLi.classList.toggle('open'); 
+                        
+                        dropdownToggles.forEach(otherToggle => {
+                            if (otherToggle !== toggle) {
+                                otherToggle.closest('li.dropdown').classList.remove('open');
+                            }
+                        });
+                    }
+                });
+            });
+        }
+
+        // -----------------------------------------------------
+        // 2. LOGIKA EMBED GENERÁTORU A ODESÍLÁNÍ
+        // -----------------------------------------------------
+
+        let currentEmbedObject = {}; // Globální proměnná pro uchování aktuálního JSONu
+
+        function initEmbedGenerator() {
+            const formElements = document.querySelectorAll('[data-target]');
+            const fieldsContainer = document.getElementById('fieldsContainer');
+            const addFieldBtn = document.getElementById('addFieldBtn');
+            const noFieldsMessage = document.getElementById('noFieldsMessage');
+            
+            const webhookUrlInput = document.getElementById('webhookUrl');
+            const sendWebhookBtn = document.getElementById('sendWebhookBtn');
+            const webhookStatus = document.getElementById('webhookStatus');
+
+            let fieldCount = 0; 
+
+            // --- Náhledové elementy ---
+            const previewColorBar = document.getElementById('previewColorBar');
+            const previewAuthor = document.getElementById('previewAuthor');
+            const previewAuthorName = document.getElementById('previewAuthorName');
+            const previewAuthorIcon = document.getElementById('previewAuthorIcon');
+            const previewTitle = document.getElementById('previewTitle');
+            const previewDescription = document.getElementById('previewDescription');
+            const previewFields = document.getElementById('previewFields');
+            const previewFooter = document.getElementById('previewFooter');
+            const previewFooterText = document.getElementById('previewFooterText');
+            const previewFooterIcon = document.getElementById('previewFooterIcon');
+
+            function hexToDecimal(hex) {
+                if (!hex || hex.length < 7) return 0;
+                return parseInt(hex.replace('#', ''), 16);
+            }
+            
+            function setIcon(imgElement, url) {
+                if (url) {
+                    imgElement.src = url;
+                    imgElement.style.display = 'block';
+                    imgElement.onerror = () => { imgElement.style.display = 'none'; };
+                } else {
+                    imgElement.src = ''; 
+                    imgElement.style.display = 'none';
+                }
+            }
+
+
+            function updateEmbed() {
+                const hexColor = document.getElementById('embedColorHex').value || '#7289da';
+                const title = document.getElementById('embedTitle').value;
+                let description = document.getElementById('embedDescription').value;
+                const authorName = document.getElementById('authorName').value;
+                const authorIcon = document.getElementById('authorIcon').value;
+                const footerText = document.getElementById('footerText').value;
+                const footerIcon = document.getElementById('footerIcon').value;
+
+                // --- 1. Aktualizace Náhledu ---
+
+                previewColorBar.style.backgroundColor = hexColor;
+
+                if (title) {
+                    previewTitle.textContent = title;
+                    previewTitle.style.display = 'block';
+                } else {
+                    previewTitle.style.display = 'none';
+                }
+
+                if (description) {
+                    previewDescription.innerHTML = description.replace(/\\n/g, '<br>');
+                    previewDescription.style.display = 'block';
+                } else {
+                    previewDescription.style.display = 'none';
+                }
+
+                if (authorName) {
+                    previewAuthorName.textContent = authorName;
+                    previewAuthor.style.display = 'flex';
+                } else {
+                    previewAuthor.style.display = 'none';
+                }
+                setIcon(previewAuthorIcon, authorIcon);
+                
+                if (footerText) {
+                    previewFooterText.textContent = footerText;
+                    previewFooter.style.display = 'flex';
+                } else {
+                    previewFooter.style.display = 'none';
+                }
+                setIcon(previewFooterIcon, footerIcon);
+                
+                // --- Pole (Fields) ---
+                const fieldInputs = fieldsContainer.querySelectorAll('.field-item');
+                previewFields.innerHTML = ''; 
+                const jsonFields = [];
+
+                fieldInputs.forEach(item => {
+                    const name = item.querySelector('.field-name-input').value;
+                    const value = item.querySelector('.field-value-input').value;
+                    const isInline = item.querySelector('.field-inline-input').checked;
+
+                    if (name && value) {
+                        // Přidání do Náhledu
+                        const fieldDiv = document.createElement('div');
+                        fieldDiv.className = 'embed-field';
+                        if (isInline) {
+                            fieldDiv.classList.add('inline');
+                        } 
+
+                        fieldDiv.innerHTML = `
+                            <div class="embed-field-name">${name}</div>
+                            <div class="embed-field-value">${value.replace(/\\n/g, '<br>')}</div>
+                        `;
+                        previewFields.appendChild(fieldDiv);
+
+                        // Přidání do JSON
+                        jsonFields.push({
+                            name: name,
+                            value: value,
+                            inline: isInline
+                        });
+                    }
+                });
+
+
+                // --- 2. Generování JSON pro WebHook ---
+                
+                const embedObject = {};
+
+                if (hexColor && hexColor.length === 7) {
+                    embedObject.color = hexToDecimal(hexColor);
+                }
+
+                if (title) {
+                    embedObject.title = title;
+                }
+
+                if (description) {
+                    embedObject.description = description;
+                }
+
+                if (authorName) {
+                    embedObject.author = {
+                        name: authorName
+                    };
+                    if (authorIcon) {
+                        embedObject.author.icon_url = authorIcon;
+                    }
+                }
+
+                if (jsonFields.length > 0) {
+                    embedObject.fields = jsonFields;
+                }
+
+                if (footerText) {
+                    embedObject.footer = {
+                        text: footerText
+                    };
+                    if (footerIcon) {
+                        embedObject.footer.icon_url = footerIcon;
+                    }
+                }
+
+                // Finální datový objekt pro WebHook
+                if (Object.keys(embedObject).length > 0) {
+                    currentEmbedObject = { embeds: [embedObject] };
+                } else {
+                    currentEmbedObject = {};
+                }
+                
+                // Povolení tlačítka Odeslat, pokud existuje obsah embedu
+                if (Object.keys(embedObject).length > 0 && webhookUrlInput.value) {
+                    sendWebhookBtn.disabled = false;
+                } else {
+                    sendWebhookBtn.disabled = true;
+                }
+            }
+            
+            function addField() {
+                fieldCount++;
+                noFieldsMessage.style.display = 'none';
+
+                const fieldItem = document.createElement('div');
+                fieldItem.className = 'field-item';
+                fieldItem.dataset.id = fieldCount;
+
+                fieldItem.innerHTML = `
+                    <div class="field-row">
+                        <div class="form-group">
+                            <label>Název pole</label>
+                            <input type="text" class="field-name-input" placeholder="Název" value="" data-target="field">
+                        </div>
+                        <div class="form-group">
+                            <label>Hodnota pole <small>(\n pro nový řádek)</small></label>
+                            <input type="text" class="field-value-input" placeholder="Hodnota" value="" data-target="field">
+                        </div>
+                    </div>
+                    <div class="field-controls">
+                        <label style="margin-right: 15px;">
+                            <input type="checkbox" class="field-inline-input" checked data-target="field">
+                            Zobrazit vedle sebe (Inline)
+                        </label>
+                        <button class="remove-field-btn cyber-button small-button">Smazat</button>
+                    </div>
+                `;
+
+                fieldsContainer.appendChild(fieldItem);
+                
+                // Přidání posluchačů pro nové pole
+                fieldItem.querySelector('.field-name-input').addEventListener('input', updateEmbed);
+                fieldItem.querySelector('.field-value-input').addEventListener('input', updateEmbed);
+                fieldItem.querySelector('.field-inline-input').addEventListener('change', updateEmbed);
+                fieldItem.querySelector('.remove-field-btn').addEventListener('click', (e) => {
+                    e.preventDefault(); 
+                    fieldItem.remove();
+                    if (fieldsContainer.children.length === 1) { 
+                        noFieldsMessage.style.display = 'block';
+                    }
+                    updateEmbed();
+                });
+
+                updateEmbed();
+            }
+            
+            // --- Odeslání zprávy přes WebHook ---
+            async function sendWebhookMessage() {
+                const url = webhookUrlInput.value;
+
+                if (!url || Object.keys(currentEmbedObject).length === 0) {
+                    displayStatus('Vyplňte WebHook URL a alespoň Název, Popis nebo Autor.', 'error');
+                    return;
+                }
+                
+                displayStatus('Odesílám...', 'success');
+                sendWebhookBtn.disabled = true;
+
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(currentEmbedObject)
+                    });
+
+                    if (response.ok) {
+                        displayStatus('Zpráva úspěšně odeslána!', 'success');
+                    } else {
+                        const errorText = await response.text();
+                        displayStatus(`Chyba (${response.status}): ${errorText.substring(0, 80)}...`, 'error');
+                    }
+                } catch (error) {
+                    displayStatus('Chyba při odesílání: WebHook URL je pravděpodobně neplatná nebo kódování.', 'error');
+                } finally {
+                    sendWebhookBtn.disabled = false;
+                }
+            }
+
+            // Funkce pro zobrazení stavu
+            function displayStatus(message, type) {
+                webhookStatus.textContent = message;
+                webhookStatus.className = `webhook-status ${type}`;
+                webhookStatus.style.display = 'block';
+            }
+
+
+            // --- Posluchači Událostí ---
+            
+            formElements.forEach(input => {
+                input.addEventListener('input', updateEmbed);
+            });
+            
+            // Synchronizace color pickeru a hex textu
+            document.getElementById('embedColor').addEventListener('input', function() {
+                document.getElementById('embedColorHex').value = this.value;
+                updateEmbed();
+            });
+            document.getElementById('embedColorHex').addEventListener('input', function() {
+                const hexValue = this.value.startsWith('#') ? this.value : '#' + this.value;
+                if (hexValue.length >= 7) {
+                    document.getElementById('embedColor').value = hexValue.substring(0, 7);
+                }
+                updateEmbed();
+            });
+
+            // Kontrola URL pro povolení tlačítka
+            webhookUrlInput.addEventListener('input', updateEmbed);
+
+            // Tlačítko pro přidání pole
+            addFieldBtn.addEventListener('click', addField);
+
+            // Tlačítko pro odeslání WebHooku
+            sendWebhookBtn.addEventListener('click', sendWebhookMessage);
+
+
+            // Přidání prvního pole při startu
+            if (fieldsContainer.children.length <= 1) { 
+                addField();
+            }
+        }
+
+
+        // Spustíme obě inicializační funkce při načtení stránky
+        document.addEventListener('DOMContentLoaded', () => {
+            initNavigation();
+            initEmbedGenerator();
+        });
+    </script>
 
 </body>
 </html>
