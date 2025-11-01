@@ -168,7 +168,7 @@
 
             <div class="module-intro-box">
                 <p>
-                    Všechny moderační akce (mute, warn, kick, ban) jsou **automaticky zaznamenány do databáze**. To zajišťuje přehled a transparentnost. Pro přístup k logům navštivte: <a href="../warns.html">Moderátorské záznamy</a>.
+                    Všechny moderační akce (mute, warn, kick, ban) jsou <strong>automaticky zaznamenány do databáze</strong>. To zajišťuje přehled a transparentnost. Pro přístup k logům navštivte: <a href="../warns.html">Moderátorské záznamy</a>.
                 </p>
             </div>
 
@@ -180,9 +180,9 @@
                 <table class="data-table small-font">
                     <thead><tr><th>Parametr</th><th>Popis</th></tr></thead>
                     <tbody>
-                        <tr><td><span class="command-code">user</span></td><td>**Povinné.** Uživatel k umlčení.</td></tr>
-                        <tr><td><span class="command-code">duration</span></td><td>**Povinné.** Délka (`30m`, `2h`, `7d`).</td></tr>
-                        <tr><td><span class="command-code">reason</span></td><td>**Volitelné.** Důvod umlčení.</td></tr>
+                        <tr><td><span class="command-code">user</span></td><td><strong>Povinné.</strong> Uživatel k umlčení.</td></tr>
+                        <tr><td><span class="command-code">duration</span></td><td><strong>Povinné.</strong> Délka (`30m`, `2h`, `7d`).</td></tr>
+                        <tr><td><span class="command-code">reason</span></td><td><strong>Volitelné.</strong> Důvod umlčení.</td></tr>
                     </tbody>
                 </table>
                 <span class="command-code-example mt-2">/mute user:@JanNovak duration:2h reason:Spamování</span>
@@ -194,8 +194,8 @@
                 <table class="data-table small-font">
                     <thead><tr><th>Parametr</th><th>Popis</th></tr></thead>
                     <tbody>
-                        <tr><td><span class="command-code">user</span></td><td>**Povinné.** Uživatel k varování.</td></tr>
-                        <tr><td><span class="command-code">reason</span></td><td>**Povinné.** Důvod varování.</td></tr>
+                        <tr><td><span class="command-code">user</span></td><td><strong>Povinné.</strong> Uživatel k varování.</td></tr>
+                        <tr><td><span class="command-code">reason</span></td><td><strong>Povinné.</strong> Důvod varování.</td></tr>
                     </tbody>
                 </table>
                 <span class="command-code-example mt-2">/warn user:@PetraDvorakova reason:Nevhodné chování</span>
@@ -207,9 +207,9 @@
                 <table class="data-table small-font">
                     <thead><tr><th>Parametr</th><th>Popis</th></tr></thead>
                     <tbody>
-                        <tr><td><span class="command-code">member</span></td><td>**Povinné.** Uživatel k vyhození.</td></tr>
-                        <tr><td><span class="command-code">reason</span></td><td>**Volitelné.** Důvod.</td></tr>
-                        <tr><td><span class="command-code">delete_messages_days</span></td><td>**Volitelné.** Množství dní, za které se mají smazat zprávy (0, 1, 2, 7).</td></tr>
+                        <tr><td><span class="command-code">member</span></td><td><strong>Povinné.</strong> Uživatel k vyhození.</td></tr>
+                        <tr><td><span class="command-code">reason</span></td><td><strong>Volitelné.</strong> Důvod.</td></tr>
+                        <tr><td><span class="command-code">delete_messages_days</span></td><td><strong>Volitelné.</strong> Množství dní, za které se mají smazat zprávy (0, 1, 2, 7).</td></tr>
                     </tbody>
                 </table>
                 <span class="command-code-example mt-2">/kick member:@MichalKadlec reason:Opakované porušování delete_messages_days:1</span>
@@ -221,9 +221,9 @@
                 <table class="data-table small-font">
                     <thead><tr><th>Parametr</th><th>Popis</th></tr></thead>
                     <tbody>
-                        <tr><td><span class="command-code">user</span></td><td>**Povinné.** Uživatel k zabanování.</td></tr>
-                        <tr><td><span class="command-code">reason</span></td><td>**Volitelné.** Důvod.</td></tr>
-                        <tr><td><span class="command-code">delete_messages_days</span></td><td>**Volitelné.** Množství dní, za které se mají smazat zprávy (0, 1, 2, 7).</td></tr>
+                        <tr><td><span class="command-code">user</span></td><td><strong>Povinné.</strong> Uživatel k zabanování.</td></tr>
+                        <tr><td><span class="command-code">reason</span></td><td><strong>Volitelné.</strong> Důvod.</td></tr>
+                        <tr><td><span class="command-code">delete_messages_days</span></td><td><strong>Volitelné.</strong> Množství dní, za které se mají smazat zprávy (0, 1, 2, 7).</td></tr>
                     </tbody>
                 </table>
                 <span class="command-code-example mt-2">/ban user:@EvaProchazkova reason:Těžké porušení delete_messages_days:7</span>
@@ -269,7 +269,7 @@
                 <table class="data-table small-font">
                     <thead><tr><th>Parametr</th><th>Popis</th></tr></thead>
                     <tbody>
-                        <tr><td><span class="command-code">seconds</span></td><td>**Povinné.** Počet sekund čekání (0 pro vypnutí). Max 21600.</td></tr>
+                        <tr><td><span class="command-code">seconds</span></td><td><strong>Povinné.</strong> Počet sekund čekání (0 pro vypnutí). Max 21600.</td></tr>
                     </tbody>
                 </table>
                 <span class="command-code-example mt-2">/slowmode seconds:10</span>
@@ -354,9 +354,9 @@
             <table class="data-table small-font">
                 <thead><tr><th>Parametr</th><th>Popis</th></tr></thead>
                 <tbody>
-                    <tr><td><span class="command-code">channel</span></td><td>**Povinné.** Hlasový kanál, jehož název se bude aktualizovat.</td></tr>
-                    <tr><td><span class="command-code">action</span></td><td>**Povinné.** Typ statistiky (`Počet členů`, `Počet botů`, `Počet rolí`, `Počet lidí s rolí`).</td></tr>
-                    <tr><td><span class="command-code">role</span></td><td>**Povinné** pro akci `Počet lidí s rolí`.</td></tr>
+                    <tr><td><span class="command-code">channel</span></td><td><strong>Povinné.</strong> Hlasový kanál, jehož název se bude aktualizovat.</td></tr>
+                    <tr><td><span class="command-code">action</span></td><td><strong>Povinné.</strong> Typ statistiky (`Počet členů`, `Počet botů`, `Počet rolí`, `Počet lidí s rolí`).</td></tr>
+                    <tr><td><span class="command-code">role</span></td><td><strong>Povinné</strong> pro akci `Počet lidí s rolí`.</td></tr>
                 </tbody>
             </table>
             <span class="command-code-example mt-2">/statistiky nastavit channel:👥-počet-členů action:Počet členů</span>
@@ -374,8 +374,8 @@
 
             <div class="info-box">
                 <h4 class="info-box-title">🚨 Jak funguje detekce?</h4>
-                <p>Bot sleduje, zda se během **30 sekund** připojí **20 a více uživatelů**.</p>
-                <p>Při detekci bot: 1) Upozorní moderátory a 2) Zvýší verifikační úroveň serveru na **Nejvyšší** (vyžaduje ověřené telefonní číslo pro připojení).</p>
+                <p>Bot sleduje, zda se během <strong>30 sekund</strong> připojí <strong>20 a více uživatelů</strong>.</p>
+                <p>Při detekci bot: 1) Upozorní moderátory a 2) Zvýší verifikační úroveň serveru na <strong>Nejvyšší</strong> (vyžaduje ověřené telefonní číslo pro připojení).</p>
             </div>
 
             <h3 class="mt-4">Nastavení upozornění: <span class="command-code">/raid setalertchannel</span></h3>
@@ -388,7 +388,7 @@
 
             <h3 class="mt-4">Resetování módu: <span class="command-code">/raid resetmode</span> <span class="badge">ADMIN</span></h3>
             <p>Vynuluje interní stav bota po ukončení raidu a umožní další detekci.</p>
-            <p>⚠️ **Důležité**: **NEVRACÍ** verifikační úroveň serveru! Tuto změnu musíte provést ručně v nastavení serveru.</p>
+            <p>⚠️ <strong>Důležité</strong>: <strong>NEVRACÍ</strong> verifikační úroveň serveru! Tuto změnu musíte provést ručně v nastavení serveru.</p>
             <span class="command-code-example">/raid resetmode</span>
             
         </div>

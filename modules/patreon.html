@@ -176,8 +176,8 @@
             
             <div class="info-box">
                 <ul class="bullet-list">
-                    <li>**Spravovat role**: **Klíčové!** Bot musí přidávat a odebírat role.</li>
-                    <li>**Hierarchie rolí**: Role bota musí být **výše** než role, které má přidělovat.</li>
+                    <li><strong>Spravovat role</strong>: <strong>Klíčové!</strong> Bot musí přidávat a odebírat role.</li>
+                    <li><strong>Hierarchie rolí</strong>: Role bota musí být <strong>výše</strong> než role, které má přidělovat.</li>
                 </ul>
             </div>
             
@@ -189,10 +189,10 @@
             <div class="command-box admin-command">
                 <h4 class="command-title">/patreon setup</h4>
                 <p>Nastaví, se kterou Patreon kampaní má server pracovat.</p>
-                <p>🔑 **Kde najít Campaign ID**: V URL adrese, když jste přihlášeni jako tvůrce, např. <span class="command-code">campaign_id=XXXXXXXX</span>.</p>
+                <p>🔑 <strong>Kde najít Campaign ID</strong>: V URL adrese, když jste přihlášeni jako tvůrce, např. <span class="command-code">campaign_id=XXXXXXXX</span>.</p>
                 <table class="data-table small-font">
                     <thead><tr><th>Parametr</th><th>Popis</th></tr></thead>
-                    <tbody><tr><td><span class="command-code">campaign_id</span></td><td>**Povinné.** ID vaší Patreon kampaně.</td></tr></tbody>
+                    <tbody><tr><td><span class="command-code">campaign_id</span></td><td><strong>Povinné.</strong> ID vaší Patreon kampaně.</td></tr></tbody>
                 </table>
                 <span class="command-code-example mt-2">/patreon setup campaign_id:12345678</span>
             </div>
@@ -200,12 +200,12 @@
             <div class="command-box admin-command">
                 <h4 class="command-title">/patreon maprole</h4>
                 <p>Namapuje konkrétní Patreon úroveň (Tier ID) na Discord roli.</p>
-                <p>🔑 **Kde najít Tier ID**: V URL adrese při úpravě úrovně, např. <span class="command-code">id=87654321</span>.</p>
+                <p>🔑 <strong>Kde najít Tier ID</strong>: V URL adrese při úpravě úrovně, např. <span class="command-code">id=87654321</span>.</p>
                 <table class="data-table small-font">
                     <thead><tr><th>Parametr</th><th>Popis</th></tr></thead>
                     <tbody>
-                        <tr><td><span class="command-code">tier_id</span></td><td>**Povinné.** ID Patreon úrovně.</td></tr>
-                        <tr><td><span class="command-code">discord_role</span></td><td>**Povinné.** Discord role, která má být přiřazena.</td></tr>
+                        <tr><td><span class="command-code">tier_id</span></td><td><strong>Povinné.</strong> ID Patreon úrovně.</td></tr>
+                        <tr><td><span class="command-code">discord_role</span></td><td><strong>Povinné.</strong> Discord role, která má být přiřazena.</td></tr>
                     </tbody>
                 </table>
                 <span class="command-code-example mt-2">/patreon maprole tier_id:87654321 discord_role:@Patreon Supporter</span>
@@ -224,7 +224,7 @@
 
             <div class="command-box user-command">
                 <h4 class="command-title">/patreon link</h4>
-                <p>Vygeneruje unikátní **ověřovací kód** pro propojení účtů. **Kód si zkopírujte!**</p>
+                <p>Vygeneruje unikátní <strong>ověřovací kód</strong> pro propojení účtů. <strong>Kód si zkopírujte!</strong></p>
                 <span class="command-code-example">/patreon link</span>
             </div>
             
@@ -236,10 +236,10 @@
 
             <div class="info-box mt-4">
                 <h4 class="info-box-title">🔑 Klíčový krok: Ověření přes Display Name</h4>
-                <p>Po spuštění <span class="command-code">/patreon link</span> musíte zkopírovaný kód **dočasně** vložit do svého **"Display Name"** (Zobrazované jméno) na Patreonu:</p>
+                <p>Po spuštění <span class="command-code">/patreon link</span> musíte zkopírovaný kód <strong>dočasně</strong> vložit do svého <strong>"Display Name"</strong> (Zobrazované jméno) na Patreonu:</p>
                 <ol class="bullet-list">
                     <li>Přejděte na: <a href="https://www.patreon.com/settings/profile" target="_blank">patreon.com/settings/profile</a></li>
-                    <li>Do pole **'Display Name'** vložte kód a uložte změny.</li>
+                    <li>Do pole <strong>'Display Name'</strong> vložte kód a uložte změny.</li>
                     <li>Vraťte se na Discord a spusťte <span class="command-code">/patreon verify</span>.</li>
                     <li>Po úspěšném ověření si můžete jméno na Patreonu změnit zpět.</li>
                 </ol>

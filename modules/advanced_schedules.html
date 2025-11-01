@@ -168,7 +168,7 @@
 
             <div class="module-intro-box">
                 <p>
-                    Tento modul rozšiřuje možnosti plánování zpráv na maximum. Můžete plánovat **jednorázové zprávy**, opakování v pevném **intervalu**, nebo použít komplexní **CRON výrazy** pro velmi specifické časové schéma.
+                    Tento modul rozšiřuje možnosti plánování zpráv na maximum. Můžete plánovat <strong>jednorázové zprávy</strong>, opakování v pevném <strong>intervalu</strong>, nebo použít komplexní <strong>CRON výrazy</strong> pro velmi specifické časové schéma.
                 </p>
             </div>
 
@@ -177,9 +177,9 @@
 
             <div class="info-box">
                 <ul class="bullet-list">
-                    <li>**Posílat zprávy**: Pro odesílání naplánovaných zpráv.</li>
-                    <li>**Číst zprávy / Zobrazit kanály**: Pro přístup ke kanálu.</li>
-                    <li>**Používat příkazy aplikací**: Pro práci s příkazy <span class="command-code">/planzpravu</span>.</li>
+                    <li><strong>Posílat zprávy</strong>: Pro odesílání naplánovaných zpráv.</li>
+                    <li><strong>Číst zprávy / Zobrazit kanály</strong>: Pro přístup ke kanálu.</li>
+                    <li><strong>Používat příkazy aplikací</strong>: Pro práci s příkazy <span class="command-code">/planzpravu</span>.</li>
                 </ul>
             </div>
             
@@ -199,10 +199,10 @@
             <div class="module-divider"></div>
 
             <h3 class="mt-4">2. Pokročilé opakování: <span class="command-code">/planzpravu pridat_cron</span></h3>
-            <p>Opakuje zprávu podle komplexního **CRON výrazu**. **Důležité:** Nový řádek v textu zprávy lze zadat pomocí symbolu <span class="command-code">|</span>.</p>
+            <p>Opakuje zprávu podle komplexního <strong>CRON výrazu</strong>. <strong>Důležité:</strong> Nový řádek v textu zprávy lze zadat pomocí symbolu <span class="command-code">|</span>.</p>
             
             <div class="warning-box">
-                ⚠️ **Důležité pro CRON!** V našem systému (APScheduler) platí: **Pondělí = 0**, Úterý = 1, Středa = 2, Čtvrtek = 3, Pátek = 4, Sobota = 5, Neděle = 6.
+                ⚠️ <strong>Důležité pro CRON!</strong> V našem systému (APScheduler) platí: <strong>Pondělí = 0</strong>, Úterý = 1, Středa = 2, Čtvrtek = 3, Pátek = 4, Sobota = 5, Neděle = 6.
                 <a href="../crongenerator.html" class="cyber-button-small mt-2" target="_blank">Online CRON Generátor</a>
             </div>
 
@@ -238,7 +238,7 @@
             </table>
 
             <h4 class="mt-4">Příklad příkazu:</h4>
-            <p>Naplánuje zprávu, která se odešle každou **první středu v měsíci** ve 12:00.</p>
+            <p>Naplánuje zprávu, která se odešle každou <strong>první středu v měsíci</strong> ve 12:00.</p>
             <div class="command-box">
                 <span class="command-code-example">/planzpravu pridat_cron cron_vyraz:0 12 1-7 * 2 channel:#obecny zprava:Dnes je první středa v měsíci!|Nezapomeňte na schůzku.</span>
             </div>
@@ -263,10 +263,10 @@
             <h2 class="module-heading">📊 Správa plánovaných zpráv</h2>
 
             <h3 class="mt-4">Výpis zpráv: <span class="command-code">/planzpravu list</span></h3>
-            <p>Zobrazí seznam naplánovaných úloh. **Běžní uživatelé** vidí jen své úlohy, **Moderátoři** vidí všechny. Uvidíte **ID**, které je klíčové pro odstranění úlohy.</p>
+            <p>Zobrazí seznam naplánovaných úloh. <strong>Běžní uživatelé</strong> vidí jen své úlohy, <strong>Moderátoři</strong> vidí všechny. Uvidíte <strong>ID</strong>, které je klíčové pro odstranění úlohy.</p>
             
             <h3 class="mt-4">Odstranění zprávy: <span class="command-code">/planzpravu odebrat</span></h3>
-            <p>Odstraní naplánovanou zprávu na základě jejího **ID**.</p>
+            <p>Odstraní naplánovanou zprávu na základě jejího <strong>ID</strong>.</p>
             <div class="command-box">
                 <h4 class="command-title">Příklad:</h4>
                 <p>Odstraní úlohu s daným ID (které získáte přes <span class="command-code">/planzpravu list</span>).</p>

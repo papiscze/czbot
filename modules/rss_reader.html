@@ -168,10 +168,10 @@
 
             <div class="module-intro-box">
                 <p>
-                    Tento modul automaticky monitoruje RSS (Really Simple Syndication) kanály z jakéhokoli zdroje a posílá nové články do vybraného textového kanálu. Veškerá správa je dostupná **pouze pro moderátory** serveru.
+                    Tento modul automaticky monitoruje RSS (Really Simple Syndication) kanály z jakéhokoli zdroje a posílá nové články do vybraného textového kanálu. Veškerá správa je dostupná <strong>pouze pro moderátory</strong> serveru.
                 </p>
                 <div class="info-box mt-4">
-                    **Důležitá oprávnění**: Pro správné zobrazení zpráv se ujistěte, že bot má oprávnění **Posílat zprávy** a **Vkládat odkazy**!
+                    <strong>Důležitá oprávnění</strong>: Pro správné zobrazení zpráv se ujistěte, že bot má oprávnění <strong>Posílat zprávy</strong> a <strong>Vkládat odkazy</strong>!
                 </div>
             </div>
 
@@ -194,23 +194,23 @@
                     <tbody>
                         <tr>
                             <td><span class="command-code">rss_feed_url</span></td>
-                            <td>**Povinné.** URL adresa RSS kanálu.</td>
+                            <td><strong>Povinné.</strong> URL adresa RSS kanálu.</td>
                         </tr>
                         <tr>
                             <td><span class="command-code">channel_id</span></td>
-                            <td>**Povinné.** Discord kanál, kam se mají novinky posílat.</td>
+                            <td><strong>Povinné.</strong> Discord kanál, kam se mají novinky posílat.</td>
                         </tr>
                         <tr>
                             <td><span class="command-code">include_description</span></td>
-                            <td>**True/False.** Zda má zpráva obsahovat i popis článku.</td>
+                            <td><strong>True/False.</strong> Zda má zpráva obsahovat i popis článku.</td>
                         </tr>
                         <tr>
                             <td><span class="command-code">custom_text</span></td>
-                            <td>**Volitelné.** Vlastní úvodní text před každou novinkou.</td>
+                            <td><strong>Volitelné.</strong> Vlastní úvodní text před každou novinkou.</td>
                         </tr>
                         <tr>
                             <td><span class="command-code">ignore_youtube_shorts</span></td>
-                            <td>**Volitelné.** Při odběru YT kanálů ignoruje shorts videa.</td>
+                            <td><strong>Volitelné.</strong> Při odběru YT kanálů ignoruje shorts videa.</td>
                         </tr>
                     </tbody>
                 </table>
@@ -242,7 +242,7 @@
             <div class="command-box mod-command">
                 <h4 class="command-title">/rss update <span class="badge">MOD</span></h4>
                 <p>Okamžitě zkontroluje všechny RSS zdroje, bez čekání na automatickou kontrolu.</p>
-                <p>⏳ **Omezení:** Lze použít jen **jednou za 5 minut**.</p>
+                <p>⏳ <strong>Omezení:</strong> Lze použít jen <strong>jednou za 5 minut</strong>.</p>
                 <span class="command-code-example">/rss update</span>
             </div>
 
@@ -251,12 +251,12 @@
             <h2 class="module-heading">🔗 Získání YouTube Channel ID pro odběr</h2>
             
             <div class="info-box">
-                <p>Pro odběr YouTube kanálu musíte znát jeho **Channel ID** (`UC...`), které vložíte do univerzálního RSS formátu:</p>
+                <p>Pro odběr YouTube kanálu musíte znát jeho <strong>Channel ID</strong> (`UC...`), které vložíte do univerzálního RSS formátu:</p>
                 <span class="command-code-example mb-3">https://www.youtube.com/feeds/videos.xml?channel_id=[VAŠE_YOUTUBE_CHANNEL_ID]</span>
                 <ol class="bullet-list">
                     <li>Navštivte stránku kanálu.</li>
-                    <li>Stiskněte **Ctrl+U** (Zobrazit zdrojový kód stránky).</li>
-                    <li>Stiskněte **Ctrl+F** a hledejte text <span class="command-code">channelId</span>.</li>
+                    <li>Stiskněte <strong>Ctrl+U</strong> (Zobrazit zdrojový kód stránky).</li>
+                    <li>Stiskněte <strong>Ctrl+F</strong> a hledejte text <span class="command-code">channelId</span>.</li>
                     <li>Zkopírujte celé ID (`UC...`) a vložte jej do odkazu výše.</li>
                 </ol>
             </div>

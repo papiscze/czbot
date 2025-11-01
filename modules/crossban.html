@@ -178,30 +178,30 @@
 
             <div class="module-intro-box">
                 <p>
-                    Modul **CrossBan** transformuje banování uživatelů na vašem serveru z lokální akce na **federativní rozhodnutí**. Cílem je zamezit trollům a raiderům v rychlém přeskakování mezi partnerskými servery a **zvýšit bezpečnost** celé sítě. Systém je založen na **dobrovolném partnerství** a **plné transparentnosti**.
+                    Modul <strong>CrossBan</strong> transformuje banování uživatelů na vašem serveru z lokální akce na <strong>federativní rozhodnutí</strong>. Cílem je zamezit trollům a raiderům v rychlém přeskakování mezi partnerskými servery a <strong>zvýšit bezpečnost</strong> celé sítě. Systém je založen na <strong>dobrovolném partnerství</strong> a <strong>plné transparentnosti</strong>.
                 </p>
             </div>
 
             <h2 class="module-heading">💡 Základní Funkcionalita a Transparentnost</h2>
-            <p>CrossBan funguje na principu **oboustranné peer-to-peer federace** (server-to-server):</p>
+            <p>CrossBan funguje na principu <strong>oboustranné peer-to-peer federace</strong> (server-to-server):</p>
             <ol>
-                <li>**Iniciace Banu:** Když moderátor na **Serveru A** spustí příkaz <span class="command-code">/crossban ban</span>, uživatel je zabanován na Serveru A a je zapsán do centrálního *crossban listu*.</li>
-                <li>**Notifikace:** Bot zjistí, které servery navázaly partnerství se Serverem A.</li>
-                <li>**Akce Partnera:** Všem těmto partnerům je odeslána notifikace. Konkrétní reakce závisí na jejich **Nastaveném Tieru** (viz níže).</li>
-                <li>**Auto-Ban (Tier 2):** Pokud má partner nastavený Tier 2, ban je proveden **automaticky**.</li>
+                <li><strong>Iniciace Banu:</strong> Když moderátor na <strong>Serveru A</strong> spustí příkaz <span class="command-code">/crossban ban</span>, uživatel je zabanován na Serveru A a je zapsán do centrálního *crossban listu*.</li>
+                <li><strong>Notifikace:</strong> Bot zjistí, které servery navázaly partnerství se Serverem A.</li>
+                <li><strong>Akce Partnera:</strong> Všem těmto partnerům je odeslána notifikace. Konkrétní reakce závisí na jejich <strong>Nastaveném Tieru</strong> (viz níže).</li>
+                <li><strong>Auto-Ban (Tier 2):</strong> Pokud má partner nastavený Tier 2, ban je proveden <strong>automaticky</strong>.</li>
             </ol>
             
             <blockquote class="note-quote">
-                <strong>Klíčová transparentnost:</strong> V notifikaci je vždy uvedeno, **KDO** (který server) ban inicioval a **PROČ**.
+                <strong>Klíčová transparentnost:</strong> V notifikaci je vždy uvedeno, <strong>KDO</strong> (který server) ban inicioval a <strong>PROČ</strong>.
             </blockquote>
             
             <div class="module-divider"></div>
 
             <h2 class="module-heading">⚙️ Správa a Nastavení</h2>
-            <p>Nastavení CrossBan probíhá ve dvou krocích: **1. Stanovení Tieru (reakce)** a **2. Navázání Partnerství (příjem/sdílení dat)**.</p>
+            <p>Nastavení CrossBan probíhá ve dvou krocích: <strong>1. Stanovení Tieru (reakce)</strong> a <strong>2. Navázání Partnerství (příjem/sdílení dat)</strong>.</p>
 
             <h3>1. Nastavení Tieru (Reakce na Ban)</h3>
-            <p>Tento příkaz určuje, **jakým způsobem bude Váš server reagovat** na crossbany od partnerů.</p>
+            <p>Tento příkaz určuje, <strong>jakým způsobem bude Váš server reagovat</strong> na crossbany od partnerů.</p>
             
             <table class="data-table">
                 <thead>
@@ -216,20 +216,20 @@
                     <tr>
                         <td><span class="command-code">/crossban tier 0</span></td>
                         <td>Vypnuto</td>
-                        <td>**IGNOROVAT** všechny crossbany. Bot nebude reagovat. (Výchozí stav)</td>
+                        <td><strong>IGNOROVAT</strong> všechny crossbany. Bot nebude reagovat. (Výchozí stav)</td>
                         <td>Žádné</td>
                     </tr>
                     <tr>
                         <td><span class="command-code">/crossban tier 1</span></td>
                         <td>Upozornění</td>
-                        <td>**NOTIFIKOVAT** moderátory (v <span class="command-code">mod_channel</span>) a **zobrazit tlačítka** pro ruční schválení/ignorování.</td>
-                        <td>**Moderační kanál** (pomocí <span class="command-code">mod_channel</span>)</td>
+                        <td><strong>NOTIFIKOVAT</strong> moderátory (v <span class="command-code">mod_channel</span>) a <strong>zobrazit tlačítka</strong> pro ruční schválení/ignorování.</td>
+                        <td><strong>Moderační kanál</strong> (pomocí <span class="command-code">mod_channel</span>)</td>
                     </tr>
                     <tr>
                         <td><span class="command-code">/crossban tier 2</span></td>
                         <td>Auto-Ban</td>
-                        <td>**AUTOMATICKY BANUJEME** každého, kdo je na listu od partnera.</td>
-                        <td>**Moderační kanál** (doporučeno pro log)</td>
+                        <td><strong>AUTOMATICKY BANUJEME</strong> každého, kdo je na listu od partnera.</td>
+                        <td><strong>Moderační kanál</strong> (doporučeno pro log)</td>
                     </tr>
                 </tbody>
             </table>
@@ -238,13 +238,13 @@
             </p>
 
             <h3 class="mt-4">2. Správa Partnerství (Federace)</h3>
-            <p>Partnerství je **oboustranná vazba**. Server, který se připojí, získává data a zároveň sdílí svůj aktuální Tier.</p>
+            <p>Partnerství je <strong>oboustranná vazba</strong>. Server, který se připojí, získává data a zároveň sdílí svůj aktuální Tier.</p>
 
             <h4>A) Získání Vašeho Partnerského Kódu (Pro připojení jiných)</h4>
             <div class="command-box">
                 <h4 class="command-title">/crossban partner_code</h4>
                 <div class="command-details">
-                    <p>Bot vygeneruje a zobrazí **unikátní, trvalý kód** (např. <span class="command-code">CB1A7B2X9</span>), který sdělíte serveru, jenž se k Vám chce připojit.</p>
+                    <p>Bot vygeneruje a zobrazí <strong>unikátní, trvalý kód</strong> (např. <span class="command-code">CB1A7B2X9</span>), který sdělíte serveru, jenž se k Vám chce připojit.</p>
                 </div>
             </div>
 
@@ -252,9 +252,9 @@
             <div class="command-box">
                 <h4 class="command-title">/crossban partner_connect &lt;kód&gt;</h4>
                 <div class="command-details">
-                    <p>Vytvoří **permanentní oboustrannou vazbu**. Od této chvíle si servery vyměňují data (dle Tieru obou stran).</p>
+                    <p>Vytvoří <strong>permanentní oboustrannou vazbu</strong>. Od této chvíle si servery vyměňují data (dle Tieru obou stran).</p>
                     <p class="mt-2">
-                        **Podmínka:** Musíte mít nastavený **Tier 1** nebo **Tier 2**.
+                        <strong>Podmínka:</strong> Musíte mít nastavený <strong>Tier 1</strong> nebo <strong>Tier 2</strong>.
                     </p>
                 </div>
             </div>
@@ -263,7 +263,7 @@
             <div class="command-box">
                 <h4 class="command-title">/crossban partners</h4>
                 <div class="command-details">
-                    <p>Zobrazí seznam všech aktuálních partnerů (ID, Jméno), Tier, který partnerovi nabízíte, a Tier, který partner nabízí Vám. Nejdůležitější je **tajný kód pro rozvázání** partnerství.</p>
+                    <p>Zobrazí seznam všech aktuálních partnerů (ID, Jméno), Tier, který partnerovi nabízíte, a Tier, který partner nabízí Vám. Nejdůležitější je <strong>tajný kód pro rozvázání</strong> partnerství.</p>
                 </div>
             </div>
 
@@ -271,7 +271,7 @@
             <div class="command-box">
                 <h4 class="command-title">/crossban dissolve &lt;kód&gt;</h4>
                 <div class="command-details">
-                    <p>**Permanentní vazba se zruší pro oba servery**. Použijte **tajný kód partnerství**, který se zobrazí v <span class="command-code">/crossban partners</span>.</p>
+                    <p><strong>Permanentní vazba se zruší pro oba servery</strong>. Použijte <strong>tajný kód partnerství</strong>, který se zobrazí v <span class="command-code">/crossban partners</span>.</p>
                 </div>
             </div>
             
@@ -285,7 +285,7 @@
                 <div class="command-details">
                     <div class="command-detail-row">
                         <span class="command-label">Popis:</span>
-                        <span>Zabanuje uživatele na **Vašem serveru** a přidá ho do **centrálního listu** pro notifikace partnerům.</span>
+                        <span>Zabanuje uživatele na <strong>Vašem serveru</strong> a přidá ho do <strong>centrálního listu</strong> pro notifikace partnerům.</span>
                     </div>
                     <div class="command-detail-row">
                         <span class="command-label">Oprávnění:</span>
@@ -298,7 +298,7 @@
                 </div>
             </div>
             <div class="warning-box">
-                **Doporučení:** Používejte tento příkaz jen u závažných případů (trolling, raidy, porno, apod.).
+                <strong>Doporučení:</strong> Používejte tento příkaz jen u závažných případů (trolling, raidy, porno, apod.).
             </div>
 
             <div class="module-divider"></div>
@@ -307,7 +307,7 @@
             
             <h3>Tier 1: Upozornění a Manuální Rozhodnutí 🟢🔴</h3>
             <p>
-                Pokud máte nastavený **Tier 1 (Upozornění)** a obdržíte notifikaci, zobrazí se ve Vašem Moderačním kanálu speciální zpráva s interaktivními tlačítky.
+                Pokud máte nastavený <strong>Tier 1 (Upozornění)</strong> a obdržíte notifikaci, zobrazí se ve Vašem Moderačním kanálu speciální zpráva s interaktivními tlačítky.
             </p>
 
             <table class="data-table">
@@ -320,25 +320,25 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>**🟢 Schválit a zabanovat**</td>
-                        <td>Okamžitě zabanuje uživatele na **Vašem serveru**.</td>
-                        <td>Rozhodnutí je uloženo jako **CONFIRMED**. Při budoucím joinu uživatele na Váš server dojde k **Auto-Banu**.</td>
+                        <td><strong>🟢 Schválit a zabanovat</strong></td>
+                        <td>Okamžitě zabanuje uživatele na <strong>Vašem serveru</strong>.</td>
+                        <td>Rozhodnutí je uloženo jako <strong>CONFIRMED</strong>. Při budoucím joinu uživatele na Váš server dojde k <strong>Auto-Banu</strong>.</td>
                     </tr>
                     <tr>
-                        <td>**🔴 Ignorovat ban**</td>
+                        <td><strong>🔴 Ignorovat ban</strong></td>
                         <td>Nijak nereaguje.</td>
-                        <td>Rozhodnutí je uloženo jako **IGNORED**. Bot už nikdy nebude kontrolovat ani notifikovat o tomto konkrétním banu pro **Váš server**.</td>
+                        <td>Rozhodnutí je uloženo jako <strong>IGNORED</strong>. Bot už nikdy nebude kontrolovat ani notifikovat o tomto konkrétním banu pro <strong>Váš server</strong>.</td>
                     </tr>
                 </tbody>
             </table>
 
             <div class="warning-box mt-4">
-                **Důležité při joinu (KICK):** Pokud se uživatel pokusí připojit **předtím, než moderátoři stihnou rozhodnout**, bot ho **okamžitě kickne**. Tím zabrání případné okamžité škodě, dokud se neschválí ban.
+                <strong>Důležité při joinu (KICK):</strong> Pokud se uživatel pokusí připojit <strong>předtím, než moderátoři stihnou rozhodnout</strong>, bot ho <strong>okamžitě kickne</strong>. Tím zabrání případné okamžité škodě, dokud se neschválí ban.
             </div>
 
             <h3>Tier 2: Automatický Ban (Auto-Ban) 🤖</h3>
             <p>
-                Při nastavení **Tieru 2 (Auto-Ban)** systém provede akci bez nutnosti zásahu moderátora.
+                Při nastavení <strong>Tieru 2 (Auto-Ban)</strong> systém provede akci bez nutnosti zásahu moderátora.
             </p>
 
             <table class="data-table">
@@ -350,18 +350,18 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>**Notifikace od partnera**</td>
-                        <td>**Okamžitě zabanuje** uživatele na **Vašem serveru**.</td>
+                        <td><strong>Notifikace od partnera</strong></td>
+                        <td><strong>Okamžitě zabanuje</strong> uživatele na <strong>Vašem serveru</strong>.</td>
                     </tr>
                     <tr>
-                        <td>**Připojení crossbanovaného uživatele**</td>
-                        <td>**Okamžitě zabanuje** uživatele při vstupu (<span class="command-code">on_member_join</span>).</td>
+                        <td><strong>Připojení crossbanovaného uživatele</strong></td>
+                        <td><strong>Okamžitě zabanuje</strong> uživatele při vstupu (<span class="command-code">on_member_join</span>).</td>
                     </tr>
                 </tbody>
             </table>
             
             <div class="warning-box mt-4">
-                **Shrnutí Tieru 2:** Tento režim je vhodný pouze pro komunity, které **zcela důvěřují** svým partnerům a preferují rychlou ochranu před manuální kontrolou.
+                <strong>Shrnutí Tieru 2:</strong> Tento režim je vhodný pouze pro komunity, které <strong>zcela důvěřují</strong> svým partnerům a preferují rychlou ochranu před manuální kontrolou.
             </div>
             
         </div>

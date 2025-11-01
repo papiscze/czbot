@@ -168,30 +168,30 @@
 
             <div class="module-intro-box">
                 <p>
-                    Tento modul umožňuje botovi připojit se do hlasového kanálu a **streamovat hudbu, rádio nebo jakýkoli přímý audio odkaz (MP3, AAC, OGG)**. Využívá robustní nástroj **FFmpeg** pro stabilní a spolehlivé streamování.
+                    Tento modul umožňuje botovi připojit se do hlasového kanálu a <strong>streamovat hudbu, rádio nebo jakýkoli přímý audio odkaz (MP3, AAC, OGG)</strong>. Využívá robustní nástroj <strong>FFmpeg</strong> pro stabilní a spolehlivé streamování.
                 </p>
             </div>
 
             <h2 class="module-heading">⚙️ Důležitá oprávnění a omezení</h2>
             <p>
-                Aby modul fungoval bez problémů, ujistěte se, že bot má na serveru tato **oprávnění** a respektujte **omezení**:
+                Aby modul fungoval bez problémů, ujistěte se, že bot má na serveru tato <strong>oprávnění</strong> a respektujte <strong>omezení</strong>:
             </p>
 
             <div class="info-box">
                 <h4>Požadovaná Oprávnění:</h4>
                 <ul>
-                    <li>**Připojit se** (`connect`): Vstup do hlasového kanálu.</li>
-                    <li>**Mluvit** (`speak`): Vysílání zvuku v hlasovém kanálu.</li>
-                    <li>**Zobrazit kanály**: Viditelnost hlasových kanálů.</li>
+                    <li><strong>Připojit se</strong> (`connect`): Vstup do hlasového kanálu.</li>
+                    <li><strong>Mluvit</strong> (`speak`): Vysílání zvuku v hlasovém kanálu.</li>
+                    <li><strong>Zobrazit kanály</strong>: Viditelnost hlasových kanálů.</li>
                 </ul>
             </div>
             
             <div class="warning-box mt-4">
                 <h4>Omezení Modulu:</h4>
                 <ul>
-                    <li>Bot podporuje **pouze jeden aktivní stream na celou guildu (server)**.</li>
-                    <li>Bot **zůstane** v hlasovém kanále a bude pokračovat ve streamování, i když ho **všichni uživatelé opustí**. Streamování se zastaví pouze příkazem <span class="command-code">/stream stop</span>.</li>
-                    <li>URL adresy vedoucí na video platformy jako **YouTube** jsou **explicitně blokovány**. **Streamování videa není podporováno!** 🚫</li>
+                    <li>Bot podporuje <strong>pouze jeden aktivní stream na celou guildu (server)</strong>.</li>
+                    <li>Bot <strong>zůstane</strong> v hlasovém kanále a bude pokračovat ve streamování, i když ho <strong>všichni uživatelé opustí</strong>. Streamování se zastaví pouze příkazem <span class="command-code">/stream stop</span>.</li>
+                    <li>URL adresy vedoucí na video platformy jako <strong>YouTube</strong> jsou <strong>explicitně blokovány</strong>. <strong>Streamování videa není podporováno!</strong> 🚫</li>
                 </ul>
             </div>
             
@@ -202,18 +202,18 @@
             
             <div class="info-box">
                 <ul>
-                    <li>**Stabilní streamování**: Využívá FFmpeg s optimalizovanými parametry.</li>
-                    <li>**Rozšířená podpora odkazů**: Zpracovává přímé audio URL a **playlisty** (<span class="command-code">.pls</span>, <span class="command-code">.m3u</span>).</li>
-                    <li>**Extrakce přímé URL**: Automaticky stáhne obsah playlistu, extrahuje skutečnou streamovací URL a tu předá FFmpeg. ✅</li>
-                    <li>**Dynamická hlasitost**: Umožňuje uživatelům nastavit hlasitost streamu v reálném čase.</li>
-                    <li>**Lokalizace**: Všechny zprávy jsou plně lokalizovány (CZ/EN).</li>
+                    <li><strong>Stabilní streamování</strong>: Využívá FFmpeg s optimalizovanými parametry.</li>
+                    <li><strong>Rozšířená podpora odkazů</strong>: Zpracovává přímé audio URL a <strong>playlisty</strong> (<span class="command-code">.pls</span>, <span class="command-code">.m3u</span>).</li>
+                    <li><strong>Extrakce přímé URL</strong>: Automaticky stáhne obsah playlistu, extrahuje skutečnou streamovací URL a tu předá FFmpeg. ✅</li>
+                    <li><strong>Dynamická hlasitost</strong>: Umožňuje uživatelům nastavit hlasitost streamu v reálném čase.</li>
+                    <li><strong>Lokalizace</strong>: Všechny zprávy jsou plně lokalizovány (CZ/EN).</li>
                 </ul>
             </div>
 
             <div class="module-divider"></div>
 
             <h2 class="module-heading">🚀 Příkazy</h2>
-            <p>Všechny příkazy patří do skupiny <span class="command-code">/stream</span>. Pro použití musíte být v **jakémkoli hlasovém kanálu**.</p>
+            <p>Všechny příkazy patří do skupiny <span class="command-code">/stream</span>. Pro použití musíte být v <strong>jakémkoli hlasovém kanálu</strong>.</p>
             
             <h3>Seznam příkazů</h3>
             
@@ -251,7 +251,7 @@
                 <div class="command-details">
                     <div class="command-detail-row">
                         <span class="command-label">Parametr:</span>
-                        <span><span class="command-code">url</span>: Přímý odkaz na audio stream (např. <span class="command-code">.mp3</span>) **NEBO playlist** (např. <span class="command-code">.pls</span>).</span>
+                        <span><span class="command-code">url</span>: Přímý odkaz na audio stream (např. <span class="command-code">.mp3</span>) <strong>NEBO playlist</strong> (např. <span class="command-code">.pls</span>).</span>
                     </div>
                     <div class="command-detail-row">
                         <span class="command-label">Příklad:</span>
@@ -283,7 +283,7 @@
                 <div class="command-details">
                     <div class="command-detail-row">
                         <span class="command-label">Parametr:</span>
-                        <span><span class="command-code">volume</span>: Celé číslo od **0** (ticho) do **100** (maximální hlasitost).</span>
+                        <span><span class="command-code">volume</span>: Celé číslo od <strong>0</strong> (ticho) do <strong>100</strong> (maximální hlasitost).</span>
                     </div>
                     <div class="command-detail-row">
                         <span class="command-label">Příklad:</span>
@@ -297,7 +297,7 @@
             </div>
             
             <div class="warning-box mt-4">
-                **Důležitá poznámka**: Ne všechny streamovací zdroje podporují softwarovou úpravu hlasitosti. V takovém případě příkaz **nebude funkční** a je nutné upravit hlasitost manuálně v Discordu.
+                <strong>Důležitá poznámka</strong>: Ne všechny streamovací zdroje podporují softwarovou úpravu hlasitosti. V takovém případě příkaz <strong>nebude funkční</strong> a je nutné upravit hlasitost manuálně v Discordu.
             </div>
 
         </div>

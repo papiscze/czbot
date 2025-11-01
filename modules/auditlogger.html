@@ -168,7 +168,7 @@
 
             <div class="module-intro-box">
                 <p>
-                    Tento modul slouží k **detailnímu logování** různých událostí, které se dějí na vašem Discord serveru. Poskytuje přehledné záznamy o změnách zpráv, uživatelů, rolí, kanálů a dalších důležitých akcí, což pomáhá udržovat pořádek a sledovat dění na serveru.
+                    Tento modul slouží k <strong>detailnímu logování</strong> různých událostí, které se dějí na vašem Discord serveru. Poskytuje přehledné záznamy o změnách zpráv, uživatelů, rolí, kanálů a dalších důležitých akcí, což pomáhá udržovat pořádek a sledovat dění na serveru.
                 </p>
             </div>
 
@@ -177,44 +177,44 @@
             <div class="module-section">
                 <h3>Události zpráv</h3>
                 <ul>
-                    <li>🗑️ **Smazané zprávy** (`message_delete`): Loguje smazané zprávy s jejich obsahem, autorem a kanálem.</li>
-                    <li>✍️ **Upravené zprávy** (`message_edit`): Zaznamenává úpravy zpráv, včetně původního a nového obsahu.</li>
+                    <li>🗑️ <strong>Smazané zprávy</strong> (`message_delete`): Loguje smazané zprávy s jejich obsahem, autorem a kanálem.</li>
+                    <li>✍️ <strong>Upravené zprávy</strong> (`message_edit`): Zaznamenává úpravy zpráv, včetně původního a nového obsahu.</li>
                 </ul>
             </div>
             
             <div class="module-section">
                 <h3>Události uživatelů a moderace</h3>
                 <ul>
-                    <li>👋 **Připojení uživatele** (`member_join`): Loguje nové členy.</li>
-                    <li>🚶 **Odchod uživatele** (`member_leave`): Zaznamenává členy, kteří opustili server.</li>
-                    <li>👤 **Úprava uživatele** (role/nick) (`member_update`): Sleduje změny přezdívek a rolí.</li>
-                    <li>🚫 **Zabanování uživatele** (`member_ban`): Loguje ban, včetně moderátora a důvodu (díky Audit Logům).</li>
-                    <li>✅ **Odbanování uživatele** (`member_unban`): Zaznamenává unban.</li>
-                    <li>👢 **Vyhození uživatele** (`member_kick`): Loguje kick, včetně moderátora a důvodu.</li>
-                    <li>⏱️ **Timeout uživatele** (`member_timeout`): Sleduje udělení a zrušení timeoutu.</li>
-                    <li>🔇 **Ztlumení mikrofonu** (server mute) / 🔊 **Odtlumení** (`member_server_mute/unmute`).</li>
-                    <li>🔕 **Ztlumení sluchátek** (server deafen) / 🔔 **Odtlumení** (`member_server_deafen/undeafen`).</li>
+                    <li>👋 <strong>Připojení uživatele</strong> (`member_join`): Loguje nové členy.</li>
+                    <li>🚶 <strong>Odchod uživatele</strong> (`member_leave`): Zaznamenává členy, kteří opustili server.</li>
+                    <li>👤 <strong>Úprava uživatele</strong> (role/nick) (`member_update`): Sleduje změny přezdívek a rolí.</li>
+                    <li>🚫 <strong>Zabanování uživatele</strong> (`member_ban`): Loguje ban, včetně moderátora a důvodu (díky Audit Logům).</li>
+                    <li>✅ <strong>Odbanování uživatele</strong> (`member_unban`): Zaznamenává unban.</li>
+                    <li>👢 <strong>Vyhození uživatele</strong> (`member_kick`): Loguje kick, včetně moderátora a důvodu.</li>
+                    <li>⏱️ <strong>Timeout uživatele</strong> (`member_timeout`): Sleduje udělení a zrušení timeoutu.</li>
+                    <li>🔇 <strong>Ztlumení mikrofonu</strong> (server mute) / 🔊 <strong>Odtlumení</strong> (`member_server_mute/unmute`).</li>
+                    <li>🔕 <strong>Ztlumení sluchátek</strong> (server deafen) / 🔔 <strong>Odtlumení</strong> (`member_server_deafen/undeafen`).</li>
                 </ul>
             </div>
             
             <div class="module-section">
                 <h3>Události rolí a kanálů</h3>
                 <ul>
-                    <li>✨ **Vytvoření role** / 💥 **Smazání role** (`role_create/delete`).</li>
-                    <li>➕ **Vytvoření kanálu** / ➖ **Smazání kanálu** (`channel_create/delete`).</li>
-                    <li>✏️ **Úprava kanálu** (`channel_update`): Sleduje změny názvu, tématu, kategorie.</li>
+                    <li>✨ <strong>Vytvoření role</strong> / 💥 <strong>Smazání role</strong> (`role_create/delete`).</li>
+                    <li>➕ <strong>Vytvoření kanálu</strong> / ➖ <strong>Smazání kanálu</strong> (`channel_create/delete`).</li>
+                    <li>✏️ <strong>Úprava kanálu</strong> (`channel_update`): Sleduje změny názvu, tématu, kategorie.</li>
                 </ul>
             </div>
 
             <div class="module-section">
                 <h3>Události serveru, vláken, pozvánek a další</h3>
                 <ul>
-                    <li>⚙️ **Úprava serveru** (`guild_update`): Změny nastavení, ikony, vlastníka.</li>
-                    <li>😀 **Úprava emotikonů** (`emoji_update`).</li>
-                    <li>📨 **Vytvoření pozvánky** / 🗑️ **Smazání pozvánky** (`invite_create/delete`).</li>
-                    <li>💬 **Vlákno vytvořeno/upraveno/smazáno** (`thread_create/update/delete`).</li>
-                    <li>🗓️ **Událost vytvořena/upravena/smazána** (`scheduled_event_create/update/delete`).</li>
-                    <li>⚡ **Použití příkazů**: Zaznamenává použití příkazů u czbota uživateli.</li>
+                    <li>⚙️ <strong>Úprava serveru</strong> (`guild_update`): Změny nastavení, ikony, vlastníka.</li>
+                    <li>😀 <strong>Úprava emotikonů</strong> (`emoji_update`).</li>
+                    <li>📨 <strong>Vytvoření pozvánky</strong> / 🗑️ <strong>Smazání pozvánky</strong> (`invite_create/delete`).</li>
+                    <li>💬 <strong>Vlákno vytvořeno/upraveno/smazáno</strong> (`thread_create/update/delete`).</li>
+                    <li>🗓️ <strong>Událost vytvořena/upravena/smazána</strong> (`scheduled_event_create/update/delete`).</li>
+                    <li>⚡ <strong>Použití příkazů</strong>: Zaznamenává použití příkazů u czbota uživateli.</li>
                 </ul>
             </div>
 
@@ -224,10 +224,10 @@
             <p>Modul funguje na principu Discord událostí (event listenerů) a využívá Discord Audit Logy pro přesné zjištění moderátorů.</p>
 
             <ol>
-                <li>**Discord Events:** Modul poslouchá specifické události, které nastanou na serveru (smazání zprávy, připojení uživatele, změna role).</li>
-                <li>**Audit Logy:** Pro **moderátorské akce** (ban, kick, timeout, mute/deafen) modul využívá **Discord Audit Logy** k zjištění, kdo akci provedl a jaký byl důvod. Pro tento přístup je klíčové oprávnění <span class="command-code">Zobrazit audit log</span>.</li>
-                <li>**Databáze:** Ukládá nastavení, které auditní události jsou pro daný server povoleny a do kterých kanálů mají být logy posílány.</li>
-                <li>**Odesílání logů:** Logy jsou odesílány do určeného textového kanálu ve formátu přehledných **embed zpráv**.</li>
+                <li><strong>Discord Events:</strong> Modul poslouchá specifické události, které nastanou na serveru (smazání zprávy, připojení uživatele, změna role).</li>
+                <li><strong>Audit Logy:</strong> Pro <strong>moderátorské akce</strong> (ban, kick, timeout, mute/deafen) modul využívá <strong>Discord Audit Logy</strong> k zjištění, kdo akci provedl a jaký byl důvod. Pro tento přístup je klíčové oprávnění <span class="command-code">Zobrazit audit log</span>.</li>
+                <li><strong>Databáze:</strong> Ukládá nastavení, které auditní události jsou pro daný server povoleny a do kterých kanálů mají být logy posílány.</li>
+                <li><strong>Odesílání logů:</strong> Logy jsou odesílány do určeného textového kanálu ve formátu přehledných <strong>embed zpráv</strong>.</li>
             </ol>
             
             <div class="module-divider"></div>
@@ -242,29 +242,29 @@
                 <div class="command-details">
                     <div class="command-detail-row">
                         <span class="command-label">Použití:</span>
-                        <span>Zadejte příkaz do libovolného textového kanálu. Bot pošle **efemérní zprávu** (viditelnou jen pro vás) s interaktivními menu a tlačítky.</span>
+                        <span>Zadejte příkaz do libovolného textového kanálu. Bot pošle <strong>efemérní zprávu</strong> (viditelnou jen pro vás) s interaktivními menu a tlačítky.</span>
                     </div>
                     <div class="command-detail-row">
                         <span class="command-label">Krok 1:</span>
-                        <span>Pomocí rozbalovacího menu (1) vyberte **Kategorii událostí** (např. "Zprávy").</span>
+                        <span>Pomocí rozbalovacího menu (1) vyberte <strong>Kategorii událostí</strong> (např. "Zprávy").</span>
                     </div>
                     <div class="command-detail-row">
                         <span class="command-label">Krok 2:</span>
-                        <span>Pomocí rozbalovacího menu (2) vyberte **Konkrétní událost** (např. "Smazané zprávy").</span>
+                        <span>Pomocí rozbalovacího menu (2) vyberte <strong>Konkrétní událost</strong> (např. "Smazané zprávy").</span>
                     </div>
                     <div class="command-detail-row">
                         <span class="command-label">Krok 3:</span>
-                        <span>Aktivujte tlačítko **Zapnout / Změnit kanál**. Otevře se modalové okno pro zadání **názvu** nebo **ID** cílového kanálu.</span>
+                        <span>Aktivujte tlačítko <strong>Zapnout / Změnit kanál</strong>. Otevře se modalové okno pro zadání <strong>názvu</strong> nebo <strong>ID</strong> cílového kanálu.</span>
                     </div>
                     <div class="command-detail-row">
                         <span class="command-label">Tip:</span>
-                        <span>**Vypnout** tlačítko vypne logování pro aktuálně vybranou událost. **Přepnout globální logování** vypne logování úplně pro celý server.</span>
+                        <span><strong>Vypnout</strong> tlačítko vypne logování pro aktuálně vybranou událost. <strong>Přepnout globální logování</strong> vypne logování úplně pro celý server.</span>
                     </div>
                 </div>
             </div>
 
             <h3 class="mt-4">2. Sledování logů</h3>
-            <p>Po nastavení bot automaticky odesílá logy pro vybrané události do určených kanálů ve formátu přehledných **embed zpráv**.</p>
+            <p>Po nastavení bot automaticky odesílá logy pro vybrané události do určených kanálů ve formátu přehledných <strong>embed zpráv</strong>.</p>
             
             <div class="module-divider"></div>
 
@@ -273,16 +273,16 @@
 
             <div class="info-box">
                 <ul>
-                    <li>**`Zobrazit audit log` (View Audit Log):** Nezbytné pro čtení Discord Audit Logů a zjišťování moderátora a důvodu.</li>
-                    <li>**`Spravovat kanály` (Manage Channels):** Pro logování událostí týkajících se kanálů.</li>
-                    <li>**`Spravovat role` (Manage Roles):** Pro logování událostí týkajících se rolí.</li>
-                    <li>**`Spravovat server` (Manage Guild):** Doporučeno pro správné fungování mnoha aspektů modulu.</li>
-                    <li>**`Odesílat zprávy` (Send Messages):** V kanálech, kam mají být logy odesílány.</li>
-                    <li>**`Vložit odkazy` (Embed Links):** Pro zobrazení logů v přehledných embed zprávách.</li>
+                    <li><strong>`Zobrazit audit log` (View Audit Log):</strong> Nezbytné pro čtení Discord Audit Logů a zjišťování moderátora a důvodu.</li>
+                    <li><strong>`Spravovat kanály` (Manage Channels):</strong> Pro logování událostí týkajících se kanálů.</li>
+                    <li><strong>`Spravovat role` (Manage Roles):</strong> Pro logování událostí týkajících se rolí.</li>
+                    <li><strong>`Spravovat server` (Manage Guild):</strong> Doporučeno pro správné fungování mnoha aspektů modulu.</li>
+                    <li><strong>`Odesílat zprávy` (Send Messages):</strong> V kanálech, kam mají být logy odesílány.</li>
+                    <li><strong>`Vložit odkazy` (Embed Links):</strong> Pro zobrazení logů v přehledných embed zprávách.</li>
                 </ul>
             </div>
             <div class="warning-box mt-4">
-                **Doporučení:** Udělte botovi roli s těmito oprávněními, ideálně roli nad kanály, do kterých se loguje.
+                <strong>Doporučení:</strong> Udělte botovi roli s těmito oprávněními, ideálně roli nad kanály, do kterých se loguje.
             </div>
 
         </div>

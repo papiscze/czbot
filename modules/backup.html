@@ -168,7 +168,7 @@
 
             <div class="module-intro-box">
                 <p>
-                    Tento modul vytváří zálohu **struktury** vašeho Discord serveru (kanály, kategorie, role). Je ideální pro rychlé obnovení nastavení po nehodě nebo pro duplikaci serveru. Doporučujeme botovi přidělit oprávnění **Administrátor**.
+                    Tento modul vytváří zálohu <strong>struktury</strong> vašeho Discord serveru (kanály, kategorie, role). Je ideální pro rychlé obnovení nastavení po nehodě nebo pro duplikaci serveru. Doporučujeme botovi přidělit oprávnění <strong>Administrátor</strong>.
                 </p>
             </div>
             
@@ -178,17 +178,17 @@
                 <div>
                     <h3 class="module-subheading text-success">✅ Zálohovaná Struktura</h3>
                     <ul class="bullet-list text-success">
-                        <li>**Role:** Názvy, barvy, oprávnění a nastavení.</li>
-                        <li>**Kanály a Kategorie:** Názvy, typy (text/hlas) a uspořádání.</li>
+                        <li><strong>Role:</strong> Názvy, barvy, oprávnění a nastavení.</li>
+                        <li><strong>Kanály a Kategorie:</strong> Názvy, typy (text/hlas) a uspořádání.</li>
                     </ul>
                 </div>
                 <div>
                     <h3 class="module-subheading text-danger">❌ Nezahrnutý Obsah</h3>
                     <ul class="bullet-list text-danger">
-                        <li>**Historie zpráv:** Chat se neukládá.</li>
-                        <li>**Členové:** Seznam členů serveru se neobnovuje.</li>
-                        <li>**Emoji:** Vlastní emoji nejsou součástí zálohy.</li>
-                        <li>**Ikona serveru:** Ikona není obnovena.</li>
+                        <li><strong>Historie zpráv:</strong> Chat se neukládá.</li>
+                        <li><strong>Členové:</strong> Seznam členů serveru se neobnovuje.</li>
+                        <li><strong>Emoji:</strong> Vlastní emoji nejsou součástí zálohy.</li>
+                        <li><strong>Ikona serveru:</strong> Ikona není obnovena.</li>
                     </ul>
                 </div>
             </div>
@@ -199,12 +199,12 @@
             
             <div class="info-box">
                 <h4 class="info-box-title">Ověřovací kód (Jednorázový)</h4>
-                <p>Pro obnovu zálohy na **jiném serveru** než na původním je nutné použít **jednorázový kód**. Tím je zajištěno, že zálohu obnoví pouze administrátor, který ji vytvořil.</p>
+                <p>Pro obnovu zálohy na <strong>jiném serveru</strong> než na původním je nutné použít <strong>jednorázový kód</strong>. Tím je zajištěno, že zálohu obnoví pouze administrátor, který ji vytvořil.</p>
                 <ol class="bullet-list">
-                    <li>Při <span class="command-code">/backup save</span> bot kód **vygeneruje**.</li>
+                    <li>Při <span class="command-code">/backup save</span> bot kód <strong>vygeneruje</strong>.</li>
                     <li>Kód je zobrazen pouze vám a je dočasně uložen s ID serveru.</li>
                     <li>Při <span class="command-code">/backup restore</span> na novém serveru musíte kód zadat.</li>
-                    <li>Po úspěšné obnově je kód **zneplatněn**.</li>
+                    <li>Po úspěšné obnově je kód <strong>zneplatněn</strong>.</li>
                 </ol>
             </div>
             
@@ -215,14 +215,14 @@
             <h3 class="mt-4">1. Vytvoření zálohy: <span class="command-code">/backup save</span></h3>
             <div class="command-box admin-command">
                 <h4 class="command-title">/backup save <span class="badge">ADMIN</span></h4>
-                <p>Uloží aktuální strukturu serveru a vygeneruje **jednorázový ověřovací kód**.</p>
-                <p>⏳ **Omezení:** Příkaz lze použít pouze **jednou za 24 hodin** na server.</p>
+                <p>Uloží aktuální strukturu serveru a vygeneruje <strong>jednorázový ověřovací kód</strong>.</p>
+                <p>⏳ <strong>Omezení:</strong> Příkaz lze použít pouze <strong>jednou za 24 hodin</strong> na server.</p>
             </div>
 
             <h3 class="mt-4">2. Obnova ze zálohy: <span class="command-code">/backup restore</span></h3>
             <div class="command-box admin-command">
                 <h4 class="command-title">/backup restore <span class="badge">ADMIN</span></h4>
-                <p>Obnoví server z dříve uložené šablony. Vyžaduje kód pro obnovu na **jiném** serveru.</p>
+                <p>Obnoví server z dříve uložené šablony. Vyžaduje kód pro obnovu na <strong>jiném</strong> serveru.</p>
                 <table class="data-table small-font">
                     <thead>
                         <tr>
@@ -233,7 +233,7 @@
                     <tbody>
                         <tr>
                             <td><span class="command-code">code</span></td>
-                            <td>**Volitelný.** Jednorázový ověřovací kód. Vyžadován POUZE pro obnovu na **novém** serveru.</td>
+                            <td><strong>Volitelný.</strong> Jednorázový ověřovací kód. Vyžadován POUZE pro obnovu na <strong>novém</strong> serveru.</td>
                         </tr>
                     </tbody>
                 </table>
@@ -244,11 +244,11 @@
             </div>
 
             <div class="info-box mt-4 text-warning">
-                **⚠️ Důležité upozornění k obnově**
+                <strong>⚠️ Důležité upozornění k obnově</strong>
                 <ul class="bullet-list">
-                    <li>Obnova **PŘIDÁVÁ**, nemaže! Přidá nové kanály a role.</li>
-                    <li>Obnova na původním serveru (bez kódu) je možná jen na serveru, který je téměř **prázdný** (má maximálně 3 kanály a 3 role). Jinak se musíte ručně vyčistit.</li>
-                    <li>Při úspěšné obnově na novém serveru je kód **zneplatněn**.</li>
+                    <li>Obnova <strong>PŘIDÁVÁ</strong>, nemaže! Přidá nové kanály a role.</li>
+                    <li>Obnova na původním serveru (bez kódu) je možná jen na serveru, který je téměř <strong>prázdný</strong> (má maximálně 3 kanály a 3 role). Jinak se musíte ručně vyčistit.</li>
+                    <li>Při úspěšné obnově na novém serveru je kód <strong>zneplatněn</strong>.</li>
                 </ul>
             </div>
             

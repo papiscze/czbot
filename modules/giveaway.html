@@ -168,18 +168,18 @@
 
             <div class="module-intro-box">
                 <p>
-                    Modul **Giveaway** poskytuje komplexní sadu funkcí pro spouštění, ukončování a opětovné losování soutěží (giveawayů). Podporuje **požadované role** a **minimální úrovně** pro omezení účasti.
+                    Modul <strong>Giveaway</strong> poskytuje komplexní sadu funkcí pro spouštění, ukončování a opětovné losování soutěží (giveawayů). Podporuje <strong>požadované role</strong> a <strong>minimální úrovně</strong> pro omezení účasti.
                 </p>
             </div>
 
             <h2 class="module-heading">⚙️ Důležitá oprávnění bota</h2>
-            <p>Pro bezproblémové fungování je **klíčové oprávnění** <span class="command-code">Spravovat zprávy</span>, které bot potřebuje pro úpravu giveaway zpráv a manipulaci s reakcemi.</p>
+            <p>Pro bezproblémové fungování je <strong>klíčové oprávnění</strong> <span class="command-code">Spravovat zprávy</span>, které bot potřebuje pro úpravu giveaway zpráv a manipulaci s reakcemi.</p>
 
             <div class="info-box">
                 <ul class="bullet-list">
-                    <li>**Spravovat zprávy** (<span class="command-code">manage_messages</span>): **Klíčové** – pro úpravu zpráv a reakcí.</li>
-                    <li>**Posílat zprávy** / **Přidávat reakce** / **Číst historii zpráv**: Nezbytné pro komunikaci a zaznamenávání účastníků.</li>
-                    <li>**Odesílat zprávy do soukromých zpráv (DM)**: Pro informování uživatelů, kteří nesplňují požadavky.</li>
+                    <li><strong>Spravovat zprávy</strong> (<span class="command-code">manage_messages</span>): <strong>Klíčové</strong> – pro úpravu zpráv a reakcí.</li>
+                    <li><strong>Posílat zprávy</strong> / <strong>Přidávat reakce</strong> / <strong>Číst historii zpráv</strong>: Nezbytné pro komunikaci a zaznamenávání účastníků.</li>
+                    <li><strong>Odesílat zprávy do soukromých zpráv (DM)</strong>: Pro informování uživatelů, kteří nesplňují požadavky.</li>
                 </ul>
             </div>
             
@@ -189,25 +189,25 @@
             
             <div class="info-box">
                 <ul class="bullet-list">
-                    <li>**Spouštění nových soutěží** s určenou délkou, počtem vítězů a cenou.</li>
-                    <li>**Omezení účasti** pomocí **Požadované role** nebo **Minimální úrovně** (vyžaduje XP systém).</li>
-                    <li>**Automatické ukončení** po uplynutí času.</li>
-                    <li>**Ruční ukončení** a **Opětovné vylosování vítězů** (<span class="command-code">reroll</span>).</li>
-                    <li>**Zaznamenávání účastníků** kliknutím na reakci 🎁 a automatická kontrola jejich oprávnění.</li>
+                    <li><strong>Spouštění nových soutěží</strong> s určenou délkou, počtem vítězů a cenou.</li>
+                    <li><strong>Omezení účasti</strong> pomocí <strong>Požadované role</strong> nebo <strong>Minimální úrovně</strong> (vyžaduje XP systém).</li>
+                    <li><strong>Automatické ukončení</strong> po uplynutí času.</li>
+                    <li><strong>Ruční ukončení</strong> a <strong>Opětovné vylosování vítězů</strong> (<span class="command-code">reroll</span>).</li>
+                    <li><strong>Zaznamenávání účastníků</strong> kliknutím na reakci 🎁 a automatická kontrola jejich oprávnění.</li>
                 </ul>
             </div>
 
             <div class="module-divider"></div>
 
             <h2 class="module-heading">🚀 Příkazy pro správu (POUZE MODERÁTOŘI)</h2>
-            <p>Všechny příkazy jsou dostupné jako **slash příkazy** pod <span class="command-code">/giveaway</span>. Jsou omezeny na uživatele s oprávněním <span class="command-code">Spravovat zprávy</span>.</p>
+            <p>Všechny příkazy jsou dostupné jako <strong>slash příkazy</strong> pod <span class="command-code">/giveaway</span>. Jsou omezeny na uživatele s oprávněním <span class="command-code">Spravovat zprávy</span>.</p>
 
             <h3 class="mt-4">1. Spuštění nového giveawaye: <span class="command-code">/giveaway start</span></h3>
             <p>Doba trvání se zadává s jednotkou (<span class="command-code">s, m, h, d</span>), např. <span class="command-code">1h30m</span>.</p>
             
             <div class="command-box">
                 <h4 class="command-title">Příklad s požadavky na role a úroveň:</h4>
-                <p>Spustí giveaway na 3 dny s 3 vítězi v kanále `#souteze`, pouze pro členy s rolí **@Věrný-člen** a min. úrovní **10**.</p>
+                <p>Spustí giveaway na 3 dny s 3 vítězi v kanále `#souteze`, pouze pro členy s rolí <strong>@Věrný-člen</strong> a min. úrovní <strong>10</strong>.</p>
                 <span class="command-code-example">/giveaway start duration:3d winners:3 prize:Steam Hra channel:#souteze required_role:@Věrný-člen min_level:10</span>
             </div>
 
@@ -245,9 +245,9 @@
             <h2 class="module-heading">🔗 Chování a interakce</h2>
             
             <ol class="bullet-list">
-                <li>**Účast**: Uživatelé se účastní kliknutím na reakci **🎁** pod zprávou.</li>
-                <li>**Odmítnutí účasti**: Pokud uživatel nesplňuje požadavky (role, úroveň), bot **automaticky odstraní jeho reakci** a pokusí se mu poslat soukromou zprávu s vysvětlením.</li>
-                <li>**Vítězové**: Po ukončení bot oznámí vítěze v kanálu a aktualizuje původní zprávu.</li>
+                <li><strong>Účast</strong>: Uživatelé se účastní kliknutím na reakci <strong>🎁</strong> pod zprávou.</li>
+                <li><strong>Odmítnutí účasti</strong>: Pokud uživatel nesplňuje požadavky (role, úroveň), bot <strong>automaticky odstraní jeho reakci</strong> a pokusí se mu poslat soukromou zprávu s vysvětlením.</li>
+                <li><strong>Vítězové</strong>: Po ukončení bot oznámí vítěze v kanálu a aktualizuje původní zprávu.</li>
             </ol>
             
         </div>
