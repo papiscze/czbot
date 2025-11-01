@@ -3,499 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CZbot - Embed Generator</title>
+    <title>Embed Generator | CZbot Nástroje</title>
     <link href="templatemo-nexus-style.css" rel="stylesheet"> 
-    
-    <style>
-        /* ==================================== */
-        /* SPECIÁLNÍ STYLY PRO EMBED GENERATOR */
-        /* ==================================== */
-        
-        /* Definice CSS proměnných (pro zajištění konzistence) */
-        :root {
-            --color-primary: #64c8ff; 
-            --color-secondary: #fff;
-            --color-bg-dark: rgba(10, 10, 20, 0.7); /* Více průhledné pro hlavní boxy */
-            --color-input-bg: rgba(30, 30, 50, 0.7); 
-            --color-border: rgba(100, 200, 255, 0.3);
-            --color-text-light: #ddd; 
-            --color-text-medium: #aaa;
-            --color-discord-bg: #36393f; 
-            --color-embed-bg: #2f3136; 
-            --color-text-discord: #dcddde;
-            --color-link-discord: #0099ff;
-        }
-        
-        /* Zajištění místa pod navigací a základní padding */
-        .embed-section {
-            padding-top: 150px; 
-            padding-bottom: 80px;
-            min-height: 100vh;
-        }
-        
-        /* Kontejner pro centrování a omezení šířky (OPRAVENO: Stejný princip jako status-container) */
-        .embed-container {
-            max-width: 1400px; /* Dostatečná šířka pro dva sloupce */
-            margin: auto;     
-            padding: 0 20px;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .section-title {
-            font-size: 3rem;
-            color: var(--color-primary); 
-            margin-bottom: 10px;
-            text-shadow: 0 0 10px rgba(100, 200, 255, 0.5);
-        }
-
-        /* Kontejnery pro formulář a náhled */
-        .form-box, .preview-box {
-            /* Upraveno pro lepší integraci s cyber stylem */
-            background-color: var(--color-bg-dark); 
-            border: 1px solid var(--color-border);
-            border-radius: 12px;
-            padding: 32px;
-            box-shadow: 0 0 20px rgba(100, 200, 255, 0.1);
-        }
-        
-        /* Rozložení formuláře a náhledu (flexbox pro 2 sloupce) */
-        .embed-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-        }
-        @media (min-width: 900px) {
-            .embed-grid {
-                flex-direction: row;
-            }
-            .embed-grid > div {
-                flex: 1;
-                min-width: 0; /* Oprava flexbox bugu */
-            }
-        }
-
-
-        /* Styl pro inputy (důležité pro tmavý vzhled) */
-        .cyber-input, .cyber-textarea, .cyber-select {
-            display: block;
-            width: 100%;
-            padding: 10px 15px;
-            margin-top: 4px;
-            background-color: var(--color-input-bg); 
-            border: 1px solid var(--color-border);
-            border-radius: 6px;
-            color: var(--color-text-light); 
-            transition: border-color 0.3s, box-shadow 0.3s;
-            /* Důležité: Odstranění defaultního vzhledu pro select */
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="%23ddd"><path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.25 4.25a.75.75 0 01-1.06 0L5.21 8.27a.75.75 0 01.02-1.06z" clip-rule="evenodd" /></svg>');
-            background-repeat: no-repeat;
-            background-position: right 0.7rem center;
-            background-size: 1em;
-            
-        }
-        
-        .cyber-input:focus, .cyber-textarea:focus, .cyber-select:focus {
-            border-color: var(--color-primary);
-            box-shadow: 0 0 5px rgba(100, 200, 255, 0.5);
-            outline: none;
-        }
-        /* Zvláštní styl pro color input */
-        #embed-color {
-             padding: 0;
-             border: none;
-             height: 40px;
-             background-color: transparent; 
-        }
-
-        .cyber-label {
-            display: block;
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: var(--color-text-medium);
-            margin-bottom: 5px;
-        }
-
-        /* Layout pro pole v Embedu */
-        .field-row {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 10px;
-            align-items: center;
-        }
-        .field-row > input {
-            flex-grow: 1;
-        }
-        .remove-field-btn {
-            /* Zajištění, že tlačítko bude mít stejný cyber vzhled */
-            background-color: #e53e3e; /* červená */
-            color: white;
-            padding: 5px 10px;
-            border-radius: 6px;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-        .remove-field-btn:hover {
-            background-color: #c53030;
-        }
-
-        /* Tlačítka pro formátování */
-        .format-buttons {
-            display: flex;
-            gap: 5px;
-            margin-bottom: 5px;
-        }
-        .format-button {
-            background-color: #3b4457;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-weight: bold;
-            transition: background-color 0.2s;
-            border: 1px solid #4a5568;
-            cursor: pointer;
-        }
-        .format-button:hover {
-            background-color: #4a5568;
-        }
-        
-        /* Styl pro hlavní tlačítko */
-        .cyber-button {
-            background-color: #4299e1;
-            color: white;
-            font-weight: bold;
-            border: none;
-            border-radius: 6px;
-            padding: 10px 15px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .cyber-button:hover {
-            background-color: #3182ce;
-        }
-        
-        /* Tlačítko pro přidání pole */
-        #add-field-btn {
-            /* Upraveno pro lepší vzhled a použití cyber-button stylů */
-            background-color: #2f855a; /* Tmavě zelená */
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            font-weight: 600;
-        }
-        #add-field-btn:hover {
-            background-color: #276749;
-        }
-
-
-        /* ==================================== */
-        /* DISCORD EMBED NÁHLED STYLY */
-        /* ==================================== */
-        
-        .discord-embed-preview-wrapper {
-            background-color: var(--color-discord-bg);
-            padding: 20px;
-            border-radius: 5px;
-            min-height: 400px;
-            display: flex;
-            flex-direction: column;
-            color: var(--color-text-discord); /* Základní barva textu v náhledu */
-        }
-        
-        .discord-message {
-            display: flex;
-            margin-bottom: 8px;
-        }
-
-        .discord-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: #4f545c;
-            margin-right: 16px;
-        }
-
-        .embed-content {
-            flex-grow: 1;
-        }
-
-        .embed-header {
-            color: var(--color-text-discord);
-            font-weight: 600;
-            font-size: 1rem;
-            margin-bottom: 4px;
-        }
-
-        .discord-embed-preview {
-            display: flex;
-            border-left: 4px solid #5865f2; /* Default barva */
-            background-color: var(--color-embed-bg);
-            border-radius: 4px;
-            padding: 8px 12px 16px 12px;
-            margin-top: 8px;
-            position: relative;
-            max-width: 520px; /* Standardní max šířka Discord embedu */
-        }
-        
-        .embed-data {
-            flex-grow: 1;
-            padding-right: 16px; 
-        }
-
-        .embed-author {
-            display: flex;
-            align-items: center;
-            font-size: 0.875rem;
-            color: var(--color-text-discord);
-            font-weight: 500;
-            margin-bottom: 4px;
-        }
-
-        .embed-author-icon {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            margin-right: 8px;
-        }
-
-        .embed-title {
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--color-text-discord);
-            margin-bottom: 4px;
-        }
-
-        .embed-description {
-            font-size: 0.875rem;
-            color: var(--color-text-light);
-            line-height: 1.375;
-            margin-bottom: 8px;
-        }
-        /* Pevné styly pro HTML z Markdownu */
-        .embed-description p { margin: 0; } 
-
-
-        .embed-fields {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 8px;
-        }
-
-        .embed-field {
-            min-width: 100%;
-        }
-        .embed-field.inline {
-            flex-basis: 48%; 
-            min-width: 150px;
-        }
-        
-        .embed-field-name {
-            font-weight: 700;
-            font-size: 0.875rem;
-            color: var(--color-text-discord);
-            margin-bottom: 2px;
-        }
-
-        .embed-field-value {
-            font-size: 0.875rem;
-            color: var(--color-text-light);
-            line-height: 1.375;
-        }
-        .embed-field-value p { margin: 0; } 
-        
-        .embed-image {
-            max-width: 100%;
-            height: auto;
-            margin-top: 8px;
-            border-radius: 4px;
-        }
-
-        .embed-thumbnail {
-            position: absolute;
-            top: 10px;
-            right: 12px;
-            max-width: 80px;
-            max-height: 80px;
-            border-radius: 4px;
-            object-fit: cover;
-        }
-
-        .embed-footer {
-            display: flex;
-            align-items: center;
-            font-size: 0.75rem;
-            color: #72767d;
-            margin-top: 8px;
-        }
-
-        .embed-footer-icon {
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            margin-right: 6px;
-        }
-        
-        /* ==================================== */
-        /* DROPDOWN MENU STYLY (pro navigaci) */
-        /* Zkopírováno z funkční navigace */
-        /* ==================================== */
-
-        .dropdown-link {
-            position: relative;
-            display: inline-block;
-        }
-        .dropbtn {
-            padding: 10px 15px;
-            background-color: transparent;
-            color: var(--color-text-light);
-            text-decoration: none;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-        .dropbtn:hover {
-            color: var(--color-primary);
-        }
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: rgba(30, 30, 50, 0.95);
-            min-width: 200px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
-            z-index: 1000;
-            border: 1px solid var(--color-border);
-            border-radius: 6px;
-            padding: 5px 0;
-            backdrop-filter: blur(5px);
-            top: 100%;
-            left: 0;
-        }
-        .dropdown-content a {
-            color: var(--color-text-light);
-            padding: 10px 16px;
-            text-decoration: none;
-            display: block;
-            font-size: 0.95rem;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        .dropdown-content a:hover {
-            background-color: var(--color-input-bg);
-            color: var(--color-primary);
-        }
-        .dropdown-link:hover .dropdown-content {
-            display: block;
-        }
-        @media (max-width: 992px) {
-            .dropdown-link .dropdown-content {
-                position: static;
-                display: none;
-                box-shadow: none;
-                border: none;
-                padding: 0;
-                background-color: transparent;
-            }
-            .dropdown-link:hover .dropdown-content {
-                display: block;
-            }
-            .dropdown-link a {
-                padding-left: 30px;
-            }
-        }
-    </style>
-</head>
+    </head>
 <body id="top">
+    
     <div class="cyber-bg">
         <div class="cyber-gradient"></div>
         <div class="matrix-rain" id="matrixRain"></div>
     </div>
+    
     <div class="particles" id="particlesContainer"></div>
     <div class="data-streams" id="dataStreams"></div>
+    
     <div class="orb orb1"></div>
     <div class="orb orb2"></div>
     <div class="orb orb3"></div>
+    
     <div class="grid-overlay">
         <div class="grid-lines"></div>
         <div class="grid-glow"></div>
     </div>
+    
     <div class="scanlines"></div>
     <div class="noise-overlay"></div>
-
+    
     <nav>
         <div class="nav-container">
-            <a href="index.html" class="logo">CZbot</a> 
+            <a href="index.html" class="logo">CZbot</a>
             <ul class="nav-links">
-                <li class="dropdown-link">
-                    <a href="" class="dropbtn">Funkce ▼</a>
-                    <div class="dropdown-content">
-                        <a href="crongenerator.html">CRON Generator</a>
-                        <a href="embedgenerator.html">Embed Generator</a>
-                        <a href="stats.html">Status bota</a>                        
-                    </div>
-                </li>
-                
                 <li><a href="commands.html">Příkazy</a></li>
-                <li><a href="warns.html">Moderátorské záznamy</a></li> 
+                
+                <li class="dropdown">
+                    <a href="" class="dropbtn">Nástroje<span class="arrow">▼</span></a> 
+                    <div class="dropdown-content">
+                        <a href="crongenerator.html">Cron Generator</a>
+                        <a href="embedgenerator.html" class="active-item">Embed Generator</a>
+                        <a href="status.html">Status bota</a>
+                    </div>
+                </li>      
+                <li><a href="https://papiscze.github.io/czbot/warns.html">Moderátorské záznamy</a></li>
                 <li><a href="https://rs422cznas.myds.me:5038/stats/">Webové statistiky serverů</a></li>
-                <li><a href="https://discord.gg/hk6PdtVxbm" target="_blank">Support server</a></li>
             </ul>
             <div class="nav-bottom">
-                <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Přidat na server</a>
+                <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Přidat bota</a>
             </div>
             <button class="mobile-menu-button" id="mobileMenuBtn">
                 <div class="hamburger">
-                    <span></span><span></span><span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </div>
             </button>
         </div>
     </nav>
     
-    <section class="embed-section">
-        <div class="embed-container">
-            
-            <div style="display: flex; justify-content: flex-end; margin-bottom: 1rem;">
-                <select id="lang-switcher" class="cyber-select" style="width: 150px;">
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <a href="index.html" class="mobile-menu-logo">CZbot</a>
+            <button class="mobile-menu-close" id="mobileMenuClose">✕</button>
+        </div>
+        
+        <nav class="mobile-menu-nav">
+            <ul>
+                <li><a href="commands.html">Příkazy</a></li>
+
+                <li class="mobile-submenu-header">
+                    <a href="" class="mobile-dropbtn">Nástroje<span class="arrow">▼</span></a>
+                    <ul class="mobile-submenu-content">
+                        <li><a href="crongenerator.html">Cron Generator</a></li>
+                        <li><a href="embedgenerator.html" class="active-item">Embed Generator</a></li>
+                        <li><a href="status.html">Status bota</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="https://papiscze.github.io/czbot/warns.html">Moderátorské záznamy</a></li>
+                <li><a href="https://rs422cznas.myds.me:5038/stats/">Webové statistiky serverů</a></li>
+            </ul>
+        </nav>
+        
+        <div class="mobile-menu-cta">
+            <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Přidat bota</a>
+        </div>
+    </div>
+    <section class="tool-section embed-generator-section" id="embedGenerator">
+        <div class="tool-container embed-container">
+
+            <header class="tool-header cron-header">
+                <h1 id="cron-title" class="header-title">Embed Creator</h1>
+                <p class="header-subtitle">Snadno generujte Embedy. (Pro Discord bota)</p>
+            </header>            
+
+            <div class="flex justify-end mb-4">
+                <select id="cron-lang-switcher">
                     <option value="cs">Čeština</option>
                     <option value="en">English</option>
                 </select>
             </div>
-            
-            <div class="section-header">
-                <h1 id="form-title" class="section-title">CZbot Discord Embed Creator</h1>
-            </div>
 
-            <div class="embed-grid">
-                
-                <div class="form-box">
+            <div class="content-grid"> 
+                <div class="tool-card embed-card form-column">             
                     <form id="embed-form" class="space-y-4">
                         
-                        <div class="mb-4">
-                            <label for="webhook-url" id="label-webhook-url" class="cyber-label">Discord Webhook URL</label>
-                            <input type="text" id="webhook-url" name="webhook-url" class="cyber-input" placeholder="Vložte sem URL vašeho Discord webhooku">
+                        <div class="form-group">
+                            <label for="webhook-url" id="label-webhook-url">Discord Webhook URL</label>
+                            <input type="text" id="webhook-url" name="webhook-url" class="tool-input" placeholder="Vložte sem URL vašeho Discord webhooku">
                         </div>
 
-                        <div class="mb-4">
-                            <label for="embed-color" id="label-embed-color" class="cyber-label">Barva embedu</label>
-                            <input type="color" id="embed-color" name="embed-color" value="#5865f2" class="mt-1 block w-full h-10 rounded-md cursor-pointer">
+                        <div class="form-group">
+                            <label for="embed-color" id="label-embed-color">Barva embedu</label>
+                            <input type="color" id="embed-color" name="embed-color" value="#5865f2" class="tool-color-input">
                         </div>
 
-                        <div class="mb-4">
-                            <label for="embed-title" id="label-embed-title" class="cyber-label">Titulek embedu</label>
-                            <input type="text" id="embed-title" name="embed-title" class="cyber-input" placeholder="Název vašeho embedu">
+                        <div class="form-group">
+                            <label for="embed-title" id="label-embed-title">Titulek embedu</label>
+                            <input type="text" id="embed-title" name="embed-title" class="tool-input" placeholder="Název vašeho embedu">
                         </div>
                         
-                        <div class="mb-4">
-                            <label for="embed-description" id="label-embed-description" class="cyber-label">Popis embedu</label>
+                        <div class="form-group">
+                            <label for="embed-description" id="label-embed-description">Popis embedu</label>
                             <div class="format-buttons">
                                 <button type="button" class="format-button" data-format="bold" data-target="embed-description" id="format-bold">**B**</button>
                                 <button type="button" class="format-button" data-format="italic" data-target="embed-description" id="format-italic">_I_</button>
@@ -503,37 +130,37 @@
                                 <button type="button" class="format-button" data-format="code" data-target="embed-description" id="format-code">`</button>
                                 <button type="button" class="format-button" data-format="link" data-target="embed-description" id="format-link">🔗</button>
                             </div>
-                            <textarea id="embed-description" name="embed-description" rows="4" class="cyber-textarea" placeholder="Popis, text zprávy. Podporuje Markdown."></textarea>
+                            <textarea id="embed-description" name="embed-description" rows="4" class="tool-input tool-textarea" placeholder="Popis, text zprávy. Podporuje Markdown."></textarea>
                         </div>
 
-                        <div class="mb-4">
-                            <label id="label-author" class="cyber-label">Autor</label>
-                            <div style="display: flex; gap: 10px; margin-top: 4px;">
-                                <input type="text" id="author-name" name="author-name" class="cyber-input" placeholder="Jméno autora">
-                                <input type="text" id="author-icon-url" name="author-icon-url" class="cyber-input" placeholder="URL ikony autora">
+                        <div class="form-group">
+                            <label id="label-author">Autor</label>
+                            <div class="tool-input-group">
+                                <input type="text" id="author-name" name="author-name" class="tool-input flex-grow" placeholder="Jméno autora">
+                                <input type="text" id="author-icon-url" name="author-icon-url" class="tool-input flex-grow" placeholder="URL ikony autora">
                             </div>
                         </div>
 
-                        <div class="mb-4">
-                            <label for="image-url" id="label-image-url" class="cyber-label">URL hlavního obrázku</label>
-                            <input type="text" id="image-url" name="image-url" class="cyber-input" placeholder="https://example.com/image.png">
+                        <div class="form-group">
+                            <label for="image-url" id="label-image-url">URL hlavního obrázku</label>
+                            <input type="text" id="image-url" name="image-url" class="tool-input" placeholder="https://example.com/image.png">
                         </div>
-                        <div class="mb-4">
-                            <label for="thumbnail-url" id="label-thumbnail-url" class="cyber-label">URL miniatury</label>
-                            <input type="text" id="thumbnail-url" name="thumbnail-url" class="cyber-input" placeholder="https://example.com/thumbnail.png">
+                        <div class="form-group">
+                            <label for="thumbnail-url" id="label-thumbnail-url">URL miniatury</label>
+                            <input type="text" id="thumbnail-url" name="thumbnail-url" class="tool-input" placeholder="https://example.com/thumbnail.png">
                         </div>
 
-                        <div class="mb-4">
-                            <label for="footer-text" id="label-footer-text" class="cyber-label">Patička</label>
-                            <div style="display: flex; gap: 10px; margin-top: 4px;">
-                                <input type="text" id="footer-text" name="footer-text" class="cyber-input" placeholder="Text patičky">
-                                <input type="text" id="footer-icon-url" name="footer-icon-url" class="cyber-input" placeholder="URL ikony patičky">
+                        <div class="form-group">
+                            <label for="footer-text" id="label-footer-text">Patička</label>
+                            <div class="tool-input-group">
+                                <input type="text" id="footer-text" name="footer-text" class="tool-input flex-grow" placeholder="Text patičky">
+                                <input type="text" id="footer-icon-url" name="footer-icon-url" class="tool-input flex-grow" placeholder="URL ikony patičky">
                             </div>
                         </div>
 
-                        <div id="embed-fields-container" class="space-y-4 pt-4">
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-                                <h3 id="fields-title" style="font-size: 1.125rem; font-weight: 600; color: #ddd;">Pole (Fields)</h3>
+                        <div id="embed-fields-container" class="fields-section">
+                            <div class="fields-header">
+                                <h3 id="fields-title">Pole (Fields)</h3>
                                 <div class="format-buttons">
                                     <button type="button" class="format-button" data-format="bold" data-target-group="fields">**B**</button>
                                     <button type="button" class="format-button" data-format="italic" data-target-group="fields">_I_</button>
@@ -543,74 +170,76 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="button" id="add-field-btn" style="width: 100%;" class="mt-4">Přidat pole</button>
+                        
+                        <button type="button" id="add-field-btn" class="cyber-button small-button">Přidat pole</button>
                         
                         <div class="pt-4">
-                            <button type="submit" id="submit-btn" class="cyber-button" style="width: 100%;">Odeslat na Discord</button>
+                            <button type="submit" id="submit-btn" class="cyber-button full-width" style="--cyber-color:#5865f2; --cyber-shadow:rgba(88, 101, 242, 0.4);">Odeslat na Discord</button>
                         </div>
                     </form>
 
-                    <div id="status-message" style="margin-top: 1rem; text-align: center; font-size: 0.875rem; font-weight: 500;"></div>
+                    <div id="status-message" class="status-message mt-4"></div>
 
                 </div>
 
-                <div class="preview-box">
-                    <h2 id="preview-title-heading" style="font-size: 1.25rem; font-weight: 700; color: #fff; margin-bottom: 1rem;">Náhled Embedu</h2>
+                <div class="tool-card embed-card preview-column">
+                    <h2 id="preview-title-heading" class="header-title preview-header">Náhled Embedu</h2>
                     
-                    <div class="discord-embed-preview-wrapper">
+                    <div class="discord-message-wrapper">
                         <div class="discord-message">
-                            <div class="discord-avatar"></div>
-                            <div class="embed-content">
-                                <div class="embed-header">Webhook Bot</div>
+                            <div class="discord-avatar"></div> <div class="embed-content-wrapper">
+                                <div class="embed-header">
+                                    <span class="username">Webhook Bot</span>
+                                    <span class="bot-tag">BOT</span> </div>
+                                
                                 <div id="embed-preview-container" class="relative">
                                     <div id="embed-preview" class="discord-embed-preview">
-                                        <div class="embed-data">
-                                            <div id="preview-author" class="embed-author" style="display: none;">
-                                                <img id="preview-author-icon" class="embed-author-icon" alt="Autor ikona" />
-                                                <span id="preview-author-name"></span>
-                                            </div>
-                                            <div id="preview-title" class="embed-title"></div>
-                                            <div id="preview-description" class="embed-description"></div>
-                                            <div id="preview-fields" class="embed-fields"></div>
-                                            <img id="preview-image" class="embed-image" alt="Obrázek embedu" style="display: none;" />
-                                            <div id="preview-footer" class="embed-footer" style="display: none;">
-                                                <img id="preview-footer-icon" class="embed-footer-icon" alt="Ikona patičky" style="display: none;" />
-                                                <span id="preview-footer-text"></span>
-                                            </div>
+                                        <img id="preview-thumbnail" class="embed-thumbnail hidden" alt="Miniatura embedu" />
+                                        <div id="preview-author" class="embed-author hidden">
+                                            <img id="preview-author-icon" class="embed-author-icon" alt="Autor ikona" />
+                                            <span id="preview-author-name"></span>
                                         </div>
-                                        <img id="preview-thumbnail" class="embed-thumbnail" alt="Miniatura embedu" style="display: none;" />
+                                        <div id="preview-title" class="embed-title"></div>
+                                        <div id="preview-description" class="embed-description"></div>
+                                        <div id="preview-fields" class="embed-fields"></div>
+                                        <img id="preview-image" class="embed-image hidden" alt="Obrázek embedu" />
+                                        <div id="preview-footer" class="embed-footer hidden">
+                                            <img id="preview-footer-icon" class="embed-footer-icon hidden" alt="Ikona patičky" />
+                                            <span id="preview-footer-text"></span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                    </div>
 
-            </div>
-        </div>
+            </div> 
+        </div> 
     </section>
 
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-links">
-                <a href="https://github.com/papiscze/czbot" target="_blank">GitHub</a>
+                <a href="https://github.com/papiscze/czbot">GitHub</a>
                 <span class="footer-separator">•</span>
-                <a href="https://discord.gg/hk6PdtVxbm" target="_blank">Support server</a>
+                <a href="https://discord.gg/hk6PdtVxbm">Support Server</a>
                 <span class="footer-separator">•</span>
-                <a href="index.html#features">Funkce</a>
+                <a href="https://github.com/papiscze/czbot/wiki">GitHub dokumentace</a>
+                <span class="footer-separator">•</span>
+                <a href="mailto:admin@ofpmafia.eu">Kontakt</a>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 CZbot. Všechna práva vyhrazena.</p>
-                <p class="footer-credit">Šablona inspirována <a href="https://templatemo.com/tm-594-nexus-flow" target="_blank" rel="noopener nofollow">TemplateMo Nexus Flow</a></p>
+                <p>&copy; 2025 CZbot. Verze webu 1.0. Všechna práva vyhrazena</p>
+                <p class="footer-credit">Šablona inspirována <a href="https://templatemo.com" target="_blank" rel="noopener nofollow">TemplateMo</a></p>
             </div>
         </div>
     </footer>
 
     <script src="templatemo-nexus-scripts.js"></script> 
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     
-    <script>
-        // Objekt s překlady
+<script>
+        // Objekt s překlady (POUZE JEDNA DEKLARACE)
         const translations = {
             cs: {
                 title: 'CZbot Discord Embed Creator',
@@ -677,7 +306,7 @@
         };
 
         const form = document.getElementById('embed-form');
-        const langSwitcher = document.getElementById('lang-switcher');
+        const langSwitcher = document.getElementById('cron-lang-switcher');
         const webhookUrlInput = document.getElementById('webhook-url');
         const embedColorInput = document.getElementById('embed-color');
         const embedTitleInput = document.getElementById('embed-title');
@@ -705,74 +334,42 @@
         const previewFooterIcon = document.getElementById('preview-footer-icon');
         const previewFooterText = document.getElementById('preview-footer-text');
 
-        // Nastavení aktivního pole pro formátování (Globální proměnná pro sledování zaměřeného pole)
-        window.activeField = embedDescriptionInput;
-
         // Funkce pro obalení vybraného textu Markdown syntaxí
         function formatText(textarea, format) {
             const start = textarea.selectionStart;
             const end = textarea.selectionEnd;
             const text = textarea.value;
             let formattedText = '';
-            let newCursorStart = start;
-            let newCursorEnd = end;
+            let newCursorPos = 0;
             const selectedText = text.substring(start, end);
 
             switch (format) {
                 case 'bold':
                     formattedText = `**${selectedText}**`;
-                    newCursorStart = start + 2;
-                    newCursorEnd = newCursorStart + selectedText.length;
+                    newCursorPos = start + 2;
                     break;
                 case 'italic':
                     formattedText = `_${selectedText}_`;
-                    newCursorStart = start + 1;
-                    newCursorEnd = newCursorStart + selectedText.length;
+                    newCursorPos = start + 1;
                     break;
                 case 'underline':
                     formattedText = `__${selectedText}__`;
-                    newCursorStart = start + 2;
-                    newCursorEnd = newCursorStart + selectedText.length;
+                    newCursorPos = start + 2;
                     break;
                 case 'code':
                     formattedText = `\`${selectedText}\``;
-                    newCursorStart = start + 1;
-                    newCursorEnd = newCursorStart + selectedText.length;
+                    newCursorPos = start + 1;
                     break;
                 case 'link':
-                    const defaultLink = 'https://example.com';
-                    const linkText = selectedText || 'text';
-                    formattedText = `[${linkText}](${defaultLink})`;
-                    newCursorStart = start + 1;
-                    newCursorEnd = newCursorStart + linkText.length;
+                    formattedText = `[${selectedText || 'text'}](${'https://example.com'})`;
+                    newCursorPos = start + 1;
                     break;
             }
 
             textarea.value = text.substring(0, start) + formattedText + text.substring(end);
             textarea.focus();
-            textarea.setSelectionRange(newCursorStart, newCursorEnd);
+            textarea.setSelectionRange(newCursorPos, newCursorPos + (selectedText.length > 0 ? selectedText.length : 0));
         }
-
-        // Pomocná funkce pro parsování markdownu
-        function parseMarkdown(text, inline = false) {
-            if (!window.marked) return text; // Pokud marked.js není načteno
-            
-            // Konfigurace marked (základní)
-            marked.setOptions({
-                sanitize: true, // Bezpečné
-                breaks: true,   // Povolit zalomení řádků
-                gfm: true       // GitHub Flavored Markdown
-            });
-            
-            let html = marked.parse(text);
-            
-            if (inline) {
-                // Odstranění wrapperů odstavců (<p>) a koncových bílých znaků
-                html = html.replace(/^<p>/, '').replace(/<\/p>\s*$/, '');
-            }
-            return html;
-        }
-
 
         // Funkce pro aktualizaci náhledu
         function updatePreview() {
@@ -786,22 +383,23 @@
             const footerText = footerTextInput.value;
             const footerIconUrl = footerIconUrlInput.value;
 
-            // Barva okraje (border-left)
-            previewContainer.style.borderColor = color;
+            // Barva okraje
+            previewContainer.style.borderLeftColor = color;
+            previewContainer.style.borderLeftWidth = '4px';
 
             // Titulek
-            previewTitle.innerHTML = parseMarkdown(title, true);
+            previewTitle.innerHTML = marked.parseInline(title);
             previewTitle.style.display = title ? 'block' : 'none';
 
             // Popis
-            previewDescription.innerHTML = parseMarkdown(description);
+            previewDescription.innerHTML = marked.parse(description);
             previewDescription.style.display = description ? 'block' : 'none';
 
             // Autor
-            if (authorName || (authorIconUrl && authorIconUrl.trim() !== '')) {
+            if (authorName || authorIconUrl) {
                 previewAuthor.style.display = 'flex';
                 previewAuthorName.textContent = authorName;
-                if (authorIconUrl && authorIconUrl.trim() !== '') {
+                if (authorIconUrl) {
                     previewAuthorIcon.src = authorIconUrl;
                     previewAuthorIcon.style.display = 'block';
                 } else {
@@ -812,7 +410,7 @@
             }
 
             // Obrázek
-            if (imageUrl && imageUrl.trim() !== '') {
+            if (imageUrl) {
                 previewImage.src = imageUrl;
                 previewImage.style.display = 'block';
             } else {
@@ -820,7 +418,7 @@
             }
 
             // Miniatura
-            if (thumbnailUrl && thumbnailUrl.trim() !== '') {
+            if (thumbnailUrl) {
                 previewThumbnail.src = thumbnailUrl;
                 previewThumbnail.style.display = 'block';
             } else {
@@ -828,10 +426,11 @@
             }
 
             // Patička
-            if (footerText || (footerIconUrl && footerIconUrl.trim() !== '')) {
+            if (footerText || footerIconUrl) {
                 previewFooter.style.display = 'flex';
-                previewFooterText.innerHTML = parseMarkdown(footerText, true);
-                if (footerIconUrl && footerIconUrl.trim() !== '') {
+                previewFooter.style.display = 'flex';
+                previewFooterText.innerHTML = marked.parseInline(footerText);
+                if (footerIconUrl) {
                     previewFooterIcon.src = footerIconUrl;
                     previewFooterIcon.style.display = 'block';
                 } else {
@@ -844,8 +443,6 @@
             // Pole (Fields)
             previewFields.innerHTML = '';
             const fieldRows = document.querySelectorAll('.field-row');
-            let currentInlineCount = 0;
-            
             fieldRows.forEach(row => {
                 const name = row.querySelector('.field-name').value;
                 const value = row.querySelector('.field-value').value;
@@ -854,39 +451,27 @@
                 if (name || value) {
                     const fieldDiv = document.createElement('div');
                     fieldDiv.className = 'embed-field';
-                    
                     if (inline) {
-                        currentInlineCount++;
                         fieldDiv.classList.add('inline');
-                    } else {
-                        currentInlineCount = 0; // Resetujeme inline, pokud narazíme na ne-inline pole
                     }
-                    
-                    // Discord omezuje inline na 3 vedle sebe
-                    if (currentInlineCount > 3 && inline) {
-                        fieldDiv.classList.remove('inline');
-                        currentInlineCount = 1; // Nový řádek
-                    }
-
-                    const nameHtml = parseMarkdown(name, true);
-                    const valueHtml = parseMarkdown(value, true);
+                    const nameHtml = marked.parseInline(name);
+                    const valueHtml = marked.parseInline(value);
                     fieldDiv.innerHTML = `<div class="embed-field-name">${nameHtml}</div><div class="embed-field-value">${valueHtml}</div>`;
                     previewFields.appendChild(fieldDiv);
                 }
             });
         }
         
-        // Funkce pro aktualizaci jazyka
+        // Funkce pro aktualizaci jazyka (Ponecháno z tvého kódu)
         function updateLanguage(lang) {
             const t = translations[lang];
-            // Aktualizace nadpisů a tlačítek
-            document.getElementById('form-title').textContent = t.title;
+            
+            document.getElementById('cron-title').textContent = t.title;
             document.getElementById('preview-title-heading').textContent = t.previewTitle;
             document.getElementById('fields-title').textContent = t.fieldsTitle;
             addFieldBtn.textContent = t.addFieldBtn;
             document.getElementById('submit-btn').textContent = t.submitBtn;
 
-            // Aktualizace labelů
             document.getElementById('label-webhook-url').textContent = t.labelWebhookUrl;
             document.getElementById('label-embed-color').textContent = t.labelEmbedColor;
             document.getElementById('label-embed-title').textContent = t.labelEmbedTitle;
@@ -896,7 +481,6 @@
             document.getElementById('label-thumbnail-url').textContent = t.labelThumbnailUrl;
             document.getElementById('label-footer-text').textContent = t.labelFooterText;
             
-            // Aktualizace placeholderů
             webhookUrlInput.placeholder = t.placeholderWebhookUrl;
             embedTitleInput.placeholder = t.placeholderEmbedTitle;
             embedDescriptionInput.placeholder = t.placeholderEmbedDescription;
@@ -907,7 +491,6 @@
             footerTextInput.placeholder = t.placeholderFooterText;
             footerIconUrlInput.placeholder = t.placeholderFooterIconUrl;
 
-            // Aktualizace placeholderů polí a popisků
             const fieldNames = fieldsContainer.querySelectorAll('.field-name');
             const fieldValues = fieldsContainer.querySelectorAll('.field-value');
             const inlineLabels = fieldsContainer.querySelectorAll('.inline-label');
@@ -920,25 +503,24 @@
             const currentLang = langSwitcher.value;
             const t = translations[currentLang];
             const fieldDiv = document.createElement('div');
-            fieldDiv.className = 'field-row mt-4 items-center';
+            
+            fieldDiv.className = 'field-row tool-input-group mt-4'; 
             fieldDiv.innerHTML = `
-                <input type="text" class="field-name cyber-input" placeholder="${t.placeholderFieldName}">
-                <input type="text" class="field-value cyber-input" placeholder="${t.placeholderFieldValue}">
-                <label class="flex items-center gap-2 text-gray-400 text-sm">
-                    <input type="checkbox" class="field-inline h-4 w-4 bg-gray-700 border-gray-600 rounded-sm">
-                    <span class="inline-label" style="color: #aaa; font-size: 0.875rem;">${t.inlineLabel}</span>
+                <input type="text" class="field-name tool-input flex-grow" placeholder="${t.placeholderFieldName}">
+                <input type="text" class="field-value tool-input flex-grow" placeholder="${t.placeholderFieldValue}">
+                <label class="flex items-center gap-2 field-inline-label">
+                    <input type="checkbox" class="field-inline tool-checkbox">
+                    <span class="inline-label">${t.inlineLabel}</span>
                 </label>
-                <button type="button" class="remove-field-btn">✕</button>
+                <button type="button" class="remove-field-btn cyber-button small-remove-button">✕</button>
             `;
             fieldsContainer.appendChild(fieldDiv);
             
-            // Odstranění pole
+            // Přidání posluchačů...
             fieldDiv.querySelector('.remove-field-btn').addEventListener('click', () => {
                 fieldDiv.remove();
                 updatePreview();
             });
-            
-            // Posluchače pro náhled
             fieldDiv.querySelector('.field-name').addEventListener('input', updatePreview);
             fieldDiv.querySelector('.field-value').addEventListener('input', updatePreview);
             fieldDiv.querySelector('.field-inline').addEventListener('change', updatePreview);
@@ -949,27 +531,19 @@
             nameInput.addEventListener('focus', () => { window.activeField = nameInput; });
             valueInput.addEventListener('focus', () => { window.activeField = valueInput; });
             
-            // Inicializace
             updatePreview();
         }
 
-        // --- Event Listeners ---
         form.addEventListener('input', updatePreview);
         addFieldBtn.addEventListener('click', addField);
-        langSwitcher.addEventListener('change', (e) => {
-            updateLanguage(e.target.value);
-            updatePreview();
-        });
+        langSwitcher.addEventListener('change', (e) => updateLanguage(e.target.value));
 
-        // Nastavení aktivního pole pro formátování u hlavních prvků
+        // Nastavení aktivního pole pro formátování
         embedDescriptionInput.addEventListener('focus', () => { window.activeField = embedDescriptionInput; });
-        embedTitleInput.addEventListener('focus', () => { window.activeField = embedTitleInput; });
-        footerTextInput.addEventListener('focus', () => { window.activeField = footerTextInput; });
 
         // Posluchač pro tlačítka formátování
         document.querySelectorAll('.format-button').forEach(button => {
             button.addEventListener('click', (e) => {
-                e.preventDefault(); // Zabrání odeslání formuláře
                 const format = e.currentTarget.dataset.format;
                 const targetId = e.currentTarget.dataset.target;
                 const targetGroup = e.currentTarget.dataset.targetGroup;
@@ -978,8 +552,6 @@
                 if (targetId) {
                     targetInput = document.getElementById(targetId);
                 } else if (targetGroup === 'fields' && window.activeField) {
-                    targetInput = window.activeField;
-                } else if (window.activeField) {
                     targetInput = window.activeField;
                 }
                 
@@ -998,8 +570,7 @@
             const webhookUrl = webhookUrlInput.value;
             const title = embedTitleInput.value;
             const description = embedDescriptionInput.value;
-            // Konverze HEX barvy na decimální číslo, které Discord Webhook očekává
-            const color = parseInt(embedColorInput.value.slice(1), 16); 
+            const color = parseInt(embedColorInput.value.slice(1), 16);
             const authorName = authorNameInput.value;
             const authorIconUrl = authorIconUrlInput.value;
             const imageUrl = imageUrlInput.value;
@@ -1007,29 +578,27 @@
             const footerText = footerTextInput.value;
             const footerIconUrl = footerIconUrlInput.value;
 
-            if (!webhookUrl || !webhookUrl.startsWith('https://discord.com/api/webhooks/')) {
+            if (!webhookUrl) {
                 statusMessage.textContent = t.statusNoWebhook;
-                statusMessage.className = 'mt-4 text-center text-sm font-medium text-red-500';
+                statusMessage.className = 'status-message text-red-500';
                 return;
             }
 
             const embeds = [{
-                // Pouze pokud existuje, jinak undefined
-                title: title || undefined, 
-                description: description || undefined,
+                title: title,
+                description: description,
                 color: color,
                 author: (authorName || authorIconUrl) ? {
                     name: authorName,
-                    icon_url: authorIconUrl || undefined
+                    icon_url: authorIconUrl
                 } : undefined,
                 image: imageUrl ? { url: imageUrl } : undefined,
                 thumbnail: thumbnailUrl ? { url: thumbnailUrl } : undefined,
                 footer: (footerText || footerIconUrl) ? {
                     text: footerText,
-                    icon_url: footerIconUrl || undefined
+                    icon_url: footerIconUrl
                 } : undefined,
-                // Discord timestamp je užitečný, pokud uživatel nenastavil vlastní
-                timestamp: new Date().toISOString(), 
+                timestamp: new Date().toISOString(),
                 fields: []
             }];
 
@@ -1047,16 +616,23 @@
                 }
             });
 
-            // Vyfiltrujeme prázdné embedy (pokud nejsou vyplněny žádné základní položky)
-            if (!embeds[0].title && !embeds[0].description && !embeds[0].author && !embeds[0].fields.length && !embeds[0].image && !embeds[0].thumbnail) {
-                 statusMessage.textContent = 'Chyba: Embed je prázdný, vyplňte alespoň Titulek nebo Popis.';
-                 statusMessage.className = 'mt-4 text-center text-sm font-medium text-red-500';
-                 return;
-            }
-            
-            const payload = { embeds: embeds };
+            // Odstranění prázdných polí, aby Discord nehlásil chyby
+            const cleanEmbed = embeds[0];
+            Object.keys(cleanEmbed).forEach(key => {
+                if (cleanEmbed[key] === null || cleanEmbed[key] === undefined || 
+                    (Array.isArray(cleanEmbed[key]) && cleanEmbed[key].length === 0) ||
+                    (typeof cleanEmbed[key] === 'object' && key !== 'fields' && Object.keys(cleanEmbed[key]).every(k => !cleanEmbed[key][k]))
+                ) {
+                    delete cleanEmbed[key];
+                }
+            });
+            if (cleanEmbed.author && !cleanEmbed.author.name && !cleanEmbed.author.icon_url) delete cleanEmbed.author;
+            if (cleanEmbed.footer && !cleanEmbed.footer.text && !cleanEmbed.footer.icon_url) delete cleanEmbed.footer;
+            if (cleanEmbed.image && !cleanEmbed.image.url) delete cleanEmbed.image;
+            if (cleanEmbed.thumbnail && !cleanEmbed.thumbnail.url) delete cleanEmbed.thumbnail;
 
-            // Odeslání na Webhook
+            const payload = { embeds: [cleanEmbed] };
+
             try {
                 const response = await fetch(webhookUrl, {
                     method: 'POST',
@@ -1066,31 +642,27 @@
 
                 if (response.ok) {
                     statusMessage.textContent = t.statusSuccess;
-                    statusMessage.className = 'mt-4 text-center text-sm font-medium text-green-500';
+                    statusMessage.className = 'status-message text-green-500';
                 } else {
-                    // Zkusíme parsovat JSON chybu, pokud je dostupná
                     const errorText = await response.text();
-                    let errorMsg = errorText;
-                    try {
-                        const errorJson = JSON.parse(errorText);
-                        errorMsg = errorJson.message || errorMsg;
-                    } catch (e) {
-                        // ignore JSON parse error
-                    }
-                    
-                    statusMessage.textContent = `${t.statusError} ${response.status} - ${errorMsg}`;
-                    statusMessage.className = 'mt-4 text-center text-sm font-medium text-red-500';
+                    statusMessage.textContent = `${t.statusError} ${response.status} - ${errorText.substring(0, 100)}...`;
+                    statusMessage.className = 'status-message text-red-500';
                 }
             } catch (error) {
                 statusMessage.textContent = `${t.statusFatalError} ${error.message}`;
-                statusMessage.className = 'mt-4 text-center text-sm font-medium text-red-500';
+                statusMessage.className = 'status-message text-red-500';
             }
         });
 
-        // Inicializace: Přidání prvního pole při načtení
-        addField(); 
-        updateLanguage(langSwitcher.value);
-        updatePreview();
+        // Přidání marked.js pro parsování markdownu
+        const script = document.createElement('script');
+        script.src = "https://cdn.jsdelivr.net/npm/marked/marked.min.js";
+        script.onload = () => {
+            // Inicializace po načtení
+            updateLanguage(langSwitcher.value);
+            updatePreview();
+        };
+        document.head.appendChild(script);
 
     </script>
 </body>

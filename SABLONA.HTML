@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Status Bota - [Jméno Bota]</title>
+    <link rel="stylesheet" href="templatemo-nexus-style.css">
+    </head>
+<body>
+
+    <header class="navbar-header">
+        <nav class="navbar-container">
+            <a href="index.html" class="logo">Nexus</a>
+            <ul class="nav-menu">
+                <li><a href="index.html">Domů</a></li>
+                <li><a href="commands.html">Příkazy</a></li>
+                <li class="active"><a href="status.html">Status</a></li> 
+                <li class="dropdown">
+                    <a href="javascript:void(0)" class="dropbtn">Nástroje</a>
+                    <div class="dropdown-content">
+                        <a href="crongenerator.html">Cron Generator</a>
+                        <a href="embedgenerator.html">Embed Generator</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="status-viewer">
+        <div class="status-viewer-container">
+            
+            <div class="status-header">
+                <h1 class="header-title">Stav Služeb</h1>
+                <p class="header-subtitle">Aktuální stav bota a klíčových služeb. Data se automaticky aktualizují každou minutu.</p>
+            </div>
+
+            <div class="status-list-wrapper" id="serviceStatusList">
+                
+                <div class="status-item bot-status">
+                    <div class="status-name">
+                        🤖 **[Jméno Bota]** (Hlavní služba)
+                    </div>
+                    <div class="status-indicator online" id="botStatusIndicator">
+                        <span class="dot"></span> Online
+                    </div>
+                </div>
+
+                <div class="status-item service-status">
+                    <div class="status-name">
+                        🌐 Externí API (Discord API)
+                    </div>
+                    <div class="status-indicator online" id="apiStatusIndicator">
+                        <span class="dot"></span> Online
+                    </div>
+                </div>
+
+                <div class="status-item service-status">
+                    <div class="status-name">
+                        💾 Databáze (MongoDB/PostgreSQL)
+                    </div>
+                    <div class="status-indicator maintenance" id="dbStatusIndicator">
+                        <span class="dot"></span> Údržba
+                    </div>
+                </div>
+                
+                <div class="status-history">
+                    <h3>Historie událostí za posledních 7 dní</h3>
+                    <ul>
+                        <li><span class="date">30. 10. 2025</span> - <span class="history-item degraded">Degradovaný výkon</span>: Mírné zpoždění odezvy (14:30 - 15:00 CET).</li>
+                        <li><span class="date">28. 10. 2025</span> - <span class="history-item resolved">Vyřešeno</span>: Obnovení provozu po údržbě databáze (03:00 CET).</li>
+                        <li><span class="date">27. 10. 2025</span> - <span class="history-item maintenance">Plánovaná údržba</span>: Databáze a hlavní služba (01:00 - 03:00 CET).</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <script src="templatemo-nexus-scripts.js"></script>
+
+</body>
+</html>
