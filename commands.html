@@ -2359,8 +2359,24 @@
                     </div>
                     <div class="command-detail-row" aria-hidden="true">
                         <div class="detail-content">
-                            <p>Nastavuje kanál tak, že jsou povoleny pouze zprávy s přílohami (fotky/videa) nebo mediálními odkazy. Textové zprávy jsou smazány a pod médii je automaticky vytvořeno vlákno pro diskuzi.</p>
-                            <div class="syntax">Syntaxe: `/vlakna add channel:<#kanál>`</div>
+                            <p>Nastavuje kanál tak, že jsou povoleny pouze zprávy s přílohami (fotky/videa) nebo mediálními odkazy. Textové zprávy jsou smazány a pod médii je dle nastavení vytvořeno vlákno pro diskuzi.</p>
+                            <div class="syntax">Syntaxe: `/vlakna add channel:<#kanál> tvorba_vlakna:True/False`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat vlákna</strong> a <strong>Spravovat zprávy</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="TVORBAVLAKEN">
+                    <div class="command-item">
+                        <div class="command-name">/vlakna setthreads</div>
+                        <div class="command-description">Úprava moderace kanálu - Nastavení povolení nebo zakázání tvorby vláken.</div>
+                        <div class="command-module-tag">Vlákna a Moderace kanálů</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Nastavuje kanál tak, zprávy jsou smazány a pod médii je dle nastavení vytvořeno vlákno pro diskuzi.</p>
+                            <div class="syntax">Syntaxe: `/vlakna setthreads channel:<#kanál> povolit_tvorbu:True/False`</div>
                             <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat vlákna</strong> a <strong>Spravovat zprávy</strong>.</div>
                         </div>
                     </div>
