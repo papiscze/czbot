@@ -174,7 +174,7 @@
 
             <div class="command-tags">
                 <button class="tag-button active-tag" data-tag="ALL">VŠECHNY MODULY</button>
-                <button class="tag-button" data-tag="LOCALIZACE">Bot localization and Language Settings</button>
+                <button class="tag-button" data-tag="LOCALIZACE">Lokalizace</button>
                 <button class="tag-button" data-tag="AUDIOSTREAM">Audio Stream</button>
                 <button class="tag-button" data-tag="AUDITLOGGER">Auditlogger</button>
                 <button class="tag-button" data-tag="AUTOPUB">Automatické publikování zpráv z kanálů oznámení</button>
@@ -192,16 +192,16 @@
                 <button class="tag-button" data-tag="REPUTACE">Reputace</button>
                 <button class="tag-button" data-tag="RSS">RSS Čtečka</button>
                 <button class="tag-button" data-tag="SCAMPREVENCE">Scam Prevence</button>
-                <button class="tag-button" data-tag="PLANEDZPRAVY">Schedules ‐ Plánované zprávy</button>
+                <button class="tag-button" data-tag="PLANEDZPRAVY">Plánované zprávy</button>
                 <button class="tag-button" data-tag="STATISTIKY">Statistiky serveru</button>
-                <button class="tag-button" data-tag="SVATKY">Svátky (CZ SK)</button>
+                <button class="tag-button" data-tag="SVATKY">Svátky</button>
                 <button class="tag-button" data-tag="ZPETNAVAZBA">Systém zpětné vazby a návrhů</button>
                 <button class="tag-button" data-tag="TIKETY">Tikety</button>
                 <button class="tag-button" data-tag="TRANSLATE">Translate modul</button>
-                <button class="tag-button" data-tag="TVORAVLAKEN">Tvorba vláken na zprávy</button>
-                <button class="tag-button" data-tag="WELCOMELEAVE">Uvítací a odchodové zprávy (Welcome Leave)</button>
+                <button class="tag-button" data-tag="TVORBAVLAKEN">Tvorba vláken na zprávy</button>
+                <button class="tag-button" data-tag="WELCOMELEAVE">Uvítací a odchodové zprávy</button>
                 <button class="tag-button" data-tag="VODOZNAK">Vodoznak s vlastním textem na obrázky</button>
-                <button class="tag-button" data-tag="VOTE">Vote ‐ Hlasování</button>
+                <button class="tag-button" data-tag="VOTE">Hlasování</button>
                 <button class="tag-button" data-tag="XPLEVEL">XP systém a úrovně</button>
                 <button class="tag-button" data-tag="ZPOVEDI">Zpovědi (Anonymní Zprávy)</button>
                 <button class="tag-button" data-tag="ZALOHOVANI">Zálohování a Obnova Serverů</button>
@@ -210,9 +210,37 @@
             <div class="command-search-bar">
                 <input type="text" id="commandSearchInput" placeholder="Vyhledat příkaz (např. /ban, /stats)...">
             </div>
-
             <div class="command-list-groups">
-                
+                <div class="command-group" data-tags="LOCALIZACE">
+                    <div class="command-item">
+                        <div class="command-name">/lokalizace server</div>
+                        <div class="command-description">Vyberte nový kód jazyka</div>
+                        <div class="command-module-tag">Lokalizace bota</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Nastavení jazyka ve kterém bot bude komunikovat na úrovni serveru.</p>
+                            <div class="syntax">Syntaxe: `/lokalizace server kod_jazyka:`</div>
+                            <div class="module-link-small">kod_jazyka: Vyberte nový kód jazyka ze seznamu (např. Čeština (cs) nebo English (en)).</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="command-group" data-tags="LOCALIZACE">
+                    <div class="command-item">
+                        <div class="command-name">/lokalizace uzivatel</div>
+                        <div class="command-description">Vyberte nový kód jazyka</div>
+                        <div class="command-module-tag">Lokalizace bota</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Nastavení jazyka ve kterém bot bude komunikovat s uživatelem.</p>
+                            <div class="syntax">Syntaxe: `/lokalizace uzivatel kod_jazyka:`</div>
+                            <div class="module-link-small">kod_jazyka: Vyberte nový kód jazyka ze seznamu (např. Čeština (cs) nebo English (en)).</div>
+                        </div>
+                    </div>
+                </div>                
                 <div class="command-group" data-tags="AUDIOSTREAM">
                     <div class="command-item">
                         <div class="command-name">/stream play</div>
@@ -224,7 +252,7 @@
                         <div class="detail-content">
                             <p>Tento příkaz spustí stream z přímé audio adresy nebo playlistu (.pls, .m3u). Video streamy (jako YouTube) nejsou podporovány. Použít lze pouze jeden aktivní stream na server.</p>
                             <div class="syntax">Syntaxe: `/stream play url:<URL_adresa_streamu>`</div>
-                            <div class="module-link-small">Modul vyžaduje oprávnění **Připojit se** a **Mluvit** v hlasovém kanálu.</div>
+                            <div class="module-link-small">Modul vyžaduje oprávnění <strong>Připojit se</strong> a <strong>Mluvit</strong> v hlasovém kanálu.</div>
                         </div>
                     </div>
                 </div>
@@ -301,8 +329,2351 @@
                             <div class="extended-description">Slouží k vytvoření kanálu podpory.</div>
                         </div>
                     </div>
+                </div>     
+                <div class="command-group" data-tags="AUDITLOGGER">
+                    <div class="command-item">
+                        <div class="command-name">/audit_nastaveni</div>
+                        <div class="command-description">Otevře interaktivní menu pro nastavení auditních logů.</div>
+                        <div class="command-module-tag">Auditlogger</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Tento příkaz otevře <strong>efemérní zprávu</strong> (viditelnou jen pro vás) s interaktivním menu, kde můžete spravovat veškeré nastavení logování na serveru.</p>
+                            <p>Pro nastavení je nutné použít <strong>dvě rozbalovací menu</strong> (Kategorie → Událost) a poté aktivovat jedno z tlačítek pro danou událost:</p>
+                            <ul>
+                                <li><strong>Zapnout / Změnit kanál:</strong> Otevře modal pro zadání cílového kanálu (název nebo ID).</li>
+                                <li><strong>Vypnout:</strong> Vypne logování pro vybraný typ události.</li>
+                                <li><strong>Přepnout globální logování:</strong> Zapne/vypne veškeré logování pro celý server.</li>
+                            </ul>
+                            <div class="syntax">Syntaxe: `/audit_nastaveni`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Moderátor/Admin</strong>.</div>
+                        </div>
+                    </div>
                 </div>
-                
+                <div class="command-group" data-tags="AUDIOSTREAM">
+                    <div class="command-item">
+                        <div class="command-name">/stream play</div>
+                        <div class="command-description">Připojí se do kanálu a spustí audio stream z URL.</div>
+                        <div class="command-module-tag">Audio Stream</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Tento příkaz spustí stream z přímé audio adresy nebo playlistu (.pls, .m3u). Video streamy (jako YouTube) nejsou podporovány. Použít lze pouze jeden aktivní stream na server.</p>
+                            <div class="syntax">Syntaxe: `/stream play url:<URL_adresa_streamu>`</div>
+                            <div class="module-link-small">Modul vyžaduje oprávnění <strong>Připojit se</strong> a <strong>Mluvit</strong> v hlasovém kanálu.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="command-group" data-tags="AUDIOSTREAM">
+                    <div class="command-item">
+                        <div class="command-name">/stream stop</div>
+                        <div class="command-description">Zastaví přehrávání a opustí hlasový kanál.</div>
+                        <div class="command-module-tag">Audio Stream</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Explicitně ukončí aktuálně běžící stream a odpojí bota z hlasového kanálu.</p>
+                            <div class="syntax">Syntaxe: `/stream stop`</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="command-group" data-tags="AUDIOSTREAM">
+                    <div class="command-item">
+                        <div class="command-name">/stream volume</div>
+                        <div class="command-description">Nastaví hlasitost aktuálně běžícího streamu (0-100).</div>
+                        <div class="command-module-tag">Audio Stream</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Dynamicky upraví hlasitost streamu. <span class="text-danger">Poznámka:</span> Funkce závisí na streamovacím zdroji. U některých rádií nemusí být funkční.</p>
+                            <div class="syntax">Syntaxe: `/stream volume volume:<číslo_0_až_100>`</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="command-group" data-tags="AUTOROLE">
+                    <div class="command-item">
+                        <div class="command-name">/verify overit</div>
+                        <div class="command-description">Ověří uživatele na serveru a přidělí mu ověřovací roli.</div>
+                        <div class="command-module-tag">Autorole, Ověřování uživatelů a Reakční role</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Slouží k získání ověřovací role, která odemkne zbytek serveru. Uživatelé ho mohou použít v libovolném kanálu (odpověď je <strong>efemérní</strong>).</p>
+                            <div class="syntax">Syntaxe: `/verify overit`</div>
+                            <div class="module-link-small">Pro běžné uživatele. Funguje pouze, pokud je ověřovací role nastavena moderátorem.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="AUTOROLE">
+                    <div class="command-item">
+                        <div class="command-name">/verify set</div>
+                        <div class="command-description">Nastaví roli, kterou uživatel získá po ověření.</div>
+                        <div class="command-module-tag">Autorole, Ověřování uživatelů a Reakční role</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Nastaví roli, která bude automaticky přidělena po úspěšném použití příkazu <code>/verify overit</code>.</p>
+                            <div class="syntax">Syntaxe: `/verify set role:<@NazevRole>`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat role</strong> a <strong>Spravovat zprávy</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="AUTOROLE">
+                    <div class="command-item">
+                        <div class="command-name">/verify remove</div>
+                        <div class="command-description">Odstraní aktuálně nastavenou ověřovací roli ze serveru.</div>
+                        <div class="command-module-tag">Autorole, Ověřování uživatelů a Reakční role</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Zakáže ověřovací systém. Uživatelé již nebudou moci získat roli přes příkaz <code>/verify overit</code>.</p>
+                            <div class="syntax">Syntaxe: `/verify remove`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat role</strong> a <strong>Spravovat zprávy</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="AUTOROLE">
+                    <div class="command-item">
+                        <div class="command-name">/autorole set</div>
+                        <div class="command-description">Nastaví roli, která se automaticky přidělí novým členům.</div>
+                        <div class="command-module-tag">Autorole, Ověřování uživatelů a Reakční role</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Nastaví automatickou roli (autorole) pro nové uživatele, kteří se připojí na server.</p>
+                            <p class="text-danger"><strong>Důležité!</strong> Role bota musí být v hierarchii <strong>nad</strong> přidělovanou rolí.</p>
+                            <div class="syntax">Syntaxe: `/autorole set role:<@NazevRole>`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat role</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="AUTOROLE">
+                    <div class="command-item">
+                        <div class="command-name">/autorole disable</div>
+                        <div class="command-description">Zakáže funkci automatické role.</div>
+                        <div class="command-module-tag">Autorole, Ověřování uživatelů a Reakční role</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Zruší nastavení automatické role. Novým uživatelům nebudou role přidělovány automaticky.</p>
+                            <div class="syntax">Syntaxe: `/autorole disable`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat role</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="AUTOROLE">
+                    <div class="command-item">
+                        <div class="command-name">/reactionroles nastavit</div>
+                        <div class="command-description">Nastaví reakční roli: emoji u zprávy přidělí roli.</div>
+                        <div class="command-module-tag">Autorole, Ověřování uživatelů a Reakční role</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Přiřadí roli k emoji u specifické zprávy (podle ID). Po kliknutí na emoji uživatel roli získá/odebere.</p>
+                            <div class="syntax">Syntaxe: `/reactionroles nastavit message_id:<ID_zprávy> emoji:<Emoji> role:<@NazevRole>`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat role</strong> a <strong>Přidat reakce</strong>. Bot musí být schopen přidat reakci na zprávu.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="AUTOROLE">
+                    <div class="command-item">
+                        <div class="command-name">/reactionroles odstranit</div>
+                        <div class="command-description">Odstraní reakční roli spojenou s konkrétním emoji u zprávy.</div>
+                        <div class="command-module-tag">Autorole, Ověřování uživatelů a Reakční role</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Odstraní nastavení reakční role pro dané ID zprávy a emoji. Bot také odebere svou reakci.</p>
+                            <div class="syntax">Syntaxe: `/reactionroles odstranit message_id:<ID_zprávy> emoji:<Emoji>`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat role</strong> a <strong>Spravovat zprávy</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="AUTOROLE">
+                    <div class="command-item">
+                        <div class="command-name">/reactionroles list</div>
+                        <div class="command-description">Zobrazí seznam všech aktivních reakčních rolí na serveru.</div>
+                        <div class="command-module-tag">Autorole, Ověřování uživatelů a Reakční role</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Vypíše všechny nastavené reakční role včetně ID zprávy, emoji a názvu role v efemérním embedu.</p>
+                            <div class="syntax">Syntaxe: `/reactionroles list`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat role</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="AUTOROLE">
+                    <div class="command-item">
+                        <div class="command-name">/temp_role set</div>
+                        <div class="command-description">Přiřadí uživateli dočasnou roli na omezenou dobu.</div>
+                        <div class="command-module-tag">Autorole, Ověřování uživatelů a Reakční role</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Umožňuje moderátorům přiřadit roli (např. trest, VIP status) na specifickou dobu. Po vypršení času je role automaticky odebrána.</p>
+                            <div class="syntax">Syntaxe: `/temp_role set member:<@Uživatel> role:<@Role> duration:<doba_trvání>`</div>
+                            <div class="module-link-small">
+                                <strong>doba_trvání formát:</strong> Např. <code>30m</code> (minuty), <code>2h</code> (hodiny), <code>7d</code> (dny).<br>
+                                Vyžaduje oprávnění <strong>Spravovat role</strong>.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="AUTOROLE">
+                    <div class="command-item">
+                        <div class="command-name">/temp_role remove</div>
+                        <div class="command-description">Ručně odebere dočasnou roli uživateli před vypršením času.</div>
+                        <div class="command-module-tag">Autorole, Ověřování uživatelů a Reakční role</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Zruší aktivní dočasnou roli a okamžitě ji uživateli odebere.</p>
+                            <div class="syntax">Syntaxe: `/temp_role remove member:<@Uživatel> role:<@Role>`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat role</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="AUTOROLE">
+                    <div class="command-item">
+                        <div class="command-name">/temp_role list</div>
+                        <div class="command-description">Zobrazí seznam všech aktivních dočasných rolí na serveru.</div>
+                        <div class="command-module-tag">Autorole, Ověřování uživatelů a Reakční role</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Vypíše přehled všech uživatelů, kteří mají přiřazenou dočasnou roli, včetně role a času, kdy vyprší.</p>
+                            <div class="syntax">Syntaxe: `/temp_role list`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat role</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="command-group" data-tags="MODERACE">
+                    <div class="command-item">
+                        <div class="command-name">/mute</div>
+                        <div class="command-description">Dočasně umlčí uživatele na celém serveru (Timeout).</div>
+                        <div class="command-module-tag">Běžné moderátorské příkazy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Omezí schopnost uživatele komunikovat na serveru po zadanou dobu.</p>
+                            <div class="syntax">Syntaxe: `/mute user:<@uživatel> duration:<délka> [reason:<důvod>]`</div>
+                            <div class="module-link-small">
+                                <strong>duration formát:</strong> Např. <code>30m</code> (minuty), <code>2h</code> (hodiny), <code>7d</code> (dny).<br>
+                                Vyžaduje oprávnění <strong>Umlčet členy</strong>.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="MODERACE">
+                    <div class="command-item">
+                        <div class="command-name">/clear pocet</div>
+                        <div class="command-description">Smaže zadaný počet nejnovějších zpráv (1-100).</div>
+                        <div class="command-module-tag">Běžné moderátorské příkazy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Rychle smaže poslední zprávy v kanále.</p>
+                            <div class="syntax">Syntaxe: `/clear pocet množství:<počet_zpráv>`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat zprávy</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="MODERACE">
+                    <div class="command-item">
+                        <div class="command-name">/clear od_zpravy</div>
+                        <div class="command-description">Smaže všechny zprávy, které byly odeslány po zadaném ID zprávy.</div>
+                        <div class="command-module-tag">Běžné moderátorské příkazy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Precizní nástroj pro čištění chatu od konkrétního bodu.</p>
+                            <div class="syntax">Syntaxe: `/clear od_zpravy id:<ID_zprávy>`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat zprávy</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="MODERACE">
+                    <div class="command-item">
+                        <div class="command-name">/clear uzivatel</div>
+                        <div class="command-description">Smaže zprávy od konkrétního uživatele v prohledávaném rozsahu.</div>
+                        <div class="command-module-tag">Běžné moderátorské příkazy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Prohledá zadaný počet zpráv (výchozí 50) a smaže všechny, které poslal vybraný uživatel.</p>
+                            <div class="syntax">Syntaxe: `/clear uzivatel uživatel:<@uživatel> [množství:<max_počet_prohledání>]`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat zprávy</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="MODERACE">
+                    <div class="command-item">
+                        <div class="command-name">/warn</div>
+                        <div class="command-description">Upozorní uživatele a zaznamená varování do databáze.</div>
+                        <div class="command-module-tag">Běžné moderátorské příkazy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Odešle upozornění do DM uživatele (pokud má DM otevřené) a zaznamená porušení pravidel.</p>
+                            <div class="syntax">Syntaxe: `/warn user:<@uživatel> reason:<důvod>`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Kopnout členy</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="MODERACE">
+                    <div class="command-item">
+                        <div class="command-name">/kick</div>
+                        <div class="command-description">Odstraní uživatele ze serveru (uživatel se může vrátit).</div>
+                        <div class="command-module-tag">Běžné moderátorské příkazy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Vykopne uživatele ze serveru. Je možné smazat jeho poslední zprávy (max 7 dní).</p>
+                            <div class="syntax">Syntaxe: `/kick member:<@uživatel> [reason:<důvod>] [delete_messages_days:<dny>]`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Vykopnout členy</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="MODERACE">
+                    <div class="command-item">
+                        <div class="command-name">/ban</div>
+                        <div class="command-description">Trvale zabanuje uživatele ze serveru.</div>
+                        <div class="command-module-tag">Běžné moderátorské příkazy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Trvalé zabanování uživatele se serveru. Je možné smazat jeho poslední zprávy (max 7 dní).</p>
+                            <div class="syntax">Syntaxe: `/ban user:<@uživatel> [reason:<důvod>] [delete_messages_days:<dny>]`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Zabanovat členy</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="MODERACE">
+                    <div class="command-item">
+                        <div class="command-name">/slowmode</div>
+                        <div class="command-description">Nastaví nebo vypne pomalý režim v kanále.</div>
+                        <div class="command-module-tag">Běžné moderátorské příkazy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Omezuje frekvenci odesílání zpráv v kanále (0 pro vypnutí, max 21600 sekund).</p>
+                            <div class="syntax">Syntaxe: `/slowmode seconds:<sekundy>`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat kanály</strong> nebo <strong>Správa chatu</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="MODERACE">
+                    <div class="command-item">
+                        <div class="command-name">/autoodpoved add</div>
+                        <div class="command-description">Přidá automatickou odpověď na konkrétní klíčové slovo.</div>
+                        <div class="command-module-tag">Běžné moderátorské příkazy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Nastaví, že bot odpoví na zprávu, která <strong>přesně odpovídá</strong> klíčovému slovu (frázi).</p>
+                            <div class="syntax">Syntaxe: `/autoodpoved add keyword:<klíčové_slovo> response:<odpověď_bota>`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat zprávy</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="MODERACE">
+                    <div class="command-item">
+                        <div class="command-name">/autoodpoved remove</div>
+                        <div class="command-description">Odebere existující automatickou odpověď.</div>
+                        <div class="command-module-tag">Běžné moderátorské příkazy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Zruší nastavení automatické odpovědi pro zadané klíčové slovo.</p>
+                            <div class="syntax">Syntaxe: `/autoodpoved remove keyword:<klíčové_slovo>`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat zprávy</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="MODERACE">
+                    <div class="command-item">
+                        <div class="command-name">/autoodpoved list</div>
+                        <div class="command-description">Zobrazí seznam všech nastavených automatických odpovědí.</div>
+                        <div class="command-module-tag">Běžné moderátorské příkazy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Vypíše všechny klíčové fráze a jim přiřazené odpovědi na serveru.</p>
+                            <div class="syntax">Syntaxe: `/autoodpoved list`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat zprávy</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="MODERACE">
+                    <div class="command-item">
+                        <div class="command-name">/bumpalert</div>
+                        <div class="command-description">Spravuje automatickou připomínku pro DISBOARD bump.</div>
+                        <div class="command-module-tag">Běžné moderátorské příkazy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Umožňuje zapnout, vypnout, resetovat text, nebo zobrazit stav automatické připomínky na DISBOARD bump po uplynutí cooldownu.</p>
+                            <div class="syntax">Syntaxe: `/bumpalert status:<on|off|reset|info> [text:<vlastní_text>]`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat zprávy</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="MODERACE">
+                    <div class="command-item">
+                        <div class="command-name">/statistiky nastavit</div>
+                        <div class="command-description">Nastaví hlasový kanál, který bude zobrazovat statistiku serveru.</div>
+                        <div class="command-module-tag">Běžné moderátorské příkazy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Vytvoří nebo změní hlasový kanál, jehož název se bude automaticky aktualizovat (každých 10 minut) s počty členů, botů nebo členů s konkrétní rolí.</p>
+                            <div class="syntax">Syntaxe: `/statistiky nastavit channel:<hlasový_kanál> action:<typ_statistiky> [role:<role>]`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat kanály</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="MODERACE">
+                    <div class="command-item">
+                        <div class="command-name">/statistiky odstranit</div>
+                        <div class="command-description">Odstraní statistiku z daného hlasového kanálu.</div>
+                        <div class="command-module-tag">Běžné moderátorské příkazy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Vypne automatickou aktualizaci názvu kanálu se statistikou.</p>
+                            <div class="syntax">Syntaxe: `/statistiky odstranit channel:<hlasový_kanál>`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat kanály</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="MODERACE">
+                    <div class="command-item">
+                        <div class="command-name">/raid setalertchannel</div>
+                        <div class="command-description">Nastaví kanál, kam budou zasílána upozornění o detekci raidu.</div>
+                        <div class="command-module-tag">Běžné moderátorské příkazy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Umožňuje botovi poslat naléhavou zprávu s `@here` zmínkou, pokud detekuje náhlý příliv nových členů.</p>
+                            <div class="syntax">Syntaxe: `/raid setalertchannel channel:<#kanál>`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat zprávy</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="MODERACE">
+                    <div class="command-item">
+                        <div class="command-name">/raid removealertchannel</div>
+                        <div class="command-description">Odstraní nastavený kanál pro upozornění na raidy.</div>
+                        <div class="command-module-tag">Běžné moderátorské příkazy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Zruší posílání upozornění o raidech do textového kanálu.</p>
+                            <div class="syntax">Syntaxe: `/raid removealertchannel`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat zprávy</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="MODERACE">
+                    <div class="command-item">
+                        <div class="command-name">/raid resetmode</div>
+                        <div class="command-description">Ručně vynuluje mód detekce raidu.</div>
+                        <div class="command-module-tag">Běžné moderátorské příkazy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Administrátor musí tento příkaz použít po odeznění raidu, aby znovu umožnil detekci. Neobnovuje automaticky původní verifikační úroveň serveru.</p>
+                            <div class="syntax">Syntaxe: `/raid resetmode`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Administrátor</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="command-group" data-tags="LOCALIZACE">
+                    <div class="command-item">
+                        <div class="command-name">/lokalizace server</div>
+                        <div class="command-description">Nastaví výchozí jazyk pro celý Discord server.</div>
+                        <div class="command-module-tag">Lokalizace a jazyková nastavení</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Nastavení jazyka, ve kterém bot bude komunikovat na úrovni serveru. Toto je výchozí jazyk pro všechny členy, kteří nemají osobní nastavení.</p>
+                            <div class="syntax">Syntaxe: `/lokalizace server kod_jazyka:<jazyk>`</div>
+                            <div class="module-link-small">
+                                <strong>kod_jazyka:</strong> Vyberte kód jazyka ze seznamu (např. Čeština (cs) nebo English (en)).<br>
+                                Vyžaduje oprávnění <strong>Spravovat server</strong>.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="LOCALIZACE">
+                    <div class="command-item">
+                        <div class="command-name">/lokalizace uzivatel</div>
+                        <div class="command-description">Nastaví váš osobní preferovaný jazyk pro komunikaci s botem.</div>
+                        <div class="command-module-tag">Lokalizace a jazyková nastavení</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Nastavení jazyka, ve kterém bot bude komunikovat pouze s vámi. Osobní nastavení má přednost před nastavením serveru.</p>
+                            <div class="syntax">Syntaxe: `/lokalizace uzivatel kod_jazyka:<jazyk>`</div>
+                            <div class="module-link-small">
+                                <strong>kod_jazyka:</strong> Vyberte kód jazyka ze seznamu (např. Čeština (cs) nebo English (en)).<br>
+                                Dostupné pro <strong>všechny uživatele</strong>.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="command-group" data-tags="ZABAVA">
+                    <div class="command-item">
+                        <div class="command-name">/hodiny</div>
+                        <div class="command-description">Zobrazí aktuální datum a čas bota (v časové zóně Praha).</div>
+                        <div class="command-module-tag">Uživatelské a Zábavné Příkazy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Zobrazí aktuální čas v časové zóně, kde je bot hostován (ephemeralní odpověď).</p>
+                            <div class="syntax">Syntaxe: `/hodiny`</div>
+                            <div class="module-link-small">Dostupné pro <strong>všechny uživatele</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="ZABAVA">
+                    <div class="command-item">
+                        <div class="command-name">/say</div>
+                        <div class="command-description">Odešle zprávu jménem bota do zvoleného kanálu.</div>
+                        <div class="command-module-tag">Uživatelské a Zábavné Příkazy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Moderátoři mohou poslat zprávu jménem bota do libovolného kanálu.</p>
+                            <div class="syntax">Syntaxe: `/say message:<text_zprávy> channel:<#kanál>`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat zprávy</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="ZABAVA">
+                    <div class="command-item">
+                        <div class="command-name">/latency</div>
+                        <div class="command-description">Změří odezvu bota na Discord API.</div>
+                        <div class="command-module-tag">Uživatelské a Zábavné Příkazy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Zobrazí odezvu bota v milisekundách. (Dostupné i pro Běžné uživatele, pokud je tak nastaveno)</p>
+                            <div class="syntax">Syntaxe: `/latency`</div>
+                            <div class="module-link-small">Dostupné pro <strong>všechny uživatele</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="ZABAVA">
+                    <div class="command-item">
+                        <div class="command-name">/random</div>
+                        <div class="command-description">Vygeneruje náhodné celé číslo v zadaném rozmezí.</div>
+                        <div class="command-module-tag">Uživatelské a Zábavné Příkazy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Užitečné pro losování nebo rychlé rozhodování.</p>
+                            <div class="syntax">Syntaxe: `/random min_value:<minimální_číslo> max_value:<maximální_číslo>`</div>
+                            <div class="module-link-small">Dostupné pro <strong>všechny uživatele</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="ZABAVA">
+                    <div class="command-item">
+                        <div class="command-name">/about</div>
+                        <div class="command-description">Zobrazí stručné informace o historii a účelu bota.</div>
+                        <div class="command-module-tag">Uživatelské a Zábavné Příkazy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Odpověď je ephemeralní (viditelná jen pro vás).</p>
+                            <div class="syntax">Syntaxe: `/about`</div>
+                            <div class="module-link-small">Dostupné pro <strong>všechny uživatele</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="ZABAVA">
+                    <div class="command-item">
+                        <div class="command-name">/hug</div>
+                        <div class="command-description">Pošle virtuální objetí jinému uživateli.</div>
+                        <div class="command-module-tag">Uživatelské a Zábavné Příkazy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Zábavný příkaz pro interakci s ostatními členy serveru.</p>
+                            <div class="syntax">Syntaxe: `/hug user:<@uživatel>`</div>
+                            <div class="module-link-small">Dostupné pro <strong>všechny uživatele</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="ZABAVA">
+                    <div class="command-item">
+                        <div class="command-name">/compliment</div>
+                        <div class="command-description">Odešle náhodný kompliment určenému uživateli.</div>
+                        <div class="command-module-tag">Uživatelské a Zábavné Příkazy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Pošle náhodný povzbudivý kompliment vybranému uživateli.</p>
+                            <div class="syntax">Syntaxe: `/compliment user:<@uživatel>`</div>
+                            <div class="module-link-small">Dostupné pro <strong>všechny uživatele</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="ZABAVA">
+                    <div class="command-item">
+                        <div class="command-name">/avatar</div>
+                        <div class="command-description">Zobrazí avatar zvoleného uživatele (nebo váš).</div>
+                        <div class="command-module-tag">Uživatelské a Zábavné Příkazy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Zobrazí obrázek (avatar) uživatele v plné velikosti.</p>
+                            <div class="syntax">Syntaxe: `/avatar [user:<@uživatel>]`</div>
+                            <div class="module-link-small">Dostupné pro <strong>všechny uživatele</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="ZABAVA">
+                    <div class="command-item">
+                        <div class="command-name">/serverinfo</div>
+                        <div class="command-description">Zobrazí základní statistiky a informace o Discord serveru.</div>
+                        <div class="command-module-tag">Uživatelské a Zábavné Příkazy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Zobrazí název serveru, ID, počet členů, datum vytvoření, boost level a další.</p>
+                            <div class="syntax">Syntaxe: `/serverinfo`</div>
+                            <div class="module-link-small">Dostupné pro <strong>všechny uživatele</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="ZABAVA">
+                    <div class="command-item">
+                        <div class="command-name">/userinfo</div>
+                        <div class="command-description">Zobrazí informace o zvoleném uživateli (nebo o vás).</div>
+                        <div class="command-module-tag">Uživatelské a Zábavné Příkazy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Zobrazí informace o uživateli, jako je ID, role, datum připojení, atd.</p>
+                            <div class="syntax">Syntaxe: `/userinfo [user:<@uživatel>]`</div>
+                            <div class="module-link-small">Dostupné pro <strong>všechny uživatele</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="ZABAVA">
+                    <div class="command-item">
+                        <div class="command-name">/uptime</div>
+                        <div class="command-description">Zobrazí celkový čas, po který je bot spuštěn (uptime).</div>
+                        <div class="command-module-tag">Uživatelské a Zábavné Příkazy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Zobrazí, jak dlouho bot běží od posledního restartu.</p>
+                            <div class="syntax">Syntaxe: `/uptime`</div>
+                            <div class="module-link-small">Dostupné pro <strong>všechny uživatele</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="ZABAVA">
+                    <div class="command-item">
+                        <div class="command-name">/navrh</div>
+                        <div class="command-description">Odešle návrh pro vylepšení bota (např. na GitHub).</div>
+                        <div class="command-module-tag">Uživatelské a Zábavné Příkazy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Odešle návrh na novou funkci nebo vylepšení vývojářům bota.</p>
+                            <div class="syntax">Syntaxe: `/navrh message:<text_návrhu>`</div>
+                            <div class="module-link-small">Dostupné pro <strong>všechny uživatele</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="ZABAVA">
+                    <div class="command-item">
+                        <div class="command-name">/vtip</div>
+                        <div class="command-description">Bot vygeneruje náhodný vtip ze seznamu.</div>
+                        <div class="command-module-tag">Uživatelské a Zábavné Příkazy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Zábavný příkaz pro pobavení. Má 5sekundový cooldown na uživatele.</p>
+                            <div class="syntax">Syntaxe: `/vtip`</div>
+                            <div class="module-link-small">Dostupné pro <strong>všechny uživatele</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="ZABAVA">
+                    <div class="command-item">
+                        <div class="command-name">/afk</div>
+                        <div class="command-description">Nastaví váš status na AFK s vlastní zprávou.</div>
+                        <div class="command-module-tag">Uživatelské a Zábavné Příkazy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Pokud vás někdo zmíní, bot automaticky odpoví vaší nastavenou AFK zprávou.</p>
+                            <div class="syntax">Syntaxe: `/afk message:<vaše AFK zpráva>`</div>
+                            <div class="module-link-small">Dostupné pro <strong>všechny uživatele</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="ZABAVA">
+                    <div class="command-item">
+                        <div class="command-name">/afkremove</div>
+                        <div class="command-description">Zruší váš AFK status.</div>
+                        <div class="command-module-tag">Uživatelské a Zábavné Příkazy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Odstraní váš AFK status a bot již nebude odpovídat na zmínky.</p>
+                            <div class="syntax">Syntaxe: `/afkremove`</div>
+                            <div class="module-link-small">Dostupné pro <strong>všechny uživatele</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="ZABAVA">
+                    <div class="command-item">
+                        <div class="command-name">/kolostesti nastavit</div>
+                        <div class="command-description">Nastaví nové kolo štěstí pro postupné losování (2-5 možností).</div>
+                        <div class="command-module-tag">Uživatelské a Zábavné Příkazy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Umožňuje nastavit až 5 možností pro losování, které bude probíhat postupně, dokud nezbude žádná.</p>
+                            <div class="syntax">Syntaxe: `/kolostesti nastavit opt1:<možnost1> opt2:<možnost2> [opt3] [opt4] [opt5]`</div>
+                            <div class="module-link-small">Dostupné pro <strong>všechny uživatele</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="ZABAVA">
+                    <div class="command-item">
+                        <div class="command-name">/kolostesti tocit</div>
+                        <div class="command-description">Vylosuje jednu možnost z aktuálního kola štěstí a odstraní ji.</div>
+                        <div class="command-module-tag">Uživatelské a Zábavné Příkazy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Zobrazí GIF rotujícího kola a oznámí vítěznou možnost, která je pro další točení odstraněna.</p>
+                            <div class="syntax">Syntaxe: `/kolostesti tocit`</div>
+                            <div class="module-link-small">Dostupné pro <strong>všechny uživatele</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="ZABAVA">
+                    <div class="command-item">
+                        <div class="command-name">/kolostesti reset</div>
+                        <div class="command-description">Resetuje (vymaže) aktuální postupné kolo štěstí.</div>
+                        <div class="command-module-tag">Uživatelské a Zábavné Příkazy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Zruší aktivní kolo štěstí, což umožní nastavit nové kolo s novými možnostmi.</p>
+                            <div class="syntax">Syntaxe: `/kolostesti reset`</div>
+                            <div class="module-link-small">Dostupné pro <strong>všechny uživatele</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="command-group" data-tags="CROSSBAN">
+                    <div class="command-item">
+                        <div class="command-name">/crossban tier</div>
+                        <div class="command-description">Nastavuje úroveň (Tier) reakce Vašeho serveru na crossbany od partnerů.</div>
+                        <div class="command-module-tag">Federativní Systém Banování</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Nastavuje, zda má Váš server crossbany ignorovat (0), upozorňovat a čekat na manuální schválení (1), nebo automaticky banovat (2).</p>
+                            <div class="syntax">Syntaxe: `/crossban tier hodnota:<0|1|2> mod_channel:<#mod-log>`</div>
+                            <div class="module-link-small">
+                                <strong>Tier 0 (Výchozí):</strong> Ignorovat.<br>
+                                <strong>Tier 1:</strong> Upozornit v kanále a čekat na rozhodnutí. Vyžaduje <code>mod_channel</code>.<br>
+                                <strong>Tier 2:</strong> Automatický Ban (Auto-Ban).
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="CROSSBAN">
+                    <div class="command-item">
+                        <div class="command-name">/crossban partner_code</div>
+                        <div class="command-description">Zobrazí unikátní kód, který potřebují partneři pro připojení k Vašemu CrossBan listu.</div>
+                        <div class="command-module-tag">Federativní Systém Banování</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Vygeneruje Váš trvalý, tajný kód, který sdělíte serverům, se kterými chcete navázat partnerství.</p>
+                            <div class="syntax">Syntaxe: `/crossban partner_code`</div>
+                            <div class="module-link-small">Dostupné pro <strong>administrátory</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="CROSSBAN">
+                    <div class="command-item">
+                        <div class="command-name">/crossban partner_connect</div>
+                        <div class="command-description">Naváže permanentní oboustranné partnerství s jiným serverem.</div>
+                        <div class="command-module-tag">Federativní Systém Banování</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Připojí Vás k centrálnímu listu partnera (pomocí jeho kódu) a zahájí obousměnnou výměnu dat. Musíte mít nastavený Tier 1 nebo 2.</p>
+                            <div class="syntax">Syntaxe: `/crossban partner_connect code:<code>`</div>
+                            <div class="module-link-small">Dostupné pro <strong>administrátory</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="CROSSBAN">
+                    <div class="command-item">
+                        <div class="command-name">/crossban partners</div>
+                        <div class="command-description">Zobrazí seznam všech aktivních partnerství a jejich tajné rozvazovací kódy.</div>
+                        <div class="command-module-tag">Federativní Systém Banování</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Přehled o všech serverech ve Vaší federaci, včetně Tierů, které si navzájem nabízíte, a kódu pro zrušení vazby.</p>
+                            <div class="syntax">Syntaxe: `/crossban partners`</div>
+                            <div class="module-link-small">Dostupné pro <strong>administrátory</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="CROSSBAN">
+                    <div class="command-item">
+                        <div class="command-name">/crossban dissolve</div>
+                        <div class="command-description">Zruší oboustranné partnerství s jiným serverem.</div>
+                        <div class="command-module-tag">Federativní Systém Banování</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>K permanentnímu zrušení oboustranné vazby je potřeba tajný kód partnerství, který zjistíte v příkazu <code>/crossban partners</code>.</p>
+                            <div class="syntax">Syntaxe: `/crossban dissolve code:<code>`</div>
+                            <div class="module-link-small">Dostupné pro <strong>administrátory</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="CROSSBAN">
+                    <div class="command-item">
+                        <div class="command-name">/crossban ban</div>
+                        <div class="command-description">Zabanuje uživatele a odešle tuto informaci partnerům pro potenciální CrossBan.</div>
+                        <div class="command-module-tag">Federativní Systém Banování</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Hlavní příkaz, který spouští federativní banovací akci. Uživatel je zabanován lokálně a notifikován partnerům.</p>
+                            <div class="syntax">Syntaxe: `/crossban ban member:<@uživatel> reason:<důvod>`</div>
+                            <div class="module-link-small">Používat pouze pro závažné případy. Vyžaduje oprávnění <strong>Zabanovat členy</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="command-group" data-tags="HLASOVYKANAL">
+                    <div class="command-item">
+                        <div class="command-name">/voicetemp pridat</div>
+                        <div class="command-description">Nastaví hlasový kanál, který bude sloužit pro automatické vytváření dočasných kanálů.</div>
+                        <div class="command-module-tag">Dočasné Hlasové Kanály</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Uživatelé se připojí do tohoto kanálu a bot je automaticky přesune do nově vytvořeného, dočasného kanálu ve stejné kategorii.</p>
+                            <div class="syntax">Syntaxe: `/voicetemp pridat create_channel:<Hlasový_kanál>`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat kanály</strong> na serveru.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="HLASOVYKANAL">
+                    <div class="command-item">
+                        <div class="command-name">/voicetemp odstranit</div>
+                        <div class="command-description">Zruší nastavení "vytvářecího" kanálu pro dočasné hlasové místnosti.</div>
+                        <div class="command-module-tag">Dočasné Hlasové Kanály</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Odebere vybraný kanál ze seznamu vytvářecích kanálů. Kanál již nebude spouštět automatické vytváření dočasných místností.</p>
+                            <div class="syntax">Syntaxe: `/voicetemp odstranit create_channel:<Hlasový_kanál>`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat kanály</strong> na serveru.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="HLASOVYKANAL">
+                    <div class="command-item">
+                        <div class="command-name">/voicetemp list</div>
+                        <div class="command-description">Zobrazí seznam všech kanálů, které jsou aktuálně nastaveny pro vytváření dočasných místností.</div>
+                        <div class="command-module-tag">Dočasné Hlasové Kanály</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Vypíše všechny hlasové kanály, které na serveru slouží jako spouštěče dočasných hlasových místností.</p>
+                            <div class="syntax">Syntaxe: `/voicetemp list`</div>
+                            <div class="module-link-small">Dostupné pro <strong>moderátory</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="command-group" data-tags="GIVEAWAY">
+                    <div class="command-item">
+                        <div class="command-name">/giveaway start</div>
+                        <div class="command-description">Spustí novou soutěž (giveaway) s určenou dobou, cenou a počtem vítězů.</div>
+                        <div class="command-module-tag">Modul Giveaway</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Nastaví novou soutěž. Podporuje volitelné požadavky na účast (role, úroveň).</p>
+                            <div class="syntax">Syntaxe: `/giveaway start duration:<délka> winners:<počet> prize:<cena> [channel:<#kanál>] [required_role:<role>] [min_level:<úroveň>]`</div>
+                            <div class="module-link-small">
+                                <strong>Délka formát:</strong> Např. <code>30s</code>, <code>10m</code>, <code>1h30m</code>, <code>7d</code>.<br>
+                                Vyžaduje oprávnění <strong>Spravovat zprávy</strong>.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="GIVEAWAY">
+                    <div class="command-item">
+                        <div class="command-name">/giveaway end</div>
+                        <div class="command-description">Předčasně ukončí zadaný aktivní giveaway a vybere vítěze.</div>
+                        <div class="command-module-tag">Modul Giveaway</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Okamžitě zastaví soutěž a oznámí vítěze.</p>
+                            <div class="syntax">Syntaxe: `/giveaway end message_id:<ID_zprávy>`</div>
+                            <div class="module-link-small">ID zprávy je uvedeno v zápatí embedu giveawaye. Vyžaduje oprávnění <strong>Spravovat zprávy</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="GIVEAWAY">
+                    <div class="command-item">
+                        <div class="command-name">/giveaway reroll</div>
+                        <div class="command-description">Opětovně vylosuje nové vítěze pro již ukončený giveaway.</div>
+                        <div class="command-module-tag">Modul Giveaway</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Používá se k výběru nových vítězů pro soutěž, která již skončila (např. pokud původní vítězové nepřevzali cenu).</p>
+                            <div class="syntax">Syntaxe: `/giveaway reroll message_id:<ID_zprávy>`</div>
+                            <div class="module-link-small">ID zprávy je uvedeno v zápatí embedu giveawaye. Vyžaduje oprávnění <strong>Spravovat zprávy</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="GIVEAWAY">
+                    <div class="command-item">
+                        <div class="command-name">/giveaway seznam</div>
+                        <div class="command-description">Zobrazí seznam všech aktivních giveawayů na serveru.</div>
+                        <div class="command-module-tag">Modul Giveaway</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Poskytuje přehled o všech probíhajících soutěžích.</p>
+                            <div class="syntax">Syntaxe: `/giveaway seznam`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat zprávy</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="command-group" data-tags="NAROZENINY">
+                    <div class="command-item">
+                        <div class="command-name">/birthday set</div>
+                        <div class="command-description">Nastaví vaše datum narození pro automatické oznámení na serveru.</div>
+                        <div class="command-module-tag">Automatické oznámení narozenin</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Uloží vaše narozeniny (den, měsíc a volitelně rok) do databáze.</p>
+                            <div class="syntax">Syntaxe: `/birthday set month:<1-12> day:<1-31> [year:<rok>]`</div>
+                            <div class="module-link-small">Dostupné pro <strong>všechny uživatele</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="NAROZENINY">
+                    <div class="command-item">
+                        <div class="command-name">/birthday remove</div>
+                        <div class="command-description">Odstraní vaše narozeniny z databáze serveru (GDPR).</div>
+                        <div class="command-module-tag">Automatické oznámení narozenin</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Zcela vymaže vaše uložené datum narození.</p>
+                            <div class="syntax">Syntaxe: `/birthday remove`</div>
+                            <div class="module-link-small">Dostupné pro <strong>všechny uživatele</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="NAROZENINY">
+                    <div class="command-item">
+                        <div class="command-name">/birthday list</div>
+                        <div class="command-description">Zobrazí vaše nastavené datum narození.</div>
+                        <div class="command-module-tag">Automatické oznámení narozenin</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Zobrazí datum, které máte u bota uloženo. Odpověď je ephemeralní.</p>
+                            <div class="syntax">Syntaxe: `/birthday list`</div>
+                            <div class="module-link-small">Dostupné pro <strong>všechny uživatele</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="NAROZENINY">
+                    <div class="command-item">
+                        <div class="command-name">/birthday setchannel</div>
+                        <div class="command-description">Nastaví kanál a zprávu pro automatické oznámení narozenin na serveru.</div>
+                        <div class="command-module-tag">Automatické oznámení narozenin</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Nastavuje kanál, zprávu (použijte <code>{user}</code>) a volitelný seznam URL GIFů oddělených čárkami.</p>
+                            <div class="syntax">Syntaxe: `/birthday setchannel channel:<#kanál> [greeting_message:<zpráva>] [gif_urls:<url,url,...>]`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat kanály</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="NAROZENINY">
+                    <div class="command-item">
+                        <div class="command-name">/birthday removechannel</div>
+                        <div class="command-description">Odstraní nastavený kanál pro oznámení narozenin na serveru.</div>
+                        <div class="command-module-tag">Automatické oznámení narozenin</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Zruší nastavení kanálu, čímž se vypne automatické oznamování narozenin pro celý server.</p>
+                            <div class="syntax">Syntaxe: `/birthday removechannel`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat kanály</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="NAROZENINY">
+                    <div class="command-item">
+                        <div class="command-name">/birthday listsettings</div>
+                        <div class="command-description">Zobrazí aktuální nastavení modulu narozenin pro server.</div>
+                        <div class="command-module-tag">Automatické oznámení narozenin</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Zobrazí nastavený kanál, zprávu a seznam GIF URL adres.</p>
+                            <div class="syntax">Syntaxe: `/birthday listsettings`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat kanály</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="command-group" data-tags="PATREON">
+                    <div class="command-item">
+                        <div class="command-name">/patreon setup</div>
+                        <div class="command-description">Nastaví ID Patreon kampaně pro synchronizaci rolí na tomto serveru.</div>
+                        <div class="command-module-tag">Patreon Sync</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p><strong>Pro administrátory.</strong> Spojí tento Discord server s vaší konkrétní Patreon kampaní. ID kampaně najdete v nastavení tvůrce na Patreonu.</p>
+                            <div class="syntax">Syntaxe: `/patreon setup campaign_id:<ID_kampaně>`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat role</strong> na Discordu.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="PATREON">
+                    <div class="command-item">
+                        <div class="command-name">/patreon maprole</div>
+                        <div class="command-description">Namapuje Patreon úroveň (tier) na Discord roli.</div>
+                        <div class="command-module-tag">Patreon Sync</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p><strong>Pro administrátory.</strong> Nastaví, kterou Discord roli získají patroni s daným ID úrovně. Role bota musí být nad přidělovanou rolí.</p>
+                            <div class="syntax">Syntaxe: `/patreon maprole tier_id:<ID_úrovně> discord_role:<@role>`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat role</strong> na Discordu.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="PATREON">
+                    <div class="command-item">
+                        <div class="command-name">/patreon unmaprole</div>
+                        <div class="command-description">Zruší mapování mezi Patreon úrovní a Discord rolí.</div>
+                        <div class="command-module-tag">Patreon Sync</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p><strong>Pro administrátory.</strong> Odstraní spojení daného Patreon tieru s Discord rolí.</p>
+                            <div class="syntax">Syntaxe: `/patreon unmaprole tier_id:<ID_úrovně>`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat role</strong> na Discordu.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="PATREON">
+                    <div class="command-item">
+                        <div class="command-name">/patreon syncnow</div>
+                        <div class="command-description">Spustí okamžitou manuální synchronizaci všech Patreon rolí pro server.</div>
+                        <div class="command-module-tag">Patreon Sync</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p><strong>Pro administrátory.</strong> Dobré pro okamžitou aktualizaci rolí po změně nastavení nebo po novém patronovi, pokud nechcete čekat na automatickou synchronizaci.</p>
+                            <div class="syntax">Syntaxe: `/patreon syncnow`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat role</strong> na Discordu.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="PATREON">
+                    <div class="command-item">
+                        <div class="command-name">/patreon link</div>
+                        <div class="command-description">Zahájí proces propojení vašeho Discord účtu s Patreonem a vygeneruje ověřovací kód.</div>
+                        <div class="command-module-tag">Patreon Sync</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p><strong>Pro uživatele.</strong> Zobrazí kód, který je nutné dočasně vložit do vašeho <strong>Display Name</strong> na Patreonu pro ověření. Odpověď je ephemeralní.</p>
+                            <div class="syntax">Syntaxe: `/patreon link`</div>
+                            <div class="module-link-small">Dostupné pro <strong>všechny uživatele</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="PATREON">
+                    <div class="command-item">
+                        <div class="command-name">/patreon verify</div>
+                        <div class="command-description">Dokončí ověření a propojí váš Discord účet s Patreonem.</div>
+                        <div class="command-module-tag">Patreon Sync</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p><strong>Pro uživatele.</strong> Po vložení kódu do Patreon Display Name použijte tento příkaz. Bot ověří kód a přidělí vám role.</p>
+                            <div class="syntax">Syntaxe: `/patreon verify`</div>
+                            <div class="module-link-small">Dostupné pro <strong>všechny uživatele</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="PATREON">
+                    <div class="command-item">
+                        <div class="command-name">/patreon unlink</div>
+                        <div class="command-description">Zruší propojení mezi vaším Discord a Patreon účtem.</div>
+                        <div class="command-module-tag">Patreon Sync</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p><strong>Pro uživatele.</strong> Odstraní vaše propojené účty a odebere vám všechny Patreon role na serveru.</p>
+                            <div class="syntax">Syntaxe: `/patreon unlink`</div>
+                            <div class="module-link-small">Dostupné pro <strong>všechny uživatele</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="command-group" data-tags="PLANEDZPREZPOK">
+                    <div class="command-item">
+                        <div class="command-name">/planzpravu pridat_jednorazovou</div>
+                        <div class="command-description">Naplánuje zprávu, která se odešle pouze jednou v určený čas.</div>
+                        <div class="command-module-tag">Pokročilé plánované zprávy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Naplánuje jednorázovou zprávu. Text zprávy lze formátovat, pro nový řádek použijte symbol <code>|</code>.</p>
+                            <div class="syntax">Syntaxe: `/planzpravu pridat_jednorazovou datum:<YYYY-MM-DD> cas:<HH:MM> channel:<#kanál> zprava:<text>`</div>
+                            <div class="module-link-small">Dostupné pro <strong>všechny uživatele</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="PLANEDZPREZPOK">
+                    <div class="command-item">
+                        <div class="command-name">/planzpravu pridat_cron</div>
+                        <div class="command-description">Naplánuje opakovanou zprávu pomocí komplexního CRON výrazu.</div>
+                        <div class="command-module-tag">Pokročilé plánované zprávy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Umožňuje pokročilé plánování, např. každé pondělí v 8:00. Upozornění: <strong>Pondělí = 0</strong>.</p>
+                            <div class="syntax">Syntaxe: `/planzpravu pridat_cron cron_vyraz:<CRON_vyraz> channel:<#kanál> zprava:<text>`</div>
+                            <div class="module-link-small">Dostupné pro <strong>všechny uživatele</strong>. Pro pomoc s tvorbou výrazů navštivte: <a href="crongenerator.html">crongenerator.html</a></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="PLANEDZPREZPOK">
+                    <div class="command-item">
+                        <div class="command-name">/planzpravu pridat_interval</div>
+                        <div class="command-description">Naplánuje opakovanou zprávu po pevném časovém intervalu (dny, hodiny, minuty).</div>
+                        <div class="command-module-tag">Pokročilé plánované zprávy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Zpráva se opakuje po zadaném intervalu, např. každých 12 hodin. Stačí zadat libovolnou kombinaci dnů, hodin a minut.</p>
+                            <div class="syntax">Syntaxe: `/planzpravu pridat_interval [dny:<číslo>] [hodiny:<číslo>] [minuty:<číslo>] channel:<#kanál> zprava:<text>`</div>
+                            <div class="module-link-small">Dostupné pro <strong>všechny uživatele</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="PLANEDZPREZPOK">
+                    <div class="command-item">
+                        <div class="command-name">/planzpravu list</div>
+                        <div class="command-description">Zobrazí seznam všech aktivních naplánovaných zpráv na serveru.</div>
+                        <div class="command-module-tag">Pokročilé plánované zprávy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Běžní uživatelé vidí jen své zprávy. Moderátoři vidí všechny zprávy včetně ID pro správu.</p>
+                            <div class="syntax">Syntaxe: `/planzpravu list`</div>
+                            <div class="module-link-small">Dostupné pro <strong>všechny uživatele</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="PLANEDZPREZPOK">
+                    <div class="command-item">
+                        <div class="command-name">/planzpravu odebrat</div>
+                        <div class="command-description">Odstraní naplánovanou zprávu pomocí jejího unikátního ID.</div>
+                        <div class="command-module-tag">Pokročilé plánované zprávy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Zruší opakování/odeslání zprávy. ID zprávy zjistíte pomocí příkazu <code>/planzpravu list</code>.</p>
+                            <div class="syntax">Syntaxe: `/planzpravu odebrat job_id:<ID_zprávy>`</div>
+                            <div class="module-link-small">Zprávu může odstranit pouze její <strong>autor</strong> nebo <strong>moderátor</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="command-group" data-tags="POCITANI">
+                    <div class="command-item">
+                        <div class="command-name">/pocitani nastavit</div>
+                        <div class="command-description">Spustí hru Počítání v určeném kanále a nastaví počáteční pravidla pro chyby.</div>
+                        <div class="command-module-tag">Modul Počítání</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Nastaví hru a její kanál. Lze nastavit, zda se po chybě hra <strong>restartuje</strong>, <strong>upozorní</strong> nebo <strong>ignoruje</strong> zprávu.</p>
+                            <div class="syntax">Syntaxe: `/pocitani nastavit channel:<#kanál> [wrong_number_action:<akce>] [double_post_action:<akce>] [non_number_action:<akce>]`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat zprávy</strong>. Akce mohou být <code>reset</code>, <code>upozornění</code>, <code>ignorovat</code> (jen pro některé chyby).</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="POCITANI">
+                    <div class="command-item">
+                        <div class="command-name">/pocitani edit</div>
+                        <div class="command-description">Upraví pravidla hry Počítání, aniž by se resetovalo aktuální číslo.</div>
+                        <div class="command-module-tag">Modul Počítání</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Umožňuje měnit akce pro různé typy chyb (špatné číslo, dvojitý příspěvek, ne-číselná zpráva).</p>
+                            <div class="syntax">Syntaxe: `/pocitani edit [wrong_number_action:<akce>] [double_post_action:<akce>] [non_number_action:<akce>]`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat zprávy</strong>. Akce mohou být <code>reset</code>, <code>upozornění</code>, <code>ignorovat</code>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="POCITANI">
+                    <div class="command-item">
+                        <div class="command-name">/pocitani reset</div>
+                        <div class="command-description">Okamžitě resetuje počítací hru zpět na číslo 1.</div>
+                        <div class="command-module-tag">Modul Počítání</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Hra začne znovu od jedničky. Hodí se, pokud se počítání dostalo do nežádoucího stavu.</p>
+                            <div class="syntax">Syntaxe: `/pocitani reset`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat zprávy</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="POCITANI">
+                    <div class="command-item">
+                        <div class="command-name">/pocitani smazat</div>
+                        <div class="command-description">Trvale ukončí hru Počítání na serveru a vymaže veškerá data.</div>
+                        <div class="command-module-tag">Modul Počítání</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Zruší modul Počítání na serveru. Hra se automaticky neobnoví po restartu bota.</p>
+                            <div class="syntax">Syntaxe: `/pocitani smazat`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat zprávy</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="POCITANI">
+                    <div class="command-item">
+                        <div class="command-name">/pocitani info</div>
+                        <div class="command-description">Zobrazí aktuální stav hry (číslo, kanál, pravidla).</div>
+                        <div class="command-module-tag">Modul Počítání</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Zobrazí aktuální číslo, kanál, kde se počítá, a nastavené chybové akce pro každý typ chyby.</p>
+                            <div class="syntax">Syntaxe: `/pocitani info`</div>
+                            <div class="module-link-small">Dostupné pro <strong>všechny uživatele</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="command-group" data-tags="REAKCESMAJLIKY">
+                    <div class="command-item">
+                        <div class="command-name">/reactions add</div>
+                        <div class="command-description">Přidá vybraný smajlík k automatickým reakcím ke každé nové zprávě v daném kanále.</div>
+                        <div class="command-module-tag">Automatické reakce smajlíky v kanálech</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Bot bude automaticky reagovat zadaným smajlíkem na každou novou zprávu v kanále.</p>
+                            <div class="syntax">Syntaxe: `/reactions add channel:<#kanál> emoji:<smajlík>`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Přidávat reakce</strong>. Podporuje Unicode i vlastní smajlíky serveru.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="REAKCESMAJLIKY">
+                    <div class="command-item">
+                        <div class="command-name">/reactions remove</div>
+                        <div class="command-description">Odstraní vybraný smajlík ze seznamu automatických reakcí v daném kanále.</div>
+                        <div class="command-module-tag">Automatické reakce smajlíky v kanálech</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Zruší automatické přidávání zadaného smajlíku v kanále. Musíte použít stejný formát smajlíku jako při přidání.</p>
+                            <div class="syntax">Syntaxe: `/reactions remove channel:<#kanál> emoji:<smajlík>`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat kanály</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="command-group" data-tags="REPUTACE">
+                    <div class="command-item">
+                        <div class="command-name">/rep plus</div>
+                        <div class="command-description">Uděluje uživateli kladný bod reputace. Lze udělit jen jednou za 12 hodin.</div>
+                        <div class="command-module-tag">Systém reputace</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Oceňuje uživatele za přínos na serveru. Nelze udělit sobě samému.</p>
+                            <div class="syntax">Syntaxe: `/rep plus user:<@uživatel>`</div>
+                            <div class="module-link-small">Dostupné pro <strong>všechny uživatele</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="REPUTACE">
+                    <div class="command-item">
+                        <div class="command-name">/rep minus</div>
+                        <div class="command-description">Uděluje uživateli záporný bod reputace. Lze udělit jen jednou za 12 hodin.</div>
+                        <div class="command-module-tag">Systém reputace</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Uděluje záporný bod reputace (používat s rozvahou). Nelze udělit sobě samému.</p>
+                            <div class="syntax">Syntaxe: `/rep minus user:<@uživatel>`</div>
+                            <div class="module-link-small">Dostupné pro <strong>všechny uživatele</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="REPUTACE">
+                    <div class="command-item">
+                        <div class="command-name">/rep top</div>
+                        <div class="command-description">Zobrazí žebříček uživatelů s nejvyšší reputací na serveru.</div>
+                        <div class="command-module-tag">Systém reputace</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Zobrazí seznam uživatelů seřazený podle počtu bodů reputace, s možností listování.</p>
+                            <div class="syntax">Syntaxe: `/rep top`</div>
+                            <div class="module-link-small">Dostupné pro <strong>všechny uživatele</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="command-group" data-tags="RSS">
+                    <div class="command-item">
+                        <div class="command-name">/rss add</div>
+                        <div class="command-description">Přidá nový RSS zdroj k pravidelnému sledování a nastaví kanál pro oznámení.</div>
+                        <div class="command-module-tag">RSS Čtečka</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Nastavuje sledování RSS zdroje. Volitelně lze zapnout/vypnout popis článku (<code>include_description</code>), přidat vlastní úvodní text (<code>custom_text</code>) a ignorovat YouTube Shorts (<code>ignore_youtube_shorts</code>).</p>
+                            <div class="syntax">Syntaxe: `/rss add rss_feed_url:<URL> channel_id:<#kanál> [include_description:true/false] [custom_text:<text>] [ignore_youtube_shorts:true/false]`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat kanály</strong>. Pro YouTube odběr použijte formát: <code>https://www.youtube.com/feeds/videos.xml?channel_id=[ID]</code></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="RSS">
+                    <div class="command-item">
+                        <div class="command-name">/rss edit</div>
+                        <div class="command-description">Upraví nastavení (kanál, popis, text) již existujícího RSS zdroje.</div>
+                        <div class="command-module-tag">RSS Čtečka</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Umožňuje změnu kanálu, kam se zprávy posílají, úpravu vlastního textu a nastavení zobrazení popisu.</p>
+                            <div class="syntax">Syntaxe: `/rss edit rss_feed_url:<URL> [new_channel:<#kanál>] [include_description:true/false] [custom_text:<text>] [ignore_youtube_shorts:true/false]`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat kanály</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="RSS">
+                    <div class="command-item">
+                        <div class="command-name">/rss remove</div>
+                        <div class="command-description">Odebere RSS zdroj ze sledování a přestane posílat novinky.</div>
+                        <div class="command-module-tag">RSS Čtečka</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Trvale zruší sledování daného RSS zdroje. Musíte zadat přesnou URL adresu zdroje.</p>
+                            <div class="syntax">Syntaxe: `/rss remove rss_feed_url:<URL>`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat kanály</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="RSS">
+                    <div class="command-item">
+                        <div class="command-name">/rss list</div>
+                        <div class="command-description">Zobrazí seznam všech RSS zdrojů, které server aktuálně sleduje.</div>
+                        <div class="command-module-tag">RSS Čtečka</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Vypíše všechny sledované URL adresy, kanály, kam posílají zprávy, a jejich nastavení.</p>
+                            <div class="syntax">Syntaxe: `/rss list`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat kanály</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="RSS">
+                    <div class="command-item">
+                        <div class="command-name">/rss update</div>
+                        <div class="command-description">Spustí okamžitou manuální kontrolu všech RSS zdrojů pro server.</div>
+                        <div class="command-module-tag">RSS Čtečka</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Kontroluje nové články ihned. Lze použít jen jednou za <strong>5 minut</strong>.</p>
+                            <div class="syntax">Syntaxe: `/rss update`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat kanály</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="command-group" data-tags="SCAMPREVENCE">
+                    <div class="command-item">
+                        <div class="command-name">/scamochrana zapnout</div>
+                        <div class="command-description">Zapne ochranu proti scamu pro celý server.</div>
+                        <div class="command-module-tag">Ochrana proti scamu</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Aktivuje ochranu, která automaticky maže zprávy s podezřelým obsahem a uděluje timeout běžným uživatelům.</p>
+                            <div class="syntax">Syntaxe: `/scamochrana zapnout`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat zprávy</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="SCAMPREVENCE">
+                    <div class="command-item">
+                        <div class="command-name">/scamochrana vypnout</div>
+                        <div class="command-description">Vypne ochranu proti scamu pro celý server.</div>
+                        <div class="command-module-tag">Ochrana proti scamu</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Deaktivuje funkci ochrany proti scamu. Žádné zprávy již nebudou mazány ani uživatelé umlčováni.</p>
+                            <div class="syntax">Syntaxe: `/scamochrana vypnout`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat zprávy</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="SCAMPREVENCE">
+                    <div class="command-item">
+                        <div class="command-name">/scamochrana status</div>
+                        <div class="command-description">Zobrazí aktuální stav (zapnuto/vypnuto) ochrany proti scamu na serveru.</div>
+                        <div class="command-module-tag">Ochrana proti scamu</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Rychlá kontrola, zda je ochrana serveru aktivní.</p>
+                            <div class="syntax">Syntaxe: `/scamochrana status`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat zprávy</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="SCAMPREVENCE">
+                    <div class="command-item">
+                        <div class="command-name">/scamochrana list</div>
+                        <div class="command-description">Zobrazí seznam blokovaných prvků a výjimek rolí.</div>
+                        <div class="command-module-tag">Ochrana proti scamu</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Ukáže seznam interně blokovaných slov a názvů souborů a seznam rolí s imunitou (výjimkou) z ochrany.</p>
+                            <div class="syntax">Syntaxe: `/scamochrana list`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat zprávy</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="SCAMPREVENCE">
+                    <div class="command-item">
+                        <div class="command-name">/scamochrana vyjimka</div>
+                        <div class="command-description">Spravuje seznam rolí, které jsou z ochrany proti scamu vyjmuty.</div>
+                        <div class="command-module-tag">Ochrana proti scamu</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Přidává nebo odebírá role ze seznamu imunity. Uživatelé s těmito rolemi nebudou postiženi timeoutem ani mazáním zpráv.</p>
+                            <div class="syntax">Syntaxe: `/scamochrana vyjimka akce:<pridat/odebrat> role:<@role>`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat zprávy</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="command-group" data-tags="PLANEDZPRAVY">
+                    <div class="command-item">
+                        <div class="command-name">/schedules schedule</div>
+                        <div class="command-description">Naplánuje opakovanou nebo jednorázovou zprávu na konkrétní den v týdnu a čas.</div>
+                        <div class="command-module-tag">Plánované zprávy (jednoduchý)</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Nastavuje zprávu pro opakování každý den (<code>everyday</code>) nebo v konkrétní den (<code>monday</code> až <code>sunday</code>). <code>repeat:0</code> znamená jednorázovou zprávu.</p>
+                            <div class="syntax">Syntaxe: `/schedules schedule zprava:<text> channel:<#kanál> time:<HH:MM> day_of_week:<den/everyday> repeat:<číslo>`</div>
+                            <div class="module-link-small">Dostupné pro <strong>všechny uživatele</strong>. Pro pokročilé možnosti použijte `/planzpravu`.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="PLANEDZPRAVY">
+                    <div class="command-item">
+                        <div class="command-name">/schedules list</div>
+                        <div class="command-description">Zobrazí seznam všech naplánovaných zpráv (vytvořených pomocí /schedules).</div>
+                        <div class="command-module-tag">Plánované zprávy (jednoduchý)</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Vypíše všechny naplánované zprávy. Moderátoři vidí všechny zprávy, běžní uživatelé jen své.</p>
+                            <div class="syntax">Syntaxe: `/schedules list`</div>
+                            <div class="module-link-small">Dostupné pro <strong>všechny uživatele</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="PLANEDZPRAVY">
+                    <div class="command-item">
+                        <div class="command-name">/schedules remove</div>
+                        <div class="command-description">Odstraní naplánovanou zprávu pomocí jejího unikátního ID.</div>
+                        <div class="command-module-tag">Plánované zprávy (jednoduchý)</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Zruší opakování/odeslání zprávy. ID zprávy zjistíte pomocí příkazu <code>/schedules list</code>.</p>
+                            <div class="syntax">Syntaxe: `/schedules remove message_id:<ID_zprávy>`</div>
+                            <div class="module-link-small">Zprávu může odstranit pouze její <strong>autor</strong> nebo <strong>moderátor</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="command-group" data-tags="STATISTIKY">
+                    <div class="command-item">
+                        <div class="command-name">/stats</div>
+                        <div class="command-description">Zobrazí detailní přehled statistik serveru, včetně aktivity členů a kanálů.</div>
+                        <div class="command-module-tag">Modul Statistiky</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Umožňuje zobrazit statistiky za různá období (24 hodin, 7 dní, měsíc, celková doba).</p>
+                            <div class="syntax">Syntaxe: `/stats [period:<časové období>]`</div>
+                            <div class="module-link-small">Dostupné pro <strong>všechny uživatele</strong> (pokud není omezeno administrátorem). Výchozí období je <strong>Posledních 24 hodin</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="command-group" data-tags="SVATKY">
+                    <div class="command-item">
+                        <div class="command-name">/svatky</div>
+                        <div class="command-description">Spravuje denní automatické oznámení českých a slovenských svátků (jmenin) a státních svátků.</div>
+                        <div class="command-module-tag">Automatické Oznámení Svátků (Jmenin)</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p><strong>Víceúčelový příkaz.</strong> Nastavuje, zapíná, vypíná a testuje denní zasílání svátků (v 00:01 SEČ/SELČ).</p>
+                            <div class="syntax">Syntaxe: `/svatky action:<on/off/test> [channel:<#kanál>]`</div>
+                            <ul>
+                                <li><code>action:on</code> zapne modul a nastaví kanál.</li>
+                                <li><code>action:off</code> vypne modul.</li>
+                                <li><code>action:test</code> odešle okamžitou zprávu do zvoleného kanálu.</li>
+                            </ul>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat zprávy</strong>. Oznámení používají <strong>Pražskou časovou zónu</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="command-group" data-tags="ZPETNAVAZBA">
+                    <div class="command-item">
+                        <div class="command-name">/feedback nastavit</div>
+                        <div class="command-description">Nastaví kanál, do kterého budou odesílány anonymní zpětné vazby.</div>
+                        <div class="command-module-tag">Systém zpětné vazby</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Aktivuje systém zpětné vazby a určí kanál pro příjem anonymních zpráv od uživatelů.</p>
+                            <div class="syntax">Syntaxe: `/feedback nastavit channel:<#kanál>`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat zprávy</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="ZPETNAVAZBA">
+                    <div class="command-item">
+                        <div class="command-name">/feedback poslat</div>
+                        <div class="command-description">Odešle vaši zprávu anonymně do nastaveného kanálu zpětné vazby.</div>
+                        <div class="command-module-tag">Systém zpětné vazby</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></span
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Odesílá textovou zprávu anonymně. Anonymita je zachována – vaše jméno nebude zobrazeno.</p>
+                            <div class="syntax">Syntaxe: `/feedback poslat message:<vaše zpráva>`</div>
+                            <div class="module-link-small">Dostupné pro <strong>všechny uživatele</strong>. Kanál musí být nejprve nastaven moderátory.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="ZPETNAVAZBA">
+                    <div class="command-item">
+                        <div class="command-name">/feedback odstranit</div>
+                        <div class="command-description">Deaktivuje systém zpětné vazby a odstraní nastavený kanál.</div>
+                        <div class="command-module-tag">Systém zpětné vazby</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Trvale vypne modul zpětné vazby na serveru.</p>
+                            <div class="syntax">Syntaxe: `/feedback odstranit`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat zprávy</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="ZPETNAVAZBA">
+                    <div class="command-item">
+                        <div class="command-name">/setsuggestionchannel</div>
+                        <div class="command-description">Nastaví kanál, do kterého budou odesílány veřejné návrhy k hodnocení.</div>
+                        <div class="command-module-tag">Systém návrhů</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Aktivuje systém návrhů. Návrhy jsou veřejné a automaticky k nim jsou přidány reakce 👍 a 👎.</p>
+                            <div class="syntax">Syntaxe: `/setsuggestionchannel channel:<#kanál>`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat zprávy</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="ZPETNAVAZBA">
+                    <div class="command-item">
+                        <div class="command-name">/suggest</div>
+                        <div class="command-description">Odešle váš návrh do nastaveného kanálu pro veřejné hodnocení.</div>
+                        <div class="command-module-tag">Systém návrhů</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Odesílá návrh jménem odesílatele do kanálu pro návrhy.</p>
+                            <div class="syntax">Syntaxe: `/suggest suggestion:<váš návrh>`</div>
+                            <div class="module-link-small">Dostupné pro <strong>všechny uživatele</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="ZPETNAVAZBA">
+                    <div class="command-item">
+                        <div class="command-name">/suggestion</div>
+                        <div class="command-description">Schválí nebo zamítne návrh a přidá oficiální odpověď.</div>
+                        <div class="command-module-tag">Systém návrhů</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Moderátorský příkaz pro správu návrhů. Aktualizuje původní zprávu se statusem (schváleno/zamítnuto) a zdůvodněním.</p>
+                            <div class="syntax">Syntaxe: `/suggestion suggestion_id:<ID_zprávy> action:<schválit/zamítnout> response:<důvod_rozhodnutí>`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat zprávy</strong>. ID zprávy lze zkopírovat pomocí Developer Mode.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="command-group" data-tags="TIKETY">
+                    <div class="command-item">
+                        <div class="command-name">/ticket setup</div>
+                        <div class="command-description">Inicializuje systém tiketů, nastaví kanály a pingovanou roli.</div>
+                        <div class="command-module-tag">Systém tiketů</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Nastavuje, kde se budou zakládat soukromá vlákna tiketů (<code>ticket_parent_channel</code>), kterou roli pingovat (<code>ping_role</code>) a kde bude umístěno tlačítko pro založení tiketu (<code>button_channel</code>).</p>
+                            <div class="syntax">Syntaxe: `/ticket setup ticket_parent_channel:<#kanál> ping_role:<@role> button_channel:<#kanál>`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat kanály</strong> nebo <strong>Spravovat role</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="TIKETY">
+                    <div class="command-item">
+                        <div class="command-name">/ticket remove_setup</div>
+                        <div class="command-description">Odstraní veškeré nastavení tiketového systému pro server.</div>
+                        <div class="command-module-tag">Systém tiketů</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Trvale odstraní nastavení modulu tiketů z databáze a smaže zprávu s tlačítkem pro vytvoření tiketu.</p>
+                            <div class="syntax">Syntaxe: `/ticket remove_setup`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat kanály</strong> nebo <strong>Spravovat role</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="TIKETY">
+                    <div class="command-item">
+                        <div class="command-name">/ticket list</div>
+                        <div class="command-description">Zobrazí přehled všech aktivních (otevřených) tiketů na serveru.</div>
+                        <div class="command-module-tag">Systém tiketů</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Vypíše seznam otevřených soukromých vláken, jejich ID a uživatele, který tiket založil.</p>
+                            <div class="syntax">Syntaxe: `/ticket list`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat kanály</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="TIKETY">
+                    <div class="command-item">
+                        <div class="command-name">/ticket close</div>
+                        <div class="command-description">Uzavře konkrétní tiket pomocí ID vlákna.</div>
+                        <div class="command-module-tag">Systém tiketů</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Uzavře, archivuje a zamkne vlákno tiketu, čímž ukončí komunikaci. ID vlákna je nutné získat.</p>
+                            <div class="syntax">Syntaxe: `/ticket close thread_id:<ID_vlákna>`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat kanály</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="TIKETY">
+                    <div class="command-item">
+                        <div class="command-name">/ticket vytvorit</div>
+                        <div class="command-description">Vytvoří nový tiket (soukromé vlákno) s vaší otázkou nebo problémem.</div>
+                        <div class="command-module-tag">Systém tiketů</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Manuální způsob pro uživatele, jak založit tiket. Je vytvořeno soukromé vlákno s vaší otázkou.</p>
+                            <div class="syntax">Syntaxe: `/ticket vytvorit question:<vaše otázka>`</div>
+                            <div class="module-link-small">Dostupné pro <strong>všechny uživatele</strong>, pokud je systém nastaven.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="command-group" data-tags="TRANSLATE">
+                    <div class="command-item">
+                        <div class="command-name">/prelozit</div>
+                        <div class="command-description">Přeloží zadaný text do požadovaného cílového jazyka pomocí DeepL.</div>
+                        <div class="command-module-tag">Překladač (DeepL)</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Rychlý překlad libovolného textu. Výsledek je zobrazen v soukromé (ephemeralní) odpovědi, viditelné jen vám. Alternativně lze použít kontextové menu pro zprávy.</p>
+                            <div class="syntax">Syntaxe: `/prelozit lang:<kód_jazyka> text:<text_k_překladu>`</div>
+                            <div class="module-link-small">Dostupné pro <strong>všechny uživatele</strong>. Použijte kódy jako <code>CS</code>, <code>EN-GB</code>, <code>DE</code>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="TRANSLATE">
+                    <div class="command-item">
+                        <div class="command-name">/autopreklad setup</div>
+                        <div class="command-description">Nastaví automatický překlad všech zpráv v kanálu do zvoleného jazyka.</div>
+                        <div class="command-module-tag">Překladač (DeepL)</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Každá zpráva odeslaná do zvoleného kanálu bude automaticky přeložena do cílového jazyka (např. <code>lang:cs</code>).</p>
+                            <div class="syntax">Syntaxe: `/autopreklad setup channel:<#kanál> lang:<kód_jazyka>`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat zprávy</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="TRANSLATE">
+                    <div class="command-item">
+                        <div class="command-name">/autopreklad remove</div>
+                        <div class="command-description">Zruší automatický překlad pro zadaný kanál.</div>
+                        <div class="command-module-tag">Překladač (DeepL)</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Trvale odstraní nastavení automatického překladu z kanálu.</p>
+                            <div class="syntax">Syntaxe: `/autopreklad remove channel:<#kanál>`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat zprávy</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="TRANSLATE">
+                    <div class="command-item">
+                        <div class="command-name">/autopreklad list</div>
+                        <div class="command-description">Zobrazí seznam všech kanálů, které mají nastaven automatický překlad.</div>
+                        <div class="command-module-tag">Překladač (DeepL)</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Vypíše všechny kanály s aktivním automatickým překladem a jejich cílové jazyky.</p>
+                            <div class="syntax">Syntaxe: `/autopreklad list`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat zprávy</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="command-group" data-tags="TVORBAVLAKEN">
+                    <div class="command-item">
+                        <div class="command-name">/vlaknatext add</div>
+                        <div class="command-description">Aktivuje automatické vytváření vláken pod každou textovou zprávou v kanálu s úvodním textem.</div>
+                        <div class="command-module-tag">Vlákna a Moderace kanálů</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Nastavuje automatické vytváření vlákna pod každou novou zprávou v kanálu. Bot odešle definovaný <code>text</code> jako první zprávu do vlákna. Pro nový řádek v textu použijte <code>\n</code>.</p>
+                            <div class="syntax">Syntaxe: `/vlaknatext add channel:<#kanál> text:<úvodní text>`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat vlákna</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="TVORBAVLAKEN">
+                    <div class="command-item">
+                        <div class="command-name">/vlakna textlist</div>
+                        <div class="command-description">Zobrazí seznam kanálů s aktivním automatickým vytvářením vláken s úvodním textem.</div>
+                        <div class="command-module-tag">Vlákna a Moderace kanálů</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Vypíše kanály, kde se ke každé zprávě vytváří vlákno, a zobrazí i nastavený úvodní text.</p>
+                            <div class="syntax">Syntaxe: `/vlakna textlist`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat vlákna</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="TVORBAVLAKEN">
+                    <div class="command-item">
+                        <div class="command-name">/vlakna textremove</div>
+                        <div class="command-description">Odebere nastavení automatického vytváření vláken s úvodní zprávou z kanálu.</div>
+                        <div class="command-module-tag">Vlákna a Moderace kanálů</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Deaktivuje funkci automatického vlákna a úvodního textu v daném kanálu.</p>
+                            <div class="syntax">Syntaxe: `/vlakna textremove channel:<#kanál>`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat vlákna</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="TVORBAVLAKEN">
+                    <div class="command-item">
+                        <div class="command-name">/vlakna add</div>
+                        <div class="command-description">Aktivuje moderaci kanálu: povolí pouze média a vytváří k nim vlákna pro diskuzi.</div>
+                        <div class="command-module-tag">Vlákna a Moderace kanálů</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Nastavuje kanál tak, že jsou povoleny pouze zprávy s přílohami (fotky/videa) nebo mediálními odkazy. Textové zprávy jsou smazány a pod médii je automaticky vytvořeno vlákno pro diskuzi.</p>
+                            <div class="syntax">Syntaxe: `/vlakna add channel:<#kanál>`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat vlákna</strong> a <strong>Spravovat zprávy</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="TVORBAVLAKEN">
+                    <div class="command-item">
+                        <div class="command-name">/vlakna remove</div>
+                        <div class="command-description">Odebere kanál z moderace a deaktivuje automatické vytváření vláken k fotkám/médiím.</div>
+                        <div class="command-module-tag">Vlákna a Moderace kanálů</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Deaktivuje moderaci kanálu. Zprávy s textem nebudou mazány a pod médii se nebudou automaticky vytvářet vlákna.</p>
+                            <div class="syntax">Syntaxe: `/vlakna remove channel:<#kanál>`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat vlákna</strong> a <strong>Spravovat zprávy</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="TVORBAVLAKEN">
+                    <div class="command-item">
+                        <div class="command-name">/vlakna list</div>
+                        <div class="command-description">Zobrazí seznam všech kanálů, které jsou nastaveny pro moderaci vláken k fotkám a médiím.</div>
+                        <div class="command-module-tag">Vlákna a Moderace kanálů</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Vypíše všechny kanály, které vyžadují přílohy/média a pod kterými se automaticky zakládají vlákna pro diskuzi.</p>
+                            <div class="syntax">Syntaxe: `/vlakna list`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat vlákna</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="command-group" data-tags="WELCOMELEAVE">
+                    <div class="command-item">
+                        <div class="command-name">/welcome set</div>
+                        <div class="command-description">Nastaví kanál pro uvítací zprávy a volitelně i jiný kanál pro zprávy o odchodu.</div>
+                        <div class="command-module-tag">Uvítací a odchodové zprávy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Aktivuje funkci. Parametr <code>welcome_channel</code> je povinný. Pokud je <code>leave_channel</code> prázdný, použije se stejný kanál pro odchodové i uvítací zprávy.</p>
+                            <div class="syntax">Syntaxe: `/welcome set welcome_channel:<#kanál> [leave_channel:<#kanál>]`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat kanály</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="WELCOMELEAVE">
+                    <div class="command-item">
+                        <div class="command-name">/welcome show</div>
+                        <div class="command-description">Zobrazí aktuálně nastavené kanály pro uvítací a odchodové zprávy.</div>
+                        <div class="command-module-tag">Uvítací a odchodové zprávy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Přehled, do jakých kanálů bot zasílá oznámení o příchodech a odchodech.</p>
+                            <div class="syntax">Syntaxe: `/welcome show`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat kanály</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="WELCOMELEAVE">
+                    <div class="command-item">
+                        <div class="command-name">/welcome remove</div>
+                        <div class="command-description">Odstraní veškerá nastavení a deaktivuje uvítací a odchodové zprávy.</div>
+                        <div class="command-module-tag">Uvítací a odchodové zprávy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Deaktivuje obě funkce. Bot již nebude posílat žádné zprávy o příchodech nebo odchodech členů.</p>
+                            <div class="syntax">Syntaxe: `/welcome remove`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat kanály</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="command-group" data-tags="VODOZNAK">
+                    <div class="command-item">
+                        <div class="command-name">/vodoznak</div>
+                        <div class="command-description">Přidá na nahraný obrázek automatický vodoznak (server, autor) a volitelný vlastní text.</div>
+                        <div class="command-module-tag">Vodoznak na obrázky</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Odešle upravený obrázek s vodoznakem v pravém dolním rohu. Volitelný parametr <code>create_thread</code> umožňuje automaticky vytvořit diskuzní vlákno k obrázku.</p>
+                            <div class="syntax">Syntaxe: `/vodoznak image_file:<obrázek> create_thread:<True/False> [custom_text:<vlastní text>]`</div>
+                            <div class="module-link-small">Dostupné pro <strong>všechny uživatele</strong>. Pro vytvoření vlákna vyžaduje bot oprávnění <strong>Spravovat vlákna</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="command-group" data-tags="VOTE">
+                    <div class="command-item">
+                        <div class="command-name">/vote</div>
+                        <div class="command-description">Zahájí hlasování o moderátorské akci (Kick, Ban, Mute, Warn) nebo o vlastní otázce.</div>
+                        <div class="command-module-tag">Modul Hlasování</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Hlasování probíhá pomocí tlačítek ANO/NE. Akce je schválena, pokud získá alespoň <strong>3 hlasy</strong> a <strong>60%</strong> je pro ANO.</p>
+                            <div class="syntax">Syntaxe: `/vote action:<typ_akce> reason:<důvod/otázka> [member:<@uživatel>] [duration:<doba>] [vote_duration:<čas>]`</div>
+                            <ul>
+                                <li><code>action</code>: <code>Kick uživatele</code>, <code>Ban uživatele</code>, <code>Mute uživatele</code>, <code>Varovat uživatele</code>, <code>Vlastní text/otázka</code>.</li>
+                                <li><code>member</code>: Povinné pro moderátorské akce.</li>
+                                <li><code>duration</code>: Povinné pro <code>Mute uživatele</code> (např. <code>30m</code>, <code>1h</code>).</li>
+                                <li><code>vote_duration</code>: Volitelná doba trvání hlasování (výchozí 5 minut).</li>
+                            </ul>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat zprávy</strong>. Pro provedení akce musí mít bot vyšší roli než cílový uživatel.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="command-group" data-tags="XPLEVEL">
+                    <div class="command-item">
+                        <div class="command-name">/xp config</div>
+                        <div class="command-description">Povolí/zakáže XP systém pro server a nastaví kanál pro oznámení o úrovních.</div>
+                        <div class="command-module-tag">XP Systém a Úrovně</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Nastavuje stav XP systému (<code>status:True/False</code>) a volitelný <code>kanal</code>, kam se mají zasílat zprávy o postupu na novou úroveň.</p>
+                            <div class="syntax">Syntaxe: `/xp config status:<True/False> [kanal:<#kanál>]`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat server</strong> (`manage_guild`).</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="XPLEVEL">
+                    <div class="command-item">
+                        <div class="command-name">/xp rank</div>
+                        <div class="command-description">Zobrazí tvou nebo jiného uživatele aktuální úroveň, celkové XP a progresi.</div>
+                        <div class="command-module-tag">XP Systém a Úrovně</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Zobrazí embed s vizuálním progres barem a detaily o úrovni pro tebe (pokud není zadán <code>member</code>) nebo pro jiného uživatele.</p>
+                            <div class="syntax">Syntaxe: `/xp rank [member:<@uživatel>]`</div>
+                            <div class="module-link-small">Dostupné pro <strong>všechny uživatele</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="XPLEVEL">
+                    <div class="command-item">
+                        <div class="command-name">/xp top</div>
+                        <div class="command-description">Zobrazí žebříček top uživatelů s nejvíce XP na serveru.</div>
+                        <div class="command-module-tag">XP Systém a Úrovně</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></span
+                        >
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Leaderboard s top 10 uživateli, s podporou stránek pro snadné procházení.</p>
+                            <div class="syntax">Syntaxe: `/xp top`</div>
+                            <div class="module-link-small">Dostupné pro <strong>všechny uživatele</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="XPLEVEL">
+                    <div class="command-item">
+                        <div class="command-name">/xp pridat_xp</div>
+                        <div class="command-description">Ručně přidá zadané množství XP bodů konkrétnímu uživateli.</div>
+                        <div class="command-module-tag">XP Systém a Úrovně</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Moderátorský příkaz pro přidání <code>mnozstvi</code> XP bodů uživateli. Lze použít k ocenění za speciální aktivitu.</p>
+                            <div class="syntax">Syntaxe: `/xp pridat_xp uzivatel:<@uživatel> mnozstvi:<počet_xp>`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat zprávy</strong> (`manage_messages`).</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="XPLEVEL">
+                    <div class="command-item">
+                        <div class="command-name">/xp nastavit_uroven</div>
+                        <div class="command-description">Ručně nastaví úroveň konkrétnímu uživateli.</div>
+                        <div class="command-module-tag">XP Systém a Úrovně</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Moderátorský příkaz pro nastavení <code>uroven</code> uživateli. Celkové XP body se automaticky přepočítají.</p>
+                            <div class="syntax">Syntaxe: `/xp nastavit_uroven uzivatel:<@uživatel> uroven:<číslo_úrovně>`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat zprávy</strong> (`manage_messages`).</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="command-group" data-tags="ZPOVEDI">
+                    <div class="command-item">
+                        <div class="command-name">/zpoved set</div>
+                        <div class="command-description">Nastaví textový kanál, do kterého se budou posílat anonymní zpovědi.</div>
+                        <div class="command-module-tag">Modul Zpovědi (Admin)</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Určuje cílový kanál, kam budou posílány zprávy od uživatelů z DM. Zprávy jsou odesílány jako Embed.</p>
+                            <div class="syntax">Syntaxe: `/zpoved set channel:<#kanál>`</div>
+                            <div class="module-link-small">Dostupné pouze pro uživatele s oprávněním <strong>Administrátor</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="ZPOVEDI">
+                    <div class="command-item">
+                        <div class="command-name">/send</div>
+                        <div class="command-description">Odešle plně anonymní zpověď do nastaveného kanálu na určeném serveru.</div>
+                        <div class="command-module-tag">Modul Zpovědi (DM)</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Příkaz je nutné použít <strong>v soukromé konverzaci (DM) s botem</strong>! K doručení je nutné zadat <strong>ID serveru</strong>, které získáte aktivací Developer Mode a kliknutím pravým tlačítkem na server.</p>
+                            <div class="syntax">Syntaxe: `/send server_id:<ID_serveru> zpověď:<váš text>`</div>
+                            <div class="module-link-small">Dostupné pro <strong>všechny uživatele</strong> na serveru, kde je bot.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="command-group" data-tags="ZALOHOVANI">
+                    <div class="command-item">
+                        <div class="command-name">/backup save</div>
+                        <div class="command-description">Vytvoří zálohu (šablonu) aktuální struktury serveru (role, kanály, oprávnění).</div>
+                        <div class="command-module-tag">Zálohování a Obnova Serverů</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Uloží strukturu serveru do JSON souboru na hosting. Po dokončení bot vygeneruje <strong>jednorázový ověřovací kód</strong> pro obnovu na jiném serveru. Lze použít pouze jednou za 24 hodin.</p>
+                            <div class="syntax">Syntaxe: `/backup save`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Administrátor</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="ZALOHOVANI">
+                    <div class="command-item">
+                        <div class="command-name">/backup restore</div>
+                        <div class="command-description">Obnoví strukturu serveru z dříve uložené zálohy.</div>
+                        <div class="command-module-tag">Zálohování a Obnova Serverů</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Obnoví všechny kanály a role z uložené šablony. Obnova <strong>přidává</strong>, neodebírá. Pokud server již obsahuje mnoho prvků, je nutné ho před obnovou ručně vyčistit. Kód je nutný pouze pro obnovu na jiném serveru, než kde byla záloha vytvořena.</p>
+                            <div class="syntax">Syntaxe: `/backup restore [code:<ověřovací kód>]`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Administrátor</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="command-group" data-tags="AUTOPUB">
+                    <div class="command-item">
+                        <div class="command-name">/autopublish add</div>
+                        <div class="command-description">Přidá kanál oznámení do seznamu pro automatické zveřejňování.</div>
+                        <div class="command-module-tag">Automatické publikování zpráv z kanálů oznámení</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Přidá vybraný <strong>kanál oznámení</strong> do seznamu automatického publikování. Můžete si zvolit, zda se mají publikovat pouze zprávy od uživatelů, nebo i zprávy od ostatních botů (např. RSS feedy).</p>
+                            <div class="syntax">Syntaxe: `/autopublish add channel:<kanál> publish_bots:<možnost>`</div>
+                            <div class="module-link-small">
+                                <strong>channel:</strong> Vyberte kanál oznámení, který chcete přidat.<br>
+                                <strong>publish_bots (volitelné):</strong> Nastavuje, zda se mají publikovat Všechny zprávy (včetně botů) nebo Pouze zprávy od uživatelů (výchozí).<br>
+                                <strong>Požadovaná práva bota:</strong> Publikovat zprávy / Spravovat kanály.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="AUTOPUB">
+                    <div class="command-item">
+                        <div class="command-name">/autopublish remove</div>
+                        <div class="command-description">Odebere kanál ze seznamu automatického zveřejňování.</div>
+                        <div class="command-module-tag">Automatické publikování zpráv z kanálů oznámení</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Ukončí automatické publikování pro vybraný kanál oznámení. Bot již nebude automaticky zveřejňovat nové zprávy z tohoto kanálu.</p>
+                            <div class="syntax">Syntaxe: `/autopublish remove channel:<kanál>`</div>
+                            <div class="module-link-small">
+                                <strong>channel:</strong> Vyberte kanál, který chcete odebrat.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="AUTOPUB">
+                    <div class="command-item">
+                        <div class="command-name">/autopublish list</div>
+                        <div class="command-description">Zobrazí seznam všech kanálů s aktivním automatickým publikováním.</div>
+                        <div class="command-module-tag">Automatické publikování zpráv z kanálů oznámení</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Vypíše přehled všech kanálů na serveru, které mají aktivní automatické publikování, včetně informace o tom, zda se v nich zveřejňují i zprávy od botů.</p>
+                            <div class="syntax">Syntaxe: `/autopublish list`</div>
+                        </div>
+                    </div>
+                </div>                                           
             </div> 
         </div> 
     </section>

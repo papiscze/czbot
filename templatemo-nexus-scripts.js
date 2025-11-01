@@ -587,7 +587,7 @@ function createTableRow(record) {
     return `
         <tr>
             <td data-label="Datum">${formatDate(record.timestamp)}</td>
-            <td data-label="Uživatel">${userName}</td>
+            <td data-label="Uživatel">${userName} (ID: ${record.user_id || 'N/A'})</td>
             <td data-label="Akce"><span class="action-badge ${actionClass}">${actionDisplay}</span></td>
             <td data-label="Důvod">${reasonText}</td>
             <td data-label="Moderátor">${moderatorName}</td>
@@ -789,4 +789,3 @@ dropdownToggles.forEach(toggle => {
         }
     });
 });
-
