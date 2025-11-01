@@ -587,7 +587,7 @@ function createTableRow(record) {
     return `
         <tr>
             <td data-label="Datum">${formatDate(record.timestamp)}</td>
-            <td data-label="Uživatel">${userName} (ID: ${record.user_id || 'N/A'})</td>
+            <td data-label="Uživatel">${userName}</td>
             <td data-label="Akce"><span class="action-badge ${actionClass}">${actionDisplay}</span></td>
             <td data-label="Důvod">${reasonText}</td>
             <td data-label="Moderátor">${moderatorName}</td>
@@ -628,7 +628,7 @@ function updatePaginationControls(totalRecords, page) {
     const totalPages = Math.ceil(totalRecords / RECORDS_PER_PAGE);
     
     pageStatusSpan.textContent = `Strana ${totalRecords > 0 ? page : 0} z ${totalPages}`;
-    searchCountInfo.textContent = `Celkem nalezeno ${totalRecords} záznamů.`;
+    searchCountInfo.textContent = `Načteno posledních ${totalRecords} záznamů z API.`;
     
     prevPageBtn.classList.toggle('disabled-btn', page <= 1);
     prevPageBtn.disabled = page <= 1;
