@@ -3,354 +3,251 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CZbot - Status Bota</title>
-    <link href="templatemo-nexus-style.css" rel="stylesheet"> 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>CZBOT - Statistiky Bota</title>
     
-    <style>
-/* ==================================== */
-/* DROPDOWN MENU STYLY (přesunuto z index.html) */
-/* ==================================== */
+    <link href="templatemo-nexus-style.css" rel="stylesheet">
+    <link href="module-styles.css" rel="stylesheet"> 
+    
+    </head>
+<body id="top"> 
 
-:root {
-    /* Předpokládám, že tyto proměnné jsou definovány v templatemo-nexus-style.css nebo přímo zde */
-    --color-text-light: #f0f0f0;
-    --color-primary: #00ffff;
-    --color-border: #006666;
-    --color-input-bg: rgba(255, 255, 255, 0.05);
-}
-
-.dropdown-link {
-    position: relative;
-    display: inline-block;
-}
-.dropbtn {
-    padding: 10px 15px;
-    background-color: transparent;
-    color: var(--color-text-light);
-    text-decoration: none;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: color 0.3s;
-}
-.dropbtn:hover {
-    color: var(--color-primary);
-}
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: rgba(30, 30, 50, 0.95);
-    min-width: 200px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
-    z-index: 1000;
-    border: 1px solid var(--color-border);
-    border-radius: 6px;
-    padding: 5px 0;
-    backdrop-filter: blur(5px);
-    top: 100%;
-    left: 0;
-}
-.dropdown-content a {
-    color: var(--color-text-light);
-    padding: 10px 16px;
-    text-decoration: none;
-    display: block;
-    font-size: 0.95rem;
-    transition: background-color 0.3s, color 0.3s;
-}
-.dropdown-content a:hover {
-    background-color: var(--color-input-bg);
-    color: var(--color-primary);
-}
-/* Zajištění, že se na desktopu otevře při hoveru */
-@media (min-width: 993px) {
-    .dropdown-link:hover .dropdown-content {
-        display: block;
-    }
-}
-
-
-/* ==================================== */
-/* OPRAVA MOBILNÍHO ZOBRAZENÍ */
-/* ==================================== */
-
-@media (max-width: 992px) {
-    /* V mobilním menu se dropdowncontent řídí JavaScriptem */
-    /* POZN: třída 'mobile-menu' zde není potřeba, protože menu je ovládané třídou 'nav-active' na body */
-
-    /* POUZE PRO MOBILNÍ ZOBRAZENÍ: zobrazení dropdownu, když je aktivní třída 'open' */
-    .dropdown-link.open .dropdown-content {
-        display: block; /* Zobrazení podmenu po kliknutí, řízené JS */
-        position: static;
-        box-shadow: none;
-        border: none;
-        padding: 0;
-        background-color: transparent;
-    }
-
-    .dropdown-link .dropdown-content a {
-        padding-left: 40px; /* Odsazení pododkazů */
-    }
-    .dropdown-link .dropbtn {
-        width: 100%; /* Aby bylo tlačítko klikatelné po celé šířce */
-        display: block;
-        text-align: left;
-    }
-}
-/* ==================================== */
-/* SPECIÁLNÍ STYLY PRO STATUS STRÁNKU */
-/* ==================================== */
-
-/* Zajištění místa pod navigací a základní padding */
-.status-section {
-    padding-top: 150px; 
-    padding-bottom: 80px;
-    min-height: 100vh;
-}
-
-.status-container {
-    max-width: 1000px;
-    margin: auto;
-    padding: 0 20px;
-}
-
-/* Sekce hlavičky, používá cyber-style */
-.section-header {
-    text-align: center;
-    margin-bottom: 40px;
-}
-
-.section-title {
-    font-size: 3rem;
-    color: var(--color-primary, #64c8ff); /* Zajištění fallback barvy */
-    margin-bottom: 10px;
-    text-shadow: 0 0 10px rgba(100, 200, 255, 0.5);
-}
-
-.section-subtitle {
-    color: #aaa;
-    font-size: 1.1rem;
-}
-
-/* Box se statistikami a cogs (inspirováno původním stylem) */
-.stats-box {
-    background-color: rgba(10, 10, 20, 0.7);
-    border: 1px solid rgba(100, 200, 255, 0.1);
-    border-radius: 12px;
-    padding: 32px;
-    margin-bottom: 30px;
-    box-shadow: 0 0 15px rgba(100, 200, 255, 0.1);
-}
-
-/* Flex kontejner pro dvě sloupce (Statistiky a Cogs) */
-.status-grid {
-    display: grid;
-    grid-template-columns: 1fr 2fr; /* Statistiky: 1 díl, Cogs: 2 díly */
-    gap: 30px;
-}
-
-@media (max-width: 900px) {
-    .status-grid {
-        grid-template-columns: 1fr; /* Pod sebou na menších obrazovkách */
-    }
-}
-
-.column-title {
-    color: var(--color-secondary, #fff);
-    font-size: 1.8rem;
-    margin-top: 0;
-    padding-bottom: 10px;
-    border-bottom: 1px solid rgba(100, 200, 255, 0.1);
-    margin-bottom: 20px;
-}
-
-/* Styl pro položky seznamu (List Items) */
-.status-list, .cogs-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.status-list li, .cogs-list li {
-    display: flex;
-    justify-content: space-between;
-    background-color: rgba(100, 200, 255, 0.05); /* Lehké pozadí pro řádek */
-    padding: 10px 15px;
-    margin-bottom: 8px;
-    border-radius: 6px;
-    transition: background-color 0.2s;
-}
-
-.status-list li:hover, .cogs-list li:hover {
-    background-color: rgba(100, 200, 255, 0.1);
-}
-
-.label {
-    font-weight: 600;
-    color: #ddd;
-}
-
-.value {
-    font-weight: 400;
-    text-align: right;
-}
-
-/* Styly pro barvy statusů */
-.status-online, .status-ok { 
-    color: #48bb78; /* Zelená */
-    font-weight: bold;
-}
-.status-offline, .status-err { 
-    color: #f56565; /* Červená */
-    font-weight: bold;
-}
-.status-offline-cog { 
-    color: #f56565; /* Červená */
-    font-weight: bold;
-}
-
-/* Varovný box */
-.warn-box {
-    background: #dd6b20; /* oranžová */
-    color: #fff;
-    padding: 14px 18px;
-    border-radius: 8px;
-    font-weight: 600;
-    text-align: center;
-    margin-bottom: 25px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    border: 2px solid #ff914d;
-}
-    </style>
-</head>
-<body id="top">
     <div class="cyber-bg">
         <div class="cyber-gradient"></div>
         <div class="matrix-rain" id="matrixRain"></div>
     </div>
-    <div class="particles" id="particlesContainer"></div>
-    <div class="data-streams" id="dataStreams"></div>
-    <div class="orb orb1"></div>
-    <div class="orb orb2"></div>
-    <div class="orb orb3"></div>
-    <div class="grid-overlay">
-        <div class="grid-lines"></div>
-        <div class="grid-glow"></div>
-        </div>
     <div class="scanlines"></div>
     <div class="noise-overlay"></div>
-
     <nav>
         <div class="nav-container">
-            <a href="index.html" class="logo">CZbot</a> 
+            <a href="../index.html" class="logo">CZbot</a>
+            
             <ul class="nav-links">
-                <li class="dropdown-link">
-                    <a href="#" class="dropbtn">Funkce ▼</a>                     <div class="dropdown-content">
-                        <a href="crongenerator.html">CRON Generator</a>
-                        <a href="embedgenerator.html">Embed Generator</a>
-                        <a href="stats.html">Status bota</a> 
-                    </div>
+                <li><a href="../commands.html">Příkazy</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Moduly ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="auditlogger.html">Auditlogger</a></li>
+                        <li><a href="audio_stream.html">Audio Stream</a></li>
+                        <li><a href="autopublish.html">Automatické publikování zpráv z kanálů oznámení</a></li>
+                        <li><a href="autorole.html">Autorole, Ověřování uživatelů a Reakční role</a></li>
+                        <li><a href="basic_user_commands.html">Běžné uživatelské a zábavné příkazy</a></li>
+                        <li><a href="basic_mod_commands.html">Běžné moderátorské příkazy</a></li>
+                        <li class="active"><a href="bot_localization.html">Bot localization and Language Settings</a></li>
+                        <li><a href="crossban.html">Crossban</a></li>
+                        <li><a href="temp_voice.html">Dočasné hlasové kanály</a></li>
+                        <li><a href="giveaway.html">Giveaway(e)</a></li>
+                        <li><a href="birthdays.html">Narozeniny</a></li>
+                        <li><a href="patreon.html">Patreon</a></li>
+                        <li><a href="counting.html">Počítání</a></li>
+                        <li><a href="advanced_schedules.html">Pokročilé plánované zprávy</a></li>
+                        <li><a href="reactions.html">Reakce smajlíky na zprávy</a></li>
+                        <li><a href="reputation.html">Reputace</a></li>
+                        <li><a href="rss_reader.html">RSS Čtečka</a></li>
+                        <li><a href="scam_prevence.html">Scam Prevence</a></li>
+                        <li><a href="schedules.html">Schedules ‐ Plánované zprávy</a></li>
+                        <li><a href="stats.html">Statistiky serveru</a></li>
+                        <li><a href="holidays.html">Svátky (CZ SK)</a></li>
+                        <li><a href="feedback.html">Systém zpětné vazby a návrhů</a></li>
+                        <li><a href="tickets.html">Tikety</a></li>
+                        <li><a href="translate.html">Translate modul</a></li>
+                        <li><a href="threads.html">Tvorba vláken na zprávy</a></li>
+                        <li><a href="welcome_leave.html">Uvítací a odchodové zprávy (Welcome Leave)</a></li>
+                        <li><a href="vote.html">Vote ‐ Hlasování</a></li>
+                        <li><a href="watermark.html">Vodoznak s vlastním textem na obrázky</a></li>
+                        <li><a href="xp.html">XP systém a úrovně</a></li>
+                        <li><a href="backup.html">Zálohování a Obnova Serverů</a></li>
+                        <li><a href="confessions.html">Zpovědi (Anonymní Zprávy)</a></li>
+                    </ul>
                 </li>
-                
-                <li><a href="commands.html">Příkazy</a></li>
-                <li><a href="warns.html">Moderátorské záznamy</a></li> 
-                <li><a href="https://rs422cznas.myds.me:5038/stats/">Webové statistiky serverů</a></li>
-                <li><a href="https://discord.gg/hk6PdtVxbm" target="_blank">Support server</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Nástroje ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../crongenerator.html">Cron Generátor</a></li>
+                        <li><a href="../embedgenerator.html">Embed Generátor</a></li>
+                        <li><a href="https://github.com/users/papiscze/projects/9">Roadmapa</a></li>
+                        <li><a href="../stats.html">Statistiky bota</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="../warns.html">Moderátorské záznamy</a></li>
+                <li><a href="https://rs422cznas.myds.me:5038/stats/">Statistiky serveru</a></li>
+                <li><a href="../privacy.html">GDPR / ToS</a></li>
             </ul>
+
             <div class="nav-bottom">
-                <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Přidat na server</a>
+                <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Pozvat bota</a>
             </div>
+
             <button class="mobile-menu-button" id="mobileMenuBtn">
                 <div class="hamburger">
-                    <span></span><span></span><span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </div>
             </button>
         </div>
     </nav>
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
     
-        <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
     <div class="mobile-menu" id="mobileMenu">
         <div class="mobile-menu-header">
-            <a href="index.html" class="mobile-menu-logo">CZbot</a>
+            <a href="../index.html" class="mobile-menu-logo">CZbot</a>
             <button class="mobile-menu-close" id="mobileMenuClose">✕</button>
         </div>
         <div class="mobile-menu-cta">
-            <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Přidat na server</a>
+            <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Přidat bota</a>
         </div>
         <nav class="mobile-menu-nav">
             <ul>
-                                <li class="dropdown-link">
-                    <a href="#" class="dropbtn">Funkce ▼</a>
-                    <div class="dropdown-content">
-                        <a href="crongenerator.html">CRON Generator</a>
-                        <a href="embedgenerator.html">Embed Generator</a>
-                        <a href="stats.html">Status bota</a>                        
-                    </div>
+                <li><a href="../commands.html">Příkazy</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Nástroje ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../crongenerator.html">Cron Generátor</a></li>
+                        <li><a href="../embedgenerator.html">Embed Generátor</a></li>
+                        <li><a href="https://github.com/users/papiscze/projects/9">Roadmapa</a></li>
+                        <li><a href="../stats.html">Statistiky bota</a></li>
+                    </ul>
                 </li>
-                <li><a href="commands.html">Příkazy</a></li>
-                <li><a href="warns.html">Moderátorské záznamy</a></li> 
-                <li><a href="https://rs422cznas.myds.me:5038/stats/" target="_blank">Webové statistiky serverů</a></li>
-                <li><a href="https://discord.gg/hk6PdtVxbm" target="_blank">Support server</a></li>
+
+                <li><a href="../warns.html">Moderátorské záznamy</a></li>
+                <li><a href="https://rs422cznas.myds.me:5038/stats/">Statistiky serveru</a></li>
+                <li><a href="../privacy.html">GDPR / ToS</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Moduly ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="auditlogger.html">Auditlogger</a></li>
+                        <li><a href="audio_stream.html">Audio Stream</a></li>
+                        <li><a href="autopublish.html">Automatické publikování zpráv z kanálů oznámení</a></li>
+                        <li><a href="autorole.html">Autorole, Ověřování uživatelů a Reakční role</a></li>
+                        <li><a href="basic_user_commands.html">Běžné uživatelské a zábavné příkazy</a></li>
+                        <li><a href="basic_mod_commands.html">Běžné moderátorské příkazy</a></li>
+                        <li><a href="bot_localization.html">Bot localization and Language Settings</a></li>
+                        <li><a href="crossban.html">Crossban</a></li>
+                        <li><a href="temp_voice.html">Dočasné hlasové kanály</a></li>
+                        <li><a href="giveaway.html">Giveaway(e)</a></li>
+                        <li><a href="birthdays.html">Narozeniny</a></li>
+                        <li><a href="patreon.html">Patreon</a></li>
+                        <li><a href="counting.html">Počítání</a></li>
+                        <li><a href="advanced_schedules.html">Pokročilé plánované zprávy</a></li>
+                        <li><a href="reactions.html">Reakce smajlíky na zprávy</a></li>
+                        <li><a href="reputation.html">Reputace</a></li>
+                        <li><a href="rss_reader.html">RSS Čtečka</a></li>
+                        <li><a href="scam_prevence.html">Scam Prevence</a></li>
+                        <li><a href="schedules.html">Schedules ‐ Plánované zprávy</a></li>
+                        <li><a href="stats.html">Statistiky serveru</a></li>
+                        <li><a href="holidays.html">Svátky (CZ SK)</a></li>
+                        <li><a href="feedback.html">Systém zpětné vazby a návrhů</a></li>
+                        <li><a href="tickets.html">Tikety</a></li>
+                        <li><a href="translate.html">Translate modul</a></li>
+                        <li><a href="threads.html">Tvorba vláken na zprávy</a></li>
+                        <li><a href="welcome_leave.html">Uvítací a odchodové zprávy (Welcome Leave)</a></li>
+                        <li><a href="vote.html">Vote ‐ Hlasování</a></li>
+                        <li><a href="watermark.html">Vodoznak s vlastním textem na obrázky</a></li>
+                        <li><a href="xp.html">XP systém a úrovně</a></li>
+                        <li><a href="backup.html">Zálohování a Obnova Serverů</a></li>
+                        <li><a href="confessions.html">Zpovědi (Anonymní Zprávy)</a></li>
+                    </ul>
+                </li>           
             </ul>
         </nav>
     </div>
-        
-    <section class="status-section">
-        <div class="status-container">
-            <div class="section-header">
-                <h1 class="section-title">Status Systémů</h1>
-                <p class="section-subtitle">Živá data o stavu CZBota, API a všech modulů (Cogs).</p>
+    </nav>
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        </div>
+    <div class="content-section">
+        <div class="content-container">
+
+            <h1 class="page-title">Statistiky a Status Bota</h1>
+            <p class="page-subtitle">Aktuální přehled provozu a výkonu Discord Bota <strong>CZbot.</strong></p>
+
+            <div class="warn-box" id="warnBox" style="display:none;"></div> 
+
+            <div class="stats-grid">
+                
+                <div class="stat-card">
+                    <h4>Status Bota</h4>
+                    <span class="value" id="statStatus">Načítám...</span> 
+                </div>
+
+                <div class="stat-card">
+                    <h4>Počet Serverů</h4>
+                    <span class="value" id="statServers">Načítám...</span>
+                </div>
+                
+                <div class="stat-card">
+                    <h4>Uptime</h4>
+                    <span class="value" id="statUptime">Načítám...</span>
+                </div>
+                
+                <div class="stat-card">
+                    <h4>Využití CPU</h4>
+                    <span class="value" id="statCPU">Načítám...</span>
+                </div>
+
+                <div class="stat-card">
+                    <h4>Využití RAM</h4>
+                    <span class="value" id="statRAM">Načítám...</span>
+                </div>
+                
+                <div class="stat-card">
+                    <h4>API a DB Status</h4>
+                    <span class="value" id="statAPI">Načítám...</span> 
+                </div>
+                
+            </div>
+
+            <div class="chart-container">
+                <h3>Stav Modulů (Cogs)</h3>
+                <ul class="cogs-list" id="cogsList">
+                    <li>Načítám moduly...</li> 
+                </ul>
             </div>
             
-            <div id="warnBox" style="display:none;"></div>
-
-            <div class="stats-box">
-                <div class="status-grid">
-                    
-                    <div>
-                        <h2 class="column-title">Základní Statistiky</h2>
-                        <ul id="statusList" class="status-list">
-                            <li>Načítám data...</li>
-                        </ul>
-                    </div>
-
-                    <div>
-                        <h2 class="column-title">Stav Modulů (Cogs)</h2>
-                        <ul id="cogsList" class="cogs-list">
-                            <li>Načítám moduly...</li>
-                        </ul>
-                    </div>
-
-                </div>
+            <div class="chart-container">
+                <h3>Historie Ping a Využití (Placeholder)</h3>
+                <p>Dynamické grafy budou implementovány později. Zde se budou zobrazovat historické metriky.</p>
+                <canvas id="pingChart" width="400" height="150" aria-label="Graf historie ping"></canvas>
             </div>
             
         </div>
-    </section>
-
+    </div>
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-links">
-                <a href="https://github.com/papiscze/czbot" target="_blank">GitHub</a>
+                <a href="https://github.com/papiscze/czbot">GitHub</a>
                 <span class="footer-separator">•</span>
-                <a href="https://discord.gg/hk6PdtVxbm" target="_blank">Support server</a>
+                <a href="https://discord.gg/hk6PdtVxbm">Support Server</a>
                 <span class="footer-separator">•</span>
-                <a href="index.html#features">Funkce</a>
+                <a href="https://github.com/papiscze/czbot/wiki">GitHub dokumentace</a>
+                <span class="footer-separator">•</span>
+                <a href="mailto:admin@ofpmafia.eu">Kontakt</a>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 CZbot. Všechna práva vyhrazena.</p>
-                <p class="footer-credit">Šablona inspirována <a href="https://templatemo.com/tm-594-nexus-flow" target="_blank" rel="noopener nofollow">TemplateMo Nexus Flow</a></p>
+                <p>&copy; 2025 CZbot. Verze webu 1.0. Všechna práva vyhrazena</p>
+                <p class="footer-credit">Šablona inspirována <a href="https://templatemo.com" target="_blank" rel="noopener nofollow">TemplateMo</a></p>
             </div>
         </div>
     </footer>
 
-    <script src="templatemo-nexus-scripts.js"></script> 
+    <script src="templatemo-nexus-scripts.js"></script>
+    
     <script>
-
         const cogs_to_load = ["Audio Streaming","Administrátorský cog","Administrátorský 2 cog","Crossban","Pokročilé plánované zprávy","Auditlogger","Automatické publikace zpráv","Automatické role","Dočasné hlasové kanály","Giveaway","Hlasování","Kolo štěstí","Lokalizace","Moderátorské příkazy","Narozeniny","Ověřování a Reakční role","Patreon","Počítání","Podcasty","Překlad","RAID ochrana","Reputace","RSS čtečka", "Zálohování serverů", "Plánované zprávy","Scam ochrana","Statistiky","Svátky","Tikety","Uvítací/odchodové zprávy","Uživatelské příkazy","Vlákna a reakce na zprávy","Vodoznaky","XP úrovně","AI cog", "Zpovědi"];
 
         async function fetchStatus() {
-            // ... kód pro fetchStatus zůstává beze změny ...
-            const statusList = document.getElementById("statusList");
+            // Získání elementů z HTML
+            const statStatus = document.getElementById("statStatus");
+            const statServers = document.getElementById("statServers");
+            const statUptime = document.getElementById("statUptime");
+            const statCPU = document.getElementById("statCPU");
+            const statRAM = document.getElementById("statRAM");
+            const statAPI = document.getElementById("statAPI");
             const cogsList = document.getElementById("cogsList");
             const warnBox = document.getElementById("warnBox");
 
@@ -359,21 +256,23 @@
 
             // zobrazení nebo skrytí varovného boxu
             if (warn_message && warn_message.trim() !== "") {
-                warnBox.textContent = warn_message;
-                warnBox.classList.add("warn-box");
+                warnBox.textContent = "🚨 UPOZORNĚNÍ: " + warn_message; // Přidáme kybernetický prefix
+                warnBox.classList.add("warn-box-active"); 
                 warnBox.style.display = "block";
             } else {
+                warnBox.classList.remove("warn-box-active");
                 warnBox.style.display = "none";
             }
 
-            statusList.innerHTML="<li>Načítám data...</li>";
+            // Nastavení počátečních hodnot při načítání
+            [statStatus, statServers, statUptime, statCPU, statRAM, statAPI].forEach(el => el.textContent = "Načítám...");
             cogsList.innerHTML="<li>Načítám moduly...</li>";
 
-            // OPRAVENÁ FUNKCE addItem
-            function addItem(label, value, unit="", cls=""){ 
+            // Pomocná funkce pro vytvoření položky Cogs
+            function addCogItem(name, status, cls=""){ 
                 const li = document.createElement("li"); 
-                // Zde je oprava: Používáme span tagy pro label a value s příslušnými třídami
-                li.innerHTML = `<span class="label">${label}</span><span class="value ${cls}">${value} ${unit}</span>`; 
+                // Stylizace pro seznam modulů
+                li.innerHTML = `<span class="cog-label">${name}</span><span class="cog-value ${cls}">${status}</span>`; 
                 return li;
             }
 
@@ -382,138 +281,66 @@
                 const data = await res.json();
 
                 const uptime_sec = data.uptime_seconds || 0;
+                const hours = Math.floor(uptime_sec/3600);
+                const minutes = Math.floor((uptime_sec%3600)/60);
+                const seconds = Math.floor(uptime_sec%60);
+                const uptime_str = `${hours}h ${minutes}m ${seconds}s`;
                 
-                const days = Math.floor(uptime_sec / 86400);
-                const hours = Math.floor((uptime_sec % 86400) / 3600);
-                const minutes = Math.floor((uptime_sec % 3600) / 60);
-                const seconds = Math.floor(uptime_sec % 60);
+                // 1. Vložení dat do karet
+                // Status bota
+                statStatus.textContent = data.bot_status.toUpperCase();
+                statStatus.className = data.bot_status === "online" ? "value status-online" : "value status-offline";
                 
-                let uptime_str = '';
-                if (days > 0) uptime_str += `${days}d `;
-                if (hours > 0 || days > 0) uptime_str += `${hours}h `;
-                uptime_str += `${minutes}m ${seconds}s`;
+                // Ostatní metriky
+                statServers.textContent = data.guilds.toLocaleString('cs-CZ');
+                statUptime.textContent = uptime_str;
+                statCPU.textContent = `${data.cpu_percent} %`;
+                statRAM.textContent = `${data.ram_mb} MB`;
+                
+                // API a DB status
+                statAPI.textContent = data.api_db_status === "OK" ? "OK" : "PROBLÉM";
+                statAPI.className = data.api_db_status === "OK" ? "value status-ok" : "value status-err";
 
-
-                statusList.innerHTML="";
-                statusList.appendChild(addItem("Bot status", data.bot_status, "", data.bot_status==="online"?"status-online":"status-offline-cog"));
-                statusList.appendChild(addItem("Uptime", uptime_str));
-                statusList.appendChild(addItem("Počet serverů", data.guilds.toLocaleString()));
-                statusList.appendChild(addItem(new Intl.NumberFormat('cs-CZ').format(data.users), "Počet uživatelů"));
-                statusList.appendChild(addItem("CPU využití", data.cpu_percent, "%"));
-                statusList.appendChild(addItem("RAM využití", data.ram_mb.toFixed(2), "MB"));
-                statusList.appendChild(addItem("API Status", data.api_db_status, "", data.api_db_status==="OK"?"status-ok":"status-offline-cog"));        
-                statusList.appendChild(addItem("Databáze Status", data.api_db_status, "", data.api_db_status==="OK"?"status-ok":"status-offline-cog"));
-
+                // 2. Vložení stavu modulů (Cogs)
                 cogsList.innerHTML="";
-                
                 const sortedCogs = Object.entries(data.cogs).sort((a,b) => a[0].localeCompare(b[0], 'cs'));
                 
-                const receivedCogs = new Set(Object.keys(data.cogs));
-                const allCogs = new Map(sortedCogs);
-
-                cogs_to_load.forEach(cogName => {
-                    if (!receivedCogs.has(cogName)) {
-                        allCogs.set(cogName, "Nedostupné");
-                    }
-                });
-                
-                const finalSortedCogs = Array.from(allCogs).sort((a,b) => a[0].localeCompare(b[0], 'cs'));
-
-
-                for(const [name,status] of finalSortedCogs){
+                for(const [name,status] of sortedCogs){
                     let cls="";
-                    let displayStatus = status;
-
                     if(status==="Funkční") cls="status-ok";
-                    else if(status.toLowerCase().includes("error") || status.toLowerCase().includes("chyba") || status.toLowerCase().includes("nedostupné")) {
-                        cls="status-err";
-                        if (displayStatus === "Nedostupné") displayStatus = "Offline"; 
-                    }
-                    else cls="status-offline-cog";
+                    else if(status.toLowerCase().includes("chyba") || status.toLowerCase().includes("error") || status.toLowerCase().includes("offline")) cls="status-err";
+                    else cls="status-warn"; // Pro jiné stavy
                     
-                    cogsList.appendChild(addItem(name,displayStatus,"",cls));
+                    cogsList.appendChild(addCogItem(name, status, cls));
                 }
+                
             } catch(err){
-                // Zpracování chyby při nedostupnosti API
-                statusList.innerHTML="";
-                statusList.appendChild(addItem("Bot status","Offline","", "status-offline-cog"));
-                statusList.appendChild(addItem("Uptime","-"));
-                statusList.appendChild(addItem("Počet serverů","-"));
-                statusList.appendChild(addItem("Počet uživatelů","-"));
-                statusList.appendChild(addItem("CPU využití","-","%"));
-                statusList.appendChild(addItem("RAM využití","-","MB"));
-                statusList.appendChild(addItem("API Status","Nedostupná","", "status-offline-cog"));
-                statusList.appendChild(addItem("Databáze Status","Nedostupná","", "status-offline-cog"));
-
+                // 3. Zpracování chyby
+                console.error("Chyba při načítání statusu API:", err);
+                
+                // Nastavení chybových hodnot pro karty
+                statStatus.textContent = "OFFLINE";
+                statStatus.className = "value status-err"; 
+                statServers.textContent = "-";
+                statUptime.textContent = "-";
+                statCPU.textContent = "- %";
+                statRAM.textContent = "- MB";
+                statAPI.textContent = "NEDOSTUPNÉ";
+                statAPI.className = "value status-err";
+                
+                // Nastavení chybových hodnot pro Cogs
                 cogsList.innerHTML="";
-                cogs_to_load.sort((a,b) => a.localeCompare(b, 'cs')).forEach(label => {
-                    cogsList.appendChild(addItem(label,"Offline","", "status-offline-cog"));
+                cogs_to_load.forEach(label => {
+                    cogsList.appendChild(addCogItem(label, "Nedostupné", "status-err"));
                 });
             }
         }
 
+        // Spuštění načítání statusu
         fetchStatus();
-        // Nastavit automatické obnovování statusu každých 30 sekund
-        setInterval(fetchStatus, 30000); 
+        // Nastavení automatického refresh 
+        setInterval(fetchStatus, 30000); // Obnoví data každých 30 sekund
     </script>
 
-    <script>
-        // ZAJISTI FUNKČNOST NAVIGACE (MOBILNÍ A DROPDOWN)
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const mobileMenu = document.getElementById('mobileMenu'); // Přidáno pro získání reference na mobilní menu
-        const body = document.body;
-
-        // 1. Logika pro Mobilní menu (Hamburger)
-        if (mobileMenuBtn) {
-            mobileMenuBtn.addEventListener('click', () => {
-                // Přidá/Odebere třídu pro zobrazení/skrytí menu v mobilu (záleží na CSS definovaném v templatemo-nexus-style.css)
-                body.classList.toggle('nav-active');
-            });
-        }
-        
-        // ZAVÍRACÍ TLAČÍTKO - aby šlo menu zavřít i ručně (přidáno)
-        const mobileMenuClose = document.getElementById('mobileMenuClose');
-        if (mobileMenuClose) {
-            mobileMenuClose.addEventListener('click', () => {
-                 body.classList.remove('nav-active');
-            });
-        }
-
-
-        // 2. Logika pro Dropdown na mobilu (aby se rozbalil na kliknutí)
-        const dropdownButtons = document.querySelectorAll('.dropdown-link > .dropbtn');
-        dropdownButtons.forEach(button => {
-            button.addEventListener('click', (e) => {
-                // Zabraň výchozí akci, protože odkaz má #
-                e.preventDefault(); 
-                
-                const parentLi = button.closest('.dropdown-link');
-                
-                // Přepíná třídu 'open' pro zobrazení/skrytí dropdownu
-                parentLi.classList.toggle('open');
-            });
-        });
-        
-        // 3. 🚨 CHYBĚJÍCÍ KÓD: Automatické zavření menu po kliknutí na odkaz 🚨
-        const mobileLinks = document.querySelectorAll('.mobile-menu-nav a'); // Zacílení na odkazy v mobilní navigaci
-
-        mobileLinks.forEach(link => {
-            // Použijeme click listener na všechny odkazy v mobilním menu
-            link.addEventListener('click', () => {
-                // Zavře celé mobilní menu odebráním třídy 'nav-active' z <body>
-                // Použití setTimeout s malou prodlevou (100ms) pomáhá s plynulostí
-                setTimeout(() => {
-                    body.classList.remove('nav-active');
-                }, 100);
-
-                // Zavře i případné rozbalené dropdowny (i když to zavření menu už není nutné)
-                const openDropdowns = document.querySelectorAll('.dropdown-link.open');
-                openDropdowns.forEach(dropdown => {
-                    dropdown.classList.remove('open');
-                });
-            });
-        });
-
-    </script>
 </body>
 </html>

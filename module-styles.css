@@ -1,0 +1,227 @@
+.command-details {
+    display: block !important;
+    overflow: visible !important;
+    padding-top: 5px !important; 
+    padding-bottom: 5px !important;
+    max-height: none !important; 
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+.command-details, 
+.command-details * {
+    color: #FFFFFF !important;
+    text-shadow: none !important;
+    box-sizing: border-box !important;
+    line-height: 1.5;
+}
+.is-hidden {
+    display: none !important;
+}
+.content-section .content-container {
+    max-width: 1000px; 
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box; 
+}
+.module-page .page-title {
+    font-size: 3em;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--color-neon-blue, #0099ff);
+    text-shadow: 0 0 10px rgba(0, 150, 255, 0.8), 0 0 20px rgba(0, 150, 255, 0.5);
+    text-align: center;
+}
+.module-page .page-subtitle {
+    font-size: 1.2em;
+    color: var(--color-off-white, #cccccc);
+    opacity: 0.8;
+    margin-top: 10px;
+    margin-bottom: 40px;
+    text-align: center;
+}
+.module-divider {
+    border: none;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--color-neon-purple, #9932cc), transparent);
+    margin: 40px 0;
+    opacity: 0.5;
+}
+.module-intro-box {
+    background-color: rgba(18, 5, 42, 0.2); 
+    border: 1px solid var(--color-neon-purple, #9932cc);
+    padding: 25px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(153, 50, 204, 0.2);
+    backdrop-filter: blur(2px);
+}
+.module-intro-box p {
+    color: var(--color-off-white, #ffffff); 
+    line-height: 1.6;
+    font-size: 1.1em;
+}
+.module-heading {
+    color: var(--color-neon-blue, #00ffff);
+    margin-top: 40px;
+    margin-bottom: 15px;
+    text-shadow: 0 0 5px rgba(0, 255, 255, 0.6);
+    font-size: 1.8em;
+    border-bottom: 1px dashed rgba(0, 255, 255, 0.3);
+    padding-bottom: 5px;
+}
+.command-box {
+    background-color: transparent; 
+    border: 1px solid var(--color-neon-purple, #9932cc);
+    border-left: 5px solid var(--color-neon-blue, #0099ff);
+    padding: 20px 25px;
+    margin: 20px 0;
+    border-radius: 6px;
+    box-shadow: 0 0 10px rgba(153, 50, 204, 0.2);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.command-box:hover {
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.3), 0 0 10px rgba(153, 50, 204, 0.6);
+    transform: translateY(-2px);
+}
+.command-title {
+    color: var(--color-neon-yellow, #ffff00);
+    font-size: 1.4em;
+    font-weight: bold;
+    margin-bottom: 5px;
+    text-shadow: 0 0 5px rgba(255, 255, 0, 0.5);
+}
+.command-detail-row {
+    display: flex;
+    margin-bottom: 10px !important; 
+    align-items: flex-start;
+    min-height: 30px; 
+    padding: 4px 0 !important;
+}
+.command-label {
+    font-weight: bold;
+    color: var(--color-neon-purple, #ff00ff) !important; 
+    min-width: 120px; 
+    margin-right: 15px;
+    flex-shrink: 0;
+    padding-top: 2px; 
+}
+.command-detail-row > span {
+    color: #ffffff !important; 
+    line-height: 1.5;
+}
+.command-code,
+.command-code-example {
+    padding: 6px 6px !important; 
+    line-height: 0.8 !important; 
+    display: inline-flex; 
+    align-items: center; 
+    white-space: nowrap;
+    border-radius: 3px;
+    font-size: 0.95em;
+    font-family: monospace, sans-serif;
+}
+.command-code {
+    background-color: rgba(0, 150, 255, 0.15); 
+    color: var(--color-neon-blue, #00ffff) !important;
+    border: 1px solid rgba(0, 150, 255, 0.4);
+}
+.command-code-example {
+    background-color: rgba(255, 255, 0, 0.1);
+    color: var(--color-neon-yellow, #ffff00) !important;
+    border: 1px solid rgba(255, 255, 0, 0.4);
+}
+.command-response {
+    color: var(--color-neon-green, #00ff00) !important;
+    font-style: italic;
+    font-size: 0.9em;
+    padding-left: 10px;
+}
+.language-documentation-switch {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+    gap: 15px;
+}
+.lang-button {
+    background-color: rgba(30, 0, 50, 0.8);
+    color: var(--color-off-white, #cccccc);
+    border: 1px solid var(--color-neon-purple, #9932cc);
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+}
+.lang-button:hover {
+    background-color: rgba(60, 0, 100, 0.8);
+}
+.lang-button.active {
+    background-color: var(--color-neon-blue, #0099ff);
+    color: var(--color-dark-bg, #111111);
+    border-color: var(--color-neon-blue, #0099ff);
+    box-shadow: 0 0 10px var(--color-neon-blue, #0099ff);
+    font-weight: bold;
+}
+.documentation-group.is-hidden {
+    display: none;
+}
+
+/* --- Styly pro tabulky v dokumentaci modulů --- */
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse; /* Odstraní mezery mezi buňkami */
+    margin: 25px 0;
+    font-size: 1em;
+    text-align: left;
+    background-color: rgba(18, 5, 42, 0.4); /* Lehce tmavší pozadí pro tabulku */
+    border: 1px solid var(--color-neon-purple, #9932cc);
+    box-shadow: 0 0 10px rgba(153, 50, 204, 0.2);
+    border-radius: 6px; /* Jemné zaoblení */
+    overflow: hidden; /* Důležité pro zaoblení */
+}
+
+.data-table th, 
+.data-table td {
+    padding: 12px 15px;
+    color: var(--color-off-white, #ffffff);
+    border: 1px solid rgba(153, 50, 204, 0.3); /* Jemné oddělovače */
+}
+
+.data-table thead th {
+    /* Záhlaví tabulky */
+    background-color: var(--color-dark-bg, #1f1f1f); 
+    color: var(--color-neon-blue, #00ffff);
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid var(--color-neon-blue, #0099ff);
+    text-shadow: 0 0 3px rgba(0, 255, 255, 0.5);
+}
+
+.data-table tbody tr {
+    transition: background-color 0.3s;
+}
+
+.data-table tbody tr:nth-child(even) {
+    /* Střídavé barvy pro lepší čitelnost */
+    background-color: rgba(30, 0, 50, 0.4); 
+}
+
+.data-table tbody tr:hover {
+    /* Efekt při najetí myší */
+    background-color: rgba(0, 150, 255, 0.1); 
+    box-shadow: inset 0 0 5px rgba(0, 150, 255, 0.3);
+}
+
+.data-table tbody tr td:first-child {
+    /* Zvýraznění prvního sloupce, kde bývá příkaz */
+    font-weight: bold;
+    color: var(--color-neon-yellow, #ffff00);
+}
+
+/* Styly pro zvýraznění kódových prvků uvnitř tabulky */
+.data-table .command-code,
+.data-table .command-code-example {
+    font-size: 0.9em;
+}

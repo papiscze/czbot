@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CZBOT - Zásady ochrany osobních údajů (GDPR)</title>
+    
+    <link href="templatemo-nexus-style.css" rel="stylesheet">
+    <link href="module-styles.css" rel="stylesheet"> 
+    
+    <style>
+        /* Specifické styly pro GDPR/Privacy stránku pro lepší čitelnost */
+        .gdpr-section {
+            padding: 30px;
+            background-color: var(--color-background-darker);
+            border: 1px solid var(--color-border);
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.1);
+        }
+        .gdpr-section h3 {
+            color: var(--color-primary-accent);
+            border-bottom: 2px solid var(--color-border-light);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        .gdpr-section p, .gdpr-section ul {
+            color: var(--color-text);
+            line-height: 1.6;
+        }
+        .gdpr-section ul {
+            list-style-type: disc;
+            margin-left: 25px;
+            padding-left: 0;
+        }
+        .gdpr-section ul li strong {
+            color: var(--color-primary-accent);
+            font-weight: bold;
+        }
+        .gdpr-command {
+            font-family: 'Consolas', 'Courier New', monospace;
+            background-color: #1a1a2e;
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #f0f0f0;
+        }
+        .contact-info a {
+            color: var(--color-primary-accent);
+            text-decoration: none;
+        }
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body id="top" class="privacy-page"> 
+
+    <div class="cyber-bg">
+        <div class="cyber-gradient"></div>
+        <div class="matrix-rain" id="matrixRain"></div>
+    </div>
+    <div class="scanlines"></div>
+    <div class="noise-overlay"></div>
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">CZbot</a>
+            
+            <ul class="nav-links">
+                <li><a href="commands.html">Příkazy</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Moduly ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="modules/auditlogger.html">Auditlogger</a></li>
+                        <li><a href="modules/audio_stream.html">Audio Stream</a></li>
+                        <li><a href="modules/autopublish.html">Automatické publikování zpráv z kanálů oznámení</a></li>
+                        <li><a href="modules/autorole.html">Autorole, Ověřování uživatelů a Reakční role</a></li>
+                        <li><a href="modules/basic_user_commands.html">Běžné uživatelské a zábavné příkazy</a></li>
+                        <li><a href="modules/basic_mod_commands.html">Běžné moderátorské příkazy</a></li>
+                        <li><a href="modules/bot_localization.html">Bot localization and Language Settings</a></li>
+                        <li><a href="modules/crossban.html">CrossBan</a></li>
+                        <li><a href="modules/temp_voice.html">Dočasné hlasové kanály</a></li>
+                        <li><a href="modules/giveaway.html">Giveaway(e)</a></li>
+                        <li><a href="modules/birthdays.html">Narozeniny</a></li>
+                        <li><a href="modules/counting.html">Počítání</a></li>
+                        <li><a href="modules/patreon.html">Patreon</a></li>
+                        <li><a href="modules/advanced_schedules.html">Pokročilé plánované zprávy</a></li>
+                        <li><a href="modules/reactions.html">Reakce smajlíky na zprávy</a></li>
+                        <li><a href="modules/reputation.html">Reputace</a></li>
+                        <li><a href="modules/rss_reader.html">RSS Čtečka</a></li>
+                        <li><a href="modules/scam_prevence.html">Scam Prevence</a></li>
+                        <li><a href="modules/schedules.html">Schedules ‐ Plánované zprávy</a></li>
+                        <li><a href="modules/stats.html">Statistiky serveru</a></li>
+                        <li><a href="modules/holidays.html">Svátky (CZ SK)</a></li>
+                        <li><a href="modules/feedback.html">Systém zpětné vazby a návrhů</a></li>
+                        <li><a href="modules/tickets.html">Tikety</a></li>
+                        <li><a href="modules/translate.html">Translate modul</a></li>
+                        <li><a href="modules/threads.html">Tvorba vláken na zprávy</a></li>
+                        <li><a href="modules/welcome_leave.html">Uvítací a odchodové zprávy (Welcome Leave)</a></li>
+                        <li><a href="modules/vote.html">Vote ‐ Hlasování</a></li>
+                        <li><a href="modules/watermark.html">Vodoznak s vlastním textem na obrázky</a></li>
+                        <li><a href="modules/xp.html">XP systém a úrovně</a></li>
+                        <li><a href="modules/backup.html">Zálohování a Obnova Serverů</a></li>
+                        <li><a href="modules/confessions.html">Zpovědi (Anonymní Zprávy)</a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Nástroje ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="crongenerator.html">Cron Generátor</a></li>
+                        <li><a href="embedgenerator.html">Embed Generátor</a></li>
+                        <li><a href="https://github.com/users/papiscze/projects/9">Roadmapa</a></li>
+                        <li><a href="stats.html">Statistiky bota</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="warns.html">Moderátorské záznamy</a></li>
+                <li><a href="https://rs422cznas.myds.me:5038/stats/">Statistiky serveru</a></li>
+                <li class="active"><a href="privacy.html">GDPR / ToS</a></li>
+            </ul>
+
+            <div class="nav-bottom">
+                <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Pozvat bota</a>
+            </div>
+
+            <button class="mobile-menu-button" id="mobileMenuBtn">
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </button>
+        </div>
+    </nav>
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        </div>
+    <div class="content-section">
+        <div class="content-container">
+
+            <h1 class="page-title">Zásady ochrany osobních údajů + GDPR</h1>
+            <p class="page-subtitle">Účinné od: <strong>28. července 2025</strong></p>
+
+            <div class="module-intro-box">
+                <p>
+                    Vítáme vás v czbot! Jsme odhodláni chránit vaše soukromí a transparentně vás informovat o tom, jak shromažďujeme, používáme a spravujeme vaše osobní údaje. Tyto zásady ochrany osobních údajů vysvětlují naše postupy v souladu s Obecným nařízením o ochraně osobních údajů (GDPR) a dalšími platnými zákony o ochraně soukromí.
+                </p>
+            </div>
+
+            <div class="gdpr-section">
+                <h3>1. Kdo jsme</h3>
+                <p>
+                    Jsme vývojáři a provozujeme Discord bota s názvem czbot. Náš bot je navržen tak, aby poskytoval zábavné a užitečné funkce pro Discord servery, včetně oznamování narozenin a dalších věcí potřebných ke správě serverů.
+                </p>
+            </div>
+
+            <div class="gdpr-section">
+                <h3>2. Jaké údaje shromažďujeme a proč</h3>
+                <p>
+                    Shromažďujeme pouze údaje nezbytné pro správné fungování funkcí bota, zejména pro oznamování narozenin. Tyto údaje zahrnují:
+                </p>
+                <ul>
+                    <li>
+                        <strong>Identifikační údaje uživatele (User ID):</strong> Discord ID uživatele (číselný identifikátor), který si nastaví své narozeniny.
+                        <p><strong>Účel:</strong> Slouží k jednoznačné identifikaci uživatele, ke kterému narozeniny patří, a k jeho zmínění v narozeninovém přání.</p>
+                    </li>
+                    <li>
+                        <strong>Datum narození (Měsíc a Den):</strong> Měsíc a den narození, které si uživatel nastaví.
+                        <p><strong>Účel:</strong> Nezbytné pro určení, kdy má bot odeslat narozeninové přání.</p>
+                    </li>
+                    <li>
+                        <strong>Rok narození (Volitelné):</strong> Uživatelé mohou volitelně poskytnout rok narození.
+                        <p><strong>Účel:</strong> Pokud je poskytnut, umožňuje botu vypočítat věk uživatele (např. "přeje k 25. narozeninám") nebo pro účely specifických komunitních funkcí, pokud jsou takto nastaveny. <strong>Upozorňujeme, že poskytnutí roku narození zvyšuje citlivost osobních údajů.</strong> Pokud není poskytnut, bot funguje bez znalosti věku.</p>
+                    </li>
+                    <li>
+                        <strong>ID serveru (Guild ID):</strong> Discord ID serveru, na kterém jsou nastaveny funkce bota (např. kanál pro narozeninová oznámení).
+                        <p><strong>Účel:</strong> Spravovat nastavení bota specifická pro každý server a posílat oznámení do správného kanálu na daném serveru.</p>
+                    </li>
+                    <li>
+                        <strong>ID kanálu (Channel ID):</strong> Discord ID kanálu, který je určen pro narozeninová oznámení.
+                        <p><strong>Účel:</strong> Zajištění, že narozeninová přání jsou odeslána do správného kanálu na serveru.</p>
+                    </li>
+                    <li>
+                        <strong>Nastavení zprávy a GIFů pro server:</strong> Volitelná vlastní zpráva a seznam URL adres GIFů, které si administrátor serveru nastaví pro narozeninová oznámení.
+                        <p><strong>Účel:</strong> Přizpůsobení narozeninového přání pro konkrétní komunitu. Tyto údaje jsou uloženy anonymně ve vztahu k serveru, nikoliv k jednotlivým uživatelům.</p>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="gdpr-section">
+                <h3>3. Jak údaje používáme</h3>
+                <p>
+                    Shromážděné údaje používáme <strong>výhradně</strong> k poskytování funkcí Discord bota, konkrétně pro:
+                </p>
+                <ul>
+                    <li>Oznamování narozenin uživatelů v určených kanálech na Discord serverech.</li>
+                    <li>Přizpůsobení narozeninových zpráv a GIFů podle nastavení serveru.</li>
+                    <li>Vedení záznamu o tom, zda uživatel již obdržel přání v aktuálním roce, aby se předešlo duplicitním oznámením.</li>
+                </ul>
+                <p>
+                    <strong>Vaše osobní údaje neprodáváme, nepronajímáme ani nesdílíme s třetími stranami pro marketingové nebo jiné účely.</strong>
+                </p>
+            </div>
+
+            <div class="gdpr-section">
+                <h3>4. Kde jsou údaje uloženy</h3>
+                <p>
+                    Všechny shromážděné údaje jsou bezpečně uloženy v <strong>databázi umístěné na serverech poskytovatele Cybrancee</strong>. Dbáme na to, aby náš poskytovatel hostingu dodržoval vysoké standardy zabezpečení dat a ochrany soukromí. Přístup k databázi je chráněn silnými hesly a je omezen pouze na autorizované osoby.
+                </p>
+            </div>
+
+            <div class="gdpr-section">
+                <h3>5. Jak dlouho údaje uchováváme</h3>
+                <p>
+                    Vaše osobní údaje (datum narození) uchováváme tak dlouho, dokud si je nepřejete odstranit, nebo dokud bot neopustí Discord server, na kterém jste si narozeniny nastavili. Nastavení serverů jsou uchovávána, dokud bot server neopustí nebo dokud administrátor serveru nastavení neodstraní.
+                </p>
+            </div>
+
+            <div class="gdpr-section">
+                <h3>6. Vaše práva (GDPR)</h3>
+                <p>
+                    Jako subjekt údajů máte v souladu s GDPR následující práva:
+                </p>
+                <ul>
+                    <li>
+                        <strong>Právo na přístup:</strong> Máte právo získat potvrzení, zda jsou vaše osobní údaje zpracovávány, a pokud ano, máte právo k těmto osobním údajům a dalším informacím přistupovat. Můžete použít příkaz <span class="gdpr-command">/birthday list</span> k zobrazení svého nastaveného data narození.
+                    </li>
+                    <li>
+                        <strong>Právo na opravu:</strong> Máte právo na to, abychom bez zbytečného odkladu opravili nepřesné osobní údaje, které se vás týkají. Svou nastavenou narozeninovou informaci můžete aktualizovat pomocí příkazu <span class="gdpr-command">/birthday set</span>.
+                    </li>
+                    <li>
+                        <strong>Právo na výmaz ("právo být zapomenut"):</strong> Máte právo na to, abychom bez zbytečného odkladu vymazali osobní údaje, které se vás týkají. Svou narozeninovou informaci můžete odstranit pomocí příkazu <span class="gdpr-command">/birthday remove</span>.
+                    </li>
+                    <li>
+                        <strong>Právo na omezení zpracování, přenositelnost údajů a námitku:</strong> Tato práva jsou vzhledem k povaze našeho bota a minimálnímu rozsahu shromažďovaných údajů obvykle zajištěna možnostmi, které poskytují výše uvedené příkazy.
+                    </li>
+                </ul>
+                <p>
+                    Pro uplatnění jakéhokoli z těchto práv nebo pro dotazy týkající se ochrany osobních údajů nás prosím kontaktujte.
+                </p>
+            </div>
+
+            <div class="gdpr-section contact-info">
+                <h3>7. Kontaktní informace</h3>
+                <p>
+                    Máte-li jakékoli dotazy ohledně těchto Zásad ochrany osobních údajů nebo našich postupů v oblasti ochrany osobních údajů, kontaktujte nás prosím na:
+                </p>
+                <ul>
+                    <li><strong>Discord:</strong> @papiscze</li>
+                    <li><strong>Discord server podpory:</strong> <a href="https://discord.gg/hk6PdtVxbm" target="_blank">[Odkaz]</a></li>
+                </ul>
+            </div>
+
+            <div class="gdpr-section">
+                <h3>8. Změny těchto zásad ochrany osobních údajů</h3>
+                <p>
+                    Tyto Zásady ochrany osobních údajů můžeme čas od času aktualizovat. Jakékoli změny budou zveřejněny na této stránce s aktualizovaným datem "Účinné od". Doporučujeme vám pravidelně tyto zásady kontrolovat.
+                </p>
+            </div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="https://github.com/papiscze/czbot">GitHub</a>
+                <span class="footer-separator">•</span>
+                <a href="https://discord.gg/hk6PdtVxbm">Support Server</a>
+                <span class="footer-separator">•</span>
+                <a href="https://github.com/papiscze/czbot/wiki">GitHub dokumentace</a>
+                <span class="footer-separator">•</span>
+                <a href="mailto:admin@ofpmafia.eu">Kontakt</a>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 CZbot. Verze webu 1.0. Všechna práva vyhrazena</p>
+                <p class="footer-credit">Šablona inspirována <a href="https://templatemo.com" target="_blank" rel="noopener nofollow">TemplateMo</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="templatemo-nexus-scripts.js"></script>
+
+</body>
+</html>

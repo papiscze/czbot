@@ -3,304 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Moderátorské záznamy | CZbot</title>
-    <link href="templatemo-nexus-style.css" rel="stylesheet">
-    
-    </head>
+    <title>Moderátorské Záznamy | CZbot</title>
+    <link rel="stylesheet" href="style.css"> 
+    <link rel="stylesheet" href="custom.css"> 
+    <link rel="stylesheet" href="log-table.css">
+</head>
+<body class="cyber-bg">
 
-<body id="top">
-    
-    <div class="cyber-bg">
-        <div class="cyber-gradient"></div>
-        <div class="matrix-rain" id="matrixRain"></div>
-    </div>
-    <div class="particles" id="particlesContainer"></div>
-    <div class="data-streams" id="dataStreams"></div>
-    <div class="orb orb1"></div>
-    <div class="orb orb2"></div>
-    <div class="orb orb3"></div>
-    <div class="grid-overlay">
-        <div class="grid-lines"></div>
-        <div class="grid-glow"></div>
-    </div>
-    <div class="scanlines"></div>
-    <div class="noise-overlay"></div>
-    
-    <nav>
-        <div class="nav-container">
-            <a href="index.html" class="logo">CZbot</a>
-            <ul class="nav-links">
-                <li><a href="commands.html">Příkazy</a></li>
-                
-                <li class="dropdown">
-                    <a href="" class="dropbtn">Nástroje<span class="arrow">▼</span></a> 
-                    <div class="dropdown-content">
-                        <a href="crongenerator.html">Cron Generator</a>
-                        <a href="embedgenerator.html">Embed Generator</a>
-                        <a href="status.html">Status bota</a> 
-                    </div>
-                </li>      
-                <li><a href="warns.html" class="active-item">Moderátorské záznamy</a></li>
-                <li><a href="https://rs422cznas.myds.me:5038/stats/">Webové statistiky serverů</a></li>
-            </ul>
-            <div class="nav-bottom">
-                <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Přidat bota</a>
-            </div>
-            <button class="mobile-menu-button" id="mobileMenuBtn">
-                <div class="hamburger">
-                    <span></span><span></span><span></span>
+    <header>
+        </header>
+
+    <main class="content-section">
+        <div class="container">
+
+            <section class="section-title fade-up">
+                <h1>Moderátorské záznamy</h1>
+                <p class="subtitle">kompletní přehled varování, mute, kick a ban akcí na všech serverech, které používají CZbot.</p>
+            </section>
+            
+            <div class="moderator-logs-container fade-up">
+
+                <div class="log-search-bar">
+                    <input type="text" placeholder="Hledat uživatele, server nebo důvod..." class="search-input">
+                    <p class="search-info">Vyhledávání probíhá v reálném čase. Hledejte jméno, ID nebo servery.</p>
                 </div>
-            </button>
-        </div>
-    </nav>
 
-    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
-    <div class="mobile-menu" id="mobileMenu">
-        <div class="mobile-menu-header">
-            <a href="index.html" class="mobile-menu-logo">CZbot</a>
-            <button class="mobile-menu-close" id="mobileMenuClose">✕</button>
-        </div>
-        <nav class="mobile-menu-nav">
-            <ul>
-                <li><a href="commands.html">Příkazy</a></li>
-                <li class="mobile-submenu-header">
-                    <a href="" class="mobile-dropbtn">Nástroje<span class="arrow">▼</span></a>
-                    <ul class="mobile-submenu-content">
-                        <li><a href="crongenerator.html">Cron Generator</a></li>
-                        <li><a href="embedgenerator.html">Embed Generator</a></li>
-                        <li><a href="status.html">Status bota</a></li> 
-                    </ul>
-                </li>
-                <li><a href="warns.html" class="active-item">Moderátorské záznamy</a></li>
-                <li><a href="https://rs422cznas.myds.me:5038/stats/">Webové statistiky serverů</a></li>
-            </ul>
-        </nav>
-        <div class="mobile-menu-cta">
-            <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Přidat bota</a>
-        </div>
-    </div>
-
-    <section class="command-viewer fade-up warns-section cyber-content" id="warnsSection">
-        <div class="command-viewer-container warns-container">
-            <header class="command-header status-header">
-                <h1 class="header-title">Moderátorské Záznamy</h1>
-                <p class="header-subtitle">Přehled akcí a trestů (Bany, Muty) provedených pomocí CZBOTa.</p>
-            </header>
-            
-            <div id="loadingSpinner" style="display: none; text-align: center; color: #00ffff; padding: 20px;">
-                <div class="spinner"></div> Načítám data...
-            </div>
-
-            <input type="text" id="searchInput" placeholder="Hledat podle ID, jména nebo důvodu..." />
-            <button id="refreshButton">Aktualizovat</button>
-
-            <div style="overflow-x: auto;">
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Datum a čas</th>
-                            <th>Uživatel</th>
-                            <th>Důvod</th>
-                            <th>Typ</th>
-                            <th>Moderátor</th>
-                            <th>Expirace</th>
-                            <th>Server</th>
-                        </tr>
-                    </thead>
-                    <tbody id="logTableBody"></tbody>
-                </table>
-            </div>
-
-            <div class="pagination">
-                <button id="prevPage">Předchozí</button>
-                <span id="pageInfo">Stránka 1 z 1</span>
-                <button id="nextPage">Další</button>
-            </div>
-            
-        </div> </section>
-
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-links">
-                <a href="https://github.com/papiscze/czbot">GitHub</a>
-                <span class="footer-separator">•</span>
-                <a href="https://discord.gg/hk6PdtVxbm">Support Server</a>
-                <span class="footer-separator">•</span>
-                <a href="https://github.com/papiscze/czbot/wiki">GitHub dokumentace</a>
-                <span class="footer-separator">•</span>
-                <a href="mailto:admin@ofpmafia.eu">Kontakt</a>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 CZbot. Verze webu 1.0. Všechna práva vyhrazena</p>
-                <p class="footer-credit">Šablona inspirována <a href="https://templatemo.com" target="_blank" rel="noopener nofollow">TemplateMo</a></p>
+                <div class="log-table-wrapper">
+                    <table class="log-table">
+                        <thead>
+                            <tr>
+                                <th class="col-date">Datum</th>
+                                <th class="col-user">Uživatel</th>
+                                <th class="col-action">Akce</th>
+                                <th class="col-reason">Důvod</th>
+                                <th class="col-moderator">Moderátor</th>
+                                <th class="col-server">Server</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="log-entry ban">
+                                <td data-label="Datum" class="col-date">1. 11. 2025<br>12:11</td>
+                                <td data-label="Uživatel" class="col-user">andrej686</td>
+                                <td data-label="Akce" class="col-action"><span class="action-tag ban">BAN</span></td>
+                                <td data-label="Důvod" class="col-reason">Stahování placených úprav zadarmo.</td>
+                                <td data-label="Moderátor" class="col-moderator">milousek98</td>
+                                <td data-label="Server" class="col-server">400 | Verisurf Praha</td>
+                            </tr>
+                            <tr class="log-entry warn">
+                                <td data-label="Datum" class="col-date">31. 10. 2025<br>18:16</td>
+                                <td data-label="Uživatel" class="col-user">elira6699</td>
+                                <td data-label="Akce" class="col-action"><span class="action-tag warn">WARN</span></td>
+                                <td data-label="Důvod" class="col-reason">Podepsaný účet, nsfw.</td>
+                                <td data-label="Moderátor" class="col-moderator">soova\_restorZZZ | 24</td>
+                                <td data-label="Server" class="col-server">OPP Commun</td>
+                            </tr>
+                            <tr class="log-entry mute">
+                                <td data-label="Datum" class="col-date">30. 10. 2025<br>14:10</td>
+                                <td data-label="Uživatel" class="col-user">max7808916cz</td>
+                                <td data-label="Akce" class="col-action"><span class="action-tag mute">MUTE</span></td>
+                                <td data-label="Důvod" class="col-reason">nsfw</td>
+                                <td data-label="Moderátor" class="col-moderator">koblixgg</td>
+                                <td data-label="Server" class="col-server">kbc7</td>
+                            </tr>
+                            <tr class="log-entry ban">
+                                <td data-label="Datum" class="col-date">30. 10. 2025<br>20:59</td>
+                                <td data-label="Uživatel" class="col-user">adam13/</td>
+                                <td data-label="Akce" class="col-action"><span class="action-tag ban">BAN</span></td>
+                                <td data-label="Důvod" class="col-reason">No reason</td>
+                                <td data-label="Moderátor" class="col-moderator">milou...</td>
+                                <td data-label="Server" class="col-server">další</td>
+                            </tr>
+                            </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </footer>
+    </main>
+
+    <footer>
+        </footer>
 
     <script src="templatemo-nexus-scripts.js"></script>
-    <script>
-        // PŮVODNÍ JAVASCRIPT LOGIKA Z WARNS.HTML
-        const API_URL = "https://rs422cznas.myds.me:5038/logs"; 
-        const SIMULATED_DELAY_MS = 300; 
-        const RECORDS_PER_PAGE = 20;
 
-        const searchInput = document.getElementById("searchInput");
-        const logTableBody = document.getElementById("logTableBody");
-        const refreshButton = document.getElementById("refreshButton");
-        const loadingSpinner = document.getElementById("loadingSpinner");
-        
-        // Prvky, které se mají skrýt při načítání
-        const contentElements = [document.querySelector('.status-header'), searchInput, refreshButton, document.querySelector('table'), document.querySelector('.pagination'), document.querySelector('footer')];
-
-        const prevPageButton = document.getElementById("prevPage");
-        const nextPageButton = document.getElementById("nextPage");
-        const pageInfoSpan = document.getElementById("pageInfo");
-
-        let allLogs = []; 
-        let currentPage = 1;
-
-        // --- Utility Functions ---
-
-        function debounce(func, delay) {
-            let timeout;
-            return function(...args) {
-                clearTimeout(timeout);
-                timeout = setTimeout(() => func.apply(this, args), delay);
-            };
-        }
-
-        function showLoading() {
-            loadingSpinner.style.display = 'block';
-            document.getElementById('warnsSection').classList.add('content-hidden');
-            // Zajišťuje skrytí obsahu při načítání
-        }
-
-        function hideLoading() {
-            loadingSpinner.style.display = 'none';
-            document.getElementById('warnsSection').classList.remove('content-hidden');
-        }
-        
-        // --- Data Fetching and Processing ---
-
-        async function fetchLogs(searchTerm = '') {
-            showLoading();
-            
-            // Změna koncového bodu pro zobrazení reálných logů
-            const url = searchTerm ? `${API_URL}?search=${encodeURIComponent(searchTerm)}` : API_URL;
-
-            try {
-                const [response] = await Promise.all([
-                    // Zde by mělo být vaše skutečné API
-                    fetch(url), 
-                    new Promise(resolve => setTimeout(resolve, SIMULATED_DELAY_MS))
-                ]);
-
-                if (!response.ok) {
-                    logTableBody.innerHTML = `<tr><td colspan='7' style="color: red; text-align: center;">Chyba ${response.status}: Nepodařilo se načíst data ze serveru.</td></tr>`;
-                    console.error("Nepodařilo se načíst data:", response.statusText);
-                    return;
-                }
-                
-                // PŘEDPOKLÁDÁME, že API vrací pole logů
-                allLogs = await response.json(); 
-                processLogs(); 
-
-            } catch (error) {
-                logTableBody.innerHTML = `<tr><td colspan='7' style="color: red; text-align: center;">Došlo k chybě při komunikaci se serverem: ${error.message}</td></tr>`;
-                console.error("Chyba při načítání logů:", error);
-            } finally {
-                hideLoading();
-            }
-        }
-
-        function processLogs() {
-            currentPage = 1;
-            displayCurrentPage();
-        }
-
-        function renderTable(logsToDisplay) {
-            logTableBody.innerHTML = "";
-            if (logsToDisplay.length === 0) {
-                logTableBody.innerHTML = "<tr><td colspan='7'>Žádné výsledky</td></tr>";
-                return;
-            }
-            logsToDisplay.forEach(log => {
-                const tr = document.createElement("tr");
-                const expirationText = log.duration ? log.duration : "N/A";
-                
-                const formattedDate = log.timestamp 
-                    ? new Date(log.timestamp).toLocaleString() 
-                    : 'N/A'; 
-        
-                tr.innerHTML = `
-                    <td>${formattedDate}</td>
-                    <td data-label="Uživatel">${log.user_name || log.user_id}</td>
-                    <td data-label="Důvod">${log.reason}</td>
-                    <td data-label="Typ">${log.action}</td>
-                    <td data-label="Moderátor">${log.moderator_name || log.moderator_id}</td>
-                    <td data-label="Expirace">${expirationText}</td>
-                    <td data-label="Server">${log.guild_name || log.guild_id}</td>
-                `;
-                logTableBody.appendChild(tr);
-            });
-        }
-
-        function updatePaginationButtons() {
-            const totalPages = Math.ceil(allLogs.length / RECORDS_PER_PAGE);
-            pageInfoSpan.textContent = `Stránka ${currentPage} z ${totalPages || 1}`;
-
-            prevPageButton.disabled = currentPage === 1;
-            nextPageButton.disabled = currentPage >= totalPages || totalPages === 0;
-        }
-
-        function displayCurrentPage() {
-            const startIndex = (currentPage - 1) * RECORDS_PER_PAGE;
-            const endIndex = startIndex + RECORDS_PER_PAGE;
-            const logsToDisplay = allLogs.slice(startIndex, endIndex);
-            renderTable(logsToDisplay);
-            updatePaginationButtons();
-        }
-
-        // --- Event Listeners ---
-
-        const debouncedSearch = debounce(() => {
-            const searchQuery = searchInput.value.trim();
-            fetchLogs(searchQuery);
-        }, 500); 
-
-        searchInput.addEventListener("input", debouncedSearch);
-
-        prevPageButton.addEventListener("click", () => {
-            if (currentPage > 1) {
-                currentPage--;
-                displayCurrentPage();
-            }
-        });
-
-        nextPageButton.addEventListener("click", () => {
-            const totalPages = Math.ceil(allLogs.length / RECORDS_PER_PAGE);
-            if (currentPage < totalPages) {
-                currentPage++;
-                displayCurrentPage();
-                
-            }
-        });
-
-        refreshButton.addEventListener('click', () => fetchLogs(searchInput.value.trim()));
-        
-        // --- Initial Load ---
-
-        function getQueryParam(param) {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(param);
-        }
-
-        const initialSearchFilter = getQueryParam('search') || getQueryParam('user'); 
-        if (initialSearchFilter) {
-            searchInput.value = initialSearchFilter;
-        }
-
-        fetchLogs(searchInput.value.trim()); 
-    </script>
 </body>
 </html>

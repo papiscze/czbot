@@ -3,186 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cron Generator | CZbot Nástroje</title>
-    <link href="templatemo-nexus-style.css" rel="stylesheet"> 
-    <script src="https://cdn.jsdelivr.net/npm/cron-parser@4.9.0/dist/cron-parser.min.js"></script> 
-</head>
-<body id="top">
+    <title>CZBOT - Cron Generátor</title>
     
+    <link href="templatemo-nexus-style.css" rel="stylesheet">
+    <link href="module-styles.css" rel="stylesheet"> 
+</head>
+<body id="top"> 
+
     <div class="cyber-bg">
         <div class="cyber-gradient"></div>
         <div class="matrix-rain" id="matrixRain"></div>
     </div>
-    
-    <div class="particles" id="particlesContainer"></div>
-    <div class="data-streams" id="dataStreams"></div>
-    
-    <div class="orb orb1"></div>
-    <div class="orb orb2"></div>
-    <div class="orb orb3"></div>
-    
-    <div class="grid-overlay">
-        <div class="grid-lines"></div>
-        <div class="grid-glow"></div>
-    </div>
-    
     <div class="scanlines"></div>
     <div class="noise-overlay"></div>
-    
     <nav>
         <div class="nav-container">
             <a href="index.html" class="logo">CZbot</a>
+            
             <ul class="nav-links">
                 <li><a href="commands.html">Příkazy</a></li>
+                <li class="dropdown"><a href="#" class="dropdown-toggle">Moduly ▾</a><ul class="dropdown-menu"></ul></li>
                 
-                <li class="dropdown">
-                    <a href="" class="dropbtn">Nástroje<span class="arrow">▼</span></a> 
-                    <div class="dropdown-content">
-                        <a href="crongenerator.html" class="active-item">Cron Generator</a>
-                        <a href="embedgenerator.html">Embed Generator</a>
-                        <a href="status.html">Status bota</a>
-                    </div>
-                </li>      
+                <li class="dropdown active"><a href="#" class="dropdown-toggle">Nástroje ▾</a>
+                    <ul class="dropdown-menu">
+                        <li class="active"><a href="crongenerator.html">Cron Generátor</a></li>
+                        <li><a href="embedgenerator.html">Embed Generátor</a></li>
+                        <li><a href="https://github.com/users/papiscze/projects/9">Roadmapa</a></li>
+                        <li><a href="stats.html">Statistiky bota</a></li>
+                    </ul>
+                </li>
                 <li><a href="warns.html">Moderátorské záznamy</a></li>
-                <li><a href="https://rs422cznas.myds.me:5038/stats/">Webové statistiky serverů</a></li>
+                <li><a href="https://rs422cznas.myds.me:5038/stats/">Statistiky serveru</a></li>
+                <li><a href="privacy.html">GDPR / ToS</a></li>
             </ul>
+
             <div class="nav-bottom">
-                <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Přidat bota</a>
+                <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Pozvat bota</a>
             </div>
+
             <button class="mobile-menu-button" id="mobileMenuBtn">
-                <div class="hamburger">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
+                <div class="hamburger"><span></span><span></span><span></span></div>
             </button>
         </div>
     </nav>
-    
     <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
-    <div class="mobile-menu" id="mobileMenu">
-        <div class="mobile-menu-header">
-            <a href="index.html" class="mobile-menu-logo">CZbot</a>
-            <button class="mobile-menu-close" id="mobileMenuClose">✕</button>
-        </div>
-        
-        <nav class="mobile-menu-nav">
-            <ul>
-                <li><a href="commands.html">Příkazy</a></li>
+    <div class="mobile-menu" id="mobileMenu"></div>
+    <div class="content-section">
+        <div class="content-container">
 
-                <li class="mobile-submenu-header">
-                    <a href="" class="mobile-dropbtn">Nástroje<span class="arrow">▼</span></a>
-                    <ul class="mobile-submenu-content">
-                        <li><a href="crongenerator.html" class="active-item">Cron Generator</a></li>
-                        <li><a href="embedgenerator.html">Embed Generator</a></li>
-                        <li><a href="status.html">Status bota</a></li>
-                    </ul>
-                </li>
+            <h1 class="page-title">Cron Generátor</h1>
+            <p class="page-subtitle">Nástroj pro snadné vytvoření Cron výrazu pro plánované úlohy.</p>
+            
+            <div class="cron-module-box">
+                
+                <h2>Nastavení plánu</h2>
+                
+                <div class="cron-grid">
+                    
+                    <div class="cron-field">
+                        <label for="minute">Minuta (0-59):</label>
+                        <select id="minute" onchange="generateCron()">
+                            <option value="*">Každou minutu (*)</option>
+                            <option value="0">V celou hodinu (0)</option>
+                            <option value="*/5">Každých 5 minut (*/5)</option>
+                            <option value="15">V 15. minutu (15)</option>
+                            <option value="30">V půl (30)</option>
+                        </select>
+                    </div>
 
-                <li><a href="warns.html">Moderátorské záznamy</a></li>
-                <li><a href="https://rs422cznas.myds.me:5038/stats/">Webové statistiky serverů</a></li>
-            </ul>
-        </nav>
-        
-        <div class="mobile-menu-cta">
-            <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Přidat bota</a>
+                    <div class="cron-field">
+                        <label for="hour">Hodina (0-23):</label>
+                        <select id="hour" onchange="generateCron()">
+                            <option value="*">Každou hodinu (*)</option>
+                            <option value="10">V 10:xx</option>
+                            <option value="12">V 12:xx</option>
+                            <option value="18">V 18:xx</option>
+                            <option value="*/2">Každou druhou hodinu (*/2)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="cron-field">
+                        <label for="dayOfMonth">Den v měsíci (1-31):</label>
+                        <select id="dayOfMonth" onchange="generateCron()">
+                            <option value="*">Každý den v měsíci (*)</option>
+                            <option value="1">První den v měsíci (1)</option>
+                            <option value="15">V polovině měsíce (15)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="cron-field">
+                        <label for="month">Měsíc (1-12):</label>
+                        <select id="month" onchange="generateCron()">
+                            <option value="*">Každý měsíc (*)</option>
+                            <option value="1">Leden (1)</option>
+                            <option value="6">Červen (6)</option>
+                            <option value="12">Prosinec (12)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="cron-field">
+                        <label for="dayOfWeek">Den v týdnu (0-7):</label>
+                        <select id="dayOfWeek" onchange="generateCron()">
+                            <option value="*">Každý den v týdnu (*)</option>
+                            <option value="0,7">Neděle (0 nebo 7)</option>
+                            <option value="1">Pondělí (1)</option>
+                            <option value="5">Pátek (5)</option>
+                        </select>
+                    </div>
+
+                </div> <hr class="cyber-divider">
+
+                <h3 class="result-label">Vygenerovaný Cron výraz:</h3>
+                <div class="cron-result-box">
+                    <code id="cronOutput" class="cron-code">* * * * *</code>
+                    <button class="cyber-button copy-button" onclick="copyCron()">Kopírovat</button>
+                </div>
+                
+                <p class="explanation-text" id="explanationText">
+                    Výraz Cron se skládá z 5 polí: **Minuta Hodina Den_v_měsíci Měsíc Den_v_týdnu**.
+                </p>
+
+            </div> <div class="cron-info-box">
+                <p>Nástroj slouží k rychlému generování základních Cron výrazů. Pro složitější výrazy použijte manuální zápis.</p>
+                <div class="cron-info-table">
+                    <div>
+                        <strong>Pole:</strong>
+                        <p>1. Minuta (0-59)</p>
+                        <p>2. Hodina (0-23)</p>
+                        <p>3. Den v měsíci (1-31)</p>
+                        <p>4. Měsíc (1-12)</p>
+                        <p>5. Den v týdnu (0-7, kde 0 a 7 je Neděle)</p>
+                    </div>
+                    <div>
+                        <strong>Speciální znaky:</strong>
+                        <p><strong>*</strong>: Jakákoli hodnota (např. každou minutu)</p>
+                        <p><strong>,</strong>: Oddělovač (např. 1,5 = v 1. a 5. hodinu)</p>
+                        <p><strong>-</strong>: Rozsah (např. 1-5 = od pondělí do pátku)</p>
+                        <p><strong>/</strong>: Interval (např. */10 = každých 10 minut)</p>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
-    <section class="tool-section cron-generator-section" id="cronGenerator">
-        <div class="tool-container cron-container">
-            
-            <header class="tool-header cron-header">
-                <h1 id="cron-title" class="header-title">CRON Generator</h1>
-                <p class="header-subtitle">Snadno generujte Cron výrazy pro automatizované úlohy. (Pro Discord bota)</p>
-            </header>
-
-            <div class="flex justify-end mb-4">
-                <select id="cron-lang-switcher">
-                    <option value="cs">Čeština</option>
-                    <option value="en">English</option>
-                </select>
-            </div>
-            
-            <div class="tool-card cron-card">
-                
-                <div class="bg-gray-700 p-4 rounded-md text-gray-300 mb-6">
-                    <p id="label-star-description">* znamená "každou hodnotu" (např. každou minutu, každý den, každý měsíc...)</p>
-                </div>
-                
-                <div class="form-group">
-                    <label id="label-presets" class="block">Předpřipravené příklady</label>
-                    <select id="cron-presets" class="mt-1 block w-full">
-                        <option value="">-- vyber --</option>
-                        <option value="0 10 * * *">Každý den v 10:00</option>
-                        <option value="0 12 * * 0-4">Každý pracovní den v 12:00</option>
-                        <option value="0 8 * * 6">Každou neděli v 8:00</option>
-                        <option value="*/15 * * * *">Každých 15 minut</option>
-                        <option value="0 10 1 * *">První den v měsíci v 10:00</option>
-                        <option value="0 10 1,15 * *">1. a 15. den v měsíci v 10:00</option>
-                        <option value="59 11 1-7 * 2">První středa v měsíci v 11:59</option>
-                        <option value="0 12 * 10 2">Každá středa v říjnu ve 12:00</option>
-                        <option value="custom">Vlastní</option>
-                    </select>
-                </div>
-
-                <div class="cron-input-grid mt-6">
-                    <div class="form-group">
-                        <label id="label-minute">Minuta</label>
-                        <input type="text" id="cron-minute" placeholder="0-59 nebo *">
-                        <p class="text-red-500 text-xs mt-1 hidden" id="error-minute"></p>
-                    </div>
-                    <div class="form-group">
-                        <label id="label-hour">Hodina</label>
-                        <input type="text" id="cron-hour" placeholder="0-23 nebo *">
-                        <p class="text-red-500 text-xs mt-1 hidden" id="error-hour"></p>
-                    </div>
-                    <div class="form-group">
-                        <label id="label-day">Den v měsíci</label>
-                        <input type="text" id="cron-day" placeholder="1-31 nebo *">
-                        <p class="text-red-500 text-xs mt-1 hidden" id="error-day"></p>
-                    </div>
-                    <div class="form-group">
-                        <label id="label-month">Měsíc</label>
-                        <input type="text" id="cron-month" placeholder="1-12 nebo *">
-                        <p class="text-red-500 text-xs mt-1 hidden" id="error-month"></p>
-                    </div>
-                    <div class="form-group">
-                        <label id="label-weekday">Den v týdnu</label>
-                        <input type="text" id="cron-weekday" placeholder="0-6 (Ne-Po) nebo *">
-                        <p class="text-red-500 text-xs mt-1 hidden" id="error-weekday"></p>
-                    </div>
-                </div>
-
-                <div class="form-group mt-6">
-                    <label id="label-message">Zpráva (| = nový řádek)</label>
-                    <textarea id="cron-message" rows="3" placeholder="Napiš zprávu..." class="mt-1 block w-full"></textarea>
-                </div>
-
-            </div>
-            
-            <div class="result-card mt-6">
-                <h2>Výstupy</h2>
-                
-                <div class="flex gap-4 mb-4">
-                    <div class="flex-1">
-                        <label id="label-output" class="result-label">Generovaný CRON výraz</label>
-                        <input type="text" id="cron-output" readonly class="mt-1 block w-full result-value" value="* * * * *">
-                    </div>
-                    <button id="copy-cron" class="cyber-button self-end" style="--cyber-color:#00ffff; --cyber-shadow:rgba(0,255,255,0.4);">Kopírovat</button>
-                </div>
-
-                <div class="flex gap-4">
-                    <div class="flex-1">
-                        <label id="label-command" class="result-label">Připravený Discord příkaz (pro /pridat_cron)</label>
-                        <textarea id="cron-command" rows="3" readonly class="mt-1 block w-full result-value">/pridat_cron cron_vyraz="* * * * *" channel=#kanal zprava=""</textarea>
-                    </div>
-                    <button id="copy-command" class="cyber-button self-end" style="--cyber-color:#00ff00; --cyber-shadow:rgba(0,255,0,0.4);">Kopírovat</button>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-links">
@@ -201,212 +164,41 @@
         </div>
     </footer>
 
-    <script src="templatemo-nexus-scripts.js"></script> 
+    <script src="templatemo-nexus-scripts.js"></script>
     
     <script>
-        const translations = {
-            cs: {
-                title: "CRON Generator",
-                labelPreset: "Předpřipravené příklady",
-                labelMinute: "Minuta",
-                labelHour: "Hodina",
-                labelDay: "Den v měsíci",
-                labelMonth: "Měsíc",
-                labelWeekday: "Den v týdnu",
-                labelOutput: "Generovaný CRON výraz",
-                labelMessage: "Zpráva (| = nový řádek)",
-                labelCommand: "Připravený Discord příkaz (pro /pridat_cron)",
-                starDescription: "* znamená 'každou hodnotu' (např. každou minutu, každý den, každý měsíc...)",
-                copyCron: "Kopírovat",
-                copyCommand: "Kopírovat",
-                errorText: "Chyba v datech",
-                errorMsg: "Neplatná hodnota, zadejte číslo v rozsahu nebo *"
-            },
-            en: {
-                title: "CRON Generator",
-                labelPreset: "Preset Examples",
-                labelMinute: "Minute",
-                labelHour: "Hour",
-                labelDay: "Day of Month",
-                labelMonth: "Month",
-                labelWeekday: "Day of Week",
-                labelOutput: "Generated CRON Expression",
-                labelMessage: "Message (| = new line)",
-                labelCommand: "Prepared Discord Command (for /add_cron)",
-                starDescription: "* means 'every value' (e.g., every minute, every day, every month...)",
-                copyCron: "Copy",
-                copyCommand: "Copy",
-                errorText: "Error in data",
-                errorMsg: "Invalid value, enter a number in range or *"
-            }
-        };
+        function generateCron() {
+            const minute = document.getElementById('minute').value;
+            const hour = document.getElementById('hour').value;
+            const dayOfMonth = document.getElementById('dayOfMonth').value;
+            const month = document.getElementById('month').value;
+            const dayOfWeek = document.getElementById('dayOfWeek').value;
 
-        const langSwitcher = document.getElementById('cron-lang-switcher');
-        const cronPresets = document.getElementById('cron-presets');
-        const cronMinute = document.getElementById('cron-minute');
-        const cronHour = document.getElementById('cron-hour');
-        const cronDay = document.getElementById('cron-day');
-        const cronMonth = document.getElementById('cron-month');
-        const cronWeekday = document.getElementById('cron-weekday');
-        const cronOutput = document.getElementById('cron-output');
-        const cronMessage = document.getElementById('cron-message');
-        const cronCommand = document.getElementById('cron-command');
-        const starDesc = document.getElementById('label-star-description');
-        const copyCronBtn = document.getElementById('copy-cron');
-        const copyCommandBtn = document.getElementById('copy-command');
+            const cronExpression = `${minute} ${hour} ${dayOfMonth} ${month} ${dayOfWeek}`;
+            document.getElementById('cronOutput').textContent = cronExpression;
 
-        const errorFields = {
-            minute: document.getElementById('error-minute'),
-            hour: document.getElementById('error-hour'),
-            day: document.getElementById('error-day'),
-            month: document.getElementById('error-month'),
-            weekday: document.getElementById('error-weekday')
-        };
-        
-        function updateInputBorder(element, isValid) {
-            // Používáme barvy definované v našem CSS
-            element.style.borderColor = isValid ? 'var(--color-border, #006666)' : '#f56565'; 
+            // Zde by mohla být složitější logika pro generování vysvětlení
+            document.getElementById('explanationText').innerHTML = 
+                `Úloha se spustí v čase definovaném výrazem: **${cronExpression}**`;
         }
 
-        function updateLanguage() {
-            const lang = langSwitcher.value;
-            const t = translations[lang];
-            
-            document.getElementById('cron-title').textContent = t.title;
-            document.getElementById('label-presets').textContent = t.labelPreset;
-            document.getElementById('label-minute').textContent = t.labelMinute;
-            document.getElementById('label-hour').textContent = t.labelHour;
-            document.getElementById('label-day').textContent = t.labelDay;
-            document.getElementById('label-month').textContent = t.labelMonth;
-            document.getElementById('label-weekday').textContent = t.labelWeekday;
-            document.getElementById('label-output').textContent = t.labelOutput;
-            document.getElementById('label-message').textContent = t.labelMessage;
-            document.getElementById('label-command').textContent = t.labelCommand;
-            starDesc.textContent = t.starDescription;
-            copyCronBtn.textContent = t.copyCron;
-            copyCommandBtn.textContent = t.copyCommand;
-        }
-
-        function validateInput(value, min, max){
-            if(value==='*'||value==='') return {valid:true,val:'*',msg:''};
-            
-            // Ponecháváme komplexní regex z tvého kódu pro validaci
-            if(/^(\d+|\d+(,\d+)*|\*\/\d+|\d+-\d+)(\/\d+)?$/.test(value)){ 
-                const parts=value.split(',');
-                for(let p of parts){
-                    if(p.includes('-')){
-                        const rangeParts = p.split('/');
-                        const [start,end]=rangeParts[0].split('-').map(Number);
-                        if(isNaN(start) || isNaN(end) || start<min||end>max) return {valid:false,val:value,msg:translations[langSwitcher.value].errorMsg};
-                    } 
-                    else if(p.includes('/')){
-                        const [base, step] = p.split('/');
-                        const n = Number(step);
-                        if(isNaN(n) || n === 0) return {valid:false,val:value,msg:translations[langSwitcher.value].errorMsg};
-                        if(base !== '*') {
-                             const nBase = Number(base);
-                             if(isNaN(nBase) || nBase < min || nBase > max) return {valid:false,val:value,msg:translations[langSwitcher.value].errorMsg};
-                        }
-                    }
-                    else{
-                        const n = Number(p);
-                        if(isNaN(n)||n<min||n>max) return {valid:false,val:value,msg:translations[langSwitcher.value].errorMsg};
-                    }
-                }
-                return {valid:true,val:value,msg:''};
-            }
-            return {valid:false,val:value,msg:translations[langSwitcher.value].errorMsg};
-        }
-
-        function updateCron(){
-            const presetValue = cronPresets.value;
-            const fields = [
-                {el: cronMinute, obj: validateInput(cronMinute.value,0,59), error: errorFields.minute},
-                {el: cronHour, obj: validateInput(cronHour.value,0,23), error: errorFields.hour},
-                {el: cronDay, obj: validateInput(cronDay.value,1,31), error: errorFields.day},
-                {el: cronMonth, obj: validateInput(cronMonth.value,1,12), error: errorFields.month},
-                {el: cronWeekday, obj: validateInput(cronWeekday.value,0,6), error: errorFields.weekday}
-            ];
-
-            let error = false;
-            for(const f of fields){
-                updateInputBorder(f.el, f.obj.valid); 
-                if(!f.obj.valid){
-                    f.error.textContent = f.obj.msg;
-                    f.error.classList.remove('hidden');
-                    error=true;
-                } else {
-                    f.error.classList.add('hidden');
-                }
-            }
-
-            // Nastavení, které hodnoty použijeme (z polí nebo z presetu)
-            let [minute,hour,day,month,weekday] = fields.map(f=>f.obj.val);
-
-            // Pokud je zvolen preset, použij jeho hodnoty
-            if(presetValue && presetValue!=='custom'){
-                const parts = presetValue.split(' ');
-                if(parts.length===5){
-                    [minute,hour,day,month,weekday]=parts;
-                }
-                
-                // Oprava neplnění polí při výběru presetu
-                cronMinute.value = minute;
-                cronHour.value = hour;
-                cronDay.value = day;
-                cronMonth.value = month;
-                cronWeekday.value = weekday;
-            }
-            
-            // Kontrola, zda uživatel ručně nezměnil preset, a přepnutí na 'Vlastní'
-            if(presetValue!=='custom'&&presetValue!==''){
-                const parts=presetValue.split(' ');
-                if(parts.length===5){
-                    const currentValues = fields.map(f=>f.el.value.trim() || '*');
-                    const presetChanged = parts.some((p,i) => p !== currentValues[i]);
-                    if(presetChanged){
-                        cronPresets.value='custom';
-                        // Pokud došlo ke změně, přegenerujeme z aktuálních polí
-                        [minute,hour,day,month,weekday] = fields.map(f=>f.obj.val);
-                    }
-                }
-            }
-
-
-            if(error){
-                cronOutput.value = translations[langSwitcher.value].errorText;
-                cronCommand.value = translations[langSwitcher.value].errorText;
-                return;
-            }
-
-            cronOutput.value = `${minute} ${hour} ${day} ${month} ${weekday}`;
-            const channelPlaceholder="#kanal";
-            const message = cronMessage.value.replace(/\n/g,'|');
-            cronCommand.value = `/pridat_cron cron_vyraz="${cronOutput.value}" channel=${channelPlaceholder} zprava="${message}"`;
-        }
-
-        // --- Event Listeners ---
-        cronPresets.addEventListener('change', updateCron);
-        [cronMinute,cronHour,cronDay,cronMonth,cronWeekday].forEach(el=>el.addEventListener('input',updateCron));
-        cronMessage.addEventListener('input', updateCron);
-
-        function copyToClipboard(element) {
-            element.select();
-            element.setSelectionRange(0, 99999); 
-            try {
-                navigator.clipboard.writeText(element.value);
-            } catch (err) {
-                document.execCommand('copy');
-            }
+        function copyCron() {
+            const cronText = document.getElementById('cronOutput').textContent;
+            navigator.clipboard.writeText(cronText).then(() => {
+                const button = document.querySelector('.copy-button');
+                const originalText = button.textContent;
+                button.textContent = 'Zkopírováno!';
+                setTimeout(() => {
+                    button.textContent = originalText;
+                }, 1500);
+            }).catch(err => {
+                console.error('Nepodařilo se zkopírovat text: ', err);
+            });
         }
         
-        copyCronBtn.addEventListener('click',()=>copyToClipboard(cronOutput));
-        copyCommandBtn.addEventListener('click',()=>copyToClipboard(cronCommand));
-        langSwitcher.addEventListener('change',()=>{updateLanguage();updateCron();});
-
-        // Inicializace
-        updateLanguage();
-        updateCron();
+        // Spustit generování při načtení stránky
+        document.addEventListener('DOMContentLoaded', generateCron);
     </script>
+
 </body>
 </html>
