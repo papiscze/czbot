@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CZBOT - Dashboard Serverů</title>
+    <link href="templatemo-nexus-style.css" rel="stylesheet">
+    
+    <style>
+        /* Speciální CSS pro Dashboard */
+        .content-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .server-list-container {
+            background-color: rgba(33, 44, 55, 0.7); 
+            border: 1px solid #00fffb; 
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 255, 251, 0.3);
+        }
+        
+        .server-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px dashed #2a2a3e;
+            transition: background-color 0.3s;
+        }
+        .server-item:last-child {
+            border-bottom: none;
+        }
+        .server-item:hover {
+            background-color: rgba(0, 255, 251, 0.05);
+        }
+        
+        .server-info {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+        }
+        
+        .server-name {
+            font-size: 1.2em;
+            color: #57F287; 
+            font-weight: bold;
+            margin-left: 15px;
+        }
+        
+        .server-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #00fffb;
+        }
+        
+        .server-status {
+            font-size: 0.9em;
+            margin-left: 20px;
+            color: #aaa;
+        }
+        
+        .status-ready { color: #57F287; }
+        .status-bot-missing { color: #F23F43; }
+
+        /* Tlačítka */
+        .cyber-button.detail-button {
+            background-color: #5a5a7a;
+            border-color: #5a5a7a;
+            color: white;
+            padding: 8px 15px;
+            text-decoration: none;
+            margin-left: 10px;
+        }
+        
+        /* Chybové/Login zprávy */
+        #messageBlock {
+            padding: 40px;
+            text-align: center;
+            color: #00fffb;
+            font-size: 1.2em;
+            border: 1px solid #00fffb;
+            border-radius: 8px;
+            background-color: rgba(33, 44, 55, 0.9);
+            margin-top: 40px;
+        }
+        #messageBlock a {
+            color: #57F287;
+            text-decoration: underline;
+            font-weight: bold;
+        }
+        /* Zvýraznění aktivní položky v navigaci */
+        .nav-links li a.active-dashboard {
+            color: #00fffb !important;
+            font-weight: bold;
+            text-shadow: 0 0 5px #00fffb;
+        }
+    </style>
+</head>
+<body id="top">
+    <div class="cyber-bg">
+        <div class="cyber-gradient"></div>
+        <div class="matrix-rain" id="matrixRain"></div>
+    </div>
+    <div class="particles" id="particlesContainer"></div>
+    <div class="data-streams" id="dataStreams"></div>
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+    <div class="grid-overlay">
+        <div class="grid-lines"></div>
+        <div class="grid-glow"></div>
+    </div>
+    <div class="scanlines"></div>
+    <div class="noise-overlay"></div>
+    
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">CZbot</a>
+            
+            <ul class="nav-links">
+                <li><a href="commands.html">Příkazy</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Moduly ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="modules/auditlogger.html">Auditlogger</a></li>
+                        <li><a href="modules/audio_stream.html">Audio Stream</a></li>
+                        <li><a href="modules/xp.html">XP systém a úrovně</a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Nástroje ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="crongenerator.html">Cron Generátor</a></li>
+                        <li><a href="embedgenerator.html">Embed Generátor</a></li>
+                        <li><a href="https://github.com/users/papiscze/projects/9">Roadmapa</a></li>
+                        <li><a href="stats.html">Statistiky bota</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="warns.html">Moderátorské záznamy</a></li>
+                <li><a href="dashboard.html" class="active-dashboard">Dashboard</a></li> 
+                <li><a href="privacy.html">GDPR / ToS</a></li>
+            </ul>
+
+            <div class="nav-bottom">
+                <a href="/api/auth/discord" class="cyber-button" id="authButton">
+                    <i class="bi bi-discord me-2"></i> Přihlásit se
+                </a>
+            </div>
+            
+            <button class="mobile-menu-button" id="mobileMenuBtn"></button>
+        </div>
+    </nav>
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    <div class="mobile-menu" id="mobileMenu"></div>
+    
+    <main class="content-container">
+        <div class="command-header-section">
+            <h1 class="main-title">🛡️ Správcovský Dashboard</h1>
+            <p class="subtitle" id="userStatus">Zobrazit servery, které spravujete.</p>
+        </div>
+        
+        <div id="messageBlock">
+            Kontroluji stav přihlášení...
+        </div>
+
+        <div class="server-list-container" id="serverListContainer" style="display: none;">
+            <h2 class="section-title">Vaše Spravované Servery</h2>
+            <div id="serverList">
+                </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        </footer>
+
+    <script src="templatemo-nexus-scripts.js"></script>
+    
+    <script>
+        const API_BASE_URL = window.location.origin;
+
+        // --- FIKTIVNÍ DATA ---
+        const MOCK_GUILDS = [
+            {
+                id: "123456789012345678",
+                name: "Cyberpunk CZ/SK Hub",
+                icon_url: "https://cdn.discordapp.com/icons/123456789012345678/a_hash1234.png?size=40",
+                bot_present: true
+            },
+            {
+                id: "234567890123456789",
+                name: "Testovací Zóna 77",
+                icon_url: null, 
+                bot_present: true
+            },
+            {
+                id: "345678901234567890",
+                name: "Starý Server (Chybí Bot)",
+                icon_url: "https://cdn.discordapp.com/icons/345678901234567890/hash5678.png?size=40",
+                bot_present: false 
+            },
+            {
+                id: "456789012345678901",
+                name: "CZbot Podpora a Nápady",
+                icon_url: null, 
+                bot_present: true
+            }
+        ];
+        
+        function showMessage(type, message, actionUrl = null, actionText = null) {
+            const block = document.getElementById('messageBlock');
+            block.style.display = 'block';
+            
+            let html = `<p>${message}</p>`;
+            if (actionUrl && actionText) {
+                html += `<a href="${actionUrl}" class="cyber-button" style="margin-top: 20px; display: inline-block;">${actionText}</a>`;
+            }
+
+            if (type === 'error') block.style.borderColor = '#F23F43';
+            else block.style.borderColor = '#00fffb';
+            
+            document.getElementById('serverListContainer').style.display = 'none';
+            block.innerHTML = html;
+        }
+
+        function hideMessage() {
+            document.getElementById('messageBlock').style.display = 'none';
+            document.getElementById('serverListContainer').style.display = 'block';
+        }
+
+        async function loadDashboard() {
+            showMessage('loading', 'Probíhá ověřování a načítání serverů...');
+            
+            const authButton = document.getElementById('authButton');
+            authButton.innerHTML = `Obnovit přístup`; 
+            authButton.href = `${API_BASE_URL}/api/auth/discord?next=${encodeURIComponent(window.location.pathname)}`;
+            
+            await new Promise(resolve => setTimeout(resolve, 800)); 
+
+            const guilds = MOCK_GUILDS;
+
+            const serverListDiv = document.getElementById('serverList');
+            serverListDiv.innerHTML = ''; 
+
+            if (!guilds || guilds.length === 0) {
+                document.getElementById('userStatus').textContent = 'Uvítací zpráva.';
+                showMessage('empty', 'Nebyly nalezeny žádné servery, které byste spravoval/a a kde by byl CZbot přítomen.');
+                return;
+            }
+            
+            hideMessage();
+            document.getElementById('userStatus').textContent = `Uživatel (ID 1234) spravuje ${guilds.length} serverů.`;
+
+            guilds.forEach(guild => {
+                const isBotPresent = guild.bot_present; 
+                const statusClass = isBotPresent ? 'status-ready' : 'status-bot-missing';
+                const statusText = isBotPresent ? 'Bot je přítomen' : 'BOT CHYBÍ!';
+                
+                // Klíčová změna: Nastavení URL
+                const detailLink = isBotPresent ? `server_settings.html?guild_id=${guild.id}` : `server_details.html?guild_id=${guild.id}`; 
+                
+                const iconUrl = guild.icon_url || `https://cdn.discordapp.com/embed/avatars/${(parseInt(guild.id.slice(0, 3)) % 5)}.png`;
+                
+                const item = document.createElement('div');
+                item.className = 'server-item';
+                item.innerHTML = `
+                    <div class="server-info">
+                        <img src="${iconUrl}" alt="Server Icon" class="server-icon">
+                        <span class="server-name">${guild.name}</span>
+                        <span class="server-status ${statusClass}">| ${statusText}</span>
+                    </div>
+                    <div>
+                        <a href="${detailLink}" class="cyber-button detail-button" 
+                           ${isBotPresent ? '' : ''}>
+                            ${isBotPresent ? 'Nastavení' : 'Detaily'}
+                        </a>
+                        ${!isBotPresent ? `<a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands&guild_id=${guild.id}" target="_blank" class="cyber-button detail-button" style="background-color: #F23F43; border-color: #F23F43; margin-left: 10px;">Pozvat Bota</a>` : ''}
+                    </div>
+                `;
+                serverListDiv.appendChild(item);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', loadDashboard);
+    </script>
+</body>
+</html>
