@@ -42,7 +42,7 @@
                         <a href="status.html" class="active-item">Status bota</a> 
                     </div>
                 </li>      
-                <li><a href="https://papiscze.github.io/czbot/warns.html">Moderátorské záznamy</a></li>
+                <li><a href="warns.html">Moderátorské záznamy</a></li>
                 <li><a href="https://rs422cznas.myds.me:5038/stats/">Webové statistiky serverů</a></li>
             </ul>
             <div class="nav-bottom">
@@ -78,7 +78,7 @@
                     </ul>
                 </li>
 
-                <li><a href="https://papiscze.github.io/czbot/warns.html">Moderátorské záznamy</a></li>
+                <li><a href="warns.html">Moderátorské záznamy</a></li>
                 <li><a href="https://rs422cznas.myds.me:5038/stats/">Webové statistiky serverů</a></li>
             </ul>
         </nav>
@@ -141,13 +141,28 @@
     <script src="templatemo-nexus-scripts.js"></script>
     
     <script>
-        // Seznam modulů pro kontrolu chybějících
+        // Seznam modulů pro kontrolu chybějících (ZŮSTÁVÁ BEZE ZMĚNY)
         const cogs_to_load = ["Audio Streaming","Administrátorský cog","Administrátorský 2 cog","Crossban","Pokročilé plánované zprávy","Auditlogger","Automatické publikace zpráv","Automatické role","Dočasné hlasové kanály","Giveaway","Hlasování","Kolo štěstí","Lokalizace","Moderátorské příkazy","Narozeniny","Ověřování a Reakční role","Patreon","Počítání","Podcasty","Překlad","RAID ochrana","Reputace","RSS čtečka", "Zálohování serverů", "Plánované zprávy","Scam ochrana","Statistiky","Svátky","Tikety","Uvítací/odchodové zprávy","Uživatelské příkazy","Vlákna a reakce na zprávy","Vodoznaky","XP úrovně","AI cog", "Zpovědi"];
 
         async function fetchStatus() {
             const statusList = document.getElementById("statusList");
             const cogsList = document.getElementById("cogsList");
             const warnBox = document.getElementById("warnBox");
+
+            // --- LOGIKA OPRAVY PRO POSUN ---
+            // 1. Uložit aktuální výšku před vymazáním
+            const statusHeight = statusList.clientHeight;
+            const cogsHeight = cogsList.clientHeight;
+
+            // 2. Nastavit minimální výšku k zamezení posunu
+            // Použijeme pouze v případě, že je výška větší než 0, abychom zbytečně neaplikovali min-height na prázdný prvek
+            if (statusHeight > 0) {
+                statusList.style.minHeight = `${statusHeight}px`;
+            }
+            if (cogsHeight > 0) {
+                cogsList.style.minHeight = `${cogsHeight}px`;
+            }
+            // --------------------------------
 
             // 🟠 Zde zadejte vlastní status zprávu
             const warn_message = ""; 
@@ -159,6 +174,7 @@
                 warnBox.style.display = "none";
             }
 
+            // Nyní, když je min-height nastaven, můžeme bezpečně vymazat obsah:
             statusList.innerHTML="<li>Načítám data...</li>";
             cogsList.innerHTML="<li>Načítám moduly...</li>";
 
@@ -169,11 +185,10 @@
             }
 
             try {
-                // Místo tvého skutečného API endpointu
                 const res = await fetch("https://rs422cznas.myds.me:5038/status"); 
                 const data = await res.json();
 
-                // --- ZÁKLADNÍ STATISTIKY ---
+                // --- VÝPOČTY (ZŮSTÁVAJÍ BEZE ZMĚNY) ---
                 const uptime_sec = data.uptime_seconds || 0;
                 
                 const days = Math.floor(uptime_sec / 86400);
@@ -187,6 +202,7 @@
                 uptime_str += `${minutes}m ${seconds}s`;
 
 
+                // --- PLNĚNÍ SEZNAMŮ (ZŮSTÁVÁ BEZE ZMĚNY) ---
                 statusList.innerHTML="";
                 statusList.appendChild(addItem("Bot status", data.bot_status, "", data.bot_status==="online"?"status-online":"status-offline-cog"));
                 statusList.appendChild(addItem("Uptime", uptime_str));
@@ -194,7 +210,7 @@
                 statusList.appendChild(addItem("Počet uživatelů", new Intl.NumberFormat('cs-CZ').format(data.users))); 
                 statusList.appendChild(addItem("CPU využití", data.cpu_percent.toFixed(2), "%"));
                 statusList.appendChild(addItem("RAM využití", data.ram_mb.toFixed(2), "MB"));
-                statusList.appendChild(addItem("API Status", data.api_db_status, "", data.api_db_status==="OK"?"status-ok":"status-offline-cog"));        
+                statusList.appendChild(addItem("API Status", data.api_db_status, "", data.api_db_status==="OK"?"status-ok":"status-offline-cog"));        
                 statusList.appendChild(addItem("Databáze Status", data.api_db_status, "", data.api_db_status==="OK"?"status-ok":"status-offline-cog"));
 
                 // --- STAV MODULŮ (COGS) ---
@@ -226,7 +242,7 @@
                     cogsList.appendChild(addItem(name,displayStatus,"",cls));
                 }
             } catch(err){
-                // Zpracování chyby při nedostupnosti API
+                // --- ZPRACOVÁNÍ CHYBY (ZŮSTÁVÁ BEZE ZMĚNY) ---
                 statusList.innerHTML="";
                 statusList.appendChild(addItem("Bot status","Offline","", "status-offline-cog"));
                 statusList.appendChild(addItem("Uptime","-"));
@@ -241,12 +257,17 @@
                 cogs_to_load.sort((a,b) => a.localeCompare(b, 'cs')).forEach(label => {
                     cogsList.appendChild(addItem(label,"Offline","", "status-offline-cog"));
                 });
+            } finally {
+                // 3. Po dokončení načítání (ať už úspěšně nebo s chybou), resetovat min-height, 
+                // aby se výška přizpůsobila novému obsahu
+                statusList.style.minHeight = '0';
+                cogsList.style.minHeight = '0';
             }
         }
 
         fetchStatus();
         // Nastavit automatické obnovování statusu každých 30 sekund
-        setInterval(fetchStatus, 30000); 
+        setInterval(fetchStatus, 30000);
     </script>
 </body>
 </html>

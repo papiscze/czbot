@@ -3,327 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CZBOT - Výpis prohřešků uživatelů</title>
-    <link href="templatemo-nexus-style.css" rel="stylesheet"> 
-    <style>
-        /* ==================================== */
-        /* STYLY PŘIZPŮSOBENÉ PRO LOGOVACÍ TABULKU (ZŮSTÁVAJÍ) */
-        /* ==================================== */
+    <title>Moderátorské záznamy | CZbot</title>
+    <link href="templatemo-nexus-style.css" rel="stylesheet">
+    
+    </head>
 
-        /* Základní rozložení */
-        .logs-section {
-            padding-top: 150px; 
-            padding-bottom: 80px;
-            min-height: 100vh;
-        }
-
-        .logs-container {
-            max-width: 1400px;
-            margin: auto;
-            padding: 0 20px;
-        }
-
-        /* Sekce hlavičky */
-        .section-header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .section-title {
-            font-size: 3rem;
-            color: var(--color-primary, #64c8ff);
-            margin-bottom: 10px;
-            text-shadow: 0 0 10px rgba(100, 200, 255, 0.5);
-        }
-
-        .section-subtitle {
-            color: #aaa;
-            font-size: 1.1rem;
-        }
-
-        /* Kontejner pro ovládací prvky */
-        .controls-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-
-        /* Vzhled inputu */
-        #searchInput { 
-            flex-grow: 1;
-            max-width: 400px;
-            padding: 10px 15px;
-            background-color: rgba(30, 30, 50, 0.7);
-            border: 1px solid rgba(100, 200, 255, 0.3);
-            border-radius: 6px;
-            color: #ddd;
-            font-family: inherit;
-            transition: border-color 0.3s, box-shadow 0.3s;
-        }
-        #searchInput:focus {
-            border-color: var(--color-primary, #64c8ff);
-            box-shadow: 0 0 5px rgba(100, 200, 255, 0.5);
-            outline: none;
-        }
-
-        /* Tlačítka */
-        .action-button {
-            padding: 10px 15px;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s, color 0.3s, transform 0.1s;
-            white-space: nowrap;
-            border: none;
-            background-color: rgba(100, 200, 255, 0.15);
-            color: var(--color-primary, #64c8ff);
-            border: 1px solid var(--color-primary, #64c8ff);
-        }
-        .action-button:hover {
-            background-color: rgba(100, 200, 255, 0.3);
-        }
-        .action-button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        /* Tabulka */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            background-color: rgba(10, 10, 20, 0.7);
-            color: #ddd;
-            border: 1px solid rgba(100, 200, 255, 0.1);
-            border-radius: 12px;
-            overflow: hidden; 
-        }
-
-        th, td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid rgba(100, 200, 255, 0.1);
-        }
-
-        th {
-            background-color: rgba(100, 200, 255, 0.1);
-            color: var(--color-primary, #64c8ff);
-            font-weight: 700;
-            text-transform: uppercase;
-            font-size: 0.85rem;
-        }
-
-        tr:hover {
-            background-color: rgba(100, 200, 255, 0.05);
-        }
-        
-        /* Paginace */
-        .pagination {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 30px;
-            gap: 20px;
-        }
-
-        #pageInfo {
-            font-weight: 600;
-            color: #ddd;
-        }
-        
-        .content-hidden {
-            opacity: 0.1;
-            pointer-events: none;
-            transition: opacity 0.3s;
-        }
-
-        /* ============================================================== */
-        /* ZJEDNOCENÉ A VYSOKOSPECIFICKÉ STYLY PRO MOBILNÍ NAVIGACI */
-        /* ============================================================== */
-
-        /* Předpokládané proměnné pro konzistenci */
-        :root {
-            --color-primary: #64c8ff; 
-            --color-text-light: #f0f0f0;
-            --color-border: rgba(100, 200, 255, 0.2);
-            --color-input-bg: rgba(100, 200, 255, 0.1);
-        }
-        
-        .dropbtn {
-            padding: 10px 15px;
-            background-color: transparent;
-            color: var(--color-text-light);
-            text-decoration: none;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: color 0.3s;
-            display: block; 
-            width: 100%;
-            text-align: left;
-        }
-        .dropbtn:hover {
-            color: var(--color-primary);
-        }
-
-        /* --- Hamburger Ikona & Tlačítka --- */
-        .mobile-menu-button {
-            display: none; 
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 10px;
-            z-index: 1001;
-        }
-
-        .hamburger span {
-            display: block;
-            width: 25px;
-            height: 3px;
-            margin: 5px 0;
-            background-color: var(--color-primary);
-            transition: all 0.3s ease;
-        }
-
-        .mobile-menu-button.open .hamburger span:nth-child(1) {
-            transform: rotate(-45deg) translate(-5px, 6px);
-        }
-        .mobile-menu-button.open .hamburger span:nth-child(2) {
-            opacity: 0;
-        }
-        .mobile-menu-button.open .hamburger span:nth-child(3) {
-            transform: rotate(45deg) translate(-5px, -6px);
-        }
-
-        /* --- Dropdown Styly (Desktop/Základní) --- */
-        .dropdown-link {
-            position: relative;
-            display: inline-block;
-        }
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: rgba(30, 30, 50, 0.95);
-            min-width: 200px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.5);
-            z-index: 1000; 
-            border: 1px solid var(--color-border);
-            border-radius: 6px;
-            padding: 5px 0;
-            backdrop-filter: blur(5px);
-            top: 100%;
-            left: 0;
-        }
-        .dropdown-content a {
-            color: var(--color-text-light);
-            padding: 10px 16px;
-            text-decoration: none;
-            display: block;
-            font-size: 0.95rem;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        .dropdown-content a:hover {
-            background-color: var(--color-input-bg);
-            color: var(--color-primary);
-        }
-
-        /* Vynucené zobrazení na hover (pro desktop) */
-        @media (min-width: 993px) {
-            .dropdown-link:hover .dropdown-content {
-                display: block;
-            }
-            /* Skrytí mobilní verze tlačítka na desktopu */
-            .nav-links .nav-bottom-mobile-li {
-                display: none !important; 
-            }
-        }
-
-        /* ==================================== */
-        /* ZJEDNOCENÉ MOBILNÍ ROZVRŽENÍ (do 992px) */
-        /* ==================================== */
-
-        @media (max-width: 992px) {
-            /* Zajištění zobrazení hamburgeru */
-            .mobile-menu-button {
-                display: block; 
-            }
-            
-            /* Vynucené skrytí desktopového tlačítka */
-            .nav-bottom {
-                display: none !important;
-            }
-
-            /* Vynucené umístění a vzhled mobilního menu */
-            .nav-links {
-                display: none; 
-                flex-direction: column;
-                width: 100%;
-                position: absolute;
-                top: 70px; /* Nastavte podle výšky Vašeho navigačního baru */
-                left: 0;
-                
-                /* KLÍČOVÉ: Vynucené tmavé pozadí přes celou šířku */
-                background-color: rgba(10, 10, 20, 0.95) !important; 
-                padding: 10px 0;
-                border-top: 1px solid rgba(100, 200, 255, 0.1);
-                z-index: 999; 
-                
-                margin: 0 !important;
-                list-style: none;
-            }
-            
-            .nav-links.active {
-                display: flex !important; /* Zobrazení menu po kliknutí */
-            }
-
-            .nav-links li {
-                width: 100%;
-                text-align: left;
-            }
-
-            .nav-links a {
-                padding: 10px 20px;
-                display: block;
-            }
-
-            /* Mobilní zobrazení dropdownu */
-            .dropdown-link .dropdown-content {
-                position: static;
-                box-shadow: none;
-                border: none;
-                padding: 0;
-                background-color: transparent;
-                display: none !important; 
-            }
-            
-            .dropdown-link.open-mobile .dropdown-content {
-                display: block !important; 
-            }
-
-            .dropdown-link .dropdown-content a {
-                padding-left: 40px !important; 
-            }
-            
-            /* Zobrazení a styling mobilního tlačítka pro přidání na server */
-            .nav-links .nav-bottom-mobile-li {
-                display: block !important; 
-                padding: 10px 20px;
-                text-align: center;
-                border-top: 1px solid rgba(100, 200, 255, 0.1);
-                margin-top: 5px;
-                padding-top: 15px;
-            }
-            .nav-bottom-mobile-li .cyber-button {
-                display: block; 
-                width: 90%;
-                margin: auto;
-            }
-        }
-    </style>
-</head>
 <body id="top">
+    
     <div class="cyber-bg">
         <div class="cyber-gradient"></div>
         <div class="matrix-rain" id="matrixRain"></div>
@@ -339,107 +25,132 @@
     </div>
     <div class="scanlines"></div>
     <div class="noise-overlay"></div>
-
+    
     <nav>
         <div class="nav-container">
-            <a href="index.html" class="logo">CZbot</a> 
-            <ul class="nav-links" id="navLinks"> 
-                <li class="dropdown-link">
-                    <a href="#" class="dropbtn">Funkce ▼</a> 
-                    <div class="dropdown-content">
-                        <a href="crongenerator.html">CRON Generator</a>
-                        <a href="embedgenerator.html">Embed Generator</a>
-                        <a href="stats.html">Status bota</a> 
-                    </div>
-                </li>
-                
+            <a href="index.html" class="logo">CZbot</a>
+            <ul class="nav-links">
                 <li><a href="commands.html">Příkazy</a></li>
-                <li><a href="warns.html">Moderátorské záznamy</a></li> 
+                
+                <li class="dropdown">
+                    <a href="" class="dropbtn">Nástroje<span class="arrow">▼</span></a> 
+                    <div class="dropdown-content">
+                        <a href="crongenerator.html">Cron Generator</a>
+                        <a href="embedgenerator.html">Embed Generator</a>
+                        <a href="status.html">Status bota</a> 
+                    </div>
+                </li>      
+                <li><a href="warns.html" class="active-item">Moderátorské záznamy</a></li>
                 <li><a href="https://rs422cznas.myds.me:5038/stats/">Webové statistiky serverů</a></li>
-                <li><a href="https://discord.gg/hk6PdtVxbm" target="_blank">Support server</a></li>
-
-                <li class="nav-bottom-mobile-li"> 
-                    <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Přidat na server</a>
-                </li>
             </ul>
-            
-            <div class="nav-bottom" id="navBottomDesktop">
-                <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Přidat na server</a>
+            <div class="nav-bottom">
+                <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Přidat bota</a>
             </div>
-            
-            <button class="mobile-menu-button" id="mobileMenuBtn" aria-label="Otevřít mobilní menu">
+            <button class="mobile-menu-button" id="mobileMenuBtn">
                 <div class="hamburger">
                     <span></span><span></span><span></span>
                 </div>
             </button>
         </div>
     </nav>
-    
-    <section class="logs-section">
-        <div class="logs-container">
-            <div class="section-header">
-                <h1 class="section-title">CZBOT - Výpis prohřešků uživatelů</h1>
-                <p class="section-subtitle">Záznam všech prohřešků (Ban, Mute, Warn) na serverech.</p>
+
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <a href="index.html" class="mobile-menu-logo">CZbot</a>
+            <button class="mobile-menu-close" id="mobileMenuClose">✕</button>
+        </div>
+        <nav class="mobile-menu-nav">
+            <ul>
+                <li><a href="commands.html">Příkazy</a></li>
+                <li class="mobile-submenu-header">
+                    <a href="" class="mobile-dropbtn">Nástroje<span class="arrow">▼</span></a>
+                    <ul class="mobile-submenu-content">
+                        <li><a href="crongenerator.html">Cron Generator</a></li>
+                        <li><a href="embedgenerator.html">Embed Generator</a></li>
+                        <li><a href="status.html">Status bota</a></li> 
+                    </ul>
+                </li>
+                <li><a href="warns.html" class="active-item">Moderátorské záznamy</a></li>
+                <li><a href="https://rs422cznas.myds.me:5038/stats/">Webové statistiky serverů</a></li>
+            </ul>
+        </nav>
+        <div class="mobile-menu-cta">
+            <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Přidat bota</a>
+        </div>
+    </div>
+
+    <section class="command-viewer fade-up warns-section cyber-content" id="warnsSection">
+        <div class="command-viewer-container warns-container">
+            <header class="command-header status-header">
+                <h1 class="header-title">Moderátorské Záznamy</h1>
+                <p class="header-subtitle">Přehled akcí a trestů (Bany, Muty) provedených pomocí CZBOTa.</p>
+            </header>
+            
+            <div id="loadingSpinner" style="display: none; text-align: center; color: #00ffff; padding: 20px;">
+                <div class="spinner"></div> Načítám data...
             </div>
 
-            <div class="controls-container">
-                <input type="text" id="searchInput" placeholder="Hledat podle ID, jména nebo důvodu..." />
-                <button id="refreshButton" class="action-button">Aktualizovat</button>
+            <input type="text" id="searchInput" placeholder="Hledat podle ID, jména nebo důvodu..." />
+            <button id="refreshButton">Aktualizovat</button>
+
+            <div style="overflow-x: auto;">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Datum a čas</th>
+                            <th>Uživatel</th>
+                            <th>Důvod</th>
+                            <th>Typ</th>
+                            <th>Moderátor</th>
+                            <th>Expirace</th>
+                            <th>Server</th>
+                        </tr>
+                    </thead>
+                    <tbody id="logTableBody"></tbody>
+                </table>
             </div>
-            
-            <table>
-                <thead>
-                    <tr>
-                        <th>Datum a čas</th>
-                        <th>Uživatel</th>
-                        <th>Důvod</th>
-                        <th>Typ</th>
-                        <th>Moderátor</th>
-                        <th>Expirace</th>
-                        <th>Server</th>
-                    </tr>
-                </thead>
-                <tbody id="logTableBody"></tbody>
-            </table>
 
             <div class="pagination">
-                <button id="prevPage" class="action-button">Předchozí</button>
+                <button id="prevPage">Předchozí</button>
                 <span id="pageInfo">Stránka 1 z 1</span>
-                <button id="nextPage" class="action-button">Další</button>
+                <button id="nextPage">Další</button>
             </div>
             
-        </div>
-    </section>
+        </div> </section>
 
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-links">
-                <a href="https://github.com/papiscze/czbot" target="_blank">GitHub</a>
+                <a href="https://github.com/papiscze/czbot">GitHub</a>
                 <span class="footer-separator">•</span>
-                <a href="https://discord.gg/hk6PdtVxbm" target="_blank">Support server</a>
+                <a href="https://discord.gg/hk6PdtVxbm">Support Server</a>
                 <span class="footer-separator">•</span>
-                <a href="index.html#features">Funkce</a>
+                <a href="https://github.com/papiscze/czbot/wiki">GitHub dokumentace</a>
+                <span class="footer-separator">•</span>
+                <a href="mailto:admin@ofpmafia.eu">Kontakt</a>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 CZbot. Všechna práva vyhrazena.</p>
-                <p class="footer-credit">Šablona inspirována <a href="https://templatemo.com/tm-594-nexus-flow" target="_blank" rel="noopener nofollow">TemplateMo Nexus Flow</a></p>
+                <p>&copy; 2025 CZbot. Verze webu 1.0. Všechna práva vyhrazena</p>
+                <p class="footer-credit">Šablona inspirována <a href="https://templatemo.com" target="_blank" rel="noopener nofollow">TemplateMo</a></p>
             </div>
         </div>
     </footer>
 
-    <script src="templatemo-nexus-scripts.js"></script> 
-    
+    <script src="templatemo-nexus-scripts.js"></script>
     <script>
+        // PŮVODNÍ JAVASCRIPT LOGIKA Z WARNS.HTML
         const API_URL = "https://rs422cznas.myds.me:5038/logs"; 
-        
         const SIMULATED_DELAY_MS = 300; 
         const RECORDS_PER_PAGE = 20;
 
         const searchInput = document.getElementById("searchInput");
         const logTableBody = document.getElementById("logTableBody");
         const refreshButton = document.getElementById("refreshButton");
+        const loadingSpinner = document.getElementById("loadingSpinner");
         
-        const contentElements = [document.querySelector('h1'), searchInput, refreshButton, document.querySelector('table'), document.querySelector('.pagination'), document.querySelector('.footer')];
+        // Prvky, které se mají skrýt při načítání
+        const contentElements = [document.querySelector('.status-header'), searchInput, refreshButton, document.querySelector('table'), document.querySelector('.pagination'), document.querySelector('footer')];
 
         const prevPageButton = document.getElementById("prevPage");
         const nextPageButton = document.getElementById("nextPage");
@@ -457,20 +168,30 @@
                 timeout = setTimeout(() => func.apply(this, args), delay);
             };
         }
+
+        function showLoading() {
+            loadingSpinner.style.display = 'block';
+            document.getElementById('warnsSection').classList.add('content-hidden');
+            // Zajišťuje skrytí obsahu při načítání
+        }
+
+        function hideLoading() {
+            loadingSpinner.style.display = 'none';
+            document.getElementById('warnsSection').classList.remove('content-hidden');
+        }
         
         // --- Data Fetching and Processing ---
 
         async function fetchLogs(searchTerm = '') {
-            // Nahrazujeme showLoading()
-            contentElements
-                .filter(el => el != null) 
-                .forEach(el => el.classList.add('content-hidden'));
+            showLoading();
             
+            // Změna koncového bodu pro zobrazení reálných logů
             const url = searchTerm ? `${API_URL}?search=${encodeURIComponent(searchTerm)}` : API_URL;
 
             try {
                 const [response] = await Promise.all([
-                    fetch(url),
+                    // Zde by mělo být vaše skutečné API
+                    fetch(url), 
                     new Promise(resolve => setTimeout(resolve, SIMULATED_DELAY_MS))
                 ]);
 
@@ -480,19 +201,15 @@
                     return;
                 }
                 
-                allLogs = await response.json();
+                // PŘEDPOKLÁDÁME, že API vrací pole logů
+                allLogs = await response.json(); 
                 processLogs(); 
 
             } catch (error) {
                 logTableBody.innerHTML = `<tr><td colspan='7' style="color: red; text-align: center;">Došlo k chybě při komunikaci se serverem: ${error.message}</td></tr>`;
                 console.error("Chyba při načítání logů:", error);
             } finally {
-                // Nahrazujeme hideLoading()
-                setTimeout(() => {
-                    contentElements
-                        .filter(el => el != null)
-                        .forEach(el => el.classList.remove('content-hidden'));
-                }, 300); 
+                hideLoading();
             }
         }
 
@@ -503,18 +220,17 @@
 
         function renderTable(logsToDisplay) {
             logTableBody.innerHTML = "";
-            const totalCols = 7; 
             if (logsToDisplay.length === 0) {
-                logTableBody.innerHTML = `<tr><td colspan='${totalCols}'>Žádné výsledky</td></tr>`;
+                logTableBody.innerHTML = "<tr><td colspan='7'>Žádné výsledky</td></tr>";
                 return;
             }
             logsToDisplay.forEach(log => {
                 const tr = document.createElement("tr");
-                const expirationText = log.duration ? log.duration : "N/A"; 
+                const expirationText = log.duration ? log.duration : "N/A";
                 
                 const formattedDate = log.timestamp 
                     ? new Date(log.timestamp).toLocaleString() 
-                    : 'N/A';
+                    : 'N/A'; 
         
                 tr.innerHTML = `
                     <td>${formattedDate}</td>
@@ -566,6 +282,7 @@
             if (currentPage < totalPages) {
                 currentPage++;
                 displayCurrentPage();
+                
             }
         });
 
@@ -584,70 +301,6 @@
         }
 
         fetchLogs(searchInput.value.trim()); 
-    </script>
-
-    <script>
-    // 🌟 Sjednocená JS logika pro mobilní menu 
-    document.addEventListener('DOMContentLoaded', () => {
-        const navLinks = document.getElementById('navLinks'); 
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const dropdownLinks = document.querySelectorAll('.dropdown-link');
-
-        if (mobileMenuBtn && navLinks) {
-            // 1. Hlavní mobilní menu (Hamburger)
-            mobileMenuBtn.addEventListener('click', () => {
-                navLinks.classList.toggle('active');
-                mobileMenuBtn.classList.toggle('open');
-                
-                if (!navLinks.classList.contains('active')) {
-                    dropdownLinks.forEach(dLink => dLink.classList.remove('open-mobile'));
-                }
-            });
-
-            // 2. Logika pro rozbalovací menu (dropdown) v mobilním menu
-            dropdownLinks.forEach(link => {
-                const dropbtn = link.querySelector('.dropbtn');
-                if (dropbtn) {
-                    dropbtn.addEventListener('click', function(e) {
-                        if (window.innerWidth <= 992) {
-                            e.preventDefault(); 
-                            e.stopPropagation(); 
-                            
-                            // Zavřít ostatní, pokud nejsou stejné
-                            dropdownLinks.forEach(dLink => {
-                                if (dLink !== link) {
-                                    dLink.classList.remove('open-mobile');
-                                }
-                            });
-                            
-                            link.classList.toggle('open-mobile');
-                        }
-                    });
-                }
-            });
-
-            // 3. Zavření menu po kliknutí na libovolný odkaz
-            const allNavLinks = navLinks.querySelectorAll('a:not(.dropbtn)'); 
-            allNavLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    if (window.innerWidth <= 992 && navLinks.classList.contains('active')) {
-                        navLinks.classList.remove('active');
-                        mobileMenuBtn.classList.remove('open');
-                        dropdownLinks.forEach(dLink => dLink.classList.remove('open-mobile'));
-                    }
-                });
-            });
-            
-            // 4. Zajištění, že se menu uzavře při změně velikosti (z mobilu na desktop)
-            window.addEventListener('resize', () => {
-                if (window.innerWidth > 992 && navLinks.classList.contains('active')) {
-                    navLinks.classList.remove('active');
-                    mobileMenuBtn.classList.remove('open');
-                    dropdownLinks.forEach(dLink => dLink.classList.remove('open-mobile'));
-                }
-            });
-        }
-    });
     </script>
 </body>
 </html>

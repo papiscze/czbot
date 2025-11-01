@@ -3,80 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Status Bota - [Jméno Bota]</title>
-    <link rel="stylesheet" href="templatemo-nexus-style.css">
+    <title>Název Nového Nástroje | CZbot</title>
+    <link href="templatemo-nexus-style.css" rel="stylesheet">
     </head>
-<body>
 
-    <header class="navbar-header">
-        <nav class="navbar-container">
-            <a href="index.html" class="logo">Nexus</a>
-            <ul class="nav-menu">
-                <li><a href="index.html">Domů</a></li>
+<body id="top">
+    
+    <div class="cyber-bg">
+        <div class="cyber-gradient"></div>
+        <div class="matrix-rain" id="matrixRain"></div>
+    </div>
+    <div class="particles" id="particlesContainer"></div>
+    <div class="data-streams" id="dataStreams"></div>
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+    <div class="grid-overlay">
+        <div class="grid-lines"></div>
+        <div class="grid-glow"></div>
+    </div>
+    <div class="scanlines"></div>
+    <div class="noise-overlay"></div>
+    
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">CZbot</a>
+            <ul class="nav-links">
                 <li><a href="commands.html">Příkazy</a></li>
-                <li class="active"><a href="status.html">Status</a></li> 
+                
                 <li class="dropdown">
-                    <a href="javascript:void(0)" class="dropbtn">Nástroje</a>
+                    <a href="" class="dropbtn">Nástroje<span class="arrow">▼</span></a> 
                     <div class="dropdown-content">
                         <a href="crongenerator.html">Cron Generator</a>
                         <a href="embedgenerator.html">Embed Generator</a>
+                        <a href="status.html">Status bota</a> 
                     </div>
+                </li>      
+                <li><a href="warns.html">Moderátorské záznamy</a></li>
+                <li><a href="https://rs422cznas.myds.me:5038/stats/">Webové statistiky serverů</a></li>
+            </ul>
+            <div class="nav-bottom">
+                <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Přidat bota</a>
+            </div>
+            <button class="mobile-menu-button" id="mobileMenuBtn">
+                <div class="hamburger">
+                    <span></span><span></span><span></span>
+                </div>
+            </button>
+        </div>
+    </nav>
+
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <a href="index.html" class="mobile-menu-logo">CZbot</a>
+            <button class="mobile-menu-close" id="mobileMenuClose">✕</button>
+        </div>
+        <nav class="mobile-menu-nav">
+            <ul>
+                <li><a href="commands.html">Příkazy</a></li>
+                <li class="mobile-submenu-header">
+                    <a href="" class="mobile-dropbtn">Nástroje<span class="arrow">▼</span></a>
+                    <ul class="mobile-submenu-content">
+                        <li><a href="crongenerator.html">Cron Generator</a></li>
+                        <li><a href="embedgenerator.html">Embed Generator</a></li>
+                        <li><a href="status.html">Status bota</a></li> 
+                    </ul>
                 </li>
+                <li><a href="warns.html">Moderátorské záznamy</a></li>
+                <li><a href="https://rs422cznas.myds.me:5038/stats/">Webové statistiky serverů</a></li>
             </ul>
         </nav>
-    </header>
-
-    <section class="status-viewer">
-        <div class="status-viewer-container">
-            
-            <div class="status-header">
-                <h1 class="header-title">Stav Služeb</h1>
-                <p class="header-subtitle">Aktuální stav bota a klíčových služeb. Data se automaticky aktualizují každou minutu.</p>
-            </div>
-
-            <div class="status-list-wrapper" id="serviceStatusList">
-                
-                <div class="status-item bot-status">
-                    <div class="status-name">
-                        🤖 **[Jméno Bota]** (Hlavní služba)
-                    </div>
-                    <div class="status-indicator online" id="botStatusIndicator">
-                        <span class="dot"></span> Online
-                    </div>
-                </div>
-
-                <div class="status-item service-status">
-                    <div class="status-name">
-                        🌐 Externí API (Discord API)
-                    </div>
-                    <div class="status-indicator online" id="apiStatusIndicator">
-                        <span class="dot"></span> Online
-                    </div>
-                </div>
-
-                <div class="status-item service-status">
-                    <div class="status-name">
-                        💾 Databáze (MongoDB/PostgreSQL)
-                    </div>
-                    <div class="status-indicator maintenance" id="dbStatusIndicator">
-                        <span class="dot"></span> Údržba
-                    </div>
-                </div>
-                
-                <div class="status-history">
-                    <h3>Historie událostí za posledních 7 dní</h3>
-                    <ul>
-                        <li><span class="date">30. 10. 2025</span> - <span class="history-item degraded">Degradovaný výkon</span>: Mírné zpoždění odezvy (14:30 - 15:00 CET).</li>
-                        <li><span class="date">28. 10. 2025</span> - <span class="history-item resolved">Vyřešeno</span>: Obnovení provozu po údržbě databáze (03:00 CET).</li>
-                        <li><span class="date">27. 10. 2025</span> - <span class="history-item maintenance">Plánovaná údržba</span>: Databáze a hlavní služba (01:00 - 03:00 CET).</li>
-                    </ul>
-                </div>
-
-            </div>
+        <div class="mobile-menu-cta">
+            <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Přidat bota</a>
         </div>
+    </div>
+
+    <section class="command-viewer fade-up tool-section cyber-content" id="mainToolSection">
+        <div class="command-viewer-container tool-container">
+            
+            <header class="command-header status-header">
+                <h1 class="header-title">Název Nového Nástroje</h1>
+                <p class="header-subtitle">Stručný popis, co nástroj dělá.</p>
+            </header>
+            
+            <div style="background-color: #1a1a2e; padding: 30px; border-radius: 8px; border: 1px solid #00ffff50; box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);">
+                <h3 style="color: #00ffff; margin-top: 0;">Ukázkový obsah</h3>
+                <p style="color: #e0e0e0;">Zde bude váš formulář, vstupní pole a tlačítka.</p>
+                
+                <input type="text" placeholder="Zadejte data..." class="tool-input" style="width: 100%; margin-bottom: 10px;"/>
+                <button class="tool-button">Spustit</button>
+            </div>
+            
+            </div> 
     </section>
 
-    <script src="templatemo-nexus-scripts.js"></script>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="https://github.com/papiscze/czbot">GitHub</a>
+                <span class="footer-separator">•</span>
+                <a href="https://discord.gg/hk6PdtVxbm">Support Server</a>
+                <span class="footer-separator">•</span>
+                <a href="https://github.com/papiscze/czbot/wiki">GitHub dokumentace</a>
+                <span class="footer-separator">•</span>
+                <a href="mailto:admin@ofpmafia.eu">Kontakt</a>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 CZbot. Verze webu 1.0. Všechna práva vyhrazena</p>
+                <p class="footer-credit">Šablona inspirována <a href="https://templatemo.com" target="_blank" rel="noopener nofollow">TemplateMo</a></p>
+            </div>
+        </div>
+    </footer>
 
+    <script src="templatemo-nexus-scripts.js"></script>
+    <script>
+        // Např. logika pro zpracování formuláře
+        console.log("Nový nástroj načten.");
+    </script>
 </body>
 </html>

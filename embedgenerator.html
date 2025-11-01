@@ -42,7 +42,7 @@
                         <a href="status.html">Status bota</a>
                     </div>
                 </li>      
-                <li><a href="https://papiscze.github.io/czbot/warns.html">Moderátorské záznamy</a></li>
+                <li><a href="warns.html">Moderátorské záznamy</a></li>
                 <li><a href="https://rs422cznas.myds.me:5038/stats/">Webové statistiky serverů</a></li>
             </ul>
             <div class="nav-bottom">
@@ -78,7 +78,7 @@
                     </ul>
                 </li>
 
-                <li><a href="https://papiscze.github.io/czbot/warns.html">Moderátorské záznamy</a></li>
+                <li><a href="warns.html">Moderátorské záznamy</a></li>
                 <li><a href="https://rs422cznas.myds.me:5038/stats/">Webové statistiky serverů</a></li>
             </ul>
         </nav>
@@ -466,7 +466,7 @@
         function updateLanguage(lang) {
             const t = translations[lang];
             
-            document.getElementById('cron-title').textContent = t.title;
+            document.getElementById('preview-title').textContent = t.title;
             document.getElementById('preview-title-heading').textContent = t.previewTitle;
             document.getElementById('fields-title').textContent = t.fieldsTitle;
             addFieldBtn.textContent = t.addFieldBtn;
