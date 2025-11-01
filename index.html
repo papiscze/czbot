@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NexusFlow - The Future of Team Collaboration</title>
+    <title>CZBOT - Moderní Discord Bot</title>
     <link href="templatemo-nexus-style.css" rel="stylesheet">
-<!--TemplateMo 594 nexus flow, https://templatemo.com/tm-594-nexus-flow-->
+<!--TemplateMo 594 nexus flow ; https://templatemo.com/tm-594-nexus-flow-->
 </head>
 <body id="top">
     <!-- Enhanced Background Elements -->
@@ -33,25 +33,67 @@
     <!-- Navigation -->
     <nav>
         <div class="nav-container">
-            <a href="index.html" class="logo">CZbot</a>
+            <a href="#top" class="logo">CZbot</a>
+            
             <ul class="nav-links">
-                <li><a href=" commands.html">Příkazy</a></li>
-                
+                <li><a href="commands.html">Příkazy</a></li>
+
                 <li class="dropdown">
-                    <a href="" class="dropbtn">Nástroje<span class="arrow">▼</span></a> 
-                    
-                    <div class="dropdown-content">
-                        <a href="crongenerator.html">Cron Generator</a>
-                        <a href="embedgenerator.html">Embed Generator</a>
-                        <a href="status.html">Status bota</a>
-                    </div>
-                </li>             
+                    <a href="#" class="dropdown-toggle">Moduly ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="modul_auditlogger.html">Auditlogger</a></li>
+                        <li><a href="modul_audio_stream.html">Audio Stream</a></li>
+                        <li><a href="modul_autopublish.html">Automatické publikování zpráv z kanálů oznámení</a></li>
+                        <li><a href="modul_autorole.html">Autorole, Ověřování uživatelů a Reakční role</a></li>
+                        <li><a href="modul_basic_user_commands.html">Běžné uživatelské a zábavné příkazy</a></li>
+                        <li><a href="modul_basic_mod_commands.html">Běžné moderátorské příkazy</a></li>
+                        <li><a href="modul_bot_localization.html">Bot localization and Language Settings</a></li>
+                        <li><a href="modul_crossban.html">Crossban</a></li>
+                        <li><a href="modul_temp_voice.html">Dočasné hlasové kanály</a></li>
+                        <li><a href="modul_giveaway.html">Giveaway(e)</a></li>
+                        <li><a href="modul_birthdays.html">Narozeniny</a></li>
+                        <li><a href="modul_patreon.html">Patreon</a></li>
+                        <li><a href="modul_counting.html">Počítání</a></li>
+                        <li><a href="modul_advanced_schedules.html">Pokročilé plánované zprávy</a></li>
+                        <li><a href="modul_reactions.html">Reakce smajlíky na zprávy</a></li>
+                        <li><a href="modul_reputation.html">Reputace</a></li>
+                        <li><a href="modul_rss_reader.html">RSS Čtečka</a></li>
+                        <li><a href="modul_scam_prevence.html">Scam Prevence</a></li>
+                        <li><a href="modul_schedules.html">Schedules ‐ Plánované zprávy</a></li>
+                        <li><a href="modul_stats.html">Statistiky serveru</a></li>
+                        <li><a href="modul_holidays.html">Svátky (CZ SK)</a></li>
+                        <li><a href="modul_feedback.html">Systém zpětné vazby a návrhů</a></li>
+                        <li><a href="modul_tickets.html">Tikety</a></li>
+                        <li><a href="modul_translate.html">Translate modul</a></li>
+                        <li><a href="modul_threads.html">Tvorba vláken na zprávy</a></li>
+                        <li><a href="modul_welcome_leave.html">Uvítací a odchodové zprávy (Welcome Leave)</a></li>
+                        <li><a href="modul_vote.html">Vote ‐ Hlasování</a></li>
+                        <li><a href="modul_watermark.html">Vodoznak s vlastním textem na obrázky</a></li>
+                        <li><a href="modul_xp.html">XP systém a úrovně</a></li>
+                        <li><a href="modul_backup.html">Zálohování a Obnova Serverů</a></li>
+                        <li><a href="modul_confessions.html">Zpovědi (Anonymní Zprávy)</a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Nástroje ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="crongenerator.html">Cron Generátor</a></li>
+                        <li><a href="embedgenerator.html">Embed Generátor</a></li>
+                        <li><a href="https://github.com/users/papiscze/projects/9">Roadmapa</a></li>
+                        <li><a href="stats.html">Statistiky bota</a></li>
+                    </ul>
+                </li>
+
                 <li><a href="warns.html">Moderátorské záznamy</a></li>
-                <li><a href="https://rs422cznas.myds.me:5038/stats/">Webové statistiky serverů</a></li>
+                <li><a href="https://rs422cznas.myds.me:5038/stats/">Statistiky serveru</a></li>
+                <li><a href="privacy.html">GDPR / ToS</a></li>
             </ul>
+
             <div class="nav-bottom">
-                <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Přidat bota</a>
+                <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Pozvat bota</a>
             </div>
+
             <button class="mobile-menu-button" id="mobileMenuBtn">
                 <div class="hamburger">
                     <span></span>
@@ -61,46 +103,82 @@
             </button>
         </div>
     </nav>
-
     <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
     <div class="mobile-menu" id="mobileMenu">
         <div class="mobile-menu-header">
-            <a href="index.html" class="mobile-menu-logo">CZbot</a>
+            <a href="#top" class="mobile-menu-logo">CZbot</a>
             <button class="mobile-menu-close" id="mobileMenuClose">✕</button>
         </div>
-        
+        <div class="mobile-menu-cta">
+            <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Přidat bota</a>
+        </div>
         <nav class="mobile-menu-nav">
             <ul>
-                <li><a href=" commands.html">Příkazy</a></li>
+                <li><a href="commands.html">Příkazy</a></li>
 
-                <li class="mobile-submenu-header">
-                    <a href="" class="mobile-dropbtn">Nástroje<span class="arrow">▼</span></a>
-                    <ul class="mobile-submenu-content">
-                        <li><a href="crongenerator.html">Cron Generator</a></li>
-                        <li><a href="embedgenerator.html">Embed Generator</a></li>
-                        <li><a href="status.html">Status bota</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Nástroje ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="crongenerator.html">Cron Generátor</a></li>
+                        <li><a href="embedgenerator.html">Embed Generátor</a></li>
+                        <li><a href="https://github.com/users/papiscze/projects/9">Roadmapa</a></li>
+                        <li><a href="stats.html">Statistiky bota</a></li>
                     </ul>
                 </li>
 
                 <li><a href="warns.html">Moderátorské záznamy</a></li>
-                <li><a href="https://rs422cznas.myds.me:5038/stats/">Webové statistiky serverů</a></li>
+                <li><a href="https://rs422cznas.myds.me:5038/stats/">Statistiky serveru</a></li>
+                <li><a href="privacy.html">GDPR / ToS</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Moduly ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="modul_auditlogger.html">Auditlogger</a></li>
+                        <li><a href="modul_audio_stream.html">Audio Stream</a></li>
+                        <li><a href="modul_autopublish.html">Automatické publikování zpráv z kanálů oznámení</a></li>
+                        <li><a href="modul_autorole.html">Autorole, Ověřování uživatelů a Reakční role</a></li>
+                        <li><a href="modul_basic_user_commands.html">Běžné uživatelské a zábavné příkazy</a></li>
+                        <li><a href="modul_basic_mod_commands.html">Běžné moderátorské příkazy</a></li>
+                        <li><a href="modul_bot_localization.html">Bot localization and Language Settings</a></li>
+                        <li><a href="modul_crossban.html">Crossban</a></li>
+                        <li><a href="modul_temp_voice.html">Dočasné hlasové kanály</a></li>
+                        <li><a href="modul_giveaway.html">Giveaway(e)</a></li>
+                        <li><a href="modul_birthdays.html">Narozeniny</a></li>
+                        <li><a href="modul_patreon.html">Patreon</a></li>
+                        <li><a href="modul_counting.html">Počítání</a></li>
+                        <li><a href="modul_advanced_schedules.html">Pokročilé plánované zprávy</a></li>
+                        <li><a href="modul_reactions.html">Reakce smajlíky na zprávy</a></li>
+                        <li><a href="modul_reputation.html">Reputace</a></li>
+                        <li><a href="modul_rss_reader.html">RSS Čtečka</a></li>
+                        <li><a href="modul_scam_prevence.html">Scam Prevence</a></li>
+                        <li><a href="modul_schedules.html">Schedules ‐ Plánované zprávy</a></li>
+                        <li><a href="modul_stats.html">Statistiky serveru</a></li>
+                        <li><a href="modul_holidays.html">Svátky (CZ SK)</a></li>
+                        <li><a href="modul_feedback.html">Systém zpětné vazby a návrhů</a></li>
+                        <li><a href="modul_tickets.html">Tikety</a></li>
+                        <li><a href="modul_translate.html">Translate modul</a></li>
+                        <li><a href="modul_threads.html">Tvorba vláken na zprávy</a></li>
+                        <li><a href="modul_welcome_leave.html">Uvítací a odchodové zprávy (Welcome Leave)</a></li>
+                        <li><a href="modul_vote.html">Vote ‐ Hlasování</a></li>
+                        <li><a href="modul_watermark.html">Vodoznak s vlastním textem na obrázky</a></li>
+                        <li><a href="modul_xp.html">XP systém a úrovně</a></li>
+                        <li><a href="modul_backup.html">Zálohování a Obnova Serverů</a></li>
+                        <li><a href="modul_confessions.html">Zpovědi (Anonymní Zprávy)</a></li>
+                    </ul>
+                </li>                
             </ul>
         </nav>
-        
-        <div class="mobile-menu-cta">
-            <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Přidat bota</a>
-        </div>
     </div>
 
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-container">
             <h1 class="hero-title">
-                <span class="hero-nexus">cz</span><span class="hero-flow">bot</span>
+                <span class="hero-nexus">CZ</span><span class="hero-flow">bot</span>
             </h1>
             <p class="hero-subtitle">Inteligentní Discord bot s automatizací, moderací a pokročilými funkcemi pro každý server.</p>
             <div class="hero-buttons">
-                <a href="https://github.com/papiscze/czbot/wiki" class="btn-primary">Github Wiki</a>
+                <a href="https://github.com/papiscze/czbot/wiki" class="btn-primary">GitHub Wiki</a>
                 <a href="https://discord.gg/hk6PdtVxbm" class="btn-secondary">Support server</a>
             </div>
         </div>
@@ -224,7 +302,7 @@
                         <li>Zpovědi (Anonymní Zprávy)</li>
                         
                     </ul>
-                    <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="btn-secondary">PŘIDAT NA DISCORD</a>
+                    <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="btn-secondary">PŘIDAT</a>
                 </div>
                 
                 <div class="pricing-card featured">
@@ -240,7 +318,7 @@
                         <li>Webové statistiky serveru</li>
                         <li>Zálohování a Obnova Serverů</li>
                     </ul>
-                    <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="btn-primary">PŘIDAT NA DISCORD</a>
+                    <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="btn-primary">PŘIDAT</a>
                 </div>
             </div>
         </div>
@@ -311,6 +389,5 @@
         });
 
     </script>
-
 </body>
 </html>

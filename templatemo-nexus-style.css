@@ -311,7 +311,28 @@ https://templatemo.com/tm-594-nexus-flow
             100% { transform: translateY(100%); }
         }
 
-        /* Navigation */
+        /* =======================================
+        GLOBAL TYPOGRAPHY (Nová Sekce)
+        ======================================= */
+
+        .page-title {
+            /* Mírně větší nadpis s modro-zeleným glow */
+            color: var(--color-primary-light); 
+            text-align: center;
+            font-size: 3.5rem;
+            margin-top: 100px; /* Zajištění mezery pod navigací */
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 15px rgba(0, 192, 255, 0.6), 0 0 25px rgba(0, 255, 128, 0.3);
+        }
+
+        .page-subtitle {
+            text-align: center;
+            color: var(--color-text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+        }
+
+        /* Navigation (beze změn) */
         nav {
             position: fixed;
             top: 0;
@@ -332,157 +353,7 @@ https://templatemo.com/tm-594-nexus-flow
             align-items: center;
         }
 
-        /* Logo */
-        .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--primary-cyan);
-            text-shadow: 0 0 20px var(--primary-cyan);
-            position: relative;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.3s ease;
-        }
-
-        .logo:hover {
-            text-shadow: 0 0 30px var(--primary-cyan);
-            transform: scale(1.05);
-        }
-
-        .logo::before {
-            content: '>';
-            margin-right: 0.5rem;
-            color: var(--primary-orange);
-            transition: all 0.3s ease;
-        }
-
-        .logo:hover::before {
-            margin-right: 0.8rem;
-            text-shadow: 0 0 10px var(--primary-orange);
-        }
-
-        .logo::after {
-            content: '_';
-            animation: blink 1s infinite;
-            color: var(--primary-cyan);
-        }
-
-        @keyframes blink {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0; }
-        }
-
-        /* Nav Links List */
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2.5rem;
-        }
-
-        .nav-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            position: relative;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary-cyan);
-            text-shadow: 0 0 10px var(--primary-cyan);
-        }
-
-        .nav-links a::before {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--primary-cyan), var(--primary-purple));
-            transition: width 0.3s ease;
-            box-shadow: 0 0 10px var(--primary-cyan);
-        }
-
-        .nav-links a:hover::before {
-            width: 100%;
-        }
-
-        /* ========================================= */
-        /* NOVÝ CSS PRO DESKTOP DROPDOWN */
-        /* ========================================= */
-
-        .dropdown {
-            position: relative;
-            display: inline-block;
-            padding: 0; /* Odstraní padding z li, ať se neovlivní mezery */
-        }
-
-        .dropbtn {
-            /* Ujistí se, že "Nástroje" vypadá jako běžný odkaz */
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .dropdown-content {
-            /* Skrytý stav */
-            display: none;
-            position: absolute;
-            min-width: 180px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.4);
-            z-index: 1;
-            top: 100%; /* Umístí pod odkaz */
-            left: 50%; /* Centrované na odkaz */
-            transform: translateX(-50%);
-            
-            /* Cyber/Dark styl */
-            background-color: var(--darker-bg);
-            border: 1px solid var(--primary-cyan);
-            border-radius: 5px;
-            overflow: hidden;
-            padding: 5px 0;
-        }
-
-        .dropdown-content a {
-            color: var(--color-text-light);
-            padding: 10px 16px;
-            text-decoration: none;
-            display: block;
-            font-size: 0.95rem;
-            transition: background-color 0.3s, color 0.3s;
-        }
-
-        .dropdown-content a:hover {
-            background-color: rgba(0, 255, 255, 0.1);
-            color: var(--primary-cyan) !important;
-            text-shadow: 0 0 5px var(--primary-cyan);
-            padding-left: 20px;
-        }
-
-        .dropdown:hover .dropdown-content {
-            display: block; /* Zobrazí menu při najetí myší */
-        }
-
-        /* Šipka (arrow) v dropbtn */
-        .arrow {
-            font-size: 0.7rem;
-            transition: transform 0.3s ease;
-            color: var(--primary-cyan);
-        }
-
-        .dropdown:hover .arrow {
-            transform: rotate(180deg);
-        }
-
-        /* ========================================= */
-        /* Mobile Menu Button */
-        /* ========================================= */
-
+        /* Mobile Menu Button, Hamburger, Mobile Menu (beze změn) */
         .mobile-menu-button {
             display: none;
             background: none;
@@ -495,19 +366,16 @@ https://templatemo.com/tm-594-nexus-flow
             height: 30px;
             transition: all 0.3s ease;
         }
-
         .mobile-menu-button:hover {
             color: var(--primary-orange);
             transform: scale(1.1);
         }
-
         .hamburger {
             position: relative;
             width: 25px;
             height: 20px;
             margin: auto;
         }
-
         .hamburger span {
             display: block;
             position: absolute;
@@ -522,37 +390,23 @@ https://templatemo.com/tm-594-nexus-flow
             box-shadow: 0 0 5px var(--primary-cyan);
             transform-origin: center;
         }
-
-        .hamburger span:nth-child(1) {
-            top: 0px;
-        }
-
-        .hamburger span:nth-child(2) {
-            top: 9px;
-        }
-
-        .hamburger span:nth-child(3) {
-            top: 18px;
-        }
-
+        .hamburger span:nth-child(1) { top: 0px; }
+        .hamburger span:nth-child(2) { top: 9px; }
+        .hamburger span:nth-child(3) { top: 18px; }
         .mobile-menu-button.active .hamburger span:nth-child(1) {
             top: 9px;
             transform: rotate(135deg);
             background: var(--primary-orange);
         }
-
         .mobile-menu-button.active .hamburger span:nth-child(2) {
             opacity: 0;
             left: -25px;
         }
-
         .mobile-menu-button.active .hamburger span:nth-child(3) {
             top: 9px;
             transform: rotate(-135deg);
             background: var(--primary-orange);
         }
-
-        /* Mobile Menu */
         .mobile-menu {
             position: fixed;
             top: 78px;
@@ -570,11 +424,7 @@ https://templatemo.com/tm-594-nexus-flow
             display: flex;
             flex-direction: column;
         }
-
-        .mobile-menu.active {
-            right: 0;
-        }
-
+        .mobile-menu.active { right: 0; }
         .mobile-menu-overlay {
             position: fixed;
             top: 0;
@@ -587,12 +437,7 @@ https://templatemo.com/tm-594-nexus-flow
             visibility: hidden;
             transition: all 0.3s ease;
         }
-
-        .mobile-menu-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
+        .mobile-menu-overlay.active { opacity: 1; visibility: visible; }
         .mobile-menu-header {
             padding: 2rem;
             border-bottom: 1px solid var(--border-color);
@@ -601,7 +446,6 @@ https://templatemo.com/tm-594-nexus-flow
             align-items: center;
             flex-shrink: 0;
         }
-
         .mobile-menu-logo {
             font-size: 1.5rem;
             font-weight: 700;
@@ -611,30 +455,25 @@ https://templatemo.com/tm-594-nexus-flow
             display: inline-block;
             transition: all 0.3s ease;
         }
-
         .mobile-menu-logo::before {
             content: '>';
             margin-right: 0.5rem;
             color: var(--primary-orange);
             transition: all 0.3s ease;
         }
-
         .mobile-menu-logo::after {
             content: '_';
             animation: blink 1s infinite;
             color: var(--primary-cyan);
         }
-
         .mobile-menu-logo:hover {
             text-shadow: 0 0 25px var(--primary-cyan);
             transform: scale(1.05);
         }
-
         .mobile-menu-logo:hover::before {
             margin-right: 0.8rem;
             text-shadow: 0 0 10px var(--primary-orange);
         }
-
         .mobile-menu-close {
             background: none;
             border: none;
@@ -648,27 +487,22 @@ https://templatemo.com/tm-594-nexus-flow
             justify-content: center;
             transition: all 0.3s ease;
         }
-
         .mobile-menu-close:hover {
             color: var(--primary-orange);
             transform: rotate(90deg);
         }
-
         .mobile-menu-nav {
             padding: 0;
             flex-grow: 1;
         }
-
         .mobile-menu-nav ul {
             list-style: none;
             padding: 0;
             margin: 0;
         }
-
         .mobile-menu-nav li {
             margin: 0;
         }
-
         .mobile-menu-nav a {
             display: block;
             padding: 1.5rem 2rem;
@@ -682,14 +516,12 @@ https://templatemo.com/tm-594-nexus-flow
             position: relative;
             border-bottom: 1px solid rgba(229, 231, 235, 0.1);
         }
-
         .mobile-menu-nav a:hover {
             color: var(--primary-cyan);
             background: rgba(0, 255, 255, 0.05);
             padding-left: 3rem;
             text-shadow: 0 0 10px var(--primary-cyan);
         }
-
         .mobile-menu-nav a::before {
             content: '>';
             position: absolute;
@@ -699,22 +531,16 @@ https://templatemo.com/tm-594-nexus-flow
             transition: all 0.3s ease;
             color: var(--primary-orange);
         }
-
         .mobile-menu-nav a:hover::before {
             opacity: 1;
             transform: translateX(0);
         }
-
-        .mobile-menu-nav li:last-child a {
-            border-bottom: none;
-        }
-
+        .mobile-menu-nav li:last-child a { border-bottom: none; }
         .mobile-menu-cta {
             padding: 2rem;
             flex-shrink: 0;
             border-bottom: 1px solid var(--border-color);
         }
-
         .cyber-button {
             display: inline-block;
             background: linear-gradient(135deg, var(--primary-cyan), var(--primary-purple));
@@ -730,104 +556,200 @@ https://templatemo.com/tm-594-nexus-flow
             width: 100%;
             text-align: center;
         }
-
         .cyber-button:hover {
             transform: translateY(-2px);
             box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
         }
-
-        /* ========================================= */
-        /* NOVÝ CSS PRO MOBILNÍ SUBMENU */
-        /* ========================================= */
-
-        .mobile-submenu-header {
-            /* Ujistíme se, že i tato položka má stejné styly jako ostatní v mobilním menu */
-            position: relative;
-            border-bottom: 1px solid rgba(229, 231, 235, 0.1);
-        }
-
-        .mobile-dropbtn {
-            /* Ujistí se, že "Nástroje" v mobilním menu je klikatelná plocha */
-            display: flex !important;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            padding-right: 2rem !important; /* Kvůli šipce */
-        }
-
-        /* 1. Skrýt submenu standardně */
-        .mobile-submenu-content {
-            display: none; /* Skryje seznam odkazů, JavaScript to změní na 'block' */
-            list-style: none;
-            padding: 0 0 10px 10px; /* Přidá odsazení pod menu */
-            margin: 0;
-        }
-
-        /* 2. Stylování samotných odkazů v submenu */
-        .mobile-submenu-content li a {
-            /* Přepisuje obecné mobilní menu styly pro submenu */
-            font-size: 0.95rem;
-            padding: 8px 15px 8px 4rem !important; /* Větší odsazení pro hierarchii */
-            border-bottom: 1px dotted rgba(255, 255, 255, 0.1);
-            color: var(--text-secondary); /* Použije sekundární barvu */
-            text-transform: none; /* Nepoužije uppercase */
-            font-weight: 400;
-        }
-
-        .mobile-submenu-content li:last-child a {
-            border-bottom: none;
-        }
-
-        .mobile-submenu-content li a:hover {
-            padding-left: 4.5rem !important;
-            background: rgba(0, 255, 255, 0.05);
-        }
-
-        /* 3. ZOBRAZIT submenu, když má rodič třídu 'active' */
-        .mobile-submenu-header.active .mobile-submenu-content {
-            display: block;
-        }
-
-        /* 4. Otočení šipky pro indikaci otevření/zavření */
-        .mobile-submenu-header .arrow {
-            font-size: 0.8rem;
-            transition: transform 0.3s ease;
-            color: var(--primary-orange);
-            position: absolute;
-            right: 2rem;
-            top: 50%;
-            transform: translateY(-50%) rotate(0deg);
-        }
-
-        .mobile-submenu-header.active .arrow {
-            transform: translateY(-50%) rotate(180deg);
-        }
-
-
-        /* Animation keyframes for mobile menu */
         @keyframes slideInLeft {
-            from {
-                opacity: 0;
-                transform: translateX(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
         }
-
         @keyframes slideInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-cyan);
+            text-shadow: 0 0 20px var(--primary-cyan);
+            position: relative;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        .logo:hover {
+            text-shadow: 0 0 30px var(--primary-cyan);
+            transform: scale(1.05);
+        }
+        .logo::before {
+            content: '>';
+            margin-right: 0.5rem;
+            color: var(--primary-orange);
+            transition: all 0.3s ease;
+        }
+        .logo:hover::before {
+            margin-right: 0.8rem;
+            text-shadow: 0 0 10px var(--primary-orange);
+        }
+        .logo::after {
+            content: '_';
+            animation: blink 1s infinite;
+            color: var(--primary-cyan);
+        }
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
         }
 
-        /* Desktop Navigation Layout */
+        /* Nav Links Base Styles (beze změn) */
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+            margin: 0;
+            padding: 0;
+        }
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+        .nav-links a:hover {
+            color: var(--primary-cyan);
+            text-shadow: 0 0 10px var(--primary-cyan);
+        }
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-cyan), var(--primary-purple));
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px var(--primary-cyan);
+        }
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+
+
+        /* --- DROPDOWN STYLES --- */
+
+        /* 1. Desktop Dropdown Kontejner (beze změn) */
+        .nav-links .dropdown {
+            position: relative;
+        }
+
+        /* 2. Dropdown Menu (Změna: Odstranění transform: translateX(-50%) pro správné zarovnání doleva) */
+        .dropdown-menu {
+            position: absolute;
+            top: 100%; 
+            left: 0;
+            transform: translateY(10px); 
+            list-style: none;
+            padding: 0.5rem 0;
+            margin: 0.5rem 0 0 0;
+            background: var(--darker-bg); 
+            border: 1px solid var(--primary-cyan); 
+            border-radius: 3px; 
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5), 0 5px 25px rgba(0, 0, 0, 0.8);
+            min-width: 250px; /* Možná budete chtít toto rozšířit kvůli dlouhým názvům modulů */
+            
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+            z-index: 10;
+            
+            /* --- ZDE ZAČÍNÁ KLÍČOVÁ ÚPRAVA --- */
+            max-height: 70vh; /* Nastavte maximální výšku na 70% výšky okna prohlížeče (vh) */
+            overflow-y: auto; /* Povolí vertikální posuvník, pokud obsah přesáhne max-height */
+            /* --- ZDE KONČÍ KLÍČOVÁ ÚPRAVA --- */
+
+            overflow-x: hidden; /* Zabrání nechtěnému horizontálnímu posuvníku */
+        }
+
+        /* 3. Zobrazení Dropdown Menu po najetí myší (Změna: Odebrán horizontální posun z transform) */
+        .nav-links .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0); /* Návrat na původní pozici */
+        }
+
+        /* 4. Styly pro odkazy v podmenu (Změna: Přidání font-weight a transition z hlavních odkazů) */
+        .dropdown-menu li a {
+            display: block;
+            padding: 0.75rem 1.5rem;
+            white-space: nowrap;
+            font-size: 0.9rem; /* Stejná velikost jako hlavní menu */
+            font-weight: 500; /* Stejná váha jako hlavní menu */
+            color: var(--text-secondary); /* Zajištění správné barvy písma */
+            text-decoration: none;
+            text-transform: none; /* Podmenu obvykle není uppercase */
+            letter-spacing: 0.5px; /* Lehce upravený spacing pro čitelnost */
+
+            transition: all 0.3s ease; /* Plynulá změna při najetí */
+        }
+
+        .dropdown-menu li a:hover {
+            color: var(--primary-cyan);
+            background: rgba(0, 255, 255, 0.1);
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5); /* Jemný glow efekt pro podmenu */
+        }
+
+        /* Zajištění, že podtržení se nezobrazuje v podmenu */
+        .dropdown-menu li a::before {
+            display: none;
+        }
+
+
+        /* --- MOBILNÍ DROPDOWN STYLY (pro JS) --- */
+
+        /* Styly pro mobilní menu dropdown (beze změn) */
+        .mobile-menu-nav .dropdown-menu {
+            position: static;
+            top: auto;
+            left: auto;
+            transform: none;
+            opacity: 1; 
+            visibility: visible; 
+            padding: 0;
+            margin: 0;
+            border: none;
+            border-top: 1px solid rgba(229, 231, 235, 0.1);
+            box-shadow: none;
+            background: var(--darker-bg);
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+        }
+        .mobile-menu-nav .dropdown.open .dropdown-menu {
+            max-height: 500px;
+            transition: max-height 0.5s ease-in;
+        }
+        .mobile-menu-nav .dropdown-menu li a {
+            padding-left: 3rem;
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--text-secondary);
+            border-bottom: 1px dashed rgba(229, 231, 235, 0.05);
+        }
+        .mobile-menu-nav .dropdown-menu li a:hover {
+            background: rgba(0, 255, 255, 0.1);
+            color: var(--primary-orange);
+            padding-left: 3.5rem;
+        }
+
+
+        /* --- DESKTOP MEDIA QUERY (Váš originál, beze změn kromě odstranění duplikátů) --- */
+
         @media (min-width: 769px) {
             .mobile-menu-button {
                 display: none !important;
@@ -852,13 +774,6 @@ https://templatemo.com/tm-594-nexus-flow
                 max-width: none;
             }
             
-            .nav-links li {
-                /* Zajistí, že dropdown a běžné odkazy mají stejné mezery na desktopu */
-                display: flex;
-                align-items: center;
-            }
-
-            /* Zrušení mobilních hover efektů pro desktop */
             .nav-links a {
                 padding: 0;
                 border-bottom: none;
@@ -872,23 +787,9 @@ https://templatemo.com/tm-594-nexus-flow
             }
             
             .nav-links a::before {
-                content: '';
-                /* Opět aktivuje linku pod odkazem pro desktop */
-                display: block;
-                position: absolute;
-                bottom: -5px;
-                left: 0;
-                width: 0;
-                height: 2px;
-                background: linear-gradient(90deg, var(--primary-cyan), var(--primary-purple));
-                transition: width 0.3s ease;
-                box-shadow: 0 0 10px var(--primary-cyan);
+                display: none;
             }
-
-            .nav-links a:hover::before {
-                width: 100%;
-            }
-
+            
             .nav-bottom {
                 flex: 0 0 auto;
             }
@@ -1322,7 +1223,7 @@ https://templatemo.com/tm-594-nexus-flow
         }
 
         .pricing-card.featured::before {
-            content: 'NEJOBLÍBENĚJŠÍ';
+            content: 'MOST POPULAR';
             position: absolute;
             top: -15px;
             left: 50%;
@@ -1377,7 +1278,7 @@ https://templatemo.com/tm-594-nexus-flow
         }
 
         .plan-features li {
-            padding: 0.5rem 0;
+            padding: 1rem 0;
             color: var(--text-secondary);
             position: relative;
             padding-left: 2rem;
@@ -1390,6 +1291,94 @@ https://templatemo.com/tm-594-nexus-flow
             left: 0;
             color: var(--primary-cyan);
             font-size: 0.8rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 120px 2rem;
+            background: rgba(0, 255, 255, 0.02);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .contact-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .contact-form-wrapper {
+            max-width: 600px;
+            margin: 0 auto;
+            margin-top: 4rem;
+        }
+
+        .contact-form {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 3rem;
+            backdrop-filter: blur(10px);
+            clip-path: polygon(30px 0%, 100% 0%, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0% 100%, 0% 30px);
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--primary-cyan);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            margin-bottom: 0.8rem;
+            text-shadow: 0 0 10px var(--primary-cyan);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            background: rgba(0, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            clip-path: polygon(10px 0%, 100% 0%, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0% 100%, 0% 10px);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: var(--text-secondary);
+            opacity: 0.7;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-cyan);
+            background: rgba(0, 255, 255, 0.08);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 1rem;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(229, 231, 235, 0.4);
         }
 
         /* Footer */
@@ -1709,1023 +1698,377 @@ https://templatemo.com/tm-594-nexus-flow
             background: linear-gradient(var(--primary-pink), var(--primary-cyan));
         }
 
-/* NOVINKY A KODY */
+/* NOVINKY Z WEBU*/
 
-/* --- COMMAND VIEWER STYLES --- */
+/* =======================================
+   COMMANDS PAGE STYLES (commands.html)
+   ======================================= */
+/* --- Tag Buttons (Filtry) --- */
 
-.command-viewer {
-    padding: 120px 0 80px;
-    position: relative;
-    z-index: 10;
-    min-height: 80vh;
-    background: rgba(15, 15, 35, 0.5);
-    backdrop-filter: blur(5px);
-}
-
-.command-viewer-container {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-.command-header {
-    text-align: center;
-    margin-bottom: 40px;
-}
-
-.header-title {
-    font-size: 2.5rem;
-    color: var(--primary-cyan);
-    text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
-    margin-bottom: 10px;
-}
-
-.header-subtitle {
-    font-size: 1.1rem;
-    color: var(--secondary-text);
-}
-
-.command-controls {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    margin-bottom: 30px;
-}
-
-/* KATEGORIE FILTRŮ */
-.category-filters {
+.command-tags {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
     justify-content: center;
-    padding: 10px 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Oddělovací čára */
+    margin-bottom: 2.5rem;
 }
 
-.filter-btn {
-    background: transparent;
-    color: var(--secondary-text);
-    border: 1px solid rgba(0, 255, 255, 0.3);
+.tag-button {
+    background-color: var(--color-dark-2); /* Tmavé pozadí */
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-border-dark);
     padding: 8px 15px;
     border-radius: 5px;
     cursor: pointer;
-    font-weight: 600;
+    font-size: 0.9rem;
     transition: all 0.3s ease;
     text-transform: uppercase;
-    font-size: 0.85rem; /* Menší písmo pro více tlačítek */
+    
+    /* Vzhled tlačítek */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
-.filter-btn:hover {
-    background: rgba(0, 255, 255, 0.1);
-    color: var(--primary-cyan);
+.tag-button:hover {
+    background-color: var(--color-dark-3);
+    border-color: var(--color-primary-light);
+    color: var(--color-primary-light);
 }
 
-.filter-btn.active {
-    background: var(--primary-cyan);
-    color: var(--dark-bg);
-    border-color: var(--primary-cyan);
-    box-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+.active-tag {
+    /* Aktivní modrý/tyrkysový styl */
+    background-color: rgba(0, 192, 255, 0.15); /* Světle modré průhledné pozadí */
+    border-color: var(--color-primary-light); /* Modrý okraj */
+    color: var(--color-primary-light);
+    box-shadow: 0 0 15px rgba(0, 192, 255, 0.6);
 }
 
-/* VYHLEDÁVÁNÍ */
-.search-box {
+/* --- Vyhledávací pole --- */
+
+.command-search-bar {
     width: 100%;
+    max-width: 800px; /* Omezení šířky pro desktop */
+    margin: 0 auto 3rem;
 }
 
-#commandSearch {
+.command-search-bar input[type="text"] {
     width: 100%;
-    padding: 12px 20px;
-    background: rgba(25, 25, 50, 0.9);
-    border: 1px solid var(--primary-cyan);
-    color: #fff;
+    padding: 15px 20px;
+    background-color: var(--color-dark-2);
+    border: 1px solid var(--color-border-dark);
+    color: var(--color-text-primary);
     border-radius: 5px;
     font-size: 1rem;
-    box-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
-    transition: border-color 0.3s;
-}
-
-#commandSearch::placeholder {
-    color: var(--secondary-text);
-}
-
-/* SEZNAM PŘÍKAZŮ - AKORDEON STYL */
-.command-list-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 10px; /* Menší mezera */
-}
-
-/* KLÍČOVÁ ÚPRAVA: Zajištění vertikálního uspořádání CELÉ POLOŽKY (Toggle a Detaily) */
-.command-item {
-    background: rgba(25, 25, 50, 0.8);
-    border: 1px solid rgba(0, 255, 255, 0.2);
-    border-radius: 5px;
-    overflow: hidden;
-    box-shadow: 0 0 10px rgba(0, 255, 255, 0.1);
+    transition: border-color 0.3s ease;
     
-    /* Vynutí, aby se command-toggle a command-details řadily POD SEBE */
-    display: flex;
-    flex-direction: column;
+    /* Neonový efekt */
+    box-shadow: 0 0 10px rgba(0, 192, 255, 0.1);
 }
 
-.command-toggle {
-    /* Uvnitř command-toggle se prvky (název, modul, ikona) řadí VODOROVNĚ */
+.command-search-bar input[type="text"]:focus {
+    outline: none;
+    border-color: var(--color-primary-light);
+    box-shadow: 0 0 15px rgba(0, 192, 255, 0.4);
+}
+
+
+/* --- Seznam příkazů --- */
+
+.command-list {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 15px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.command-item {
+    display: grid;
+    /* Rozložení sloupců: Příkaz | Popis | Modul | Šipka */
+    grid-template-columns: 180px 1fr auto 50px; 
     align-items: center;
     padding: 15px 20px;
-    cursor: pointer;
-    background: rgba(0, 255, 255, 0.05);
-    transition: background 0.2s;
-    font-size: 1.1rem;
-    font-weight: 500;
+    background-color: var(--color-dark-3);
+    border: 1px solid var(--color-border-dark);
+    border-radius: 5px;
+    transition: all 0.3s ease;
 }
 
-.command-toggle:hover {
-    background: rgba(0, 255, 255, 0.1);
-}
-
-.command-item.open .command-toggle {
-    background: rgba(0, 255, 255, 0.15);
-    border-bottom: 1px solid var(--primary-cyan);
+.command-item:hover {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 10px rgba(255, 100, 200, 0.4); /* Růžový/fialový glow při najetí */
 }
 
 .command-name {
-    color: #fff;
-    flex-grow: 1; 
-    font-family: 'Consolas', 'Courier New', monospace;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.command-module {
-    font-size: 0.85rem;
-    color: var(--secondary-text);
-    padding: 5px 10px;
-    background: rgba(0, 255, 255, 0.1);
-    border-radius: 3px;
-    white-space: nowrap; 
-    margin-right: 15px;
-}
-
-.command-icon {
-    font-family: 'Times New Roman', serif;
+    font-family: 'Consolas', monospace; /* Fixní šířka pro příkaz */
+    color: var(--color-primary-light);
+    font-size: 1.1rem;
     font-weight: bold;
-    font-size: 1.2rem;
-    color: var(--primary-cyan);
-    /* Zrušeno: transform: rotate(180deg); */
-    transition: transform 0.3s ease;
-    margin-left: 10px;
-    display: inline-block; /* Zajištění správného renderování symbolů */
 }
 
-/* Zobrazení šipky vpravo, když je zavřený */
-.command-item .command-icon::before { 
-    content: '▶';
+.command-description {
+    color: var(--color-text-secondary);
+    padding-right: 15px;
 }
 
-/* Zobrazení šipky dolů, když je otevřený */
-.command-item.open .command-icon::before { 
-    content: '▼';
+.command-module-tag {
+    /* Modul Tag jako na obrázku */
+    color: var(--color-accent);
+    background-color: rgba(255, 100, 200, 0.1);
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    text-align: center;
 }
 
-/* Zrušíme rotaci, která byla v původním kódu a narušovala symboly */
-.command-item .command-icon {
-    transform: none;
-}
-.command-item.open .command-icon {
-    transform: none;
+.command-link a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border: 1px solid var(--color-accent);
+    border-radius: 50%;
+    color: var(--color-accent);
+    text-decoration: none;
+    transition: all 0.2s ease;
 }
 
+.command-link a:hover {
+    background-color: var(--color-accent);
+    color: var(--color-dark-1);
+    box-shadow: 0 0 10px var(--color-accent);
+}
 
-/* VÝRAZNÁ ÚPRAVA DETAILŮ: Zajištění, že se texty v detailech řadí vertikálně */
-.command-details {
-    padding: 0 20px;
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+.command-link .arrow {
+    transform: rotate(-90deg); /* Otočení šipky nahoru, jako na obrázku */
+    display: block;
+    font-weight: bold;
+}
+
+/* --- Responzivní úpravy pro mobilní zařízení --- */
+
+@media (max-width: 768px) {
+    .page-title {
+        font-size: 2.5rem;
+    }
+
+    .command-item {
+        /* Na mobilu přejdeme na dvousloupcové uspořádání */
+        grid-template-columns: 1fr auto;
+        grid-template-rows: auto auto;
+        gap: 5px 10px;
+        padding: 12px 15px;
+    }
     
-    /* Přecházíme na display: block pro bezpečné vertikální řazení vnitřních prvků */
+    .command-name {
+        grid-column: 1 / 2;
+        font-size: 1rem;
+    }
+    
+    .command-description {
+        grid-column: 1 / 2;
+        font-size: 0.9rem;
+        padding-right: 0;
+    }
+
+    .command-module-tag {
+        grid-column: 2 / 3;
+        grid-row: 1 / 2;
+        font-size: 0.75rem;
+        padding: 4px 8px;
+        text-align: right;
+        align-self: flex-start;
+    }
+
+    .command-link {
+        grid-column: 2 / 3;
+        grid-row: 2 / 3;
+        justify-self: end;
+    }
+
+    .command-tags {
+        justify-content: start;
+    }
+    
+    .tag-button {
+        font-size: 0.8rem;
+        padding: 6px 10px;
+    }
+}
+
+/*NOVINKY/*
+/* =======================================
+   COMMANDS FILTROVÁNÍ (Klíčová třída)
+   ======================================= */
+
+/* Tato třída je klíčová pro filtrování a musí být deklarována! */
+.is-hidden {
+    /* Použijeme !important, aby to přebilo případné kolidující styly */
+    display: none !important;
+}
+
+/* =======================================
+   COMMANDS ACCORDION STYLES (commands.html)
+   ======================================= */
+
+/* Nový kontejner pro skupiny příkazů a rozbalování */
+.command-list-groups {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Menší mezera mezi skupinami */
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Hlavní prvek řádku příkazu, který drží item a detail */
+.command-group {
+    border: 1px solid var(--color-border-dark);
+    border-radius: 5px;
+    background-color: var(--color-dark-3);
+    transition: all 0.3s ease;
+    /* Zajištění, aby JS mohl prvek skrýt/zobrazit, i bez !important */
     display: block; 
 }
 
-.command-item.open .command-details {
-    max-height: 300px;
-    padding: 15px 20px;
-}
-
-.detail-label {
-    color: var(--primary-cyan);
-    font-weight: bold;
-    /* Větší mezera pro oddělení od předchozí hodnoty */
-    margin: 10px 0 0px; 
-    display: block; /* Vynutí label na nový řádek */
-}
-
-/* První label uvnitř detailů nebude mít extra horní mezeru */
-.command-details .detail-label:first-of-type {
-    margin-top: 0;
-}
-
-.detail-value {
-    color: var(--main-text);
-    margin: 0 0 5px; 
-    padding-left: 10px;
-    border-left: 2px solid rgba(0, 255, 255, 0.5);
-    background: rgba(0, 0, 0, 0.1);
-    padding: 5px 10px;
-    border-radius: 3px;
-    /* Důležité: Zajistí, že hodnota zabere celý řádek */
-    width: 100%; 
-    box-sizing: border-box; 
-    display: block; /* Vynutí value na nový řádek */
-}
-
-/* Responsivita */
-@media (max-width: 768px) {
-    .command-toggle {
-        flex-wrap: wrap;
-    }
-    .command-name {
-        width: 100%;
-        margin-bottom: 5px;
-        order: 1;
-    }
-    .command-module {
-        order: 2;
-        flex-grow: 1;
-        text-align: left;
-        margin-right: 0;
-    }
-    .command-icon {
-        order: 3;
-        margin-left: auto;
-    }
-}
-
-/* STATUS BOTA*/
-/* ==================================== */
-/* === STATUS PAGE STYLY (status.html) === */
-/* ==================================== */
-
-/*
-   Předpokládáme, že následující globální prvky už existují:
-   - :root proměnné (např. --color-primary, --color-text-light)
-   - .navbar-header, .navbar-container, .nav-menu
-*/
-
-/* 1. Základní nastavení sekce pro Status (Status Section) */
-.tool-section.status-section {
-    /* Konzistentní odsazení od navigace */
-    padding-top: 120px; 
-    padding-bottom: 80px;
-    min-height: 100vh;
-    color: var(--color-text-light, #f0f0f0);
-    display: flex;
-    justify-content: center;
-}
-
-/* 2. Kontejner obsahu */
-.tool-container.status-container {
-    width: 100%;
-    max-width: 1000px; /* Zvětšená šířka pro lepší zobrazení Cogs */
-    padding: 0 20px;
-    margin: auto;
-}
-
-/* 3. Hlavička sekce */
-.tool-header.section-header {
-    text-align: center;
-    margin-bottom: 40px;
-}
-
-.header-title.section-title {
-    font-size: 2.8rem;
-    color: var(--color-primary, #00ffff);
-    text-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
-    margin-bottom: 10px;
-}
-
-.header-subtitle.section-subtitle {
-    color: #aaa;
-    font-size: 1.1rem;
-}
-
-/* 4. Karta pro statistiky a moduly (Stats Box) */
-.tool-card.stats-box {
-    background-color: rgba(10, 10, 20, 0.7);
-    border: 1px solid var(--color-border, #006666);
-    border-radius: 10px;
-    padding: 30px;
-    margin-bottom: 30px;
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
-}
-
-.column-title {
-    color: var(--color-secondary, #fff);
-    font-size: 1.8rem;
-    margin-top: 0;
-    padding-bottom: 10px;
-    border-bottom: 1px solid rgba(100, 200, 255, 0.1);
-    margin-bottom: 20px;
-}
-
-/* 5. Rozložení statistik a modulů (Status Grid) */
-.status-grid {
+/* Základní řádek příkazu (uvnitř command-group) */
+.command-item {
     display: grid;
-    grid-template-columns: 1fr 2fr; /* Statistiky: 1 díl, Cogs: 2 díly */
-    gap: 30px;
+    /* 4 sloupce: Název | Popis | Tag modulu | Tlačítko (50px) */
+    grid-template-columns: 180px 1fr auto 50px; 
+    align-items: center;
+    padding: 15px 20px;
+    cursor: pointer;
 }
 
-@media (max-width: 900px) {
-    .status-grid {
-        grid-template-columns: 1fr; /* Pod sebou na menších obrazovkách */
-    }
+.command-group:hover {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 10px rgba(255, 100, 200, 0.4); 
 }
 
-/* 6. Styly pro seznamy */
-.status-list, .cogs-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+/* Aktivní styl pro rozbalený řádek */
+.command-group.active {
+    border-color: var(--color-primary-light);
+    box-shadow: 0 0 10px rgba(0, 192, 255, 0.4);
 }
 
-.status-list li, .cogs-list li {
-    display: flex;
-    justify-content: space-between;
-    background-color: rgba(100, 200, 255, 0.05); /* Lehké pozadí pro řádek */
-    padding: 10px 15px;
-    margin-bottom: 8px;
-    border-radius: 6px;
-    transition: background-color 0.2s;
-}
-
-.status-list li:hover, .cogs-list li:hover {
-    background-color: rgba(100, 200, 255, 0.1);
-}
-
-.label {
-    font-weight: 600;
-    color: #ddd;
-}
-
-.value {
-    font-weight: 400;
-    text-align: right;
-    word-break: break-word; 
-}
-
-/* 7. Barvy statusů */
-.status-online, .status-ok { 
-    color: #48bb78; /* Zelená */
-    font-weight: bold;
-}
-.status-offline, .status-err { 
-    color: #f56565; /* Červená */
-    font-weight: bold;
-}
-.status-offline-cog { 
-    color: #f56565; /* Červená (pro cogs, když nejsou dostupné/offline) */
-    font-weight: bold;
-}
-
-/* 8. Varovný box */
-.warn-box {
-    background: #dd6b20; /* oranžová */
-    color: #fff;
-    padding: 14px 18px;
-    border-radius: 8px;
-    font-weight: 600;
-    text-align: center;
-    margin-bottom: 25px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-    border: 2px solid #ff914d;
-}
-
-/* ==================================== */
-/* === CRON GENERATOR STYLY (Final & Opravený) === */
-/* ==================================== */
-
-/* 1. Základní nastavení sekce pro Nástroj */
-.tool-section.cron-generator-section {
-    padding-top: 120px; 
-    padding-bottom: 80px;
-    min-height: 100vh;
-    color: var(--color-text-light, #f0f0f0);
+/* Toggle tlačítko místo odkazu */
+.command-toggle-button {
+    all: unset; /* Odstraníme výchozí styly tlačítek */
     display: flex;
     justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    border: 1px solid var(--color-accent);
+    border-radius: 50%;
+    color: var(--color-accent);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0;
 }
 
-/* 2. Kontejner obsahu */
-.tool-container.cron-container {
-    width: 100%;
-    max-width: 800px;
-    padding: 0 20px;
-    margin: auto;
+.command-toggle-button:hover {
+    background-color: var(--color-accent);
+    color: var(--color-dark-1);
+    box-shadow: 0 0 10px var(--color-accent);
 }
 
-/* 3. Hlavička sekce */
-.tool-header.cron-header {
-    text-align: center;
-    margin-bottom: 40px;
-}
-
-/* 4. Karta pro formulář a výsledek */
-.tool-card.cron-card,
-.result-card {
-    background-color: rgba(10, 10, 20, 0.8);
-    border: 1px solid var(--color-border, #006666);
-    border-radius: 10px;
-    padding: 30px;
-    margin-bottom: 30px;
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
-}
-
-.tool-card h2,
-.result-card h2 {
-    color: var(--color-text-light, #fff);
-    font-size: 1.5rem;
-    margin-top: 0;
-    border-bottom: 1px solid rgba(0, 255, 255, 0.2);
-    padding-bottom: 10px;
-    margin-bottom: 25px;
-}
-
-/* 5. Styly pro formulářové skupiny */
-.form-group {
-    margin-bottom: 20px;
-}
-
-.form-group label {
+/* Rotace šipky */
+.command-toggle-button .arrow {
+    transform: rotate(90deg); /* Výchozí stav: Šipka "doprava" */
     display: block;
-    margin-bottom: 8px;
-    font-weight: 600;
-    color: var(--color-primary-light, #00cccc);
+    transition: transform 0.3s ease;
+}
+
+.command-toggle-button[aria-expanded="true"] .arrow {
+    transform: rotate(180deg); /* Rozbalený stav: Šipka dolů */
+}
+
+/* --- Detaily příkazu (Rozbalená sekce) --- */
+
+.command-detail-row {
+    /* Zajišťuje animované rozbalování */
+    max-height: 0; 
+    overflow: hidden;
+    transition: max-height 0.4s ease-out, padding 0.3s ease;
+    padding: 0 20px; /* Výchozí padding 0 */
+}
+
+/* Stav pro zobrazení */
+.command-detail-row.is-open {
+    max-height: 500px; /* Dostatečně velká hodnota pro plynulou animaci */
+    padding: 15px 20px 20px 20px;
+    border-top: 1px dashed var(--color-border-dark);
+}
+
+.detail-content {
+    color: var(--color-text-primary);
+}
+
+.syntax {
+    font-family: 'Consolas', monospace;
+    color: #00ff80; /* Zelený text pro syntaxi */
+    background-color: var(--color-dark-1);
+    padding: 8px 12px;
+    border-radius: 3px;
+    margin-bottom: 10px;
+    border-left: 3px solid #00ff80;
+}
+
+.syntax strong {
+    font-weight: normal; /* Vypneme ztučnění markdown hvězdiček, necháme jen zelenou barvu */
+}
+
+.extended-description p {
+    margin: 5px 0;
+    line-height: 1.4;
     font-size: 0.95rem;
 }
 
-/* Kontejner pro pět vstupních polí Cron */
-.cron-input-grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr); 
-    gap: 15px;
-    align-items: flex-start;
+.module-link-small {
+    margin-top: 15px !important;
+    font-size: 0.85rem !important;
+    color: var(--color-text-secondary) !important;
 }
 
-/* === OPRAVA A SJEDNOCENÍ VŠECH VSTUPNÍCH A VÝSTUPNÍCH POLÍ === */
-
-/* Sjednocený styl pro VŠECHNY interaktivní prvky formuláře a přepínač jazyka */
-.tool-card input[type="text"],
-.tool-card textarea,
-.tool-card select,
-.result-card input[type="text"],
-.result-card textarea,
-#cron-lang-switcher
-{
-    /* Tmavé pozadí s lehkou průhledností */
-    background-color: var(--color-input-bg, rgba(255, 255, 255, 0.05));
-    /* Světlý text pro kontrast */
-    color: var(--color-text-light, #f0f0f0); 
-    /* Okraj ve stylu cyber */
-    border: 1px solid var(--color-border, #006666);
-    border-radius: 4px;
-    padding: 10px;
-    font-size: 1rem;
-    font-family: monospace; 
-    box-shadow: inset 0 0 5px rgba(0, 255, 255, 0.1);
-    width: 100%;
-    transition: border-color 0.3s, box-shadow 0.3s;
-}
-
-.tool-card input:focus,
-.tool-card select:focus,
-.tool-card textarea:focus {
-    border-color: var(--color-primary);
-    box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
-    outline: none;
-}
-
-/* OPRAVA: Pokus o styl pro VŠECHNY MOŽNOSTI (Option) - pro čitelnost*/
-.tool-card select option,
-#cron-lang-switcher option 
-{
-    /* Vynutit tmavé pozadí a bílý text pro položky v menu */
-    background-color: #000000 !important; 
-    color: #ffffff !important;
+.module-link-small a {
+    color: var(--color-accent);
+    text-decoration: none;
 }
 
 
-/* Speciální styly pro VÝSTUPNÍ pole (READONLY) */
-.result-card input[type="text"],
-.result-card textarea {
-    background-color: rgba(0, 255, 255, 0.05); /* Mírně odlišné pozadí */
-    border-color: var(--color-primary, #00ffff);
-    color: var(--color-primary);
-    box-shadow: 0 0 5px rgba(0, 255, 255, 0.2);
-}
-
-/* OPRAVA: Zajištění dostatečné výšky pro Discord příkaz (textarea) */
-#cron-command {
-    min-height: 100px; 
-    resize: vertical; /* Povolit svislou změnu velikosti */
-}
-
-/* OPRAVA: Zajištění dostatečné výšky pro Cron výraz */
-#cron-output {
-    min-height: 40px; 
-}
-
-
-/* OPRAVA: Změna barvy rámečku při chybě (pro JS validaci) */
-.tool-card input[style*="red"],
-.tool-card select[style*="red"],
-.tool-card textarea[style*="red"] {
-    border-color: #f56565 !important;
-    box-shadow: 0 0 8px rgba(245, 101, 101, 0.6) !important;
-}
-
-/* Barva pro chybovou hlášku */
-.text-red-500 {
-    color: #f56565 !important;
-    font-size: 0.85rem;
-}
-
-/* Responzivita pro mobilní zařízení */
-@media (max-width: 600px) {
-    .cron-input-grid {
-        grid-template-columns: repeat(2, 1fr); /* 2 sloupce na mobilu */
-        gap: 10px;
-    }
-    /* Flex uspořádání pro tlačítka pod sebou */
-    .flex-1 {
-        flex: 1 1 100%;
-    }
-    .flex.gap-4 {
-        flex-direction: column;
-        gap: 10px;
-    }
-    .cyber-button {
-        width: 100%;
-        margin-top: 0;
-    }
-    .self-end {
-        align-self: auto;
-    }
-}
-
-/* ==================================================== */
-/* === EMBED GENERATOR STYLY (SLOUČENÁ VERZE) === */
-/* ==================================================== */
-
-/* 1. Základní nastavení a rozvržení */
-.tool-section.embed-generator-section {
-    padding-top: 120px; 
-    padding-bottom: 80px;
-    min-height: 100vh;
-    color: var(--color-text-light, #f0f0f0);
-    display: flex;
-    justify-content: center;
-}
-
-.tool-container.embed-container {
-    width: 100%;
-    max-width: 1200px;
-    padding: 0 20px;
-    margin: auto;
-}
-
-/* Rozvržení do 2 sloupců */
-.content-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr; 
-    gap: 30px;
-}
-
-/* PŮVODNÍ KARTY (zůstává pro form-column) */
-.tool-card.embed-card {
-    background-color: rgba(10, 10, 20, 0.8);
-    border: 1px solid var(--color-border, #006666);
-    border-radius: 10px;
-    padding: 30px;
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
-}
-
-/* POZNÁMKA: Původní třídu .preview-column je nutné z kódu odebrat, 
-   nebo ji přesměrovat, pokud se vyskytuje v HTML. Nová struktura 
-   používá .preview-column-wrapper a .preview-column-inner.
-*/
-.preview-column {
-    /* Toto by se nemělo používat ve vašem opraveném HTML, ale ponecháváme
-       pro jistotu, pokud se vyskytuje jinde než na vnitřní kartě.
-       V opraveném HTML je nahrazena kombinací wrapper/inner. */
-    padding: 30px;
-}
-
-
-/* 2. Styly pro INPUT a Formulář */
-.tool-input-group {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
-
-/* Input pro barvu */
-.tool-color-input {
-    width: 100%;
-    height: 40px;
-    border: 1px solid var(--color-border, #006666);
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-/* Tlačítka pro formátování Markdownu */
-.format-buttons {
-    display: flex;
-    gap: 5px;
-    margin-bottom: 8px;
-}
-/* A zbytek vašich .format-button stylů */
-
-/* Sekce pro Pole */
-.field-row {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    margin-bottom: 15px;
-    padding: 10px;
-    border: 1px dashed rgba(0, 255, 255, 0.2);
-    border-radius: 4px;
-}
-
-
-/* ========================================================== */
-/* 3. STYLY PRO NÁHLED DISCORD EMBEDU (Vnitřní embed) */
-/* ========================================================== */
-
-/* Hlavní kontejner Embedu */
-.discord-embed-preview {
-    background-color: #2f3136; /* Tmavá Discord barva pozadí pro embed */
-    color: #dcddde; /* Světlá barva textu */
-    border-left: 4px solid; /* Barva bude nastavena JavaScriptem */
-    padding: 16px; 
-    border-radius: 4px;
-    font-size: 14px;
-    max-width: 432px;
-}
-
-/* Autor */
-.embed-author {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 8px;
-}
-.embed-author-icon {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-}
-
-/* Titulek */
-.embed-title {
-    font-weight: 600;
-    font-size: 16px;
-    color: #fff;
-    margin-bottom: 8px;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-}
-
-/* Popis */
-.embed-description {
-    color: #b9bbbe; 
-    margin-bottom: 8px;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-}
-
-/* Pole (Fields) Kontejner */
-.embed-fields {
-    margin-top: 8px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-
-/* Jednotlivé Pole */
-.embed-field {
-    margin-bottom: 4px;
-    flex-basis: 100%; 
-}
-.embed-field.inline {
-    flex-basis: calc(33.333% - 8px); 
-    min-width: 100px; 
-}
-.embed-field-name {
-    color: #fff;
-    font-weight: 600;
-}
-.embed-field-value {
-    color: #b9bbbe;
-    font-weight: 400;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-}
-
-
-/* Miniatura a Obrázek */
-.embed-thumbnail {
-    float: right;
-    width: 80px; 
-    height: 80px;
-    border-radius: 4px; 
-    margin-left: 10px;
-}
-.embed-image {
-    max-width: 100%;
-    height: auto;
-    border-radius: 4px;
-    margin-top: 8px;
-}
-
-/* Patička (Footer) */
-.embed-footer {
-    display: flex;
-    align-items: center;
-    font-size: 12px;
-    color: #6c6d71; 
-    margin-top: 8px;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-}
-.embed-footer-icon {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    margin-right: 8px;
-}
-
-/* ========================================================== */
-/* 4. STYLY PRO DISCORD ZPRÁVU (Vnější kontext) */
-/* ========================================================== */
-
-/* Obal simulující pozadí kanálu - zajišťuje kontrast a barvu pozadí */
-.discord-message-wrapper {
-    background-color: #36393f; /* Tmavé pozadí Discordu */
-    padding: 10px;
-    border-radius: 5px;
-    margin-top: 0; /* Oprava: margin-top už není potřeba, řeší to .preview-column-wrapper */
-}
-
-/* Kontejner pro avatar a obsah zprávy */
-.discord-message {
-    display: flex;
-    align-items: flex-start;
-    padding: 2px 0;
-    line-height: 1.375rem;
-    font-size: 1rem;
-    color: #dcddde;
-}
-
-/* Styl pro avatar Webhooku */
-.discord-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 16px;
-    background-color: #7289da; 
-    content: ''; 
-    display: block;
-}
-
-.embed-content-wrapper {
-    flex-grow: 1;
-}
-
-/* Hlavička zprávy (Jméno Webhooku) */
-.embed-header {
-    font-size: 1rem;
-    font-weight: 500;
-    line-height: 1.375rem;
-    margin-bottom: 4px;
-}
-
-.embed-header .username {
-    color: #fff;
-    margin-right: 8px;
-}
-
-/* Tag "BOT" */
-.embed-header .bot-tag {
-    background-color: #5865f2; 
-    color: #fff;
-    font-size: 0.75rem;
-    font-weight: 600;
-    padding: 1px 4px;
-    border-radius: 3px;
-    vertical-align: top;
-    line-height: 1;
-    display: inline-block;
-}
-
-/* Úprava odsazení samotného embedu, aby seděl pod hlavičkou */
-#embed-preview-container {
-    padding-top: 5px; 
-}
-
-
-/* ========================================================== */
-/* 5. OPRAVA ZAROVNÁNÍ TITULKU NÁHLEDU */
-/* ========================================================== */
-
-/* Nový obal pro náhled sloupec, který zarovnává nadpis */
-.preview-column-wrapper {
-    display: flex;
-    flex-direction: column; /* Nadpis nad kartou */
-    gap: 20px; /* Mezera mezi nadpisem a kartou (nastaveno na 20px pro zarovnání s form-column) */
-}
-
-/* Aplikujeme styly "karty" na nový vnitřní div, který drží náhled */
-.tool-card.embed-card.preview-column-inner {
-    background-color: rgba(10, 10, 20, 0.8);
-    border: 1px solid var(--color-border, #006666);
-    border-radius: 10px;
-    padding: 30px; /* Původní padding pro vnitřní obsah karty */
-    box-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
-}
-
-/* Styl pro samotný nadpis, aby se zarovnal s formulářovým titulkem */
-.header-title.preview-header {
-    /* Nadpis h2 se uvnitř .content-grid automaticky zarovná s okrajem buňky
-       Díky .preview-column-wrapper a flex-direction: column bude na začátku */
-    margin-left: 0; 
-    padding-left: 0;
-    align-self: flex-start; 
-}
-
-
-/* ========================================================== */
-/* 6. Responzivita */
-/* ========================================================== */
-@media (max-width: 1024px) {
-    .content-grid {
-        grid-template-columns: 1fr;
-    }
-    /* Zbytek vašich responzivních stylů pro formulář */
-}
-
-
-/* ==================================================== */
-/* === WARNS.HTML SPECIFICKÉ STYLY (Minimalizované Cyber) === */
-/* ==================================================== */
-
-/* --- 1. Základní kontejnery a hlavička (pro umístění obsahu) --- */
-.warns-section.cyber-content {
-    padding-top: 120px; /* Mezera pro fixní navigaci */
-    padding-bottom: 80px;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-}
-.warns-container {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-
-/* --- 2. Input a Tlačítka (v warns-container) --- */
-
-.warns-container input[type="text"], 
-.warns-container button {
-    /* Základní cyber vzhled pro inputy/tlačítka v tomto kontejneru */
-    background-color: #1a1a2e; 
-    border: 1px solid #00ffff; /* Cyber modrý okraj */
-    color: #00ffff; 
-    padding: 10px;
-    border-radius: 4px;
-    margin-right: 10px;
-    transition: all 0.3s;
-    box-sizing: border-box; /* Zajištění, že padding nezvětší element */
-    max-width: 100%;
-}
-.warns-container button {
-    cursor: pointer;
-    background-color: #008080; /* Tmavší modrá/tyrkysová */
-    color: white;
-    border: none;
-    box-shadow: 0 0 10px #00ffff40;
-}
-.warns-container button:hover {
-    background-color: #00cccc;
-}
-.warns-container button:disabled {
-    background-color: #333333;
-    color: #888;
-    cursor: not-allowed;
-    box-shadow: none;
-    transform: none;
-}
-
-
-/* --- 3. Tabulka (data-table) --- */
-
-.warns-container .data-table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: #1a1a2e; 
-    box-shadow: 0 0 15px rgba(0, 255, 255, 0.2); 
-    border-radius: 8px; 
-    overflow: hidden; 
-    border: 1px solid #00ffff50; 
-    margin-top: 10px;
-}
-.warns-container .data-table th {
-    background-color: #11111f;
-    color: #00ffff;
-    font-weight: 700;
-    text-transform: uppercase;
-    border-bottom: 2px solid #00ffff50;
-    padding: 12px 10px;
-}
-.warns-container .data-table td {
-    border: 1px solid #00ffff1a; 
-    padding: 12px 10px; 
-    color: #e0e0e0; 
-}
-.warns-container .data-table tr:nth-child(odd) {
-    background-color: #151525;
-}
-.warns-container .data-table tr:hover {
-    background-color: #25253e;
-    color: #00ffff;
-}
-
-
-/* --- 4. Pagination --- */
-
-.warns-container .pagination {
-    margin-top: 20px;
-    text-align: center;
-    color: #e0e0e0;
-}
-.warns-container .pagination span {
-    font-weight: bold;
-    margin: 0 10px;
-    color: #00ffff;
-}
-
-
-/* --- 5. Responzivní design (pro mobily) --- */
-
+/* --- Responzivní úpravy pro mobilní zařízení --- */
 @media (max-width: 768px) {
-    .warns-container input[type="text"] { 
-        width: 100%; 
-        margin-bottom: 10px;
-        margin-right: 0;
+    /* Přizpůsobení gridu pro menší obrazovky */
+    .command-item {
+        grid-template-columns: 1fr 50px; /* Název, Popis/Tag a Tlačítko se srovnají */
+        grid-template-rows: auto auto;
+        gap: 5px 0;
     }
-    .warns-container button { 
-        width: 100%; 
-        margin-right: 0; 
+    
+    .command-name {
+        grid-column: 1 / 2;
+        grid-row: 1 / 2;
     }
-
-    /* Stohování tabulky pro mobily */
-    .warns-container .data-table, 
-    .warns-container .data-table thead, 
-    .warns-container .data-table tbody, 
-    .warns-container .data-table th, 
-    .warns-container .data-table td, 
-    .warns-container .data-table tr {
-        display: block;
+    
+    .command-description {
+        grid-column: 1 / 2;
+        grid-row: 2 / 3;
+        font-size: 0.85rem;
     }
-    .warns-container .data-table thead tr {
-        position: absolute;
-        top: -9999px;
-        left: -9999px;
+    
+    .command-module-tag {
+        /* Na mobilu skryjeme, aby bylo více místa, nebo přesuneme */
+        display: none; 
     }
-    .warns-container .data-table tr { 
-        border: 1px solid #00ffff50;
-        margin-bottom: 10px; 
-        border-radius: 8px; 
-    }
-    .warns-container .data-table td {
-        border: none;
-        border-bottom: 1px solid #00ffff1a;
-        position: relative;
-        padding-left: 50%;
-        text-align: right;
-    }
-    .warns-container .data-table td::before {
-        content: attr(data-label);
-        position: absolute;
-        left: 6px;
-        width: 45%;
-        padding-right: 10px;
-        white-space: nowrap;
-        text-align: left;
-        font-weight: bold;
-        color: #00ffff;
+    
+    .command-toggle-button {
+        grid-column: 2 / 3;
+        grid-row: 1 / 3;
+        justify-self: center;
+        align-self: center;
+        width: 40px;
+        height: 40px;
     }
 }

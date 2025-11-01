@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Příkazy Bota | CZbot</title>
-    <link href="templatemo-nexus-style.css" rel="stylesheet">
+    <title>CZBOT - Přehled příkazů</title>
+    <link href="templatemo-nexus-style.css" rel="stylesheet"> 
 </head>
 <body id="top">
     <div class="cyber-bg">
@@ -13,6 +13,7 @@
     </div>
     
     <div class="particles" id="particlesContainer"></div>
+    
     <div class="data-streams" id="dataStreams"></div>
     
     <div class="orb orb1"></div>
@@ -30,24 +31,66 @@
     <nav>
         <div class="nav-container">
             <a href="index.html" class="logo">CZbot</a>
+            
             <ul class="nav-links">
-                <li><a href="commands.html" class="active-item">Příkazy</a></li>
-                
+                <li><a href="commands.html" class="active-link">Příkazy</a></li>
+
                 <li class="dropdown">
-                    <a href="" class="dropbtn">Nástroje<span class="arrow">▼</span></a> 
-                    
-                    <div class="dropdown-content">
-                        <a href="crongenerator.html">Cron Generator</a>
-                        <a href="embedgenerator.html">Embed Generator</a>
-                        <a href="status.html">Status bota</a>
-                    </div>
-                </li> 		 
+                    <a href="#" class="dropdown-toggle">Moduly ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="modul_auditlogger.html">Auditlogger</a></li>
+                        <li><a href="modul_audio_stream.html">Audio Stream</a></li>
+                        <li><a href="modul_autopublish.html">Automatické publikování zpráv z kanálů oznámení</a></li>
+                        <li><a href="modul_autorole.html">Autorole, Ověřování uživatelů a Reakční role</a></li>
+                        <li><a href="modul_basic_user_commands.html">Běžné uživatelské a zábavné příkazy</a></li>
+                        <li><a href="modul_basic_mod_commands.html">Běžné moderátorské příkazy</a></li>
+                        <li><a href="modul_bot_localization.html">Bot localization and Language Settings</a></li>
+                        <li><a href="modul_crossban.html">Crossban</a></li>
+                        <li><a href="modul_temp_voice.html">Dočasné hlasové kanály</a></li>
+                        <li><a href="modul_giveaway.html">Giveaway(e)</a></li>
+                        <li><a href="modul_birthdays.html">Narozeniny</a></li>
+                        <li><a href="modul_patreon.html">Patreon</a></li>
+                        <li><a href="modul_counting.html">Počítání</a></li>
+                        <li><a href="modul_advanced_schedules.html">Pokročilé plánované zprávy</a></li>
+                        <li><a href="modul_reactions.html">Reakce smajlíky na zprávy</a></li>
+                        <li><a href="modul_reputation.html">Reputace</a></li>
+                        <li><a href="modul_rss_reader.html">RSS Čtečka</a></li>
+                        <li><a href="modul_scam_prevence.html">Scam Prevence</a></li>
+                        <li><a href="modul_schedules.html">Schedules ‐ Plánované zprávy</a></li>
+                        <li><a href="modul_stats.html">Statistiky serveru</a></li>
+                        <li><a href="modul_holidays.html">Svátky (CZ SK)</a></li>
+                        <li><a href="modul_feedback.html">Systém zpětné vazby a návrhů</a></li>
+                        <li><a href="modul_tickets.html">Tikety</a></li>
+                        <li><a href="modul_translate.html">Translate modul</a></li>
+                        <li><a href="modul_threads.html">Tvorba vláken na zprávy</a></li>
+                        <li><a href="modul_welcome_leave.html">Uvítací a odchodové zprávy (Welcome Leave)</a></li>
+                        <li><a href="modul_vote.html">Vote ‐ Hlasování</a></li>
+                        <li><a href="modul_watermark.html">Vodoznak s vlastním textem na obrázky</a></li>
+                        <li><a href="modul_xp.html">XP systém a úrovně</a></li>
+                        <li><a href="modul_backup.html">Zálohování a Obnova Serverů</a></li>
+                        <li><a href="modul_confessions.html">Zpovědi (Anonymní Zprávy)</a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Nástroje ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="crongenerator.html">Cron Generátor</a></li>
+                        <li><a href="embedgenerator.html">Embed Generátor</a></li>
+                        <li><a href="https://github.com/users/papiscze/projects/9">Roadmapa</a></li>
+                        <li><a href="stats.html">Statistiky bota</a></li>
+                    </ul>
+                </li>
+
                 <li><a href="warns.html">Moderátorské záznamy</a></li>
-                <li><a href="https://rs422cznas.myds.me:5038/stats/">Webové statistiky serverů</a></li>
+                <li><a href="https://rs422cznas.myds.me:5038/stats/">Statistiky serveru</a></li>
+                <li><a href="privacy.html">GDPR / ToS</a></li>
             </ul>
+
             <div class="nav-bottom">
-                <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Přidat bota</a>
+                <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Pozvat bota</a>
             </div>
+
             <button class="mobile-menu-button" id="mobileMenuBtn">
                 <div class="hamburger">
                     <span></span>
@@ -57,141 +100,213 @@
             </button>
         </div>
     </nav>
-
     <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    
     <div class="mobile-menu" id="mobileMenu">
         <div class="mobile-menu-header">
             <a href="index.html" class="mobile-menu-logo">CZbot</a>
             <button class="mobile-menu-close" id="mobileMenuClose">✕</button>
         </div>
-        
+        <div class="mobile-menu-cta">
+            <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Přidat bota</a>
+        </div>
         <nav class="mobile-menu-nav">
             <ul>
-                <li><a href="commands.html">Příkazy</a></li>
+                <li><a href="commands.html" class="active-link">Příkazy</a></li>
 
-                <li class="mobile-submenu-header">
-                    <a href="" class="mobile-dropbtn">Nástroje<span class="arrow">▼</span></a>
-                    <ul class="mobile-submenu-content">
-                        <li><a href="crongenerator.html">Cron Generator</a></li>
-                        <li><a href="embedgenerator.html">Embed Generator</a></li>
-                        <li><a href="status.html">Status bota</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Nástroje ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="crongenerator.html">Cron Generátor</a></li>
+                        <li><a href="embedgenerator.html">Embed Generátor</a></li>
+                        <li><a href="https://github.com/users/papiscze/projects/9">Roadmapa</a></li>
+                        <li><a href="stats.html">Statistiky bota</a></li>
                     </ul>
                 </li>
 
                 <li><a href="warns.html">Moderátorské záznamy</a></li>
-                <li><a href="https://rs422cznas.myds.me:5038/stats/">Webové statistiky serverů</a></li>
+                <li><a href="https://rs422cznas.myds.me:5038/stats/">Statistiky serveru</a></li>
+                <li><a href="privacy.html">GDPR / ToS</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Moduly ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="modul_auditlogger.html">Auditlogger</a></li>
+                        <li><a href="modul_audio_stream.html">Audio Stream</a></li>
+                        <li><a href="modul_autopublish.html">Automatické publikování zpráv z kanálů oznámení</a></li>
+                        <li><a href="modul_autorole.html">Autorole, Ověřování uživatelů a Reakční role</a></li>
+                        <li><a href="modul_basic_user_commands.html">Běžné uživatelské a zábavné příkazy</a></li>
+                        <li><a href="modul_basic_mod_commands.html">Běžné moderátorské příkazy</a></li>
+                        <li><a href="modul_bot_localization.html">Bot localization and Language Settings</a></li>
+                        <li><a href="modul_crossban.html">Crossban</a></li>
+                        <li><a href="modul_temp_voice.html">Dočasné hlasové kanály</a></li>
+                        <li><a href="modul_giveaway.html">Giveaway(e)</a></li>
+                        <li><a href="modul_birthdays.html">Narozeniny</a></li>
+                        <li><a href="modul_patreon.html">Patreon</a></li>
+                        <li><a href="modul_counting.html">Počítání</a></li>
+                        <li><a href="modul_advanced_schedules.html">Pokročilé plánované zprávy</a></li>
+                        <li><a href="modul_reactions.html">Reakce smajlíky na zprávy</a></li>
+                        <li><a href="modul_reputation.html">Reputace</a></li>
+                        <li><a href="modul_rss_reader.html">RSS Čtečka</a></li>
+                        <li><a href="modul_scam_prevence.html">Scam Prevence</a></li>
+                        <li><a href="modul_schedules.html">Schedules ‐ Plánované zprávy</a></li>
+                        <li><a href="modul_stats.html">Statistiky serveru</a></li>
+                        <li><a href="modul_holidays.html">Svátky (CZ SK)</a></li>
+                        <li><a href="modul_feedback.html">Systém zpětné vazby a návrhů</a></li>
+                        <li><a href="modul_tickets.html">Tikety</a></li>
+                        <li><a href="modul_translate.html">Translate modul</a></li>
+                        <li><a href="modul_threads.html">Tvorba vláken na zprávy</a></li>
+                        <li><a href="modul_welcome_leave.html">Uvítací a odchodové zprávy (Welcome Leave)</a></li>
+                        <li><a href="modul_vote.html">Vote ‐ Hlasování</a></li>
+                        <li><a href="modul_watermark.html">Vodoznak s vlastním textem na obrázky</a></li>
+                        <li><a href="modul_xp.html">XP systém a úrovně</a></li>
+                        <li><a href="modul_backup.html">Zálohování a Obnova Serverů</a></li>
+                        <li><a href="modul_confessions.html">Zpovědi (Anonymní Zprávy)</a></li>
+                    </ul>
+                </li>
             </ul>
         </nav>
-        
-        <div class="mobile-menu-cta">
-            <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Přidat bota</a>
-        </div>
     </div>
+    <section class="content-section commands-page">
+        <div class="content-container">
+            <h1 class="page-title">Všechny Příkazy</h1>
+            <p class="page-subtitle">Zde najdete všechny příkazy poskytované botem. <span class="text-danger">ROZPRACOVÁNO</span></p>
 
-    <section class="command-viewer fade-up" id="commandViewer">
-        <div class="command-viewer-container">
-            <header class="command-header">
-                <h1 class="header-title">Všechny Příkazy</h1>
-                <p class="header-subtitle">Zde najdete všechny příkazy poskytované botem. ROZPRACOVÁNO</p>
-            </header>
-
-            <div class="command-controls">
-                <div class="category-filters" id="categoryFilters">
-                    <button class="filter-btn active" data-category="all">VŠECHNY MODULY</button>
-                    
-                    <button class="filter-btn" data-category="Bot localization and Language Settings">Localization</button>
-                    <button class="filter-btn" data-category="Audio Stream">Audio</button>
-                    <button class="filter-btn" data-category="Auditlogger">Audit</button>
-                    <button class="filter-btn" data-category="Běžné moderátorské příkazy">Moderace</button>
-                    <button class="filter-btn" data-category="Běžné uživatelské a zábavné příkazy">Zábava</button>
-                    <button class="filter-btn" data-category="Autorole, Ověřování uživatelů a Reakční role">Role/Verify</button>
-                    <button class="filter-btn" data-category="RSS Čtečka">RSS</button>
-                    <button class="filter-btn" data-category="Tikety">Tikety</button>
-                    <button class="filter-btn" data-category="XP systém a úrovně">XP/Level</button>
-                    <button class="filter-btn" data-category="Crossban">Crossban</button>
-                    
-                </div>
-                
-                <div class="search-box">
-                    <input type="text" id="commandSearch" placeholder="Vyhledat příkaz (např. /ban, /stats)...">
-                </div>
+            <div class="command-tags">
+                <button class="tag-button active-tag" data-tag="ALL">VŠECHNY MODULY</button>
+                <button class="tag-button" data-tag="LOCALIZACE">Bot localization and Language Settings</button>
+                <button class="tag-button" data-tag="AUDIOSTREAM">Audio Stream</button>
+                <button class="tag-button" data-tag="AUDITLOGGER">Auditlogger</button>
+                <button class="tag-button" data-tag="AUTOPUB">Automatické publikování zpráv z kanálů oznámení</button>
+                <button class="tag-button" data-tag="AUTOROLE">Autorole, Ověřování uživatelů a Reakční role</button>
+                <button class="tag-button" data-tag="MODERACE">Běžné moderátorské příkazy</button>
+                <button class="tag-button" data-tag="ZABAVA">Běžné uživatelské a zábavné příkazy</button>
+                <button class="tag-button" data-tag="CROSSBAN">Crossban</button>
+                <button class="tag-button" data-tag="HLASOVYKANAL">Dočasné hlasové kanály</button>
+                <button class="tag-button" data-tag="GIVEAWAY">Giveaway(e)</button>
+                <button class="tag-button" data-tag="NAROZENINY">Narozeniny</button>
+                <button class="tag-button" data-tag="PATREON">Patreon</button>
+                <button class="tag-button" data-tag="PLANEDZPREZPOK">Pokročilé plánované zprávy</button>
+                <button class="tag-button" data-tag="POCITANI">Počítání</button>
+                <button class="tag-button" data-tag="REAKCESMAJLIKY">Reakce smajlíky na zprávy</button>
+                <button class="tag-button" data-tag="REPUTACE">Reputace</button>
+                <button class="tag-button" data-tag="RSS">RSS Čtečka</button>
+                <button class="tag-button" data-tag="SCAMPREVENCE">Scam Prevence</button>
+                <button class="tag-button" data-tag="PLANEDZPRAVY">Schedules ‐ Plánované zprávy</button>
+                <button class="tag-button" data-tag="STATISTIKY">Statistiky serveru</button>
+                <button class="tag-button" data-tag="SVATKY">Svátky (CZ SK)</button>
+                <button class="tag-button" data-tag="ZPETNAVAZBA">Systém zpětné vazby a návrhů</button>
+                <button class="tag-button" data-tag="TIKETY">Tikety</button>
+                <button class="tag-button" data-tag="TRANSLATE">Translate modul</button>
+                <button class="tag-button" data-tag="TVORAVLAKEN">Tvorba vláken na zprávy</button>
+                <button class="tag-button" data-tag="WELCOMELEAVE">Uvítací a odchodové zprávy (Welcome Leave)</button>
+                <button class="tag-button" data-tag="VODOZNAK">Vodoznak s vlastním textem na obrázky</button>
+                <button class="tag-button" data-tag="VOTE">Vote ‐ Hlasování</button>
+                <button class="tag-button" data-tag="XPLEVEL">XP systém a úrovně</button>
+                <button class="tag-button" data-tag="ZPOVEDI">Zpovědi (Anonymní Zprávy)</button>
+                <button class="tag-button" data-tag="ZALOHOVANI">Zálohování a Obnova Serverů</button>
             </div>
 
-            <div class="command-list-wrapper" id="commandListWrapper">
+            <div class="command-search-bar">
+                <input type="text" id="commandSearchInput" placeholder="Vyhledat příkaz (např. /ban, /stats)...">
+            </div>
+
+            <div class="command-list-groups">
                 
-                <div class="command-item" data-command="/ban" data-category="Běžné moderátorské příkazy">
-                    <div class="command-toggle" onclick="toggleCommand(this)">
-                        <span class="command-name">/ban &nbsp; Trvale vyloučí uživatele ze serveru</span>
-                        <span class="command-module">Běžné moderátorské příkazy</span>
-                        <span class="command-icon">^</span>
+                <div class="command-group" data-tags="AUDIOSTREAM">
+                    <div class="command-item">
+                        <div class="command-name">/stream play</div>
+                        <div class="command-description">Připojí se do kanálu a spustí audio stream z URL.</div>
+                        <div class="command-module-tag">Audio Stream</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
                     </div>
-                    <div class="command-details">
-                        <p class="detail-label">Použití:</p>
-                        <p class="detail-value">`/ban @uživatel [důvod]`</p>
-                        <p class="detail-label">Popis:</p>
-                        <p class="detail-value">Používá se pro udělení permanentního banu. Ukládá záznam do Auditloggeru.</p>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Tento příkaz spustí stream z přímé audio adresy nebo playlistu (.pls, .m3u). Video streamy (jako YouTube) nejsou podporovány. Použít lze pouze jeden aktivní stream na server.</p>
+                            <div class="syntax">Syntaxe: `/stream play url:<URL_adresa_streamu>`</div>
+                            <div class="module-link-small">Modul vyžaduje oprávnění **Připojit se** a **Mluvit** v hlasovém kanálu.</div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="command-item" data-command="/level" data-category="XP systém a úrovně">
-                    <div class="command-toggle" onclick="toggleCommand(this)">
-                        <span class="command-name">/level &nbsp; Zobrazí aktuální úroveň uživatele</span>
-                        <span class="command-module">XP systém a úrovně</span>
-                        <span class="command-icon">^</span>
+                <div class="command-group" data-tags="AUDIOSTREAM">
+                    <div class="command-item">
+                        <div class="command-name">/stream stop</div>
+                        <div class="command-description">Zastaví přehrávání a opustí hlasový kanál.</div>
+                        <div class="command-module-tag">Audio Stream</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
                     </div>
-                    <div class="command-details">
-                        <p class="detail-label">Použití:</p>
-                        <p class="detail-value">`/level` nebo `/level @uživatel`</p>
-                        <p class="detail-label">Popis:</p>
-                        <p class="detail-value">Zobrazí rank kartu s aktuální úrovní, XP a pozicí v žebříčku.</p>
-                    </div>
-                </div>
-
-                <div class="command-item" data-command="/rss add" data-category="RSS Čtečka">
-                    <div class="command-toggle" onclick="toggleCommand(this)">
-                        <span class="command-name">/rss add &nbsp; Přidá nový zdroj pro sledování</span>
-                        <span class="command-module">RSS Čtečka</span>
-                        <span class="command-icon">^</span>
-                    </div>
-                    <div class="command-details">
-                        <p class="detail-label">Použití:</p>
-                        <p class="detail-value">`/rss add [url] [kanál] [popis]`</p>
-                        <p class="detail-label">Popis:</p>
-                        <p class="detail-value">Nastaví automatické publikování článků z URL do zvoleného kanálu.</p>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Explicitně ukončí aktuálně běžící stream a odpojí bota z hlasového kanálu.</p>
+                            <div class="syntax">Syntaxe: `/stream stop`</div>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="command-item" data-command="/lang set" data-category="Bot localization and Language Settings">
-                    <div class="command-toggle" onclick="toggleCommand(this)">
-                        <span class="command-name">/lang set &nbsp; Nastaví jazyk pro bota na serveru</span>
-                        <span class="command-module">Bot localization and Language Settings</span>
-                        <span class="command-icon">^</span>
+                <div class="command-group" data-tags="AUDIOSTREAM">
+                    <div class="command-item">
+                        <div class="command-name">/stream volume</div>
+                        <div class="command-description">Nastaví hlasitost aktuálně běžícího streamu (0-100).</div>
+                        <div class="command-module-tag">Audio Stream</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
                     </div>
-                    <div class="command-details">
-                        <p class="detail-label">Použití:</p>
-                        <p class="detail-value">`/lang set [jazyk]`</p>
-                        <p class="detail-label">Popis:</p>
-                        <p class="detail-value">Nastaví výchozí jazyk pro odpovědi bota na celém serveru.</p>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Dynamicky upraví hlasitost streamu. <span class="text-danger">Poznámka:</span> Funkce závisí na streamovacím zdroji. U některých rádií nemusí být funkční.</p>
+                            <div class="syntax">Syntaxe: `/stream volume volume:<číslo_0_až_100>`</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="command-group" data-tags="MODERACE">
+                    <div class="command-item">
+                        <div class="command-name">/ban</div>
+                        <div class="command-description">Trvale vyloučí uživatele ze serveru</div>
+                        <div class="command-module-tag">Běžné moderátorské příkazy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <div class="syntax">Syntaxe: `/ban <uživatel> [doba] [důvod]`</div>
+                            <div class="extended-description">Umožňuje administrátorům a moderátorům zabanovat uživatele.</div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="command-item" data-command="/log channel" data-category="Auditlogger">
-                    <div class="command-toggle" onclick="toggleCommand(this)">
-                        <span class="command-name">/log channel &nbsp; Nastaví logovací kanál</span>
-                        <span class="command-module">Auditlogger</span>
-                        <span class="command-icon">^</span>
+                <div class="command-group" data-tags="XPLEVEL">
+                    <div class="command-item">
+                        <div class="command-name">/level</div>
+                        <div class="command-description">Zobrazí aktuální úroveň uživatele</div>
+                        <div class="command-module-tag">XP systém a úrovně</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
                     </div>
-                    <div class="command-details">
-                        <p class="detail-label">Použití:</p>
-                        <p class="detail-value">`/log channel [kanál]`</p>
-                        <p class="detail-label">Popis:</p>
-                        <p class="detail-value">Určí kanál, kam se budou posílat záznamy o smazaných zprávách, úpravách a akcích moderátorů.</p>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <div class="syntax">Syntaxe: `/level [uživatel]`</div>
+                            <div class="extended-description">Zobrazí úroveň a XP body.</div>
+                        </div>
                     </div>
                 </div>
                 
+                <div class="command-group" data-tags="TIKETY">
+                    <div class="command-item">
+                        <div class="command-name">/ticket open</div>
+                        <div class="command-description">Otevře nový soukromý kanál pro podporu</div>
+                        <div class="command-module-tag">Tikety - systém podpory</div>
+                         <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <div class="syntax">Syntaxe: `/ticket open [důvod]`</div>
+                            <div class="extended-description">Slouží k vytvoření kanálu podpory.</div>
+                        </div>
+                    </div>
                 </div>
-        </div>
+                
+            </div> 
+        </div> 
     </section>
+    
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-links">
@@ -210,11 +325,172 @@
         </div>
     </footer>
 
-    <script src="templatemo-nexus-scripts.js"></script>
+    <script src="templatemo-nexus-scripts.js"></script> 
+    
     <script>
-        // ... (Zde by normálně byl kód loadStats, ale ten na této stránce není potřeba)
-        // Důležité je zajistit, že je naimportován templatemo-nexus-scripts.js, 
-        // který bude obsahovat logiku pro akordeon a filtrování.
+        document.addEventListener('DOMContentLoaded', () => {
+            const commandsPage = document.querySelector('.commands-page');
+            if (!commandsPage) {
+                return;
+            }
+            
+            const tagButtons = commandsPage.querySelectorAll('.tag-button');
+            const commandGroupsContainer = commandsPage.querySelector('.command-list-groups');
+            const commandGroups = Array.from(commandGroupsContainer.querySelectorAll('.command-group'));
+            const searchInput = document.getElementById('commandSearchInput');
+
+            // --- FUNKCE PRO TŘÍDĚNÍ ---
+            function sortCommandGroups() {
+                commandGroups.sort((a, b) => {
+                    const nameA = a.querySelector('.command-name').textContent.toLowerCase().trim();
+                    const nameB = b.querySelector('.command-name').textContent.toLowerCase().trim();
+                    
+                    if (nameA < nameB) {
+                        return -1;
+                    }
+                    if (nameA > nameB) {
+                        return 1;
+                    }
+                    return 0;
+                });
+                commandGroups.forEach(group => {
+                    commandGroupsContainer.appendChild(group);
+                });
+            }
+
+            // Spuštění seřazení hned po načtení
+            sortCommandGroups();
+            
+            // --- FUNKCE FILTROVÁNÍ (POUŽÍVÁ TŘÍDU is-hidden) ---
+            function filterCommands(selectedTag) {
+                // Normalizace tagu (odstranění diakritiky, např. ZÁBAVA -> ZABAVA)
+                const normalizedSelectedTag = selectedTag.toUpperCase()
+                    .replace(/Á|Ä/g, 'A')
+                    .replace(/Č/g, 'C')
+                    .replace(/Ď/g, 'D')
+                    .replace(/É|Ě/g, 'E')
+                    .replace(/Í/g, 'I')
+                    .replace(/Ň/g, 'N')
+                    .replace(/Ó/g, 'O')
+                    .replace(/Ř/g, 'R')
+                    .replace(/Š/g, 'S')
+                    .replace(/Ť/g, 'T')
+                    .replace(/Ú|Ů/g, 'U')
+                    .replace(/Ý/g, 'Y')
+                    .replace(/Ž/g, 'Z')
+                    .replace(/[^A-Z]/g, '');
+
+                commandGroups.forEach(group => {
+                    // 1. Zavření detailů při filtrování
+                    if (group.classList.contains('active')) {
+                        group.classList.remove('active');
+                        group.querySelector('.command-detail-row').classList.remove('is-open');
+                        group.querySelector('.command-toggle-button').setAttribute('aria-expanded', 'false');
+                        group.querySelector('.command-detail-row').setAttribute('aria-hidden', 'true');
+                    }
+                    
+                    // 2. Získání tagů příkazu
+                    const commandTags = group.getAttribute('data-tags');
+
+                    let shouldShow = false;
+
+                    // 3. Logika zobrazení
+                    if (normalizedSelectedTag === 'ALL') {
+                        shouldShow = true;
+                    } else if (commandTags && commandTags.includes(normalizedSelectedTag)) {
+                        shouldShow = true;
+                    } 
+                    
+                    // 4. Aplikace/odebrání třídy is-hidden
+                    if (shouldShow) {
+                        group.classList.remove('is-hidden');
+                    } else {
+                        group.classList.add('is-hidden');
+                    }
+                });
+            }
+            // --- UDÁLOSTI TLAČÍTEK ---
+            tagButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    tagButtons.forEach(btn => btn.classList.remove('active-tag'));
+                    button.classList.add('active-tag');
+
+                    const selectedTag = button.getAttribute('data-tag');
+                    filterCommands(selectedTag);
+                    searchInput.value = '';
+                });
+            });
+
+            // --- UDÁLOSTI VYHLEDÁVÁNÍ ---
+            searchInput.addEventListener('input', () => {
+                const searchText = searchInput.value.toLowerCase().trim();
+                tagButtons.forEach(btn => btn.classList.remove('active-tag'));
+
+                commandGroups.forEach(group => {
+                    const commandItemText = group.querySelector('.command-item').textContent.toLowerCase();
+
+                    let shouldShowSearch = false;
+                    if (searchText === '' || commandItemText.includes(searchText)) {
+                        shouldShowSearch = true;
+                    } 
+                    
+                    if (shouldShowSearch) {
+                        group.classList.remove('is-hidden');
+                    } else {
+                        group.classList.add('is-hidden');
+                    }
+                });
+            });
+
+            // --- ACCODRION (Rozbalování detailů) ---
+            function toggleDetail(group) {
+                const detailRow = group.querySelector('.command-detail-row');
+                const toggleButton = group.querySelector('.command-toggle-button');
+                const isOpen = detailRow.classList.contains('is-open');
+
+                // Zavře všechny ostatní
+                commandGroups.forEach(g => {
+                    if (g !== group && g.classList.contains('active')) {
+                        g.classList.remove('active');
+                        g.querySelector('.command-detail-row').classList.remove('is-open');
+                        g.querySelector('.command-toggle-button').setAttribute('aria-expanded', 'false');
+                        g.querySelector('.command-detail-row').setAttribute('aria-hidden', 'true');
+                    }
+                });
+
+                // Otevře/zavře aktuální
+                if (isOpen) {
+                    detailRow.classList.remove('is-open');
+                    toggleButton.setAttribute('aria-expanded', 'false');
+                    detailRow.setAttribute('aria-hidden', 'true');
+                    group.classList.remove('active');
+                } else {
+                    detailRow.classList.add('is-open');
+                    toggleButton.setAttribute('aria-expanded', 'true');
+                    detailRow.setAttribute('aria-hidden', 'false');
+                    group.classList.add('active');
+                }
+            }
+
+            commandGroups.forEach(group => {
+                const item = group.querySelector('.command-item');
+                const button = group.querySelector('.command-toggle-button');
+
+                item.addEventListener('click', (event) => {
+                    if (event.target.tagName === 'A' || event.target.closest('.command-module-tag')) {
+                        return; 
+                    }
+                    toggleDetail(group);
+                });
+                
+                button.addEventListener('click', () => {
+                    toggleDetail(group);
+                });
+            });
+
+            // Spuštění filtru ALL na začátku
+            filterCommands('ALL'); 
+        });
     </script>
 </body>
 </html>
