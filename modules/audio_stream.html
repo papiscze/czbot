@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CZBOT - Modul pro Audio Streamování</title>
+    
+    <link href="../templatemo-nexus-style.css" rel="stylesheet">
+    <link href="../module-styles.css" rel="stylesheet"> 
+    
+</head>
+<body id="top" class="module-page"> 
+
+    <div class="cyber-bg">
+        <div class="cyber-gradient"></div>
+        <div class="matrix-rain" id="matrixRain"></div>
+    </div>
+    <div class="scanlines"></div>
+    <div class="noise-overlay"></div>
+    <nav>
+        <div class="nav-container">
+            <a href="../index.html" class="logo">CZbot</a>
+            
+            <ul class="nav-links">
+                <li><a href="../commands.html">Příkazy</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Moduly ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="auditlogger.html">Auditlogger</a></li>
+                        <li><a href="audio_stream.html">Audio Stream</a></li>
+                        <li><a href="autopublish.html">Automatické publikování zpráv z kanálů oznámení</a></li>
+                        <li><a href="autorole.html">Autorole, Ověřování uživatelů a Reakční role</a></li>
+                        <li><a href="basic_user_commands.html">Běžné uživatelské a zábavné příkazy</a></li>
+                        <li><a href="basic_mod_commands.html">Běžné moderátorské příkazy</a></li>
+                        <li class="active"><a href="bot_localization.html">Bot localization and Language Settings</a></li>
+                        <li><a href="crossban.html">Crossban</a></li>
+                        <li><a href="temp_voice.html">Dočasné hlasové kanály</a></li>
+                        <li><a href="giveaway.html">Giveaway(e)</a></li>
+                        <li><a href="birthdays.html">Narozeniny</a></li>
+                        <li><a href="patreon.html">Patreon</a></li>
+                        <li><a href="counting.html">Počítání</a></li>
+                        <li><a href="advanced_schedules.html">Pokročilé plánované zprávy</a></li>
+                        <li><a href="reactions.html">Reakce smajlíky na zprávy</a></li>
+                        <li><a href="reputation.html">Reputace</a></li>
+                        <li><a href="rss_reader.html">RSS Čtečka</a></li>
+                        <li><a href="scam_prevence.html">Scam Prevence</a></li>
+                        <li><a href="schedules.html">Schedules ‐ Plánované zprávy</a></li>
+                        <li><a href="stats.html">Statistiky serveru</a></li>
+                        <li><a href="holidays.html">Svátky (CZ SK)</a></li>
+                        <li><a href="feedback.html">Systém zpětné vazby a návrhů</a></li>
+                        <li><a href="tickets.html">Tikety</a></li>
+                        <li><a href="translate.html">Translate modul</a></li>
+                        <li><a href="threads.html">Tvorba vláken na zprávy</a></li>
+                        <li><a href="welcome_leave.html">Uvítací a odchodové zprávy (Welcome Leave)</a></li>
+                        <li><a href="vote.html">Vote ‐ Hlasování</a></li>
+                        <li><a href="watermark.html">Vodoznak s vlastním textem na obrázky</a></li>
+                        <li><a href="xp.html">XP systém a úrovně</a></li>
+                        <li><a href="backup.html">Zálohování a Obnova Serverů</a></li>
+                        <li><a href="confessions.html">Zpovědi (Anonymní Zprávy)</a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Nástroje ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../crongenerator.html">Cron Generátor</a></li>
+                        <li><a href="../embedgenerator.html">Embed Generátor</a></li>
+                        <li><a href="https://github.com/users/papiscze/projects/9">Roadmapa</a></li>
+                        <li><a href="../stats.html">Statistiky bota</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="../warns.html">Moderátorské záznamy</a></li>
+                <li><a href="https://rs422cznas.myds.me:5038/stats/">Statistiky serveru</a></li>
+                <li><a href="../privacy.html">GDPR / ToS</a></li>
+            </ul>
+
+            <div class="nav-bottom">
+                <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Pozvat bota</a>
+            </div>
+
+            <button class="mobile-menu-button" id="mobileMenuBtn">
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </button>
+        </div>
+    </nav>
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <a href="../index.html" class="mobile-menu-logo">CZbot</a>
+            <button class="mobile-menu-close" id="mobileMenuClose">✕</button>
+        </div>
+        <div class="mobile-menu-cta">
+            <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Přidat bota</a>
+        </div>
+        <nav class="mobile-menu-nav">
+            <ul>
+                <li><a href="../commands.html">Příkazy</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Nástroje ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../crongenerator.html">Cron Generátor</a></li>
+                        <li><a href="../embedgenerator.html">Embed Generátor</a></li>
+                        <li><a href="https://github.com/users/papiscze/projects/9">Roadmapa</a></li>
+                        <li><a href="../stats.html">Statistiky bota</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="../warns.html">Moderátorské záznamy</a></li>
+                <li><a href="https://rs422cznas.myds.me:5038/stats/">Statistiky serveru</a></li>
+                <li><a href="../privacy.html">GDPR / ToS</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Moduly ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="auditlogger.html">Auditlogger</a></li>
+                        <li><a href="audio_stream.html">Audio Stream</a></li>
+                        <li><a href="autopublish.html">Automatické publikování zpráv z kanálů oznámení</a></li>
+                        <li><a href="autorole.html">Autorole, Ověřování uživatelů a Reakční role</a></li>
+                        <li><a href="basic_user_commands.html">Běžné uživatelské a zábavné příkazy</a></li>
+                        <li><a href="basic_mod_commands.html">Běžné moderátorské příkazy</a></li>
+                        <li><a href="bot_localization.html">Bot localization and Language Settings</a></li>
+                        <li><a href="crossban.html">Crossban</a></li>
+                        <li><a href="temp_voice.html">Dočasné hlasové kanály</a></li>
+                        <li><a href="giveaway.html">Giveaway(e)</a></li>
+                        <li><a href="birthdays.html">Narozeniny</a></li>
+                        <li><a href="patreon.html">Patreon</a></li>
+                        <li><a href="counting.html">Počítání</a></li>
+                        <li><a href="advanced_schedules.html">Pokročilé plánované zprávy</a></li>
+                        <li><a href="reactions.html">Reakce smajlíky na zprávy</a></li>
+                        <li><a href="reputation.html">Reputace</a></li>
+                        <li><a href="rss_reader.html">RSS Čtečka</a></li>
+                        <li><a href="scam_prevence.html">Scam Prevence</a></li>
+                        <li><a href="schedules.html">Schedules ‐ Plánované zprávy</a></li>
+                        <li><a href="stats.html">Statistiky serveru</a></li>
+                        <li><a href="holidays.html">Svátky (CZ SK)</a></li>
+                        <li><a href="feedback.html">Systém zpětné vazby a návrhů</a></li>
+                        <li><a href="tickets.html">Tikety</a></li>
+                        <li><a href="translate.html">Translate modul</a></li>
+                        <li><a href="threads.html">Tvorba vláken na zprávy</a></li>
+                        <li><a href="welcome_leave.html">Uvítací a odchodové zprávy (Welcome Leave)</a></li>
+                        <li><a href="vote.html">Vote ‐ Hlasování</a></li>
+                        <li><a href="watermark.html">Vodoznak s vlastním textem na obrázky</a></li>
+                        <li><a href="xp.html">XP systém a úrovně</a></li>
+                        <li><a href="backup.html">Zálohování a Obnova Serverů</a></li>
+                        <li><a href="confessions.html">Zpovědi (Anonymní Zprávy)</a></li>
+                    </ul>
+                </li>           
+            </ul>
+        </nav>
+    </div>
+    </nav>
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        </div>
+    <div class="content-section">
+        <div class="content-container">
+
+            <h1 class="page-title">📻 Modul pro Audio Streamování (Audio Cog)</h1>
+            <p class="page-subtitle">Streamujte hudbu, rádio nebo jakýkoli přímý audio odkaz do hlasového kanálu. 🎧</p>
+
+            <div class="module-intro-box">
+                <p>
+                    Tento modul umožňuje botovi připojit se do hlasového kanálu a **streamovat hudbu, rádio nebo jakýkoli přímý audio odkaz (MP3, AAC, OGG)**. Využívá robustní nástroj **FFmpeg** pro stabilní a spolehlivé streamování.
+                </p>
+            </div>
+
+            <h2 class="module-heading">⚙️ Důležitá oprávnění a omezení</h2>
+            <p>
+                Aby modul fungoval bez problémů, ujistěte se, že bot má na serveru tato **oprávnění** a respektujte **omezení**:
+            </p>
+
+            <div class="info-box">
+                <h4>Požadovaná Oprávnění:</h4>
+                <ul>
+                    <li>**Připojit se** (`connect`): Vstup do hlasového kanálu.</li>
+                    <li>**Mluvit** (`speak`): Vysílání zvuku v hlasovém kanálu.</li>
+                    <li>**Zobrazit kanály**: Viditelnost hlasových kanálů.</li>
+                </ul>
+            </div>
+            
+            <div class="warning-box mt-4">
+                <h4>Omezení Modulu:</h4>
+                <ul>
+                    <li>Bot podporuje **pouze jeden aktivní stream na celou guildu (server)**.</li>
+                    <li>Bot **zůstane** v hlasovém kanále a bude pokračovat ve streamování, i když ho **všichni uživatelé opustí**. Streamování se zastaví pouze příkazem <span class="command-code">/stream stop</span>.</li>
+                    <li>URL adresy vedoucí na video platformy jako **YouTube** jsou **explicitně blokovány**. **Streamování videa není podporováno!** 🚫</li>
+                </ul>
+            </div>
+            
+            <div class="module-divider"></div>
+
+            <h2 class="module-heading">💡 Co modul umí?</h2>
+            <p>Přehled klíčových funkcí, které dělají modul spolehlivým:</p>
+            
+            <div class="info-box">
+                <ul>
+                    <li>**Stabilní streamování**: Využívá FFmpeg s optimalizovanými parametry.</li>
+                    <li>**Rozšířená podpora odkazů**: Zpracovává přímé audio URL a **playlisty** (<span class="command-code">.pls</span>, <span class="command-code">.m3u</span>).</li>
+                    <li>**Extrakce přímé URL**: Automaticky stáhne obsah playlistu, extrahuje skutečnou streamovací URL a tu předá FFmpeg. ✅</li>
+                    <li>**Dynamická hlasitost**: Umožňuje uživatelům nastavit hlasitost streamu v reálném čase.</li>
+                    <li>**Lokalizace**: Všechny zprávy jsou plně lokalizovány (CZ/EN).</li>
+                </ul>
+            </div>
+
+            <div class="module-divider"></div>
+
+            <h2 class="module-heading">🚀 Příkazy</h2>
+            <p>Všechny příkazy patří do skupiny <span class="command-code">/stream</span>. Pro použití musíte být v **jakémkoli hlasovém kanálu**.</p>
+            
+            <h3>Seznam příkazů</h3>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Příkaz</th>
+                        <th>Popis</th>
+                        <th>Parametry</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="command-code">/stream play</span></td>
+                        <td>Připojí se a spustí stream z dané URL.</td>
+                        <td><span class="command-code">url</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="command-code">/stream stop</span></td>
+                        <td>Zastaví přehrávání a opustí kanál.</td>
+                        <td>Žádné</td>
+                    </tr>
+                    <tr>
+                        <td><span class="command-code">/stream volume</span></td>
+                        <td>Nastaví hlasitost streamu v %.</td>
+                        <td><span class="command-code">volume</span> (0-100)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 class="mt-4">1. Spuštění streamu: /stream play</h3>
+            <p>Spustí stream z přímé audio adresy nebo z playlistu.</p>
+            <div class="command-box">
+                <h4 class="command-title">/stream play url:&lt;URL_adresa_streamu&gt;</h4>
+                <div class="command-details">
+                    <div class="command-detail-row">
+                        <span class="command-label">Parametr:</span>
+                        <span><span class="command-code">url</span>: Přímý odkaz na audio stream (např. <span class="command-code">.mp3</span>) **NEBO playlist** (např. <span class="command-code">.pls</span>).</span>
+                    </div>
+                    <div class="command-detail-row">
+                        <span class="command-label">Příklad:</span>
+                        <span class="command-code-example">/stream play url:https://radioabc.cz/stream.mp3</span>
+                    </div>
+                    <div class="command-detail-row">
+                        <span class="command-label">Odpověď bota:</span>
+                        <span class="command-response">📻 Spouštím stream na [URL] v kanálu [Název kanálu]...</span>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="mt-4">2. Zastavení streamu: /stream stop</h3>
+            <p>Zastaví aktuální přehrávání a odpojí bota z hlasového kanálu.</p>
+            <div class="command-box">
+                <h4 class="command-title">/stream stop</h4>
+                <div class="command-details">
+                    <div class="command-detail-row">
+                        <span class="command-label">Odpověď bota:</span>
+                        <span class="command-response">Přehrávání zastaveno a opouštím hlasový kanál.</span>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="mt-4">3. Nastavení hlasitosti: /stream volume</h3>
+            <p>Nastaví hlasitost aktuálně běžícího streamu.</p>
+            <div class="command-box">
+                <h4 class="command-title">/stream volume volume:&lt;číslo_0_až_100&gt;</h4>
+                <div class="command-details">
+                    <div class="command-detail-row">
+                        <span class="command-label">Parametr:</span>
+                        <span><span class="command-code">volume</span>: Celé číslo od **0** (ticho) do **100** (maximální hlasitost).</span>
+                    </div>
+                    <div class="command-detail-row">
+                        <span class="command-label">Příklad:</span>
+                        <span class="command-code-example">/stream volume volume:50</span>
+                    </div>
+                    <div class="command-detail-row">
+                        <span class="command-label">Odpověď bota:</span>
+                        <span class="command-response">(efemérní): 🔊 Hlasitost nastavena na 50%.</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="warning-box mt-4">
+                **Důležitá poznámka**: Ne všechny streamovací zdroje podporují softwarovou úpravu hlasitosti. V takovém případě příkaz **nebude funkční** a je nutné upravit hlasitost manuálně v Discordu.
+            </div>
+
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="https://github.com/papiscze/czbot">GitHub</a>
+                <span class="footer-separator">•</span>
+                <a href="https://discord.gg/hk6PdtVxbm">Support Server</a>
+                <span class="footer-separator">•</span>
+                <a href="https://github.com/papiscze/czbot/wiki">GitHub dokumentace</a>
+                <span class="footer-separator">•</span>
+                <a href="mailto:admin@ofpmafia.eu">Kontakt</a>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 CZbot. Verze webu 1.0. Všechna práva vyhrazena</p>
+                <p class="footer-credit">Šablona inspirována <a href="https://templatemo.com" target="_blank" rel="noopener nofollow">TemplateMo</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../templatemo-nexus-scripts.js"></script>
+
+</body>
+</html>

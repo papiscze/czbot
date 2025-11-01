@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CZBOT - Modul Giveaway (Soutěže)</title>
+    
+    <link href="../templatemo-nexus-style.css" rel="stylesheet">
+    <link href="../module-styles.css" rel="stylesheet"> 
+    
+</head>
+<body id="top" class="module-page"> 
+
+    <div class="cyber-bg">
+        <div class="cyber-gradient"></div>
+        <div class="matrix-rain" id="matrixRain"></div>
+    </div>
+    <div class="scanlines"></div>
+    <div class="noise-overlay"></div>
+    <nav>
+        <div class="nav-container">
+            <a href="../index.html" class="logo">CZbot</a>
+            
+            <ul class="nav-links">
+                <li><a href="../commands.html">Příkazy</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Moduly ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="auditlogger.html">Auditlogger</a></li>
+                        <li><a href="audio_stream.html">Audio Stream</a></li>
+                        <li><a href="autopublish.html">Automatické publikování zpráv z kanálů oznámení</a></li>
+                        <li><a href="autorole.html">Autorole, Ověřování uživatelů a Reakční role</a></li>
+                        <li><a href="basic_user_commands.html">Běžné uživatelské a zábavné příkazy</a></li>
+                        <li><a href="basic_mod_commands.html">Běžné moderátorské příkazy</a></li>
+                        <li class="active"><a href="bot_localization.html">Bot localization and Language Settings</a></li>
+                        <li><a href="crossban.html">Crossban</a></li>
+                        <li><a href="temp_voice.html">Dočasné hlasové kanály</a></li>
+                        <li><a href="giveaway.html">Giveaway(e)</a></li>
+                        <li><a href="birthdays.html">Narozeniny</a></li>
+                        <li><a href="patreon.html">Patreon</a></li>
+                        <li><a href="counting.html">Počítání</a></li>
+                        <li><a href="advanced_schedules.html">Pokročilé plánované zprávy</a></li>
+                        <li><a href="reactions.html">Reakce smajlíky na zprávy</a></li>
+                        <li><a href="reputation.html">Reputace</a></li>
+                        <li><a href="rss_reader.html">RSS Čtečka</a></li>
+                        <li><a href="scam_prevence.html">Scam Prevence</a></li>
+                        <li><a href="schedules.html">Schedules ‐ Plánované zprávy</a></li>
+                        <li><a href="stats.html">Statistiky serveru</a></li>
+                        <li><a href="holidays.html">Svátky (CZ SK)</a></li>
+                        <li><a href="feedback.html">Systém zpětné vazby a návrhů</a></li>
+                        <li><a href="tickets.html">Tikety</a></li>
+                        <li><a href="translate.html">Translate modul</a></li>
+                        <li><a href="threads.html">Tvorba vláken na zprávy</a></li>
+                        <li><a href="welcome_leave.html">Uvítací a odchodové zprávy (Welcome Leave)</a></li>
+                        <li><a href="vote.html">Vote ‐ Hlasování</a></li>
+                        <li><a href="watermark.html">Vodoznak s vlastním textem na obrázky</a></li>
+                        <li><a href="xp.html">XP systém a úrovně</a></li>
+                        <li><a href="backup.html">Zálohování a Obnova Serverů</a></li>
+                        <li><a href="confessions.html">Zpovědi (Anonymní Zprávy)</a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Nástroje ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../crongenerator.html">Cron Generátor</a></li>
+                        <li><a href="../embedgenerator.html">Embed Generátor</a></li>
+                        <li><a href="https://github.com/users/papiscze/projects/9">Roadmapa</a></li>
+                        <li><a href="../stats.html">Statistiky bota</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="../warns.html">Moderátorské záznamy</a></li>
+                <li><a href="https://rs422cznas.myds.me:5038/stats/">Statistiky serveru</a></li>
+                <li><a href="../privacy.html">GDPR / ToS</a></li>
+            </ul>
+
+            <div class="nav-bottom">
+                <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Pozvat bota</a>
+            </div>
+
+            <button class="mobile-menu-button" id="mobileMenuBtn">
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </button>
+        </div>
+    </nav>
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <a href="../index.html" class="mobile-menu-logo">CZbot</a>
+            <button class="mobile-menu-close" id="mobileMenuClose">✕</button>
+        </div>
+        <div class="mobile-menu-cta">
+            <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Přidat bota</a>
+        </div>
+        <nav class="mobile-menu-nav">
+            <ul>
+                <li><a href="../commands.html">Příkazy</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Nástroje ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../crongenerator.html">Cron Generátor</a></li>
+                        <li><a href="../embedgenerator.html">Embed Generátor</a></li>
+                        <li><a href="https://github.com/users/papiscze/projects/9">Roadmapa</a></li>
+                        <li><a href="../stats.html">Statistiky bota</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="../warns.html">Moderátorské záznamy</a></li>
+                <li><a href="https://rs422cznas.myds.me:5038/stats/">Statistiky serveru</a></li>
+                <li><a href="../privacy.html">GDPR / ToS</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Moduly ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="auditlogger.html">Auditlogger</a></li>
+                        <li><a href="audio_stream.html">Audio Stream</a></li>
+                        <li><a href="autopublish.html">Automatické publikování zpráv z kanálů oznámení</a></li>
+                        <li><a href="autorole.html">Autorole, Ověřování uživatelů a Reakční role</a></li>
+                        <li><a href="basic_user_commands.html">Běžné uživatelské a zábavné příkazy</a></li>
+                        <li><a href="basic_mod_commands.html">Běžné moderátorské příkazy</a></li>
+                        <li><a href="bot_localization.html">Bot localization and Language Settings</a></li>
+                        <li><a href="crossban.html">Crossban</a></li>
+                        <li><a href="temp_voice.html">Dočasné hlasové kanály</a></li>
+                        <li><a href="giveaway.html">Giveaway(e)</a></li>
+                        <li><a href="birthdays.html">Narozeniny</a></li>
+                        <li><a href="patreon.html">Patreon</a></li>
+                        <li><a href="counting.html">Počítání</a></li>
+                        <li><a href="advanced_schedules.html">Pokročilé plánované zprávy</a></li>
+                        <li><a href="reactions.html">Reakce smajlíky na zprávy</a></li>
+                        <li><a href="reputation.html">Reputace</a></li>
+                        <li><a href="rss_reader.html">RSS Čtečka</a></li>
+                        <li><a href="scam_prevence.html">Scam Prevence</a></li>
+                        <li><a href="schedules.html">Schedules ‐ Plánované zprávy</a></li>
+                        <li><a href="stats.html">Statistiky serveru</a></li>
+                        <li><a href="holidays.html">Svátky (CZ SK)</a></li>
+                        <li><a href="feedback.html">Systém zpětné vazby a návrhů</a></li>
+                        <li><a href="tickets.html">Tikety</a></li>
+                        <li><a href="translate.html">Translate modul</a></li>
+                        <li><a href="threads.html">Tvorba vláken na zprávy</a></li>
+                        <li><a href="welcome_leave.html">Uvítací a odchodové zprávy (Welcome Leave)</a></li>
+                        <li><a href="vote.html">Vote ‐ Hlasování</a></li>
+                        <li><a href="watermark.html">Vodoznak s vlastním textem na obrázky</a></li>
+                        <li><a href="xp.html">XP systém a úrovně</a></li>
+                        <li><a href="backup.html">Zálohování a Obnova Serverů</a></li>
+                        <li><a href="confessions.html">Zpovědi (Anonymní Zprávy)</a></li>
+                    </ul>
+                </li>           
+            </ul>
+        </nav>
+    </div>
+    </nav>
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        </div>
+    <div class="content-section">
+        <div class="content-container">
+
+            <h1 class="page-title">🎉 Modul Giveaway (Soutěže)</h1>
+            <p class="page-subtitle">Snadno spravujte a organizujte soutěže přímo na vašem Discord serveru.</p>
+
+            <div class="module-intro-box">
+                <p>
+                    Modul **Giveaway** poskytuje komplexní sadu funkcí pro spouštění, ukončování a opětovné losování soutěží (giveawayů). Podporuje **požadované role** a **minimální úrovně** pro omezení účasti.
+                </p>
+            </div>
+
+            <h2 class="module-heading">⚙️ Důležitá oprávnění bota</h2>
+            <p>Pro bezproblémové fungování je **klíčové oprávnění** <span class="command-code">Spravovat zprávy</span>, které bot potřebuje pro úpravu giveaway zpráv a manipulaci s reakcemi.</p>
+
+            <div class="info-box">
+                <ul class="bullet-list">
+                    <li>**Spravovat zprávy** (<span class="command-code">manage_messages</span>): **Klíčové** – pro úpravu zpráv a reakcí.</li>
+                    <li>**Posílat zprávy** / **Přidávat reakce** / **Číst historii zpráv**: Nezbytné pro komunikaci a zaznamenávání účastníků.</li>
+                    <li>**Odesílat zprávy do soukromých zpráv (DM)**: Pro informování uživatelů, kteří nesplňují požadavky.</li>
+                </ul>
+            </div>
+            
+            <div class="module-divider"></div>
+
+            <h2 class="module-heading">💡 Co modul umí?</h2>
+            
+            <div class="info-box">
+                <ul class="bullet-list">
+                    <li>**Spouštění nových soutěží** s určenou délkou, počtem vítězů a cenou.</li>
+                    <li>**Omezení účasti** pomocí **Požadované role** nebo **Minimální úrovně** (vyžaduje XP systém).</li>
+                    <li>**Automatické ukončení** po uplynutí času.</li>
+                    <li>**Ruční ukončení** a **Opětovné vylosování vítězů** (<span class="command-code">reroll</span>).</li>
+                    <li>**Zaznamenávání účastníků** kliknutím na reakci 🎁 a automatická kontrola jejich oprávnění.</li>
+                </ul>
+            </div>
+
+            <div class="module-divider"></div>
+
+            <h2 class="module-heading">🚀 Příkazy pro správu (POUZE MODERÁTOŘI)</h2>
+            <p>Všechny příkazy jsou dostupné jako **slash příkazy** pod <span class="command-code">/giveaway</span>. Jsou omezeny na uživatele s oprávněním <span class="command-code">Spravovat zprávy</span>.</p>
+
+            <h3 class="mt-4">1. Spuštění nového giveawaye: <span class="command-code">/giveaway start</span></h3>
+            <p>Doba trvání se zadává s jednotkou (<span class="command-code">s, m, h, d</span>), např. <span class="command-code">1h30m</span>.</p>
+            
+            <div class="command-box">
+                <h4 class="command-title">Příklad s požadavky na role a úroveň:</h4>
+                <p>Spustí giveaway na 3 dny s 3 vítězi v kanále `#souteze`, pouze pro členy s rolí **@Věrný-člen** a min. úrovní **10**.</p>
+                <span class="command-code-example">/giveaway start duration:3d winners:3 prize:Steam Hra channel:#souteze required_role:@Věrný-člen min_level:10</span>
+            </div>
+
+            <h3 class="mt-4">2. Ostatní příkazy pro správu</h3>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Příkaz</th>
+                        <th>Popis</th>
+                        <th>Parametr</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="command-code">/giveaway end</span></td>
+                        <td>Okamžitě ukončí zadaný giveaway a vybere vítěze.</td>
+                        <td><span class="command-code">message_id</span>: ID zprávy giveawaye.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="command-code">/giveaway reroll</span></td>
+                        <td>Vybere nové vítěze pro již ukončený giveaway.</td>
+                        <td><span class="command-code">message_id</span>: ID zprávy giveawaye.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="command-code">/giveaway seznam</span></td>
+                        <td>Zobrazí seznam všech probíhajících giveawayů na serveru.</td>
+                        <td>Žádné.</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="module-divider"></div>
+
+            <h2 class="module-heading">🔗 Chování a interakce</h2>
+            
+            <ol class="bullet-list">
+                <li>**Účast**: Uživatelé se účastní kliknutím na reakci **🎁** pod zprávou.</li>
+                <li>**Odmítnutí účasti**: Pokud uživatel nesplňuje požadavky (role, úroveň), bot **automaticky odstraní jeho reakci** a pokusí se mu poslat soukromou zprávu s vysvětlením.</li>
+                <li>**Vítězové**: Po ukončení bot oznámí vítěze v kanálu a aktualizuje původní zprávu.</li>
+            </ol>
+            
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="https://github.com/papiscze/czbot">GitHub</a>
+                <span class="footer-separator">•</span>
+                <a href="https://discord.gg/hk6PdtVxbm">Support Server</a>
+                <span class="footer-separator">•</span>
+                <a href="https://github.com/papiscze/czbot/wiki">GitHub dokumentace</a>
+                <span class="footer-separator">•</span>
+                <a href="mailto:admin@ofpmafia.eu">Kontakt</a>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 CZbot. Verze webu 1.0. Všechna práva vyhrazena</p>
+                <p class="footer-credit">Šablona inspirována <a href="https://templatemo.com" target="_blank" rel="noopener nofollow">TemplateMo</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../templatemo-nexus-scripts.js"></script>
+
+</body>
+</html>

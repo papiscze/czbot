@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CZBOT - Autorole, Ověřování a Reakční Role</title>
+    
+    <link href="../templatemo-nexus-style.css" rel="stylesheet">
+    <link href="../module-styles.css" rel="stylesheet"> 
+    
+</head>
+<body id="top" class="module-page"> 
+
+    <div class="cyber-bg">
+        <div class="cyber-gradient"></div>
+        <div class="matrix-rain" id="matrixRain"></div>
+    </div>
+    <div class="scanlines"></div>
+    <div class="noise-overlay"></div>
+    <nav>
+        <div class="nav-container">
+            <a href="../index.html" class="logo">CZbot</a>
+            
+            <ul class="nav-links">
+                <li><a href="../commands.html">Příkazy</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Moduly ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="auditlogger.html">Auditlogger</a></li>
+                        <li><a href="audio_stream.html">Audio Stream</a></li>
+                        <li><a href="autopublish.html">Automatické publikování zpráv z kanálů oznámení</a></li>
+                        <li><a href="autorole.html">Autorole, Ověřování uživatelů a Reakční role</a></li>
+                        <li><a href="basic_user_commands.html">Běžné uživatelské a zábavné příkazy</a></li>
+                        <li><a href="basic_mod_commands.html">Běžné moderátorské příkazy</a></li>
+                        <li class="active"><a href="bot_localization.html">Bot localization and Language Settings</a></li>
+                        <li><a href="crossban.html">Crossban</a></li>
+                        <li><a href="temp_voice.html">Dočasné hlasové kanály</a></li>
+                        <li><a href="giveaway.html">Giveaway(e)</a></li>
+                        <li><a href="birthdays.html">Narozeniny</a></li>
+                        <li><a href="patreon.html">Patreon</a></li>
+                        <li><a href="counting.html">Počítání</a></li>
+                        <li><a href="advanced_schedules.html">Pokročilé plánované zprávy</a></li>
+                        <li><a href="reactions.html">Reakce smajlíky na zprávy</a></li>
+                        <li><a href="reputation.html">Reputace</a></li>
+                        <li><a href="rss_reader.html">RSS Čtečka</a></li>
+                        <li><a href="scam_prevence.html">Scam Prevence</a></li>
+                        <li><a href="schedules.html">Schedules ‐ Plánované zprávy</a></li>
+                        <li><a href="stats.html">Statistiky serveru</a></li>
+                        <li><a href="holidays.html">Svátky (CZ SK)</a></li>
+                        <li><a href="feedback.html">Systém zpětné vazby a návrhů</a></li>
+                        <li><a href="tickets.html">Tikety</a></li>
+                        <li><a href="translate.html">Translate modul</a></li>
+                        <li><a href="threads.html">Tvorba vláken na zprávy</a></li>
+                        <li><a href="welcome_leave.html">Uvítací a odchodové zprávy (Welcome Leave)</a></li>
+                        <li><a href="vote.html">Vote ‐ Hlasování</a></li>
+                        <li><a href="watermark.html">Vodoznak s vlastním textem na obrázky</a></li>
+                        <li><a href="xp.html">XP systém a úrovně</a></li>
+                        <li><a href="backup.html">Zálohování a Obnova Serverů</a></li>
+                        <li><a href="confessions.html">Zpovědi (Anonymní Zprávy)</a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Nástroje ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../crongenerator.html">Cron Generátor</a></li>
+                        <li><a href="../embedgenerator.html">Embed Generátor</a></li>
+                        <li><a href="https://github.com/users/papiscze/projects/9">Roadmapa</a></li>
+                        <li><a href="../stats.html">Statistiky bota</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="../warns.html">Moderátorské záznamy</a></li>
+                <li><a href="https://rs422cznas.myds.me:5038/stats/">Statistiky serveru</a></li>
+                <li><a href="../privacy.html">GDPR / ToS</a></li>
+            </ul>
+
+            <div class="nav-bottom">
+                <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Pozvat bota</a>
+            </div>
+
+            <button class="mobile-menu-button" id="mobileMenuBtn">
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </button>
+        </div>
+    </nav>
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <a href="../index.html" class="mobile-menu-logo">CZbot</a>
+            <button class="mobile-menu-close" id="mobileMenuClose">✕</button>
+        </div>
+        <div class="mobile-menu-cta">
+            <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Přidat bota</a>
+        </div>
+        <nav class="mobile-menu-nav">
+            <ul>
+                <li><a href="../commands.html">Příkazy</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Nástroje ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../crongenerator.html">Cron Generátor</a></li>
+                        <li><a href="../embedgenerator.html">Embed Generátor</a></li>
+                        <li><a href="https://github.com/users/papiscze/projects/9">Roadmapa</a></li>
+                        <li><a href="../stats.html">Statistiky bota</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="../warns.html">Moderátorské záznamy</a></li>
+                <li><a href="https://rs422cznas.myds.me:5038/stats/">Statistiky serveru</a></li>
+                <li><a href="../privacy.html">GDPR / ToS</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Moduly ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="auditlogger.html">Auditlogger</a></li>
+                        <li><a href="audio_stream.html">Audio Stream</a></li>
+                        <li><a href="autopublish.html">Automatické publikování zpráv z kanálů oznámení</a></li>
+                        <li><a href="autorole.html">Autorole, Ověřování uživatelů a Reakční role</a></li>
+                        <li><a href="basic_user_commands.html">Běžné uživatelské a zábavné příkazy</a></li>
+                        <li><a href="basic_mod_commands.html">Běžné moderátorské příkazy</a></li>
+                        <li><a href="bot_localization.html">Bot localization and Language Settings</a></li>
+                        <li><a href="crossban.html">Crossban</a></li>
+                        <li><a href="temp_voice.html">Dočasné hlasové kanály</a></li>
+                        <li><a href="giveaway.html">Giveaway(e)</a></li>
+                        <li><a href="birthdays.html">Narozeniny</a></li>
+                        <li><a href="patreon.html">Patreon</a></li>
+                        <li><a href="counting.html">Počítání</a></li>
+                        <li><a href="advanced_schedules.html">Pokročilé plánované zprávy</a></li>
+                        <li><a href="reactions.html">Reakce smajlíky na zprávy</a></li>
+                        <li><a href="reputation.html">Reputace</a></li>
+                        <li><a href="rss_reader.html">RSS Čtečka</a></li>
+                        <li><a href="scam_prevence.html">Scam Prevence</a></li>
+                        <li><a href="schedules.html">Schedules ‐ Plánované zprávy</a></li>
+                        <li><a href="stats.html">Statistiky serveru</a></li>
+                        <li><a href="holidays.html">Svátky (CZ SK)</a></li>
+                        <li><a href="feedback.html">Systém zpětné vazby a návrhů</a></li>
+                        <li><a href="tickets.html">Tikety</a></li>
+                        <li><a href="translate.html">Translate modul</a></li>
+                        <li><a href="threads.html">Tvorba vláken na zprávy</a></li>
+                        <li><a href="welcome_leave.html">Uvítací a odchodové zprávy (Welcome Leave)</a></li>
+                        <li><a href="vote.html">Vote ‐ Hlasování</a></li>
+                        <li><a href="watermark.html">Vodoznak s vlastním textem na obrázky</a></li>
+                        <li><a href="xp.html">XP systém a úrovně</a></li>
+                        <li><a href="backup.html">Zálohování a Obnova Serverů</a></li>
+                        <li><a href="confessions.html">Zpovědi (Anonymní Zprávy)</a></li>
+                    </ul>
+                </li>           
+            </ul>
+        </nav>
+    </div>
+    </nav>
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        </div>
+    <div class="content-section">
+        <div class="content-container">
+
+            <h1 class="page-title">📚 Průvodce rolemi a ověřováním uživatelů</h1>
+            <p class="page-subtitle">Spravujte samoověření, reakční role, automatické role a dočasné role.</p>
+
+            <div class="module-intro-box">
+                <p>
+                    Tento modul pomáhá se **samoověřením** na serveru a také s využíváním **reakčních rolí** a **automatických rolí**. Uživatelé si mohou sami přidávat role kliknutím na emoji a noví členové získají roli automaticky.
+                </p>
+            </div>
+
+            <h2 class="module-heading">⚙️ Důležitá oprávnění bota</h2>
+            <p>Pro správnou funkci musí mít bot následující **klíčové oprávnění**: **<span class="command-code">Spravovat role</span>**.</p>
+
+            <div class="info-box">
+                <ul class="bullet-list">
+                    <li>**Číst zprávy / Zobrazit kanály**</li>
+                    <li>**Posílat zprávy**</li>
+                    <li>**Spravovat role**: **Klíčové** – bez něj nelze role přidělovat ani odebírat.</li>
+                    <li>**Vkládat odkazy** / **Přidat reakce** (pro reakční role)</li>
+                    <li>**Používat příkazy aplikací**</li>
+                </ul>
+            </div>
+            
+            <div class="module-divider"></div>
+
+            <h2 class="module-heading">🛡️ Ověřování uživatelů (`/verify`)</h2>
+            
+            <h3 class="mt-4">Jak se ověřit (pro běžné uživatele)</h3>
+            <p>Proces je jednoduchý a uděluje uživateli roli, která mu odemkne zbytek serveru (pokud je ověřovací role nastavena).</p>
+            <div class="command-box">
+                <h4 class="command-title">/verify overit</h4>
+                <div class="command-details">
+                    <div class="command-detail-row">
+                        <span class="command-label">Použití:</span>
+                        <span>Do libovolného chatu napište <span class="command-code">/verify overit</span>.</span>
+                    </div>
+                    <div class="command-detail-row">
+                        <span class="command-label">Odpověď bota:</span>
+                        <span class="command-response">Ověření úspěšné, získali jste roli [Název Role]. ✅</span>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="mt-4">Správa ověřovací role (POUZE MODERÁTOŘI)</h3>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Příkaz</th>
+                        <th>Popis</th>
+                        <th>Příklad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="command-code">/verify set &lt;role&gt;</span></td>
+                        <td>Nastaví roli, kterou uživatel získá po použití <span class="command-code">/verify overit</span>.</td>
+                        <td><span class="command-code-example">/verify set role:@Ověřený uživatel</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="command-code">/verify remove</span></td>
+                        <td>Odstraní aktuálně nastavenou ověřovací roli.</td>
+                        <td><span class="command-code-example">/verify remove</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="module-divider"></div>
+
+            <h2 class="module-heading">🚀 Automatické role (`/autorole`)</h2>
+            <p>Automaticky přidělí novým členům na serveru uvítací roli (autorole).</p>
+            
+            <div class="warning-box">
+                **⚠️ Důležité! Hierarchie rolí**<br>
+                Pro správné fungování musí být **role bota** v hierarchii rolí **nad** rolí, kterou má automaticky přidělovat.
+            </div>
+
+            <h3 class="mt-4">Příkazy pro správu (POUZE MODERÁTOŘI)</h3>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Příkaz</th>
+                        <th>Popis</th>
+                        <th>Příklad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="command-code">/autorole set &lt;role&gt;</span></td>
+                        <td>Nastaví vybranou roli jako automatickou roli pro nové uživatele.</td>
+                        <td><span class="command-code-example">/autorole set role:Člen</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="command-code">/autorole disable</span></td>
+                        <td>Zakáže funkci automatické role.</td>
+                        <td><span class="command-code-example">/autorole disable</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="module-divider"></div>
+
+            <h2 class="module-heading">🙋‍♀️ Reakční role (`/reactionroles`)</h2>
+            <p>Umožňují uživatelům získat nebo odebrat si role na serveru pouhým kliknutím na emoji u konkrétní zprávy.</p>
+            
+            <h3 class="mt-4">Jak získat reakční roli (pro běžné uživatele)</h3>
+            <ol>
+                <li>Najděte zprávu s reakčními rolemi.</li>
+                <li>Jednoduše **klikněte na emoji** pod touto zprávou, které odpovídá roli, kterou chcete získat.</li>
+                <li>Pro odebrání role klikněte na stejné emoji znovu.</li>
+            </ol>
+
+            <h3 class="mt-4">Příkazy pro správu (POUZE MODERÁTOŘI)</h3>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Příkaz</th>
+                        <th>Popis a Parametry</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="command-code">/reactionroles nastavit</span></td>
+                        <td>Nastaví vazbu **ID zprávy** + **Emoji** k **Roli**.<br>
+                            **Použití**: <span class="command-code-example">/reactionroles nastavit message_id:123... emoji:🎮 role:Hráč</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span class="command-code">/reactionroles odstranit</span></td>
+                        <td>Odstraní vazbu mezi **ID zprávy** a **Emoji**.<br>
+                            **Použití**: <span class="command-code-example">/reactionroles odstranit message_id:123... emoji:🎮</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span class="command-code">/reactionroles list</span></td>
+                        <td>Zobrazí seznam všech aktivních reakčních rolí na serveru.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="module-divider"></div>
+
+            <h2 class="module-heading">⏳ Správa dočasných rolí (`/temp_role`)</h2>
+            <p>Moderátoři mohou přiřadit uživatelům roli na omezenou dobu, po jejímž uplynutí je role automaticky odebrána.</p>
+
+            <h3 class="mt-4">Příkazy pro správu (POUZE MODERÁTOŘI)</h3>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Příkaz</th>
+                        <th>Popis a Parametry</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="command-code">/temp_role set</span></td>
+                        <td>Přiřadí dočasnou roli.<br>
+                            **Parametr duration formát**: <span class="command-code">1h</span> (1 hodina), <span class="command-code">30m</span> (30 minut), <span class="command-code">7d</span> (7 dnů).<br>
+                            **Použití**: <span class="command-code-example">/temp_role set member:Pepa role:Mute duration:30m</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span class="command-code">/temp_role remove</span></td>
+                        <td>Ručně odebere dočasnou roli před vypršením času.<br>
+                            **Použití**: <span class="command-code-example">/temp_role remove member:Pepa role:Mute</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span class="command-code">/temp_role list</span></td>
+                        <td>Zobrazí seznam všech aktivních dočasných rolí na serveru.</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="https://github.com/papiscze/czbot">GitHub</a>
+                <span class="footer-separator">•</span>
+                <a href="https://discord.gg/hk6PdtVxbm">Support Server</a>
+                <span class="footer-separator">•</span>
+                <a href="https://github.com/papiscze/czbot/wiki">GitHub dokumentace</a>
+                <span class="footer-separator">•</span>
+                <a href="mailto:admin@ofpmafia.eu">Kontakt</a>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 CZbot. Verze webu 1.0. Všechna práva vyhrazena</p>
+                <p class="footer-credit">Šablona inspirována <a href="https://templatemo.com" target="_blank" rel="noopener nofollow">TemplateMo</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../templatemo-nexus-scripts.js"></script>
+
+</body>
+</html>

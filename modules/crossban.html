@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CZBOT - CrossBan: Federativní Systém Banování</title>
+    
+    <link href="../templatemo-nexus-style.css" rel="stylesheet">
+    <link href="../module-styles.css" rel="stylesheet"> 
+    
+</head>
+<body id="top" class="module-page"> 
+
+    <div class="cyber-bg">
+        <div class="cyber-gradient"></div>
+        <div class="matrix-rain" id="matrixRain"></div>
+    </div>
+    <div class="particles" id="particlesContainer"></div>
+    <div class="data-streams" id="dataStreams"></div>
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+    <div class="grid-overlay">
+        <div class="grid-lines"></div>
+        <div class="grid-glow"></div>
+    </div>
+    <div class="scanlines"></div>
+    <div class="noise-overlay"></div>
+    <nav>
+        <div class="nav-container">
+            <a href="../index.html" class="logo">CZbot</a>
+            
+            <ul class="nav-links">
+                <li><a href="../commands.html">Příkazy</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Moduly ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="auditlogger.html">Auditlogger</a></li>
+                        <li><a href="audio_stream.html">Audio Stream</a></li>
+                        <li><a href="autopublish.html">Automatické publikování zpráv z kanálů oznámení</a></li>
+                        <li><a href="autorole.html">Autorole, Ověřování uživatelů a Reakční role</a></li>
+                        <li><a href="basic_user_commands.html">Běžné uživatelské a zábavné příkazy</a></li>
+                        <li><a href="basic_mod_commands.html">Běžné moderátorské příkazy</a></li>
+                        <li class="active"><a href="bot_localization.html">Bot localization and Language Settings</a></li>
+                        <li><a href="crossban.html">Crossban</a></li>
+                        <li><a href="temp_voice.html">Dočasné hlasové kanály</a></li>
+                        <li><a href="giveaway.html">Giveaway(e)</a></li>
+                        <li><a href="birthdays.html">Narozeniny</a></li>
+                        <li><a href="patreon.html">Patreon</a></li>
+                        <li><a href="counting.html">Počítání</a></li>
+                        <li><a href="advanced_schedules.html">Pokročilé plánované zprávy</a></li>
+                        <li><a href="reactions.html">Reakce smajlíky na zprávy</a></li>
+                        <li><a href="reputation.html">Reputace</a></li>
+                        <li><a href="rss_reader.html">RSS Čtečka</a></li>
+                        <li><a href="scam_prevence.html">Scam Prevence</a></li>
+                        <li><a href="schedules.html">Schedules ‐ Plánované zprávy</a></li>
+                        <li><a href="stats.html">Statistiky serveru</a></li>
+                        <li><a href="holidays.html">Svátky (CZ SK)</a></li>
+                        <li><a href="feedback.html">Systém zpětné vazby a návrhů</a></li>
+                        <li><a href="tickets.html">Tikety</a></li>
+                        <li><a href="translate.html">Translate modul</a></li>
+                        <li><a href="threads.html">Tvorba vláken na zprávy</a></li>
+                        <li><a href="welcome_leave.html">Uvítací a odchodové zprávy (Welcome Leave)</a></li>
+                        <li><a href="vote.html">Vote ‐ Hlasování</a></li>
+                        <li><a href="watermark.html">Vodoznak s vlastním textem na obrázky</a></li>
+                        <li><a href="xp.html">XP systém a úrovně</a></li>
+                        <li><a href="backup.html">Zálohování a Obnova Serverů</a></li>
+                        <li><a href="confessions.html">Zpovědi (Anonymní Zprávy)</a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Nástroje ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../crongenerator.html">Cron Generátor</a></li>
+                        <li><a href="../embedgenerator.html">Embed Generátor</a></li>
+                        <li><a href="https://github.com/users/papiscze/projects/9">Roadmapa</a></li>
+                        <li><a href="../stats.html">Statistiky bota</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="../warns.html">Moderátorské záznamy</a></li>
+                <li><a href="https://rs422cznas.myds.me:5038/stats/">Statistiky serveru</a></li>
+                <li><a href="../privacy.html">GDPR / ToS</a></li>
+            </ul>
+
+            <div class="nav-bottom">
+                <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Pozvat bota</a>
+            </div>
+
+            <button class="mobile-menu-button" id="mobileMenuBtn">
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </button>
+        </div>
+    </nav>
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <a href="../index.html" class="mobile-menu-logo">CZbot</a>
+            <button class="mobile-menu-close" id="mobileMenuClose">✕</button>
+        </div>
+        <div class="mobile-menu-cta">
+            <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Přidat bota</a>
+        </div>
+        <nav class="mobile-menu-nav">
+            <ul>
+                <li><a href="../commands.html">Příkazy</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Nástroje ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../crongenerator.html">Cron Generátor</a></li>
+                        <li><a href="../embedgenerator.html">Embed Generátor</a></li>
+                        <li><a href="https://github.com/users/papiscze/projects/9">Roadmapa</a></li>
+                        <li><a href="../stats.html">Statistiky bota</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="../warns.html">Moderátorské záznamy</a></li>
+                <li><a href="https://rs422cznas.myds.me:5038/stats/">Statistiky serveru</a></li>
+                <li><a href="../privacy.html">GDPR / ToS</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Moduly ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="auditlogger.html">Auditlogger</a></li>
+                        <li><a href="audio_stream.html">Audio Stream</a></li>
+                        <li><a href="autopublish.html">Automatické publikování zpráv z kanálů oznámení</a></li>
+                        <li><a href="autorole.html">Autorole, Ověřování uživatelů a Reakční role</a></li>
+                        <li><a href="basic_user_commands.html">Běžné uživatelské a zábavné příkazy</a></li>
+                        <li><a href="basic_mod_commands.html">Běžné moderátorské příkazy</a></li>
+                        <li><a href="bot_localization.html">Bot localization and Language Settings</a></li>
+                        <li><a href="crossban.html">Crossban</a></li>
+                        <li><a href="temp_voice.html">Dočasné hlasové kanály</a></li>
+                        <li><a href="giveaway.html">Giveaway(e)</a></li>
+                        <li><a href="birthdays.html">Narozeniny</a></li>
+                        <li><a href="patreon.html">Patreon</a></li>
+                        <li><a href="counting.html">Počítání</a></li>
+                        <li><a href="advanced_schedules.html">Pokročilé plánované zprávy</a></li>
+                        <li><a href="reactions.html">Reakce smajlíky na zprávy</a></li>
+                        <li><a href="reputation.html">Reputace</a></li>
+                        <li><a href="rss_reader.html">RSS Čtečka</a></li>
+                        <li><a href="scam_prevence.html">Scam Prevence</a></li>
+                        <li><a href="schedules.html">Schedules ‐ Plánované zprávy</a></li>
+                        <li><a href="stats.html">Statistiky serveru</a></li>
+                        <li><a href="holidays.html">Svátky (CZ SK)</a></li>
+                        <li><a href="feedback.html">Systém zpětné vazby a návrhů</a></li>
+                        <li><a href="tickets.html">Tikety</a></li>
+                        <li><a href="translate.html">Translate modul</a></li>
+                        <li><a href="threads.html">Tvorba vláken na zprávy</a></li>
+                        <li><a href="welcome_leave.html">Uvítací a odchodové zprávy (Welcome Leave)</a></li>
+                        <li><a href="vote.html">Vote ‐ Hlasování</a></li>
+                        <li><a href="watermark.html">Vodoznak s vlastním textem na obrázky</a></li>
+                        <li><a href="xp.html">XP systém a úrovně</a></li>
+                        <li><a href="backup.html">Zálohování a Obnova Serverů</a></li>
+                        <li><a href="confessions.html">Zpovědi (Anonymní Zprávy)</a></li>
+                    </ul>
+                </li>           
+            </ul>
+        </nav>
+    </div>
+    </nav>
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    
+    <div class="mobile-menu" id="mobileMenu">
+        </div>
+    <div class="content-section">
+        <div class="content-container">
+
+            <h1 class="page-title">🛡️ CrossBan: Federativní Systém Banování</h1>
+            <p class="page-subtitle">Anti-Raid/Anti-Trolling systém pro partnerské servery.</p>
+
+            <div class="module-intro-box">
+                <p>
+                    Modul **CrossBan** transformuje banování uživatelů na vašem serveru z lokální akce na **federativní rozhodnutí**. Cílem je zamezit trollům a raiderům v rychlém přeskakování mezi partnerskými servery a **zvýšit bezpečnost** celé sítě. Systém je založen na **dobrovolném partnerství** a **plné transparentnosti**.
+                </p>
+            </div>
+
+            <h2 class="module-heading">💡 Základní Funkcionalita a Transparentnost</h2>
+            <p>CrossBan funguje na principu **oboustranné peer-to-peer federace** (server-to-server):</p>
+            <ol>
+                <li>**Iniciace Banu:** Když moderátor na **Serveru A** spustí příkaz <span class="command-code">/crossban ban</span>, uživatel je zabanován na Serveru A a je zapsán do centrálního *crossban listu*.</li>
+                <li>**Notifikace:** Bot zjistí, které servery navázaly partnerství se Serverem A.</li>
+                <li>**Akce Partnera:** Všem těmto partnerům je odeslána notifikace. Konkrétní reakce závisí na jejich **Nastaveném Tieru** (viz níže).</li>
+                <li>**Auto-Ban (Tier 2):** Pokud má partner nastavený Tier 2, ban je proveden **automaticky**.</li>
+            </ol>
+            
+            <blockquote class="note-quote">
+                <strong>Klíčová transparentnost:</strong> V notifikaci je vždy uvedeno, **KDO** (který server) ban inicioval a **PROČ**.
+            </blockquote>
+            
+            <div class="module-divider"></div>
+
+            <h2 class="module-heading">⚙️ Správa a Nastavení</h2>
+            <p>Nastavení CrossBan probíhá ve dvou krocích: **1. Stanovení Tieru (reakce)** a **2. Navázání Partnerství (příjem/sdílení dat)**.</p>
+
+            <h3>1. Nastavení Tieru (Reakce na Ban)</h3>
+            <p>Tento příkaz určuje, **jakým způsobem bude Váš server reagovat** na crossbany od partnerů.</p>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Příkaz</th>
+                        <th>Hodnota</th>
+                        <th>Reakce na Vašem serveru</th>
+                        <th>Požadované kanály</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="command-code">/crossban tier 0</span></td>
+                        <td>Vypnuto</td>
+                        <td>**IGNOROVAT** všechny crossbany. Bot nebude reagovat. (Výchozí stav)</td>
+                        <td>Žádné</td>
+                    </tr>
+                    <tr>
+                        <td><span class="command-code">/crossban tier 1</span></td>
+                        <td>Upozornění</td>
+                        <td>**NOTIFIKOVAT** moderátory (v <span class="command-code">mod_channel</span>) a **zobrazit tlačítka** pro ruční schválení/ignorování.</td>
+                        <td>**Moderační kanál** (pomocí <span class="command-code">mod_channel</span>)</td>
+                    </tr>
+                    <tr>
+                        <td><span class="command-code">/crossban tier 2</span></td>
+                        <td>Auto-Ban</td>
+                        <td>**AUTOMATICKY BANUJEME** každého, kdo je na listu od partnera.</td>
+                        <td>**Moderační kanál** (doporučeno pro log)</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="mt-2">
+                <strong>Příklad:</strong> <span class="command-code-example">/crossban tier 1 mod_channel:#mod-log</span>
+            </p>
+
+            <h3 class="mt-4">2. Správa Partnerství (Federace)</h3>
+            <p>Partnerství je **oboustranná vazba**. Server, který se připojí, získává data a zároveň sdílí svůj aktuální Tier.</p>
+
+            <h4>A) Získání Vašeho Partnerského Kódu (Pro připojení jiných)</h4>
+            <div class="command-box">
+                <h4 class="command-title">/crossban partner_code</h4>
+                <div class="command-details">
+                    <p>Bot vygeneruje a zobrazí **unikátní, trvalý kód** (např. <span class="command-code">CB1A7B2X9</span>), který sdělíte serveru, jenž se k Vám chce připojit.</p>
+                </div>
+            </div>
+
+            <h4>B) Navázání Partnerství</h4>
+            <div class="command-box">
+                <h4 class="command-title">/crossban partner_connect &lt;kód&gt;</h4>
+                <div class="command-details">
+                    <p>Vytvoří **permanentní oboustrannou vazbu**. Od této chvíle si servery vyměňují data (dle Tieru obou stran).</p>
+                    <p class="mt-2">
+                        **Podmínka:** Musíte mít nastavený **Tier 1** nebo **Tier 2**.
+                    </p>
+                </div>
+            </div>
+
+            <h4>C) Zobrazení Aktuálních Partnerství 🆕</h4>
+            <div class="command-box">
+                <h4 class="command-title">/crossban partners</h4>
+                <div class="command-details">
+                    <p>Zobrazí seznam všech aktuálních partnerů (ID, Jméno), Tier, který partnerovi nabízíte, a Tier, který partner nabízí Vám. Nejdůležitější je **tajný kód pro rozvázání** partnerství.</p>
+                </div>
+            </div>
+
+            <h4>D) Rozvázání Partnerství ✂️</h4>
+            <div class="command-box">
+                <h4 class="command-title">/crossban dissolve &lt;kód&gt;</h4>
+                <div class="command-details">
+                    <p>**Permanentní vazba se zruší pro oba servery**. Použijte **tajný kód partnerství**, který se zobrazí v <span class="command-code">/crossban partners</span>.</p>
+                </div>
+            </div>
+            
+            <div class="module-divider"></div>
+
+            <h2 class="module-heading">🚀 Hlavní Příkaz pro Banování</h2>
+            <p>Tento příkaz spustí ban, zanese ho do globálního listu a odešle notifikace partnerům.</p>
+
+            <div class="command-box">
+                <h4 class="command-title">/crossban ban &lt;member&gt; &lt;reason&gt;</h4>
+                <div class="command-details">
+                    <div class="command-detail-row">
+                        <span class="command-label">Popis:</span>
+                        <span>Zabanuje uživatele na **Vašem serveru** a přidá ho do **centrálního listu** pro notifikace partnerům.</span>
+                    </div>
+                    <div class="command-detail-row">
+                        <span class="command-label">Oprávnění:</span>
+                        <span><span class="command-code">Zabanovat členy</span></span>
+                    </div>
+                    <div class="command-detail-row">
+                        <span class="command-label">Příklad:</span>
+                        <span class="command-code-example">/crossban ban @BadGuy Raiding a spamování soukromých zpráv.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="warning-box">
+                **Doporučení:** Používejte tento příkaz jen u závažných případů (trolling, raidy, porno, apod.).
+            </div>
+
+            <div class="module-divider"></div>
+
+            <h2 class="module-heading">👁️ Sledování a Reakce na Tieru 1 a 2</h2>
+            
+            <h3>Tier 1: Upozornění a Manuální Rozhodnutí 🟢🔴</h3>
+            <p>
+                Pokud máte nastavený **Tier 1 (Upozornění)** a obdržíte notifikaci, zobrazí se ve Vašem Moderačním kanálu speciální zpráva s interaktivními tlačítky.
+            </p>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Tlačítko</th>
+                        <th>Akce</th>
+                        <th>Důsledek pro Uživatelovu historii</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>**🟢 Schválit a zabanovat**</td>
+                        <td>Okamžitě zabanuje uživatele na **Vašem serveru**.</td>
+                        <td>Rozhodnutí je uloženo jako **CONFIRMED**. Při budoucím joinu uživatele na Váš server dojde k **Auto-Banu**.</td>
+                    </tr>
+                    <tr>
+                        <td>**🔴 Ignorovat ban**</td>
+                        <td>Nijak nereaguje.</td>
+                        <td>Rozhodnutí je uloženo jako **IGNORED**. Bot už nikdy nebude kontrolovat ani notifikovat o tomto konkrétním banu pro **Váš server**.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="warning-box mt-4">
+                **Důležité při joinu (KICK):** Pokud se uživatel pokusí připojit **předtím, než moderátoři stihnou rozhodnout**, bot ho **okamžitě kickne**. Tím zabrání případné okamžité škodě, dokud se neschválí ban.
+            </div>
+
+            <h3>Tier 2: Automatický Ban (Auto-Ban) 🤖</h3>
+            <p>
+                Při nastavení **Tieru 2 (Auto-Ban)** systém provede akci bez nutnosti zásahu moderátora.
+            </p>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Událost</th>
+                        <th>Akce systému</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>**Notifikace od partnera**</td>
+                        <td>**Okamžitě zabanuje** uživatele na **Vašem serveru**.</td>
+                    </tr>
+                    <tr>
+                        <td>**Připojení crossbanovaného uživatele**</td>
+                        <td>**Okamžitě zabanuje** uživatele při vstupu (<span class="command-code">on_member_join</span>).</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="warning-box mt-4">
+                **Shrnutí Tieru 2:** Tento režim je vhodný pouze pro komunity, které **zcela důvěřují** svým partnerům a preferují rychlou ochranu před manuální kontrolou.
+            </div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="https://github.com/papiscze/czbot">GitHub</a>
+                <span class="footer-separator">•</span>
+                <a href="https://discord.gg/hk6PdtVxbm">Support Server</a>
+                <span class="footer-separator">•</span>
+                <a href="https://github.com/papiscze/czbot/wiki">GitHub dokumentace</a>
+                <span class="footer-separator">•</span>
+                <a href="mailto:admin@ofpmafia.eu">Kontakt</a>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 CZbot. Verze webu 1.0. Všechna práva vyhrazena</p>
+                <p class="footer-credit">Šablona inspirována <a href="https://templatemo.com" target="_blank" rel="noopener nofollow">TemplateMo</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../templatemo-nexus-scripts.js"></script>
+
+</body>
+</html>

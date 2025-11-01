@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CZBOT - Modul RSS Čtečka</title>
+    
+    <link href="../templatemo-nexus-style.css" rel="stylesheet">
+    <link href="../module-styles.css" rel="stylesheet"> 
+    
+</head>
+<body id="top" class="module-page"> 
+
+    <div class="cyber-bg">
+        <div class="cyber-gradient"></div>
+        <div class="matrix-rain" id="matrixRain"></div>
+    </div>
+    <div class="scanlines"></div>
+    <div class="noise-overlay"></div>
+    <nav>
+        <div class="nav-container">
+            <a href="../index.html" class="logo">CZbot</a>
+            
+            <ul class="nav-links">
+                <li><a href="../commands.html">Příkazy</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Moduly ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="auditlogger.html">Auditlogger</a></li>
+                        <li><a href="audio_stream.html">Audio Stream</a></li>
+                        <li><a href="autopublish.html">Automatické publikování zpráv z kanálů oznámení</a></li>
+                        <li><a href="autorole.html">Autorole, Ověřování uživatelů a Reakční role</a></li>
+                        <li><a href="basic_user_commands.html">Běžné uživatelské a zábavné příkazy</a></li>
+                        <li><a href="basic_mod_commands.html">Běžné moderátorské příkazy</a></li>
+                        <li class="active"><a href="bot_localization.html">Bot localization and Language Settings</a></li>
+                        <li><a href="crossban.html">Crossban</a></li>
+                        <li><a href="temp_voice.html">Dočasné hlasové kanály</a></li>
+                        <li><a href="giveaway.html">Giveaway(e)</a></li>
+                        <li><a href="birthdays.html">Narozeniny</a></li>
+                        <li><a href="patreon.html">Patreon</a></li>
+                        <li><a href="counting.html">Počítání</a></li>
+                        <li><a href="advanced_schedules.html">Pokročilé plánované zprávy</a></li>
+                        <li><a href="reactions.html">Reakce smajlíky na zprávy</a></li>
+                        <li><a href="reputation.html">Reputace</a></li>
+                        <li><a href="rss_reader.html">RSS Čtečka</a></li>
+                        <li><a href="scam_prevence.html">Scam Prevence</a></li>
+                        <li><a href="schedules.html">Schedules ‐ Plánované zprávy</a></li>
+                        <li><a href="stats.html">Statistiky serveru</a></li>
+                        <li><a href="holidays.html">Svátky (CZ SK)</a></li>
+                        <li><a href="feedback.html">Systém zpětné vazby a návrhů</a></li>
+                        <li><a href="tickets.html">Tikety</a></li>
+                        <li><a href="translate.html">Translate modul</a></li>
+                        <li><a href="threads.html">Tvorba vláken na zprávy</a></li>
+                        <li><a href="welcome_leave.html">Uvítací a odchodové zprávy (Welcome Leave)</a></li>
+                        <li><a href="vote.html">Vote ‐ Hlasování</a></li>
+                        <li><a href="watermark.html">Vodoznak s vlastním textem na obrázky</a></li>
+                        <li><a href="xp.html">XP systém a úrovně</a></li>
+                        <li><a href="backup.html">Zálohování a Obnova Serverů</a></li>
+                        <li><a href="confessions.html">Zpovědi (Anonymní Zprávy)</a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Nástroje ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../crongenerator.html">Cron Generátor</a></li>
+                        <li><a href="../embedgenerator.html">Embed Generátor</a></li>
+                        <li><a href="https://github.com/users/papiscze/projects/9">Roadmapa</a></li>
+                        <li><a href="../stats.html">Statistiky bota</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="../warns.html">Moderátorské záznamy</a></li>
+                <li><a href="https://rs422cznas.myds.me:5038/stats/">Statistiky serveru</a></li>
+                <li><a href="../privacy.html">GDPR / ToS</a></li>
+            </ul>
+
+            <div class="nav-bottom">
+                <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Pozvat bota</a>
+            </div>
+
+            <button class="mobile-menu-button" id="mobileMenuBtn">
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </button>
+        </div>
+    </nav>
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <a href="../index.html" class="mobile-menu-logo">CZbot</a>
+            <button class="mobile-menu-close" id="mobileMenuClose">✕</button>
+        </div>
+        <div class="mobile-menu-cta">
+            <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Přidat bota</a>
+        </div>
+        <nav class="mobile-menu-nav">
+            <ul>
+                <li><a href="../commands.html">Příkazy</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Nástroje ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../crongenerator.html">Cron Generátor</a></li>
+                        <li><a href="../embedgenerator.html">Embed Generátor</a></li>
+                        <li><a href="https://github.com/users/papiscze/projects/9">Roadmapa</a></li>
+                        <li><a href="../stats.html">Statistiky bota</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="../warns.html">Moderátorské záznamy</a></li>
+                <li><a href="https://rs422cznas.myds.me:5038/stats/">Statistiky serveru</a></li>
+                <li><a href="../privacy.html">GDPR / ToS</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Moduly ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="auditlogger.html">Auditlogger</a></li>
+                        <li><a href="audio_stream.html">Audio Stream</a></li>
+                        <li><a href="autopublish.html">Automatické publikování zpráv z kanálů oznámení</a></li>
+                        <li><a href="autorole.html">Autorole, Ověřování uživatelů a Reakční role</a></li>
+                        <li><a href="basic_user_commands.html">Běžné uživatelské a zábavné příkazy</a></li>
+                        <li><a href="basic_mod_commands.html">Běžné moderátorské příkazy</a></li>
+                        <li><a href="bot_localization.html">Bot localization and Language Settings</a></li>
+                        <li><a href="crossban.html">Crossban</a></li>
+                        <li><a href="temp_voice.html">Dočasné hlasové kanály</a></li>
+                        <li><a href="giveaway.html">Giveaway(e)</a></li>
+                        <li><a href="birthdays.html">Narozeniny</a></li>
+                        <li><a href="patreon.html">Patreon</a></li>
+                        <li><a href="counting.html">Počítání</a></li>
+                        <li><a href="advanced_schedules.html">Pokročilé plánované zprávy</a></li>
+                        <li><a href="reactions.html">Reakce smajlíky na zprávy</a></li>
+                        <li><a href="reputation.html">Reputace</a></li>
+                        <li><a href="rss_reader.html">RSS Čtečka</a></li>
+                        <li><a href="scam_prevence.html">Scam Prevence</a></li>
+                        <li><a href="schedules.html">Schedules ‐ Plánované zprávy</a></li>
+                        <li><a href="stats.html">Statistiky serveru</a></li>
+                        <li><a href="holidays.html">Svátky (CZ SK)</a></li>
+                        <li><a href="feedback.html">Systém zpětné vazby a návrhů</a></li>
+                        <li><a href="tickets.html">Tikety</a></li>
+                        <li><a href="translate.html">Translate modul</a></li>
+                        <li><a href="threads.html">Tvorba vláken na zprávy</a></li>
+                        <li><a href="welcome_leave.html">Uvítací a odchodové zprávy (Welcome Leave)</a></li>
+                        <li><a href="vote.html">Vote ‐ Hlasování</a></li>
+                        <li><a href="watermark.html">Vodoznak s vlastním textem na obrázky</a></li>
+                        <li><a href="xp.html">XP systém a úrovně</a></li>
+                        <li><a href="backup.html">Zálohování a Obnova Serverů</a></li>
+                        <li><a href="confessions.html">Zpovědi (Anonymní Zprávy)</a></li>
+                    </ul>
+                </li>           
+            </ul>
+        </nav>
+    </div>
+    </nav>
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        </div>
+    <div class="content-section">
+        <div class="content-container">
+
+            <h1 class="page-title">📰 RSS Čtečka pro váš Discord Server</h1>
+            <p class="page-subtitle">Přenášejte nejnovější zprávy a články z oblíbených webů přímo do Discordu. </p>
+
+            <div class="module-intro-box">
+                <p>
+                    Tento modul automaticky monitoruje RSS (Really Simple Syndication) kanály z jakéhokoli zdroje a posílá nové články do vybraného textového kanálu. Veškerá správa je dostupná **pouze pro moderátory** serveru.
+                </p>
+                <div class="info-box mt-4">
+                    **Důležitá oprávnění**: Pro správné zobrazení zpráv se ujistěte, že bot má oprávnění **Posílat zprávy** a **Vkládat odkazy**!
+                </div>
+            </div>
+
+            <div class="module-divider"></div>
+
+            <h2 class="module-heading">🚀 Příkazy pro Správu (pouze MOD)</h2>
+
+            <h3 class="mt-4">1. Přidání nového zdroje: <span class="command-code">/rss add</span></h3>
+            <div class="command-box mod-command">
+                <h4 class="command-title">/rss add <span class="badge">MOD</span></h4>
+                <p>Začne sledovat RSS zdroj a posílat novinky do kanálu.</p>
+                
+                <table class="data-table small-font">
+                    <thead>
+                        <tr>
+                            <th>Parametr</th>
+                            <th>Popis</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="command-code">rss_feed_url</span></td>
+                            <td>**Povinné.** URL adresa RSS kanálu.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="command-code">channel_id</span></td>
+                            <td>**Povinné.** Discord kanál, kam se mají novinky posílat.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="command-code">include_description</span></td>
+                            <td>**True/False.** Zda má zpráva obsahovat i popis článku.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="command-code">custom_text</span></td>
+                            <td>**Volitelné.** Vlastní úvodní text před každou novinkou.</td>
+                        </tr>
+                        <tr>
+                            <td><span class="command-code">ignore_youtube_shorts</span></td>
+                            <td>**Volitelné.** Při odběru YT kanálů ignoruje shorts videa.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <span class="command-code-example mt-2">/rss add rss_feed_url:[URL] channel_id:#novinky include_description:true</span>
+            </div>
+
+            <h3 class="mt-4">2. Úprava existujícího zdroje: <span class="command-code">/rss edit</span></h3>
+            <div class="command-box mod-command">
+                <h4 class="command-title">/rss edit <span class="badge">MOD</span></h4>
+                <p>Změní nastavení (kanál, popis, vlastní text) existujícího RSS zdroje.</p>
+                <span class="command-code-example">/rss edit rss_feed_url:[URL] new_channel:#dulezite-info custom_text:"Důležité info:"</span>
+            </div>
+
+            <h3 class="mt-4">3. Odebrání zdroje: <span class="command-code">/rss remove</span></h3>
+            <div class="command-box mod-command">
+                <h4 class="command-title">/rss remove <span class="badge">MOD</span></h4>
+                <p>Přestane sledovat RSS zdroj a smaže jeho záznamy.</p>
+                <span class="command-code-example">/rss remove rss_feed_url:[URL]</span>
+            </div>
+
+            <h3 class="mt-4">4. Zobrazení seznamu: <span class="command-code">/rss list</span></h3>
+            <div class="command-box mod-command">
+                <h4 class="command-title">/rss list <span class="badge">MOD</span></h4>
+                <p>Zobrazí seznam všech sledovaných RSS zdrojů na serveru s podporou listování.</p>
+                <span class="command-code-example">/rss list</span>
+            </div>
+
+            <h3 class="mt-4">5. Manuální aktualizace: <span class="command-code">/rss update</span></h3>
+            <div class="command-box mod-command">
+                <h4 class="command-title">/rss update <span class="badge">MOD</span></h4>
+                <p>Okamžitě zkontroluje všechny RSS zdroje, bez čekání na automatickou kontrolu.</p>
+                <p>⏳ **Omezení:** Lze použít jen **jednou za 5 minut**.</p>
+                <span class="command-code-example">/rss update</span>
+            </div>
+
+            <div class="module-divider"></div>
+
+            <h2 class="module-heading">🔗 Získání YouTube Channel ID pro odběr</h2>
+            
+            <div class="info-box">
+                <p>Pro odběr YouTube kanálu musíte znát jeho **Channel ID** (`UC...`), které vložíte do univerzálního RSS formátu:</p>
+                <span class="command-code-example mb-3">https://www.youtube.com/feeds/videos.xml?channel_id=[VAŠE_YOUTUBE_CHANNEL_ID]</span>
+                <ol class="bullet-list">
+                    <li>Navštivte stránku kanálu.</li>
+                    <li>Stiskněte **Ctrl+U** (Zobrazit zdrojový kód stránky).</li>
+                    <li>Stiskněte **Ctrl+F** a hledejte text <span class="command-code">channelId</span>.</li>
+                    <li>Zkopírujte celé ID (`UC...`) a vložte jej do odkazu výše.</li>
+                </ol>
+            </div>
+
+            <div class="module-divider"></div>
+
+            <h2 class="module-heading"><del>🎧 Podcasty: Sledování nových epizod</del> <span class="text-danger">(Odebráno ve verzi 2.7)</span></h2>
+            
+            <div class="info-box text-danger">
+                <p><del>Funkce sledování podcastů byla v rámci optimalizace kódu bota odstraněna. Pro sledování podcastů doporučujeme použít běžný RSS feed a příkazy z části 1, pokud je k dispozici RSS odkaz podcastu.</del></p>
+
+                <h4 class="info-box-title mt-3"><del>1. Přidání nového podcastu: /podcastadd</del></h4>
+                <p><del>Tento příkaz sloužil k přidání podcastu do sledování. Původní parametry: <span class="command-code">podcast_name</span>, <span class="command-code">podcast_rss_feed</span>, <span class="command-code">target_channel</span>.</del></p>
+
+                <h4 class="info-box-title mt-3"><del>2. Zobrazení sledovaných podcastů: /podcastlist</del></h4>
+                <p><del>Tento příkaz zobrazoval seznam sledovaných podcastů.</del></p>
+                
+                <h4 class="info-box-title mt-3"><del>3. Odebrání sledovaného podcastu: /podcastremove</del></h4>
+                <p><del>Tento příkaz sloužil k odebrání podcastu ze sledování.</del></p>
+            </div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="https://github.com/papiscze/czbot">GitHub</a>
+                <span class="footer-separator">•</span>
+                <a href="https://discord.gg/hk6PdtVxbm">Support Server</a>
+                <span class="footer-separator">•</span>
+                <a href="https://github.com/papiscze/czbot/wiki">GitHub dokumentace</a>
+                <span class="footer-separator">•</span>
+                <a href="mailto:admin@ofpmafia.eu">Kontakt</a>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 CZbot. Verze webu 1.0. Všechna práva vyhrazena</p>
+                <p class="footer-credit">Šablona inspirována <a href="https://templatemo.com" target="_blank" rel="noopener nofollow">TemplateMo</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../templatemo-nexus-scripts.js"></script>
+
+</body>
+</html>

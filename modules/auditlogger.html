@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CZBOT - Discord Audit Logger Modul</title>
+    
+    <link href="../templatemo-nexus-style.css" rel="stylesheet">
+    <link href="../module-styles.css" rel="stylesheet"> 
+    
+</head>
+<body id="top" class="module-page"> 
+
+    <div class="cyber-bg">
+        <div class="cyber-gradient"></div>
+        <div class="matrix-rain" id="matrixRain"></div>
+    </div>
+    <div class="scanlines"></div>
+    <div class="noise-overlay"></div>
+    <nav>
+        <div class="nav-container">
+            <a href="../index.html" class="logo">CZbot</a>
+            
+            <ul class="nav-links">
+                <li><a href="../commands.html">Příkazy</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Moduly ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="auditlogger.html">Auditlogger</a></li>
+                        <li><a href="audio_stream.html">Audio Stream</a></li>
+                        <li><a href="autopublish.html">Automatické publikování zpráv z kanálů oznámení</a></li>
+                        <li><a href="autorole.html">Autorole, Ověřování uživatelů a Reakční role</a></li>
+                        <li><a href="basic_user_commands.html">Běžné uživatelské a zábavné příkazy</a></li>
+                        <li><a href="basic_mod_commands.html">Běžné moderátorské příkazy</a></li>
+                        <li class="active"><a href="bot_localization.html">Bot localization and Language Settings</a></li>
+                        <li><a href="crossban.html">Crossban</a></li>
+                        <li><a href="temp_voice.html">Dočasné hlasové kanály</a></li>
+                        <li><a href="giveaway.html">Giveaway(e)</a></li>
+                        <li><a href="birthdays.html">Narozeniny</a></li>
+                        <li><a href="patreon.html">Patreon</a></li>
+                        <li><a href="counting.html">Počítání</a></li>
+                        <li><a href="advanced_schedules.html">Pokročilé plánované zprávy</a></li>
+                        <li><a href="reactions.html">Reakce smajlíky na zprávy</a></li>
+                        <li><a href="reputation.html">Reputace</a></li>
+                        <li><a href="rss_reader.html">RSS Čtečka</a></li>
+                        <li><a href="scam_prevence.html">Scam Prevence</a></li>
+                        <li><a href="schedules.html">Schedules ‐ Plánované zprávy</a></li>
+                        <li><a href="stats.html">Statistiky serveru</a></li>
+                        <li><a href="holidays.html">Svátky (CZ SK)</a></li>
+                        <li><a href="feedback.html">Systém zpětné vazby a návrhů</a></li>
+                        <li><a href="tickets.html">Tikety</a></li>
+                        <li><a href="translate.html">Translate modul</a></li>
+                        <li><a href="threads.html">Tvorba vláken na zprávy</a></li>
+                        <li><a href="welcome_leave.html">Uvítací a odchodové zprávy (Welcome Leave)</a></li>
+                        <li><a href="vote.html">Vote ‐ Hlasování</a></li>
+                        <li><a href="watermark.html">Vodoznak s vlastním textem na obrázky</a></li>
+                        <li><a href="xp.html">XP systém a úrovně</a></li>
+                        <li><a href="backup.html">Zálohování a Obnova Serverů</a></li>
+                        <li><a href="confessions.html">Zpovědi (Anonymní Zprávy)</a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Nástroje ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../crongenerator.html">Cron Generátor</a></li>
+                        <li><a href="../embedgenerator.html">Embed Generátor</a></li>
+                        <li><a href="https://github.com/users/papiscze/projects/9">Roadmapa</a></li>
+                        <li><a href="../stats.html">Statistiky bota</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="../warns.html">Moderátorské záznamy</a></li>
+                <li><a href="https://rs422cznas.myds.me:5038/stats/">Statistiky serveru</a></li>
+                <li><a href="../privacy.html">GDPR / ToS</a></li>
+            </ul>
+
+            <div class="nav-bottom">
+                <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Pozvat bota</a>
+            </div>
+
+            <button class="mobile-menu-button" id="mobileMenuBtn">
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </button>
+        </div>
+    </nav>
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <a href="../index.html" class="mobile-menu-logo">CZbot</a>
+            <button class="mobile-menu-close" id="mobileMenuClose">✕</button>
+        </div>
+        <div class="mobile-menu-cta">
+            <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Přidat bota</a>
+        </div>
+        <nav class="mobile-menu-nav">
+            <ul>
+                <li><a href="../commands.html">Příkazy</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Nástroje ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../crongenerator.html">Cron Generátor</a></li>
+                        <li><a href="../embedgenerator.html">Embed Generátor</a></li>
+                        <li><a href="https://github.com/users/papiscze/projects/9">Roadmapa</a></li>
+                        <li><a href="../stats.html">Statistiky bota</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="../warns.html">Moderátorské záznamy</a></li>
+                <li><a href="https://rs422cznas.myds.me:5038/stats/">Statistiky serveru</a></li>
+                <li><a href="../privacy.html">GDPR / ToS</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Moduly ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="auditlogger.html">Auditlogger</a></li>
+                        <li><a href="audio_stream.html">Audio Stream</a></li>
+                        <li><a href="autopublish.html">Automatické publikování zpráv z kanálů oznámení</a></li>
+                        <li><a href="autorole.html">Autorole, Ověřování uživatelů a Reakční role</a></li>
+                        <li><a href="basic_user_commands.html">Běžné uživatelské a zábavné příkazy</a></li>
+                        <li><a href="basic_mod_commands.html">Běžné moderátorské příkazy</a></li>
+                        <li><a href="bot_localization.html">Bot localization and Language Settings</a></li>
+                        <li><a href="crossban.html">Crossban</a></li>
+                        <li><a href="temp_voice.html">Dočasné hlasové kanály</a></li>
+                        <li><a href="giveaway.html">Giveaway(e)</a></li>
+                        <li><a href="birthdays.html">Narozeniny</a></li>
+                        <li><a href="patreon.html">Patreon</a></li>
+                        <li><a href="counting.html">Počítání</a></li>
+                        <li><a href="advanced_schedules.html">Pokročilé plánované zprávy</a></li>
+                        <li><a href="reactions.html">Reakce smajlíky na zprávy</a></li>
+                        <li><a href="reputation.html">Reputace</a></li>
+                        <li><a href="rss_reader.html">RSS Čtečka</a></li>
+                        <li><a href="scam_prevence.html">Scam Prevence</a></li>
+                        <li><a href="schedules.html">Schedules ‐ Plánované zprávy</a></li>
+                        <li><a href="stats.html">Statistiky serveru</a></li>
+                        <li><a href="holidays.html">Svátky (CZ SK)</a></li>
+                        <li><a href="feedback.html">Systém zpětné vazby a návrhů</a></li>
+                        <li><a href="tickets.html">Tikety</a></li>
+                        <li><a href="translate.html">Translate modul</a></li>
+                        <li><a href="threads.html">Tvorba vláken na zprávy</a></li>
+                        <li><a href="welcome_leave.html">Uvítací a odchodové zprávy (Welcome Leave)</a></li>
+                        <li><a href="vote.html">Vote ‐ Hlasování</a></li>
+                        <li><a href="watermark.html">Vodoznak s vlastním textem na obrázky</a></li>
+                        <li><a href="xp.html">XP systém a úrovně</a></li>
+                        <li><a href="backup.html">Zálohování a Obnova Serverů</a></li>
+                        <li><a href="confessions.html">Zpovědi (Anonymní Zprávy)</a></li>
+                    </ul>
+                </li>           
+            </ul>
+        </nav>
+    </div>
+    </nav>
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        </div>
+    <div class="content-section">
+        <div class="content-container">
+
+            <h1 class="page-title">🤖 Discord Audit Logger Modul</h1>
+            <p class="page-subtitle">Detailní logování událostí, změn a akcí na vašem Discord serveru.</p>
+
+            <div class="module-intro-box">
+                <p>
+                    Tento modul slouží k **detailnímu logování** různých událostí, které se dějí na vašem Discord serveru. Poskytuje přehledné záznamy o změnách zpráv, uživatelů, rolí, kanálů a dalších důležitých akcí, což pomáhá udržovat pořádek a sledovat dění na serveru.
+                </p>
+            </div>
+
+            <h2 class="module-heading">💡 Co modul umí? (Kategorie logů)</h2>
+
+            <div class="module-section">
+                <h3>Události zpráv</h3>
+                <ul>
+                    <li>🗑️ **Smazané zprávy** (`message_delete`): Loguje smazané zprávy s jejich obsahem, autorem a kanálem.</li>
+                    <li>✍️ **Upravené zprávy** (`message_edit`): Zaznamenává úpravy zpráv, včetně původního a nového obsahu.</li>
+                </ul>
+            </div>
+            
+            <div class="module-section">
+                <h3>Události uživatelů a moderace</h3>
+                <ul>
+                    <li>👋 **Připojení uživatele** (`member_join`): Loguje nové členy.</li>
+                    <li>🚶 **Odchod uživatele** (`member_leave`): Zaznamenává členy, kteří opustili server.</li>
+                    <li>👤 **Úprava uživatele** (role/nick) (`member_update`): Sleduje změny přezdívek a rolí.</li>
+                    <li>🚫 **Zabanování uživatele** (`member_ban`): Loguje ban, včetně moderátora a důvodu (díky Audit Logům).</li>
+                    <li>✅ **Odbanování uživatele** (`member_unban`): Zaznamenává unban.</li>
+                    <li>👢 **Vyhození uživatele** (`member_kick`): Loguje kick, včetně moderátora a důvodu.</li>
+                    <li>⏱️ **Timeout uživatele** (`member_timeout`): Sleduje udělení a zrušení timeoutu.</li>
+                    <li>🔇 **Ztlumení mikrofonu** (server mute) / 🔊 **Odtlumení** (`member_server_mute/unmute`).</li>
+                    <li>🔕 **Ztlumení sluchátek** (server deafen) / 🔔 **Odtlumení** (`member_server_deafen/undeafen`).</li>
+                </ul>
+            </div>
+            
+            <div class="module-section">
+                <h3>Události rolí a kanálů</h3>
+                <ul>
+                    <li>✨ **Vytvoření role** / 💥 **Smazání role** (`role_create/delete`).</li>
+                    <li>➕ **Vytvoření kanálu** / ➖ **Smazání kanálu** (`channel_create/delete`).</li>
+                    <li>✏️ **Úprava kanálu** (`channel_update`): Sleduje změny názvu, tématu, kategorie.</li>
+                </ul>
+            </div>
+
+            <div class="module-section">
+                <h3>Události serveru, vláken, pozvánek a další</h3>
+                <ul>
+                    <li>⚙️ **Úprava serveru** (`guild_update`): Změny nastavení, ikony, vlastníka.</li>
+                    <li>😀 **Úprava emotikonů** (`emoji_update`).</li>
+                    <li>📨 **Vytvoření pozvánky** / 🗑️ **Smazání pozvánky** (`invite_create/delete`).</li>
+                    <li>💬 **Vlákno vytvořeno/upraveno/smazáno** (`thread_create/update/delete`).</li>
+                    <li>🗓️ **Událost vytvořena/upravena/smazána** (`scheduled_event_create/update/delete`).</li>
+                    <li>⚡ **Použití příkazů**: Zaznamenává použití příkazů u czbota uživateli.</li>
+                </ul>
+            </div>
+
+            <div class="module-divider"></div>
+
+            <h2 class="module-heading">🧠 Jak modul funguje v pozadí?</h2>
+            <p>Modul funguje na principu Discord událostí (event listenerů) a využívá Discord Audit Logy pro přesné zjištění moderátorů.</p>
+
+            <ol>
+                <li>**Discord Events:** Modul poslouchá specifické události, které nastanou na serveru (smazání zprávy, připojení uživatele, změna role).</li>
+                <li>**Audit Logy:** Pro **moderátorské akce** (ban, kick, timeout, mute/deafen) modul využívá **Discord Audit Logy** k zjištění, kdo akci provedl a jaký byl důvod. Pro tento přístup je klíčové oprávnění <span class="command-code">Zobrazit audit log</span>.</li>
+                <li>**Databáze:** Ukládá nastavení, které auditní události jsou pro daný server povoleny a do kterých kanálů mají být logy posílány.</li>
+                <li>**Odesílání logů:** Logy jsou odesílány do určeného textového kanálu ve formátu přehledných **embed zpráv**.</li>
+            </ol>
+            
+            <div class="module-divider"></div>
+
+            <h2 class="module-heading">🚀 Jak používat modul?</h2>
+            
+            <h3>1. Inicializace a nastavení (pouze pro Moderátory/Adminy)</h3>
+            <p>Použijte slash příkaz <span class="command-code">/audit_nastaveni</span> k otevření interaktivního menu pro správu logů.</p>
+            
+            <div class="command-box">
+                <h4 class="command-title">/audit_nastaveni</h4>
+                <div class="command-details">
+                    <div class="command-detail-row">
+                        <span class="command-label">Použití:</span>
+                        <span>Zadejte příkaz do libovolného textového kanálu. Bot pošle **efemérní zprávu** (viditelnou jen pro vás) s interaktivními menu a tlačítky.</span>
+                    </div>
+                    <div class="command-detail-row">
+                        <span class="command-label">Krok 1:</span>
+                        <span>Pomocí rozbalovacího menu (1) vyberte **Kategorii událostí** (např. "Zprávy").</span>
+                    </div>
+                    <div class="command-detail-row">
+                        <span class="command-label">Krok 2:</span>
+                        <span>Pomocí rozbalovacího menu (2) vyberte **Konkrétní událost** (např. "Smazané zprávy").</span>
+                    </div>
+                    <div class="command-detail-row">
+                        <span class="command-label">Krok 3:</span>
+                        <span>Aktivujte tlačítko **Zapnout / Změnit kanál**. Otevře se modalové okno pro zadání **názvu** nebo **ID** cílového kanálu.</span>
+                    </div>
+                    <div class="command-detail-row">
+                        <span class="command-label">Tip:</span>
+                        <span>**Vypnout** tlačítko vypne logování pro aktuálně vybranou událost. **Přepnout globální logování** vypne logování úplně pro celý server.</span>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="mt-4">2. Sledování logů</h3>
+            <p>Po nastavení bot automaticky odesílá logy pro vybrané události do určených kanálů ve formátu přehledných **embed zpráv**.</p>
+            
+            <div class="module-divider"></div>
+
+            <h2 class="module-heading">🔒 Požadovaná oprávnění bota</h2>
+            <p>Pro plnou funkčnost, zejména pro čtení moderátorských záznamů, jsou vyžadována tato oprávnění:</p>
+
+            <div class="info-box">
+                <ul>
+                    <li>**`Zobrazit audit log` (View Audit Log):** Nezbytné pro čtení Discord Audit Logů a zjišťování moderátora a důvodu.</li>
+                    <li>**`Spravovat kanály` (Manage Channels):** Pro logování událostí týkajících se kanálů.</li>
+                    <li>**`Spravovat role` (Manage Roles):** Pro logování událostí týkajících se rolí.</li>
+                    <li>**`Spravovat server` (Manage Guild):** Doporučeno pro správné fungování mnoha aspektů modulu.</li>
+                    <li>**`Odesílat zprávy` (Send Messages):** V kanálech, kam mají být logy odesílány.</li>
+                    <li>**`Vložit odkazy` (Embed Links):** Pro zobrazení logů v přehledných embed zprávách.</li>
+                </ul>
+            </div>
+            <div class="warning-box mt-4">
+                **Doporučení:** Udělte botovi roli s těmito oprávněními, ideálně roli nad kanály, do kterých se loguje.
+            </div>
+
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="https://github.com/papiscze/czbot">GitHub</a>
+                <span class="footer-separator">•</span>
+                <a href="https://discord.gg/hk6PdtVxbm">Support Server</a>
+                <span class="footer-separator">•</span>
+                <a href="https://github.com/papiscze/czbot/wiki">GitHub dokumentace</a>
+                <span class="footer-separator">•</span>
+                <a href="mailto:admin@ofpmafia.eu">Kontakt</a>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 CZbot. Verze webu 1.0. Všechna práva vyhrazena</p>
+                <p class="footer-credit">Šablona inspirována <a href="https://templatemo.com" target="_blank" rel="noopener nofollow">TemplateMo</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../templatemo-nexus-scripts.js"></script>
+
+</body>
+</html>

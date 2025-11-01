@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CZBOT - Modul Překladač (Translate)</title>
+    
+    <link href="../templatemo-nexus-style.css" rel="stylesheet">
+    <link href="../module-styles.css" rel="stylesheet"> 
+    
+</head>
+<body id="top" class="module-page"> 
+
+    <div class="cyber-bg">
+        <div class="cyber-gradient"></div>
+        <div class="matrix-rain" id="matrixRain"></div>
+    </div>
+    <div class="scanlines"></div>
+    <div class="noise-overlay"></div>
+    <nav>
+        <div class="nav-container">
+            <a href="../index.html" class="logo">CZbot</a>
+            
+            <ul class="nav-links">
+                <li><a href="../commands.html">Příkazy</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Moduly ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="auditlogger.html">Auditlogger</a></li>
+                        <li><a href="audio_stream.html">Audio Stream</a></li>
+                        <li><a href="autopublish.html">Automatické publikování zpráv z kanálů oznámení</a></li>
+                        <li><a href="autorole.html">Autorole, Ověřování uživatelů a Reakční role</a></li>
+                        <li><a href="basic_user_commands.html">Běžné uživatelské a zábavné příkazy</a></li>
+                        <li><a href="basic_mod_commands.html">Běžné moderátorské příkazy</a></li>
+                        <li class="active"><a href="bot_localization.html">Bot localization and Language Settings</a></li>
+                        <li><a href="crossban.html">Crossban</a></li>
+                        <li><a href="temp_voice.html">Dočasné hlasové kanály</a></li>
+                        <li><a href="giveaway.html">Giveaway(e)</a></li>
+                        <li><a href="birthdays.html">Narozeniny</a></li>
+                        <li><a href="patreon.html">Patreon</a></li>
+                        <li><a href="counting.html">Počítání</a></li>
+                        <li><a href="advanced_schedules.html">Pokročilé plánované zprávy</a></li>
+                        <li><a href="reactions.html">Reakce smajlíky na zprávy</a></li>
+                        <li><a href="reputation.html">Reputace</a></li>
+                        <li><a href="rss_reader.html">RSS Čtečka</a></li>
+                        <li><a href="scam_prevence.html">Scam Prevence</a></li>
+                        <li><a href="schedules.html">Schedules ‐ Plánované zprávy</a></li>
+                        <li><a href="stats.html">Statistiky serveru</a></li>
+                        <li><a href="holidays.html">Svátky (CZ SK)</a></li>
+                        <li><a href="feedback.html">Systém zpětné vazby a návrhů</a></li>
+                        <li><a href="tickets.html">Tikety</a></li>
+                        <li><a href="translate.html">Translate modul</a></li>
+                        <li><a href="threads.html">Tvorba vláken na zprávy</a></li>
+                        <li><a href="welcome_leave.html">Uvítací a odchodové zprávy (Welcome Leave)</a></li>
+                        <li><a href="vote.html">Vote ‐ Hlasování</a></li>
+                        <li><a href="watermark.html">Vodoznak s vlastním textem na obrázky</a></li>
+                        <li><a href="xp.html">XP systém a úrovně</a></li>
+                        <li><a href="backup.html">Zálohování a Obnova Serverů</a></li>
+                        <li><a href="confessions.html">Zpovědi (Anonymní Zprávy)</a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Nástroje ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../crongenerator.html">Cron Generátor</a></li>
+                        <li><a href="../embedgenerator.html">Embed Generátor</a></li>
+                        <li><a href="https://github.com/users/papiscze/projects/9">Roadmapa</a></li>
+                        <li><a href="../stats.html">Statistiky bota</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="../warns.html">Moderátorské záznamy</a></li>
+                <li><a href="https://rs422cznas.myds.me:5038/stats/">Statistiky serveru</a></li>
+                <li><a href="../privacy.html">GDPR / ToS</a></li>
+            </ul>
+
+            <div class="nav-bottom">
+                <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Pozvat bota</a>
+            </div>
+
+            <button class="mobile-menu-button" id="mobileMenuBtn">
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </button>
+        </div>
+    </nav>
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <a href="../index.html" class="mobile-menu-logo">CZbot</a>
+            <button class="mobile-menu-close" id="mobileMenuClose">✕</button>
+        </div>
+        <div class="mobile-menu-cta">
+            <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Přidat bota</a>
+        </div>
+        <nav class="mobile-menu-nav">
+            <ul>
+                <li><a href="../commands.html">Příkazy</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Nástroje ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../crongenerator.html">Cron Generátor</a></li>
+                        <li><a href="../embedgenerator.html">Embed Generátor</a></li>
+                        <li><a href="https://github.com/users/papiscze/projects/9">Roadmapa</a></li>
+                        <li><a href="../stats.html">Statistiky bota</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="../warns.html">Moderátorské záznamy</a></li>
+                <li><a href="https://rs422cznas.myds.me:5038/stats/">Statistiky serveru</a></li>
+                <li><a href="../privacy.html">GDPR / ToS</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Moduly ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="auditlogger.html">Auditlogger</a></li>
+                        <li><a href="audio_stream.html">Audio Stream</a></li>
+                        <li><a href="autopublish.html">Automatické publikování zpráv z kanálů oznámení</a></li>
+                        <li><a href="autorole.html">Autorole, Ověřování uživatelů a Reakční role</a></li>
+                        <li><a href="basic_user_commands.html">Běžné uživatelské a zábavné příkazy</a></li>
+                        <li><a href="basic_mod_commands.html">Běžné moderátorské příkazy</a></li>
+                        <li><a href="bot_localization.html">Bot localization and Language Settings</a></li>
+                        <li><a href="crossban.html">Crossban</a></li>
+                        <li><a href="temp_voice.html">Dočasné hlasové kanály</a></li>
+                        <li><a href="giveaway.html">Giveaway(e)</a></li>
+                        <li><a href="birthdays.html">Narozeniny</a></li>
+                        <li><a href="patreon.html">Patreon</a></li>
+                        <li><a href="counting.html">Počítání</a></li>
+                        <li><a href="advanced_schedules.html">Pokročilé plánované zprávy</a></li>
+                        <li><a href="reactions.html">Reakce smajlíky na zprávy</a></li>
+                        <li><a href="reputation.html">Reputace</a></li>
+                        <li><a href="rss_reader.html">RSS Čtečka</a></li>
+                        <li><a href="scam_prevence.html">Scam Prevence</a></li>
+                        <li><a href="schedules.html">Schedules ‐ Plánované zprávy</a></li>
+                        <li><a href="stats.html">Statistiky serveru</a></li>
+                        <li><a href="holidays.html">Svátky (CZ SK)</a></li>
+                        <li><a href="feedback.html">Systém zpětné vazby a návrhů</a></li>
+                        <li><a href="tickets.html">Tikety</a></li>
+                        <li><a href="translate.html">Translate modul</a></li>
+                        <li><a href="threads.html">Tvorba vláken na zprávy</a></li>
+                        <li><a href="welcome_leave.html">Uvítací a odchodové zprávy (Welcome Leave)</a></li>
+                        <li><a href="vote.html">Vote ‐ Hlasování</a></li>
+                        <li><a href="watermark.html">Vodoznak s vlastním textem na obrázky</a></li>
+                        <li><a href="xp.html">XP systém a úrovně</a></li>
+                        <li><a href="backup.html">Zálohování a Obnova Serverů</a></li>
+                        <li><a href="confessions.html">Zpovědi (Anonymní Zprávy)</a></li>
+                    </ul>
+                </li>           
+            </ul>
+        </nav>
+    </div>
+    </nav>
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        </div>
+    <div class="content-section">
+        <div class="content-container">
+
+            <h1 class="page-title">📚 Průvodce používáním překladače (DeepL)</h1>
+            <p class="page-subtitle">Rychlý a efektivní překlad zpráv a textu přímo na Discordu.</p>
+
+            <div class="module-intro-box">
+                <p>
+                    Tento modul využívá **DeepL API** pro poskytování vysoce kvalitních překladů. K dispozici máte:
+                    <br>
+                    1. **Kontextové menu** pro rychlý překlad zpráv.
+                    <br>
+                    2. Příkaz <span class="command-code">/prelozit</span> pro překlad zadaného textu.
+                    <br>
+                    3. **Automatický překlad** kanálů pro mezinárodní komunity.
+                </p>
+            </div>
+
+            <h2 class="module-heading">1. Rychlý překlad zprávy (Kontextové menu)</h2>
+            <p>Doporučený způsob pro překlad zpráv, které již v chatu jsou.</p>
+
+            <div class="info-box">
+                <h4 class="info-box-title">Postup:</h4>
+                <ol>
+                    <li>Klikněte **pravým tlačítkem** na zprávu, kterou chcete přeložit.</li>
+                    <li>V menu vyberte **Aplikace** (Apps).</li>
+                    <li>Zvolte položku **[BETA] Přeložit**.</li>
+                    <li>Zadejte **kód jazyka** (např. <span class="command-code">CS</span>) do cílového pole a odešlete.</li>
+                </ol>
+                <p class="mt-2">Překlad se zobrazí pouze vám (**ephemeralní** odpověď).</p>
+            </div>
+            
+            <div class="module-divider"></div>
+
+            <h2 class="module-heading">2. Překlad textu pomocí příkazu <span class="command-code">/prelozit</span></h2>
+            <p>Použijte, pokud chcete přeložit text, který píšete sami nebo který ještě není v chatu.</p>
+
+            <div class="command-box user-command">
+                <h4 class="command-title">/prelozit <span class="badge">UŽIVATEL</span></h4>
+                <table class="data-table small-font">
+                    <thead>
+                        <tr>
+                            <th>Parametr</th>
+                            <th>Popis</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="command-code">lang</span></td>
+                            <td>**Kód cílového jazyka** (např. <span class="command-code">DE</span> pro Němčinu).</td>
+                        </tr>
+                        <tr>
+                            <td><span class="command-code">text</span></td>
+                            <td>**Text k přeložení**.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h4 class="command-title mt-2">Příklad:</h4>
+                <span class="command-code-example">/prelozit lang:es text:Dobrý den, jak se máte?</span>
+            </div>
+
+            <div class="module-divider"></div>
+
+            <h2 class="module-heading">3. Správa automatického překladu (POUZE MODERÁTOŘI)</h2>
+            <p>Nastavení kanálů, kde se každá zpráva automaticky překládá do nastaveného jazyka.</p>
+            
+            <div class="command-box mod-command">
+                <h4 class="command-title">/autopreklad setup <span class="badge">MOD</span></h4>
+                <p>Zapne automatický překlad pro daný kanál.</p>
+                <span class="command-code-example">/autopreklad setup channel:#english-chat lang:en-gb</span>
+            </div>
+            
+            <div class="command-box mod-command">
+                <h4 class="command-title">/autopreklad remove <span class="badge">MOD</span></h4>
+                <p>Zruší automatický překlad v daném kanálu.</p>
+                <span class="command-code-example">/autopreklad remove channel:#english-chat</span>
+            </div>
+            
+            <div class="command-box mod-command">
+                <h4 class="command-title">/autopreklad list <span class="badge">MOD</span></h4>
+                <p>Zobrazí seznam kanálů s nastaveným automatickým překladem.</p>
+            </div>
+
+            <div class="module-divider"></div>
+
+            <h2 class="module-heading">🌍 Seznam podporovaných jazyků (DeepL)</h2>
+            <p>Používejte uvedené kódy při zadávání cílového jazyka.</p>
+
+            <table class="data-table language-table">
+                <thead>
+                    <tr>
+                        <th>Kód</th>
+                        <th>Jazyk</th>
+                        <th>Kód</th>
+                        <th>Jazyk</th>
+                        <th>Kód</th>
+                        <th>Jazyk</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td><span class="command-code">BG</span></td><td>Bulharština</td><td><span class="command-code">EN-GB</span></td><td>Angličtina (britská)</td><td><span class="command-code">NL</span></td><td>Holandština</td></tr>
+                    <tr><td><span class="command-code">CS</span></td><td>Čeština</td><td><span class="command-code">ES</span></td><td>Španělština</td><td><span class="command-code">PL</span></td><td>Polština</td></tr>
+                    <tr><td><span class="command-code">DA</span></td><td>Dánština</td><td><span class="command-code">ET</span></td><td>Estonština</td><td><span class="command-code">PT</span></td><td>Portugalština</td></tr>
+                    <tr><td><span class="command-code">DE</span></td><td>Němčina</td><td><span class="command-code">FI</span></td><td>Finština</td><td><span class="command-code">RO</span></td><td>Rumunština</td></tr>
+                    <tr><td><span class="command-code">EL</span></td><td>Řečtina</td><td><span class="command-code">FR</span></td><td>Francouzština</td><td><span class="command-code">RU</span></td><td>Ruština</td></tr>
+                    <tr><td><span class="command-code">EN</span></td><td>Angličtina (US)</td><td><span class="command-code">HU</span></td><td>Maďarština</td><td><span class="command-code">SK</span></td><td>Slovenština</td></tr>
+                    <tr><td><span class="command-code">EN-US</span></td><td>Angličtina (US)</td><td><span class="command-code">ID</span></td><td>Indonéština</td><td><span class="command-code">SL</span></td><td>Slovinština</td></tr>
+                    <tr><td><span class="command-code">EN-GB</span></td><td>Angličtina (GB)</td><td><span class="command-code">IT</span></td><td>Italština</td><td><span class="command-code">SV</span></td><td>Švédština</td></tr>
+                    <tr><td><span class="command-code">EN</span></td><td>Angličtina (Neurčená)</td><td><span class="command-code">JA</span></td><td>Japonština</td><td><span class="command-code">TR</span></td><td>Turečtina</td></tr>
+                    <tr><td><span class="command-code">AR</span></td><td>Arabština</td><td><span class="command-code">KO</span></td><td>Korejština</td><td><span class="command-code">UK</span></td><td>Ukrajinština</td></tr>
+                    <tr><td><span class="command-code">DA</span></td><td>Dánština</td><td><span class="command-code">LT</span></td><td>Litevština</td><td><span class="command-code">ZH</span></td><td>Čínština</td></tr>
+                    <tr><td><span class="command-code">NB</span></td><td>Norština (Bokmål)</td><td><span class="command-code">LV</span></td><td>Lotyština</td></tr>
+                </tbody>
+            </table>
+            
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="https://github.com/papiscze/czbot">GitHub</a>
+                <span class="footer-separator">•</span>
+                <a href="https://discord.gg/hk6PdtVxbm">Support Server</a>
+                <span class="footer-separator">•</span>
+                <a href="https://github.com/papiscze/czbot/wiki">GitHub dokumentace</a>
+                <span class="footer-separator">•</span>
+                <a href="mailto:admin@ofpmafia.eu">Kontakt</a>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 CZbot. Verze webu 1.0. Všechna práva vyhrazena</p>
+                <p class="footer-credit">Šablona inspirována <a href="https://templatemo.com" target="_blank" rel="noopener nofollow">TemplateMo</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../templatemo-nexus-scripts.js"></script>
+
+</body>
+</html>

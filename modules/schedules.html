@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CZBOT - Modul Plánované zprávy (Schedules)</title>
+    
+    <link href="../templatemo-nexus-style.css" rel="stylesheet">
+    <link href="../module-styles.css" rel="stylesheet"> 
+    
+</head>
+<body id="top" class="module-page"> 
+
+    <div class="cyber-bg">
+        <div class="cyber-gradient"></div>
+        <div class="matrix-rain" id="matrixRain"></div>
+    </div>
+    <div class="scanlines"></div>
+    <div class="noise-overlay"></div>
+    <nav>
+        <div class="nav-container">
+            <a href="../index.html" class="logo">CZbot</a>
+            
+            <ul class="nav-links">
+                <li><a href="../commands.html">Příkazy</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Moduly ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="auditlogger.html">Auditlogger</a></li>
+                        <li><a href="audio_stream.html">Audio Stream</a></li>
+                        <li><a href="autopublish.html">Automatické publikování zpráv z kanálů oznámení</a></li>
+                        <li><a href="autorole.html">Autorole, Ověřování uživatelů a Reakční role</a></li>
+                        <li><a href="basic_user_commands.html">Běžné uživatelské a zábavné příkazy</a></li>
+                        <li><a href="basic_mod_commands.html">Běžné moderátorské příkazy</a></li>
+                        <li class="active"><a href="bot_localization.html">Bot localization and Language Settings</a></li>
+                        <li><a href="crossban.html">Crossban</a></li>
+                        <li><a href="temp_voice.html">Dočasné hlasové kanály</a></li>
+                        <li><a href="giveaway.html">Giveaway(e)</a></li>
+                        <li><a href="birthdays.html">Narozeniny</a></li>
+                        <li><a href="patreon.html">Patreon</a></li>
+                        <li><a href="counting.html">Počítání</a></li>
+                        <li><a href="advanced_schedules.html">Pokročilé plánované zprávy</a></li>
+                        <li><a href="reactions.html">Reakce smajlíky na zprávy</a></li>
+                        <li><a href="reputation.html">Reputace</a></li>
+                        <li><a href="rss_reader.html">RSS Čtečka</a></li>
+                        <li><a href="scam_prevence.html">Scam Prevence</a></li>
+                        <li><a href="schedules.html">Schedules ‐ Plánované zprávy</a></li>
+                        <li><a href="stats.html">Statistiky serveru</a></li>
+                        <li><a href="holidays.html">Svátky (CZ SK)</a></li>
+                        <li><a href="feedback.html">Systém zpětné vazby a návrhů</a></li>
+                        <li><a href="tickets.html">Tikety</a></li>
+                        <li><a href="translate.html">Translate modul</a></li>
+                        <li><a href="threads.html">Tvorba vláken na zprávy</a></li>
+                        <li><a href="welcome_leave.html">Uvítací a odchodové zprávy (Welcome Leave)</a></li>
+                        <li><a href="vote.html">Vote ‐ Hlasování</a></li>
+                        <li><a href="watermark.html">Vodoznak s vlastním textem na obrázky</a></li>
+                        <li><a href="xp.html">XP systém a úrovně</a></li>
+                        <li><a href="backup.html">Zálohování a Obnova Serverů</a></li>
+                        <li><a href="confessions.html">Zpovědi (Anonymní Zprávy)</a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Nástroje ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../crongenerator.html">Cron Generátor</a></li>
+                        <li><a href="../embedgenerator.html">Embed Generátor</a></li>
+                        <li><a href="https://github.com/users/papiscze/projects/9">Roadmapa</a></li>
+                        <li><a href="../stats.html">Statistiky bota</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="../warns.html">Moderátorské záznamy</a></li>
+                <li><a href="https://rs422cznas.myds.me:5038/stats/">Statistiky serveru</a></li>
+                <li><a href="../privacy.html">GDPR / ToS</a></li>
+            </ul>
+
+            <div class="nav-bottom">
+                <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Pozvat bota</a>
+            </div>
+
+            <button class="mobile-menu-button" id="mobileMenuBtn">
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </button>
+        </div>
+    </nav>
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <a href="../index.html" class="mobile-menu-logo">CZbot</a>
+            <button class="mobile-menu-close" id="mobileMenuClose">✕</button>
+        </div>
+        <div class="mobile-menu-cta">
+            <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Přidat bota</a>
+        </div>
+        <nav class="mobile-menu-nav">
+            <ul>
+                <li><a href="../commands.html">Příkazy</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Nástroje ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../crongenerator.html">Cron Generátor</a></li>
+                        <li><a href="../embedgenerator.html">Embed Generátor</a></li>
+                        <li><a href="https://github.com/users/papiscze/projects/9">Roadmapa</a></li>
+                        <li><a href="../stats.html">Statistiky bota</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="../warns.html">Moderátorské záznamy</a></li>
+                <li><a href="https://rs422cznas.myds.me:5038/stats/">Statistiky serveru</a></li>
+                <li><a href="../privacy.html">GDPR / ToS</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Moduly ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="auditlogger.html">Auditlogger</a></li>
+                        <li><a href="audio_stream.html">Audio Stream</a></li>
+                        <li><a href="autopublish.html">Automatické publikování zpráv z kanálů oznámení</a></li>
+                        <li><a href="autorole.html">Autorole, Ověřování uživatelů a Reakční role</a></li>
+                        <li><a href="basic_user_commands.html">Běžné uživatelské a zábavné příkazy</a></li>
+                        <li><a href="basic_mod_commands.html">Běžné moderátorské příkazy</a></li>
+                        <li><a href="bot_localization.html">Bot localization and Language Settings</a></li>
+                        <li><a href="crossban.html">Crossban</a></li>
+                        <li><a href="temp_voice.html">Dočasné hlasové kanály</a></li>
+                        <li><a href="giveaway.html">Giveaway(e)</a></li>
+                        <li><a href="birthdays.html">Narozeniny</a></li>
+                        <li><a href="patreon.html">Patreon</a></li>
+                        <li><a href="counting.html">Počítání</a></li>
+                        <li><a href="advanced_schedules.html">Pokročilé plánované zprávy</a></li>
+                        <li><a href="reactions.html">Reakce smajlíky na zprávy</a></li>
+                        <li><a href="reputation.html">Reputace</a></li>
+                        <li><a href="rss_reader.html">RSS Čtečka</a></li>
+                        <li><a href="scam_prevence.html">Scam Prevence</a></li>
+                        <li><a href="schedules.html">Schedules ‐ Plánované zprávy</a></li>
+                        <li><a href="stats.html">Statistiky serveru</a></li>
+                        <li><a href="holidays.html">Svátky (CZ SK)</a></li>
+                        <li><a href="feedback.html">Systém zpětné vazby a návrhů</a></li>
+                        <li><a href="tickets.html">Tikety</a></li>
+                        <li><a href="translate.html">Translate modul</a></li>
+                        <li><a href="threads.html">Tvorba vláken na zprávy</a></li>
+                        <li><a href="welcome_leave.html">Uvítací a odchodové zprávy (Welcome Leave)</a></li>
+                        <li><a href="vote.html">Vote ‐ Hlasování</a></li>
+                        <li><a href="watermark.html">Vodoznak s vlastním textem na obrázky</a></li>
+                        <li><a href="xp.html">XP systém a úrovně</a></li>
+                        <li><a href="backup.html">Zálohování a Obnova Serverů</a></li>
+                        <li><a href="confessions.html">Zpovědi (Anonymní Zprávy)</a></li>
+                    </ul>
+                </li>           
+            </ul>
+        </nav>
+    </div>
+    </nav>
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        </div>
+    <div class="content-section">
+        <div class="content-container">
+
+            <h1 class="page-title">⏰ Plánované zprávy (Schedules)</h1>
+            <p class="page-subtitle">Nastavení automatického odesílání zpráv v určitý čas a do vybraného kanálu.</p>
+
+            <div class="module-intro-box">
+                <p>
+                    Modul **Schedules** vám umožní efektivně řídit komunikaci na serveru. Můžete naplánovat **jednorázové** nebo **opakované** zprávy (denní nebo týdenní), což je ideální pro pravidelné oznámení, připomenutí událostí nebo denní pozdravy.
+                </p>
+                <div class="info-box mt-4">
+                    **Důležité:** Čas pro plánování je zadáván ve formátu **HH:MM** (24h formát) a odpovídá **času serveru Discord** (obvykle UTC, ale bot by měl automaticky převádět na místní čas, pokud je to podporováno jeho nastavením).
+                </div>
+            </div>
+
+            <h2 class="module-heading">⚙️ Nastavení opakování</h2>
+            <p>Při plánování zprávy je klíčové nastavit, jak se má opakovat:</p>
+
+            <table class="data-table small-font">
+                <thead>
+                    <tr>
+                        <th>Parametr</th>
+                        <th>Popis</th>
+                        <th>Akce</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="command-code">repeat:0</span></td>
+                        <td>Jednorázové odeslání.</td>
+                        <td>Zpráva se odešle **jen jednou** a poté se automaticky smaže ze seznamu.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="command-code">repeat:1</span> a více</td>
+                        <td>Omezené opakování.</td>
+                        <td>Zpráva se odešle zadaný počet opakování a poté se smaže.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="command-code">repeat:999</span> (nebo vysoké číslo)</td>
+                        <td>Opakování do smazání.</td>
+                        <td>Zpráva se opakuje prakticky **nekonečně dlouho**, dokud ji ručně nesmažete příkazem <span class="command-code">/schedules remove</span>.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="module-divider"></div>
+
+            <h2 class="module-heading">🚀 Příkazy pro správu: <span class="command-code">/schedules</span></h2>
+
+            <h3 class="mt-4">1. Naplánování nové zprávy: <span class="command-code">/schedules schedule</span></h3>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Parametr</th>
+                        <th>Povinné?</th>
+                        <th>Formát / Příklady</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="command-code">zprava</span></td>
+                        <td>Ano</td>
+                        <td>Text zprávy (např. <span class="command-code">Dneska hrajeme!</span>)</td>
+                    </tr>
+                    <tr>
+                        <td><span class="command-code">channel</span></td>
+                        <td>Ano</td>
+                        <td>Textový kanál (např. <span class="command-code">#oznámení</span>)</td>
+                    </tr>
+                    <tr>
+                        <td><span class="command-code">time</span></td>
+                        <td>Ano</td>
+                        <td>Čas HH:MM (např. <span class="command-code">16:30</span>)</td>
+                    </tr>
+                    <tr>
+                        <td><span class="command-code">day_of_week</span></td>
+                        <td>Ano</td>
+                        <td>Anglický název dne (např. <span class="command-code">monday</span>) nebo <span class="command-code">everyday</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="command-code">repeat</span></td>
+                        <td>Ano</td>
+                        <td>Počet opakování (např. <span class="command-code">0</span>, <span class="command-code">10</span>, <span class="command-code">999</span>)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4 class="mt-4">Příklad nekonečného opakování:</h4>
+            <div class="command-box">
+                <h4 class="command-title">Každé pondělí v 8:00</h4>
+                <p>Odesílá zprávu každé pondělí v 8:00, dokud není ručně odstraněna.</p>
+                <span class="command-code-example">/schedules schedule zprava:Hezký start týdne! channel:#obecny time:08:00 day_of_week:monday repeat:999</span>
+            </div>
+
+            <h3 class="mt-4">2. Výpis naplánovaných zpráv: <span class="command-code">/schedules list</span></h3>
+            <p>Zobrazí seznam naplánovaných zpráv.</p>
+
+            <div class="command-box">
+                <h4 class="command-title">/schedules list</h4>
+                <p><strong>Upozornění:</strong> Zprávu může odstranit pouze **autor** nebo **moderátor** serveru.</p>
+                <span class="command-code-example">Moderátoři uvidí všechny zprávy, běžní uživatelé jen své vlastní.</span>
+            </div>
+
+            <h3 class="mt-4">3. Odstranění naplánované zprávy: <span class="command-code">/schedules remove</span></h3>
+            <p>Odstraní zprávu na základě jejího unikátního ID.</p>
+
+            <div class="command-box">
+                <h4 class="command-title">Příklad odstranění</h4>
+                <p>Odstraní naplánovanou zprávu s daným ID.</p>
+                <span class="command-code-example">/schedules remove message_id:abcdef12-3456-7890-abcd-ef1234567890</span>
+            </div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="https://github.com/papiscze/czbot">GitHub</a>
+                <span class="footer-separator">•</span>
+                <a href="https://discord.gg/hk6PdtVxbm">Support Server</a>
+                <span class="footer-separator">•</span>
+                <a href="https://github.com/papiscze/czbot/wiki">GitHub dokumentace</a>
+                <span class="footer-separator">•</span>
+                <a href="mailto:admin@ofpmafia.eu">Kontakt</a>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 CZbot. Verze webu 1.0. Všechna práva vyhrazena</p>
+                <p class="footer-credit">Šablona inspirována <a href="https://templatemo.com" target="_blank" rel="noopener nofollow">TemplateMo</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../templatemo-nexus-scripts.js"></script>
+
+</body>
+</html>

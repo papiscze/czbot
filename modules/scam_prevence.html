@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CZBOT - Modul Ochrana proti scamu</title>
+    
+    <link href="../templatemo-nexus-style.css" rel="stylesheet">
+    <link href="../module-styles.css" rel="stylesheet"> 
+    
+</head>
+<body id="top" class="module-page"> 
+
+    <div class="cyber-bg">
+        <div class="cyber-gradient"></div>
+        <div class="matrix-rain" id="matrixRain"></div>
+    </div>
+    <div class="scanlines"></div>
+    <div class="noise-overlay"></div>
+    <nav>
+        <div class="nav-container">
+            <a href="../index.html" class="logo">CZbot</a>
+            
+            <ul class="nav-links">
+                <li><a href="../commands.html">Příkazy</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Moduly ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="auditlogger.html">Auditlogger</a></li>
+                        <li><a href="audio_stream.html">Audio Stream</a></li>
+                        <li><a href="autopublish.html">Automatické publikování zpráv z kanálů oznámení</a></li>
+                        <li><a href="autorole.html">Autorole, Ověřování uživatelů a Reakční role</a></li>
+                        <li><a href="basic_user_commands.html">Běžné uživatelské a zábavné příkazy</a></li>
+                        <li><a href="basic_mod_commands.html">Běžné moderátorské příkazy</a></li>
+                        <li class="active"><a href="bot_localization.html">Bot localization and Language Settings</a></li>
+                        <li><a href="crossban.html">Crossban</a></li>
+                        <li><a href="temp_voice.html">Dočasné hlasové kanály</a></li>
+                        <li><a href="giveaway.html">Giveaway(e)</a></li>
+                        <li><a href="birthdays.html">Narozeniny</a></li>
+                        <li><a href="patreon.html">Patreon</a></li>
+                        <li><a href="counting.html">Počítání</a></li>
+                        <li><a href="advanced_schedules.html">Pokročilé plánované zprávy</a></li>
+                        <li><a href="reactions.html">Reakce smajlíky na zprávy</a></li>
+                        <li><a href="reputation.html">Reputace</a></li>
+                        <li><a href="rss_reader.html">RSS Čtečka</a></li>
+                        <li><a href="scam_prevence.html">Scam Prevence</a></li>
+                        <li><a href="schedules.html">Schedules ‐ Plánované zprávy</a></li>
+                        <li><a href="stats.html">Statistiky serveru</a></li>
+                        <li><a href="holidays.html">Svátky (CZ SK)</a></li>
+                        <li><a href="feedback.html">Systém zpětné vazby a návrhů</a></li>
+                        <li><a href="tickets.html">Tikety</a></li>
+                        <li><a href="translate.html">Translate modul</a></li>
+                        <li><a href="threads.html">Tvorba vláken na zprávy</a></li>
+                        <li><a href="welcome_leave.html">Uvítací a odchodové zprávy (Welcome Leave)</a></li>
+                        <li><a href="vote.html">Vote ‐ Hlasování</a></li>
+                        <li><a href="watermark.html">Vodoznak s vlastním textem na obrázky</a></li>
+                        <li><a href="xp.html">XP systém a úrovně</a></li>
+                        <li><a href="backup.html">Zálohování a Obnova Serverů</a></li>
+                        <li><a href="confessions.html">Zpovědi (Anonymní Zprávy)</a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Nástroje ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../crongenerator.html">Cron Generátor</a></li>
+                        <li><a href="../embedgenerator.html">Embed Generátor</a></li>
+                        <li><a href="https://github.com/users/papiscze/projects/9">Roadmapa</a></li>
+                        <li><a href="../stats.html">Statistiky bota</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="../warns.html">Moderátorské záznamy</a></li>
+                <li><a href="https://rs422cznas.myds.me:5038/stats/">Statistiky serveru</a></li>
+                <li><a href="../privacy.html">GDPR / ToS</a></li>
+            </ul>
+
+            <div class="nav-bottom">
+                <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Pozvat bota</a>
+            </div>
+
+            <button class="mobile-menu-button" id="mobileMenuBtn">
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </button>
+        </div>
+    </nav>
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <a href="../index.html" class="mobile-menu-logo">CZbot</a>
+            <button class="mobile-menu-close" id="mobileMenuClose">✕</button>
+        </div>
+        <div class="mobile-menu-cta">
+            <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Přidat bota</a>
+        </div>
+        <nav class="mobile-menu-nav">
+            <ul>
+                <li><a href="../commands.html">Příkazy</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Nástroje ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../crongenerator.html">Cron Generátor</a></li>
+                        <li><a href="../embedgenerator.html">Embed Generátor</a></li>
+                        <li><a href="https://github.com/users/papiscze/projects/9">Roadmapa</a></li>
+                        <li><a href="../stats.html">Statistiky bota</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="../warns.html">Moderátorské záznamy</a></li>
+                <li><a href="https://rs422cznas.myds.me:5038/stats/">Statistiky serveru</a></li>
+                <li><a href="../privacy.html">GDPR / ToS</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Moduly ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="auditlogger.html">Auditlogger</a></li>
+                        <li><a href="audio_stream.html">Audio Stream</a></li>
+                        <li><a href="autopublish.html">Automatické publikování zpráv z kanálů oznámení</a></li>
+                        <li><a href="autorole.html">Autorole, Ověřování uživatelů a Reakční role</a></li>
+                        <li><a href="basic_user_commands.html">Běžné uživatelské a zábavné příkazy</a></li>
+                        <li><a href="basic_mod_commands.html">Běžné moderátorské příkazy</a></li>
+                        <li><a href="bot_localization.html">Bot localization and Language Settings</a></li>
+                        <li><a href="crossban.html">Crossban</a></li>
+                        <li><a href="temp_voice.html">Dočasné hlasové kanály</a></li>
+                        <li><a href="giveaway.html">Giveaway(e)</a></li>
+                        <li><a href="birthdays.html">Narozeniny</a></li>
+                        <li><a href="patreon.html">Patreon</a></li>
+                        <li><a href="counting.html">Počítání</a></li>
+                        <li><a href="advanced_schedules.html">Pokročilé plánované zprávy</a></li>
+                        <li><a href="reactions.html">Reakce smajlíky na zprávy</a></li>
+                        <li><a href="reputation.html">Reputace</a></li>
+                        <li><a href="rss_reader.html">RSS Čtečka</a></li>
+                        <li><a href="scam_prevence.html">Scam Prevence</a></li>
+                        <li><a href="schedules.html">Schedules ‐ Plánované zprávy</a></li>
+                        <li><a href="stats.html">Statistiky serveru</a></li>
+                        <li><a href="holidays.html">Svátky (CZ SK)</a></li>
+                        <li><a href="feedback.html">Systém zpětné vazby a návrhů</a></li>
+                        <li><a href="tickets.html">Tikety</a></li>
+                        <li><a href="translate.html">Translate modul</a></li>
+                        <li><a href="threads.html">Tvorba vláken na zprávy</a></li>
+                        <li><a href="welcome_leave.html">Uvítací a odchodové zprávy (Welcome Leave)</a></li>
+                        <li><a href="vote.html">Vote ‐ Hlasování</a></li>
+                        <li><a href="watermark.html">Vodoznak s vlastním textem na obrázky</a></li>
+                        <li><a href="xp.html">XP systém a úrovně</a></li>
+                        <li><a href="backup.html">Zálohování a Obnova Serverů</a></li>
+                        <li><a href="confessions.html">Zpovědi (Anonymní Zprávy)</a></li>
+                    </ul>
+                </li>           
+            </ul>
+        </nav>
+    </div>
+    </nav>
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        </div>
+    <div class="content-section">
+        <div class="content-container">
+
+            <h1 class="page-title">🛡️ Ochrana proti scamu</h1>
+            <p class="page-subtitle">Automatické mazání zpráv a udělení dočasného umlčení při detekci známých scam slov a nebezpečných příloh.</p>
+
+            <div class="module-intro-box">
+                <p>
+                    Tento modul je navržen tak, aby chránil váš server před škodlivým obsahem. Bot monitoruje zprávy a přílohy a v případě detekce scamu automaticky zasáhne: zprávu **smaže** a v mnoha případech uživateli udělí **1 hodinu timeout**.
+                </p>
+                <div class="info-box mt-4">
+                    **Klíčové oprávnění:** Pro správu a konfiguraci modulu je vyžadováno oprávnění **Spravovat zprávy** (<span class="command-code">manage_messages</span>).
+                </div>
+            </div>
+
+            <h2 class="module-heading">🚨 Jak modul funguje a reaguje?</h2>
+            <p>Bot má odlišné chování na základě oprávnění uživatele, který scam odeslal:</p>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Typ uživatele</th>
+                        <th>Akce bota</th>
+                        <th>Poznámka</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>**Imunitní role**</td>
+                        <td>**Zcela ignoruje**</td>
+                        <td>Uživatel s rolí nastavenou jako výjimka neaktivuje žádnou akci.</td>
+                    </tr>
+                    <tr>
+                        <td>**Moderátor** (s <span class="command-code">Spravovat zprávy</span>)</td>
+                        <td>**Smaže** zprávu, **NEUDĚLÍ** timeout.</td>
+                        <td>Zaznamenáno jako upozornění (<span class="command-code">WARNING</span>) do changelog kanálu.</td>
+                    </tr>
+                    <tr>
+                        <td>**Běžný uživatel**</td>
+                        <td>**Smaže** zprávu a **udělí timeout na 1 hodinu**.</td>
+                        <td>Zaznamenáno jako informace (<span class="command-code">INFO</span>) do logů.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="module-divider"></div>
+
+            <h2 class="module-heading">🤖 Příkazy pro správu: <span class="command-code">/scamochrana</span></h2>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Příkaz</th>
+                        <th>Popis</th>
+                        <th>Příklad použití</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="command-code">/scamochrana zapnout</span></td>
+                        <td>Zapne ochranu proti scamu na serveru.</td>
+                        <td><span class="command-code">/scamochrana zapnout</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="command-code">/scamochrana vypnout</span></td>
+                        <td>Vypne ochranu proti scamu na serveru.</td>
+                        <td><span class="command-code">/scamochrana vypnout</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="command-code">/scamochrana list</span></td>
+                        <td>Zobrazí seznam blokovaných slov a rolí s výjimkou.</td>
+                        <td><span class="command-code">/scamochrana list</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="command-code">/scamochrana status</span></td>
+                        <td>Zobrazí aktuální stav zapnutí/vypnutí ochrany.</td>
+                        <td><span class="command-code">/scamochrana status</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 class="mt-4">Správa výjimek pro role: <span class="command-code">/scamochrana vyjimka</span></h3>
+            <p>Nastavuje role, pro které je ochrana proti scamu ignorována.</p>
+
+            <div class="command-box">
+                <h4 class="command-title">Příklad: Přidání výjimky</h4>
+                <p>Přidá roli <span class="command-code">@Moderátoři</span> na seznam výjimek.</p>
+                <span class="command-code-example">/scamochrana vyjimka akce:pridat role:@Moderátoři</span>
+            </div>
+            
+            <div class="command-box">
+                <h4 class="command-title">Příklad: Odebrání výjimky</h4>
+                <p>Odebere roli <span class="command-code">@Správci</span> ze seznamu výjimek.</p>
+                <span class="command-code-example">/scamochrana vyjimka akce:odebrat role:@Správci</span>
+            </div>
+
+            <div class="module-divider"></div>
+
+            <h2 class="module-heading">📝 Globální seznam blokovaných prvků</h2>
+            <p>Bot používá interní, průběžně aktualizovaný seznam slov a názvů souborů. Zde je krátká ukázka:</p>
+            
+            <div class="code-block">
+                <p><strong>Podezřelá slova a fráze:</strong></p>
+                <code>Solara is back!</code>, <code>Free Discord Nitro</code>, <code>Nltro</code>, <code>You have received a gift</code>, <code>steam airdrop</code>, <code>verify ownership</code>, atd.
+                <p><strong>Podezřelé názvy souborů:</strong></p>
+                <code>free-nitro.scr</code>, <code>nitro-giveaway.exe</code>, <code>steam-airdrop.zip</code>, <code>asdasd.png</code>, atd.
+            </div>
+
+            <div class="info-box mt-4">
+                Máte-li návrhy na nová scam slova, připojte se na náš <a href="https://discord.gg/hk6PdtVxbm" target="_blank">oficiální Discord server</a> a pomozte nám filtr vylepšit!
+            </div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="https://github.com/papiscze/czbot">GitHub</a>
+                <span class="footer-separator">•</span>
+                <a href="https://discord.gg/hk6PdtVxbm">Support Server</a>
+                <span class="footer-separator">•</span>
+                <a href="https://github.com/papiscze/czbot/wiki">GitHub dokumentace</a>
+                <span class="footer-separator">•</span>
+                <a href="mailto:admin@ofpmafia.eu">Kontakt</a>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 CZbot. Verze webu 1.0. Všechna práva vyhrazena</p>
+                <p class="footer-credit">Šablona inspirována <a href="https://templatemo.com" target="_blank" rel="noopener nofollow">TemplateMo</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../templatemo-nexus-scripts.js"></script>
+
+</body>
+</html>

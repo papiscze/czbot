@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CZBOT - Lokalizace a jazyková nastavení</title>
+    
+    <link href="../templatemo-nexus-style.css" rel="stylesheet"> 
+    
+    <link href="../module-styles.css" rel="stylesheet"> 
+</head>
+<body id="top">
+    <div class="cyber-bg">
+        <div class="cyber-gradient"></div>
+        <div class="matrix-rain" id="matrixRain"></div>
+    </div>
+    
+    <div class="particles" id="particlesContainer"></div>
+    
+    <div class="data-streams" id="dataStreams"></div>
+    
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+    
+    <div class="grid-overlay">
+        <div class="grid-lines"></div>
+        <div class="grid-glow"></div>
+    </div>
+    
+    <div class="scanlines"></div>
+    <div class="noise-overlay"></div>
+    
+    <nav>
+        <div class="nav-container">
+            <a href="../index.html" class="logo">CZbot</a>
+            
+            <ul class="nav-links">
+                <li><a href="../commands.html">Příkazy</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Moduly ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="auditlogger.html">Auditlogger</a></li>
+                        <li><a href="audio_stream.html">Audio Stream</a></li>
+                        <li><a href="autopublish.html">Automatické publikování zpráv z kanálů oznámení</a></li>
+                        <li><a href="autorole.html">Autorole, Ověřování uživatelů a Reakční role</a></li>
+                        <li><a href="basic_user_commands.html">Běžné uživatelské a zábavné příkazy</a></li>
+                        <li><a href="basic_mod_commands.html">Běžné moderátorské příkazy</a></li>
+                        <li class="active"><a href="bot_localization.html">Bot localization and Language Settings</a></li>
+                        <li><a href="crossban.html">Crossban</a></li>
+                        <li><a href="temp_voice.html">Dočasné hlasové kanály</a></li>
+                        <li><a href="giveaway.html">Giveaway(e)</a></li>
+                        <li><a href="birthdays.html">Narozeniny</a></li>
+                        <li><a href="patreon.html">Patreon</a></li>
+                        <li><a href="counting.html">Počítání</a></li>
+                        <li><a href="advanced_schedules.html">Pokročilé plánované zprávy</a></li>
+                        <li><a href="reactions.html">Reakce smajlíky na zprávy</a></li>
+                        <li><a href="reputation.html">Reputace</a></li>
+                        <li><a href="rss_reader.html">RSS Čtečka</a></li>
+                        <li><a href="scam_prevence.html">Scam Prevence</a></li>
+                        <li><a href="schedules.html">Schedules ‐ Plánované zprávy</a></li>
+                        <li><a href="stats.html">Statistiky serveru</a></li>
+                        <li><a href="holidays.html">Svátky (CZ SK)</a></li>
+                        <li><a href="feedback.html">Systém zpětné vazby a návrhů</a></li>
+                        <li><a href="tickets.html">Tikety</a></li>
+                        <li><a href="translate.html">Translate modul</a></li>
+                        <li><a href="threads.html">Tvorba vláken na zprávy</a></li>
+                        <li><a href="welcome_leave.html">Uvítací a odchodové zprávy (Welcome Leave)</a></li>
+                        <li><a href="vote.html">Vote ‐ Hlasování</a></li>
+                        <li><a href="watermark.html">Vodoznak s vlastním textem na obrázky</a></li>
+                        <li><a href="xp.html">XP systém a úrovně</a></li>
+                        <li><a href="backup.html">Zálohování a Obnova Serverů</a></li>
+                        <li><a href="confessions.html">Zpovědi (Anonymní Zprávy)</a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Nástroje ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../crongenerator.html">Cron Generátor</a></li>
+                        <li><a href="../embedgenerator.html">Embed Generátor</a></li>
+                        <li><a href="https://github.com/users/papiscze/projects/9">Roadmapa</a></li>
+                        <li><a href="../stats.html">Statistiky bota</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="../warns.html">Moderátorské záznamy</a></li>
+                <li><a href="https://rs422cznas.myds.me:5038/stats/">Statistiky serveru</a></li>
+                <li><a href="../privacy.html">GDPR / ToS</a></li>
+            </ul>
+
+            <div class="nav-bottom">
+                <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Pozvat bota</a>
+            </div>
+
+            <button class="mobile-menu-button" id="mobileMenuBtn">
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </button>
+        </div>
+    </nav>
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <a href="../index.html" class="mobile-menu-logo">CZbot</a>
+            <button class="mobile-menu-close" id="mobileMenuClose">✕</button>
+        </div>
+        <div class="mobile-menu-cta">
+            <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Přidat bota</a>
+        </div>
+        <nav class="mobile-menu-nav">
+            <ul>
+                <li><a href="../commands.html">Příkazy</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Nástroje ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../crongenerator.html">Cron Generátor</a></li>
+                        <li><a href="../embedgenerator.html">Embed Generátor</a></li>
+                        <li><a href="https://github.com/users/papiscze/projects/9">Roadmapa</a></li>
+                        <li><a href="../stats.html">Statistiky bota</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="../warns.html">Moderátorské záznamy</a></li>
+                <li><a href="https://rs422cznas.myds.me:5038/stats/">Statistiky serveru</a></li>
+                <li><a href="../privacy.html">GDPR / ToS</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Moduly ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="auditlogger.html">Auditlogger</a></li>
+                        <li><a href="audio_stream.html">Audio Stream</a></li>
+                        <li><a href="autopublish.html">Automatické publikování zpráv z kanálů oznámení</a></li>
+                        <li><a href="autorole.html">Autorole, Ověřování uživatelů a Reakční role</a></li>
+                        <li><a href="basic_user_commands.html">Běžné uživatelské a zábavné příkazy</a></li>
+                        <li><a href="basic_mod_commands.html">Běžné moderátorské příkazy</a></li>
+                        <li><a href="bot_localization.html">Bot localization and Language Settings</a></li>
+                        <li><a href="crossban.html">Crossban</a></li>
+                        <li><a href="temp_voice.html">Dočasné hlasové kanály</a></li>
+                        <li><a href="giveaway.html">Giveaway(e)</a></li>
+                        <li><a href="birthdays.html">Narozeniny</a></li>
+                        <li><a href="patreon.html">Patreon</a></li>
+                        <li><a href="counting.html">Počítání</a></li>
+                        <li><a href="advanced_schedules.html">Pokročilé plánované zprávy</a></li>
+                        <li><a href="reactions.html">Reakce smajlíky na zprávy</a></li>
+                        <li><a href="reputation.html">Reputace</a></li>
+                        <li><a href="rss_reader.html">RSS Čtečka</a></li>
+                        <li><a href="scam_prevence.html">Scam Prevence</a></li>
+                        <li><a href="schedules.html">Schedules ‐ Plánované zprávy</a></li>
+                        <li><a href="stats.html">Statistiky serveru</a></li>
+                        <li><a href="holidays.html">Svátky (CZ SK)</a></li>
+                        <li><a href="feedback.html">Systém zpětné vazby a návrhů</a></li>
+                        <li><a href="tickets.html">Tikety</a></li>
+                        <li><a href="translate.html">Translate modul</a></li>
+                        <li><a href="threads.html">Tvorba vláken na zprávy</a></li>
+                        <li><a href="welcome_leave.html">Uvítací a odchodové zprávy (Welcome Leave)</a></li>
+                        <li><a href="vote.html">Vote ‐ Hlasování</a></li>
+                        <li><a href="watermark.html">Vodoznak s vlastním textem na obrázky</a></li>
+                        <li><a href="xp.html">XP systém a úrovně</a></li>
+                        <li><a href="backup.html">Zálohování a Obnova Serverů</a></li>
+                        <li><a href="confessions.html">Zpovědi (Anonymní Zprávy)</a></li>
+                    </ul>
+                </li>           
+            </ul>
+        </nav>
+    </div>
+
+    <section class="content-section module-page">
+        <div class="content-container">
+            
+            <h1 class="page-title">🌐 Lokalizace a jazyková nastavení</h1>
+            <p class="page-subtitle">(Localization and Language Settings)</p>
+
+            <div class="module-intro-box">
+                <p>Tento modul umožňuje uživatelům a administrátorům serveru nastavit preferovaný jazyk, ve kterém s nimi bude bot komunikovat. Jazyk lze nastavit buď **globálně pro celý server** (nastavení má přednost pro všechny, kteří nemají nastavený osobní jazyk), nebo **osobně pro jednotlivé uživatele**.</p>
+            </div>
+
+            <hr class="module-divider">
+            
+            <div class="language-documentation-switch">
+                <button class="lang-button active" data-lang="cz">🇨🇿 Česká Dokumentace</button>
+                <button class="lang-button" data-lang="en">🇬🇧 English Documentation</button>
+            </div>
+            <hr class="module-divider">
+
+            <div class="documentation-group" data-lang="cz">
+                <h3 class="module-heading">⚙️ Správa jazyka</h3>
+                
+                <p>Všechny příkazy pro správu jazyka jsou sdruženy pod hlavním příkazem <span class="command-code">/lokalizace</span>.</p>
+
+                <div class="command-box">
+                    <div class="command-title">1. Nastavení jazyka pro celý server</div>
+                    <div class="command-details">
+                        <div class="command-detail-row">
+                            <span class="command-label">Popis:</span>
+                            <span>Tento příkaz mohou používat pouze **administrátoři** s oprávněním `Spravovat server`. Nastavený jazyk bude použit pro všechny zprávy, které bot odesílá do veřejných kanálů, a jako výchozí jazyk pro všechny členy.</span>
+                        </div>
+                        <div class="command-detail-row">
+                            <span class="command-label">Příkaz:</span>
+                            <span class="command-code">/lokalizace server</span>
+                        </div>
+                        <div class="command-detail-row">
+                            <span class="command-label">Detail:</span>
+                            <span>Nastaví výchozí jazyk bota pro daný server.</span>
+                        </div>
+                        <div class="command-detail-row">
+                            <span class="command-label">Parametry:</span>
+                            <span><span class="command-code">kod_jazyka</span>: Vyberte nový kód jazyka ze seznamu (např. **Čeština (cs)** nebo **English (en)**).</span>
+                        </div>
+                        <div class="command-detail-row">
+                            <span class="command-label">Příklad:</span>
+                            <span class="command-code-example">/lokalizace server kod_jazyka:cs</span>
+                        </div>
+                        <div class="command-detail-row">
+                            <span class="command-label">Odpověď:</span>
+                            <span class="command-response">✅ Jazyk pro Server byl úspěšně nastaven na CS.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-box">
+                    <div class="command-title">2. Nastavení osobního jazyka pro uživatele</div>
+                    <div class="command-details">
+                        <div class="command-detail-row">
+                            <span class="command-label">Popis:</span>
+                            <span>Tento příkaz může použít **kterýkoli uživatel** k nastavení svého vlastního, osobního preferovaného jazyka. Osobní nastavení **přepisuje** nastavení serveru.</span>
+                        </div>
+                        <div class="command-detail-row">
+                            <span class="command-label">Příkaz:</span>
+                            <span class="command-code">/lokalizace uzivatel</span>
+                        </div>
+                        <div class="command-detail-row">
+                            <span class="command-label">Detail:</span>
+                            <span>Nastaví váš osobní jazyk pro interakci s botem.</span>
+                        </div>
+                        <div class="command-detail-row">
+                            <span class="command-label">Parametry:</span>
+                            <span><span class="command-code">kod_jazyka</span>: Vyberte nový kód jazyka ze seznamu (např. **Čeština (cs)** nebo **English (en)**).</span>
+                        </div>
+                        <div class="command-detail-row">
+                            <span class="command-label">Příklad:</span>
+                            <span class="command-code-example">/lokalizace uzivatel kod_jazyka:en</span>
+                        </div>
+                        <div class="command-detail-row">
+                            <span class="command-label">Odpověď:</span>
+                            <span class="command-response">✅ Jazyk pro Vás byl úspěšně nastaven na EN.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="documentation-group is-hidden" data-lang="en">
+                <h3 class="module-heading">⚙️ Language Management</h3>
+                
+                <p>All language management commands are grouped under the main command <span class="command-code">/localization</span>.</p>
+
+                <div class="command-box">
+                    <div class="command-title">1. Set Server Language</div>
+                    <div class="command-details">
+                        <div class="command-detail-row">
+                            <span class="command-label">Description:</span>
+                            <span>This command can only be used by **administrators** with the `Manage Server` permission. The set language will be used for all messages the bot sends to public channels and as the default language for all members.</span>
+                        </div>
+                        <div class="command-detail-row">
+                            <span class="command-label">Command:</span>
+                            <span class="command-code">/localization server</span>
+                        </div>
+                        <div class="command-detail-row">
+                            <span class="command-label">Detail:</span>
+                            <span>Sets the bot's default language for the entire server.</span>
+                        </div>
+                        <div class="command-detail-row">
+                            <span class="command-label">Parameters:</span>
+                            <span><span class="command-code">language_code</span> (<span class="command-code">kod_jazyka</span>): Select the new language code from the list (e.g., **English (en)** or **Čeština (cs)**).</span>
+                        </div>
+                        <div class="command-detail-row">
+                            <span class="command-label">Usage:</span>
+                            <span class="command-code-example">/localization server language_code:en</span>
+                        </div>
+                        <div class="command-detail-row">
+                            <span class="command-label">Response:</span>
+                            <span class="command-response">✅ Language for Server has been successfully set to EN.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-box">
+                    <div class="command-title">2. Set Personal User Language</div>
+                    <div class="command-details">
+                        <div class="command-detail-row">
+                            <span class="command-label">Description:</span>
+                            <span>This command can be used by **any user** to set their own, personal preferred language. Personal settings **override** the server setting.</span>
+                        </div>
+                        <div class="command-detail-row">
+                            <span class="command-label">Command:</span>
+                            <span class="command-code">/localization user</span>
+                        </div>
+                        <div class="command-detail-row">
+                            <span class="command-label">Detail:</span>
+                            <span>Sets your personal language for bot interactions.</span>
+                        </div>
+                        <div class="command-detail-row">
+                            <span class="command-label">Parameters:</span>
+                            <span><span class="command-code">language_code</span> (<span class="command-code">kod_jazyka</span>): Select the new language code from the list (e.g., **English (en)** or **Čeština (cs)**).</span>
+                        </div>
+                        <div class="command-detail-row">
+                            <span class="command-label">Usage:</span>
+                            <span class="command-code-example">/localization user language_code:cs</span>
+                        </div>
+                        <div class="command-detail-row">
+                            <span class="command-label">Response:</span>
+                            <span class="command-response">✅ Language for You has been successfully set to CS.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+    </section>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="https://github.com/papiscze/czbot">GitHub</a>
+                <span class="footer-separator">•</span>
+                <a href="https://discord.gg/hk6PdtVxbm">Support Server</a>
+                <span class="footer-separator">•</span>
+                <a href="https://github.com/papiscze/czbot/wiki">GitHub dokumentace</a>
+                <span class="footer-separator">•</span>
+                <a href="mailto:admin@ofpmafia.eu">Kontakt</a>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 CZbot. Verze webu 1.0. Všechna práva vyhrazena</p>
+                <p class="footer-credit">Šablona inspirována <a href="https://templatemo.com" target="_blank" rel="noopener nofollow">TemplateMo</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../templatemo-nexus-scripts.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const langButtons = document.querySelectorAll('.lang-button');
+            const docGroups = document.querySelectorAll('.documentation-group');
+
+            langButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const targetLang = this.getAttribute('data-lang');
+
+                    // Odebrat 'active' ze všech tlačítek a přidat na kliknuté
+                    langButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+
+                    // Skrýt všechny dokumentační skupiny
+                    docGroups.forEach(group => {
+                        group.classList.add('is-hidden');
+                    });
+
+                    // Zobrazit cílovou dokumentační skupinu
+                    const targetGroup = document.querySelector(`.documentation-group[data-lang="${targetLang}"]`);
+                    if (targetGroup) {
+                        targetGroup.classList.remove('is-hidden');
+                    }
+                });
+            });
+        });
+    </script>
+    
+    </body>
+</html>

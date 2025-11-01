@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CZBOT - Automatické publikování zpráv</title>
+    
+    <link href="../templatemo-nexus-style.css" rel="stylesheet">
+    <link href="../module-styles.css" rel="stylesheet"> 
+    
+</head>
+<body id="top" class="module-page"> 
+
+    <div class="cyber-bg">
+        <div class="cyber-gradient"></div>
+        <div class="matrix-rain" id="matrixRain"></div>
+    </div>
+    <div class="scanlines"></div>
+    <div class="noise-overlay"></div>
+    <nav>
+        <div class="nav-container">
+            <a href="../index.html" class="logo">CZbot</a>
+            
+            <ul class="nav-links">
+                <li><a href="../commands.html">Příkazy</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Moduly ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="auditlogger.html">Auditlogger</a></li>
+                        <li><a href="audio_stream.html">Audio Stream</a></li>
+                        <li><a href="autopublish.html">Automatické publikování zpráv z kanálů oznámení</a></li>
+                        <li><a href="autorole.html">Autorole, Ověřování uživatelů a Reakční role</a></li>
+                        <li><a href="basic_user_commands.html">Běžné uživatelské a zábavné příkazy</a></li>
+                        <li><a href="basic_mod_commands.html">Běžné moderátorské příkazy</a></li>
+                        <li class="active"><a href="bot_localization.html">Bot localization and Language Settings</a></li>
+                        <li><a href="crossban.html">Crossban</a></li>
+                        <li><a href="temp_voice.html">Dočasné hlasové kanály</a></li>
+                        <li><a href="giveaway.html">Giveaway(e)</a></li>
+                        <li><a href="birthdays.html">Narozeniny</a></li>
+                        <li><a href="patreon.html">Patreon</a></li>
+                        <li><a href="counting.html">Počítání</a></li>
+                        <li><a href="advanced_schedules.html">Pokročilé plánované zprávy</a></li>
+                        <li><a href="reactions.html">Reakce smajlíky na zprávy</a></li>
+                        <li><a href="reputation.html">Reputace</a></li>
+                        <li><a href="rss_reader.html">RSS Čtečka</a></li>
+                        <li><a href="scam_prevence.html">Scam Prevence</a></li>
+                        <li><a href="schedules.html">Schedules ‐ Plánované zprávy</a></li>
+                        <li><a href="stats.html">Statistiky serveru</a></li>
+                        <li><a href="holidays.html">Svátky (CZ SK)</a></li>
+                        <li><a href="feedback.html">Systém zpětné vazby a návrhů</a></li>
+                        <li><a href="tickets.html">Tikety</a></li>
+                        <li><a href="translate.html">Translate modul</a></li>
+                        <li><a href="threads.html">Tvorba vláken na zprávy</a></li>
+                        <li><a href="welcome_leave.html">Uvítací a odchodové zprávy (Welcome Leave)</a></li>
+                        <li><a href="vote.html">Vote ‐ Hlasování</a></li>
+                        <li><a href="watermark.html">Vodoznak s vlastním textem na obrázky</a></li>
+                        <li><a href="xp.html">XP systém a úrovně</a></li>
+                        <li><a href="backup.html">Zálohování a Obnova Serverů</a></li>
+                        <li><a href="confessions.html">Zpovědi (Anonymní Zprávy)</a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Nástroje ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../crongenerator.html">Cron Generátor</a></li>
+                        <li><a href="../embedgenerator.html">Embed Generátor</a></li>
+                        <li><a href="https://github.com/users/papiscze/projects/9">Roadmapa</a></li>
+                        <li><a href="../stats.html">Statistiky bota</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="../warns.html">Moderátorské záznamy</a></li>
+                <li><a href="https://rs422cznas.myds.me:5038/stats/">Statistiky serveru</a></li>
+                <li><a href="../privacy.html">GDPR / ToS</a></li>
+            </ul>
+
+            <div class="nav-bottom">
+                <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Pozvat bota</a>
+            </div>
+
+            <button class="mobile-menu-button" id="mobileMenuBtn">
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </button>
+        </div>
+    </nav>
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <a href="../index.html" class="mobile-menu-logo">CZbot</a>
+            <button class="mobile-menu-close" id="mobileMenuClose">✕</button>
+        </div>
+        <div class="mobile-menu-cta">
+            <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Přidat bota</a>
+        </div>
+        <nav class="mobile-menu-nav">
+            <ul>
+                <li><a href="../commands.html">Příkazy</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Nástroje ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../crongenerator.html">Cron Generátor</a></li>
+                        <li><a href="../embedgenerator.html">Embed Generátor</a></li>
+                        <li><a href="https://github.com/users/papiscze/projects/9">Roadmapa</a></li>
+                        <li><a href="../stats.html">Statistiky bota</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="../warns.html">Moderátorské záznamy</a></li>
+                <li><a href="https://rs422cznas.myds.me:5038/stats/">Statistiky serveru</a></li>
+                <li><a href="../privacy.html">GDPR / ToS</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Moduly ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="auditlogger.html">Auditlogger</a></li>
+                        <li><a href="audio_stream.html">Audio Stream</a></li>
+                        <li><a href="autopublish.html">Automatické publikování zpráv z kanálů oznámení</a></li>
+                        <li><a href="autorole.html">Autorole, Ověřování uživatelů a Reakční role</a></li>
+                        <li><a href="basic_user_commands.html">Běžné uživatelské a zábavné příkazy</a></li>
+                        <li><a href="basic_mod_commands.html">Běžné moderátorské příkazy</a></li>
+                        <li><a href="bot_localization.html">Bot localization and Language Settings</a></li>
+                        <li><a href="crossban.html">Crossban</a></li>
+                        <li><a href="temp_voice.html">Dočasné hlasové kanály</a></li>
+                        <li><a href="giveaway.html">Giveaway(e)</a></li>
+                        <li><a href="birthdays.html">Narozeniny</a></li>
+                        <li><a href="patreon.html">Patreon</a></li>
+                        <li><a href="counting.html">Počítání</a></li>
+                        <li><a href="advanced_schedules.html">Pokročilé plánované zprávy</a></li>
+                        <li><a href="reactions.html">Reakce smajlíky na zprávy</a></li>
+                        <li><a href="reputation.html">Reputace</a></li>
+                        <li><a href="rss_reader.html">RSS Čtečka</a></li>
+                        <li><a href="scam_prevence.html">Scam Prevence</a></li>
+                        <li><a href="schedules.html">Schedules ‐ Plánované zprávy</a></li>
+                        <li><a href="stats.html">Statistiky serveru</a></li>
+                        <li><a href="holidays.html">Svátky (CZ SK)</a></li>
+                        <li><a href="feedback.html">Systém zpětné vazby a návrhů</a></li>
+                        <li><a href="tickets.html">Tikety</a></li>
+                        <li><a href="translate.html">Translate modul</a></li>
+                        <li><a href="threads.html">Tvorba vláken na zprávy</a></li>
+                        <li><a href="welcome_leave.html">Uvítací a odchodové zprávy (Welcome Leave)</a></li>
+                        <li><a href="vote.html">Vote ‐ Hlasování</a></li>
+                        <li><a href="watermark.html">Vodoznak s vlastním textem na obrázky</a></li>
+                        <li><a href="xp.html">XP systém a úrovně</a></li>
+                        <li><a href="backup.html">Zálohování a Obnova Serverů</a></li>
+                        <li><a href="confessions.html">Zpovědi (Anonymní Zprávy)</a></li>
+                    </ul>
+                </li>           
+            </ul>
+        </nav>
+    </div>
+    </nav>
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        </div>
+    <div class="content-section">
+        <div class="content-container">
+
+            <h1 class="page-title">📢 Automatické publikování zpráv z kanálů oznámení</h1>
+            <p class="page-subtitle">Zveřejňujte zprávy automaticky a šiřte své novinky rychleji. 🚀</p>
+
+            <div class="module-intro-box">
+                <p>
+                    Tento modul umožňuje automaticky **zveřejňovat (<span class="command-code">publish</span>)** zprávy z vybraných Discord **kanálů oznámení**. Když je zpráva zveřejněna, může být automaticky šířena na jiné servery, které váš kanál sledují. To je ideální pro důležité novinky a aktualizace.
+                </p>
+                <div class="warning-box mt-4">
+                    **Poznámka:** Kanály oznámení (<span class="command-code">Announcement Channels</span>) jsou dostupné pouze na serverech, které mají aktivované **Nastavení Komunity** (<span class="command-code">Community Enabled</span>).
+                </div>
+            </div>
+
+            <h2 class="module-heading">⚙️ Důležitá oprávnění bota</h2>
+            <p>Aby modul mohl správně fungovat, potřebuje bot na vašem serveru určitá **oprávnění** v příslušných kanálech:</p>
+
+            <div class="info-box">
+                <ul>
+                    <li>**Číst zprávy** a **Zobrazit kanály**</li>
+                    <li>**Spravovat kanály** nebo **Publikovat zprávy** (<span class="command-code">Manage Channels</span> nebo <span class="command-code">Publish Messages</span>) - Klíčové oprávnění.</li>
+                    <li>**Používat příkazy aplikací**</li>
+                </ul>
+            </div>
+
+            <div class="module-divider"></div>
+
+            <h2 class="module-heading">💡 Co umí modul?</h2>
+            
+            <div class="info-box">
+                <ul>
+                    <li>**Automatické zveřejňování**: Bot automaticky zveřejní nové zprávy v kanálech, které sleduje.</li>
+                    <li>**Flexibilní nastavení**: Můžete si vybrat, zda chcete publikovat pouze zprávy od uživatelů, nebo i od ostatních botů (např. z RSS feedů).</li>
+                    <li>**Jednoduchá správa**: Snadno přidávejte, odebírejte a kontrolujte sledované kanály pomocí lomítkových příkazů.</li>
+                </ul>
+            </div>
+
+            <div class="module-divider"></div>
+
+            <h2 class="module-heading">🚀 Příkazy pro správu</h2>
+            <p>Všechny příkazy pro správu automatického publikování jsou dostupné **pouze moderátorům serveru**.</p>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Příkaz</th>
+                        <th>Popis</th>
+                        <th>Parametry</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="command-code">/autopublish add</span></td>
+                        <td>Přidá kanál pro automatické publikování.</td>
+                        <td><span class="command-code">channel</span>, <span class="command-code">publish_bots</span> (volitelné)</td>
+                    </tr>
+                    <tr>
+                        <td><span class="command-code">/autopublish remove</span></td>
+                        <td>Zastaví automatické publikování pro daný kanál.</td>
+                        <td><span class="command-code">channel</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="command-code">/autopublish list</span></td>
+                        <td>Zobrazí seznam všech nastavených kanálů.</td>
+                        <td>Žádné</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 class="mt-4">1. Přidání kanálu: /autopublish add</h3>
+            <p>Přidá kanál do seznamu pro automatické publikování. Můžete si zvolit, zda se mají publikovat i zprávy od botů.</p>
+            <div class="command-box">
+                <h4 class="command-title">/autopublish add channel:&lt;kanál&gt; publish_bots:&lt;volba&gt;</h4>
+                <div class="command-details">
+                    <div class="command-detail-row">
+                        <span class="command-label">Parametry:</span>
+                        <span><span class="command-code">channel</span>: Kanál oznámení k přidání.<br>
+                        <span class="command-code">publish_bots</span>:
+                            <ul>
+                                <li><span class="command-code-example">Pouze zprávy od uživatelů</span> (výchozí)</li>
+                                <li><span class="command-code-example">Všechny zprávy (včetně botů)</span></li>
+                            </ul>
+                        </span>
+                    </div>
+                    <div class="command-detail-row">
+                        <span class="command-label">Příklad (včetně botů):</span>
+                        <span class="command-code-example">/autopublish add channel:#rss-novinky publish_bots:Všechny zprávy (včetně botů)</span>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="mt-4">2. Odebrání kanálu: /autopublish remove</h3>
+            <p>Zastaví automatické publikování zpráv z určitého kanálu.</p>
+            <div class="command-box">
+                <h4 class="command-title">/autopublish remove channel:&lt;kanál&gt;</h4>
+                <div class="command-details">
+                    <div class="command-detail-row">
+                        <span class="command-label">Příklad:</span>
+                        <span class="command-code-example">/autopublish remove channel:#staré-oznámení</span>
+                    </div>
+                </div>
+            </div>
+            
+            <h3 class="mt-4">3. Zobrazení seznamu kanálů: /autopublish list</h3>
+            <p>Zobrazí seznam všech kanálů, které jsou nastaveny pro automatické publikování, včetně jejich nastavení pro zprávy od botů.</p>
+            <div class="command-box">
+                <h4 class="command-title">/autopublish list</h4>
+                <div class="command-details">
+                    <div class="command-detail-row">
+                        <span class="command-label">Akce:</span>
+                        <span>Zobrazí přehled všech aktivních automatických publikování.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="module-divider"></div>
+
+            <h2 class="module-heading">❓ Jak to funguje v praxi?</h2>
+            <p>Jakmile je kanál přidán do seznamu (<span class="command-code">/autopublish add</span>), bot bude **naslouchat všem novým zprávám** v tomto kanálu.</p>
+            <ul class="bullet-list">
+                <li>Pokud je zpráva od **uživatele**, bot ji vždy publikuje.</li>
+                <li>Pokud je zpráva od **bota**, bot ji publikuje jen v případě, že jste zvolili možnost <span class="command-code-example">Všechny zprávy (včetně botů)</span>.</li>
+            </ul>
+            <p>Pokud má bot správná oprávnění a kanál je kanál oznámení, zpráva se objeví jako "Zveřejněná" a bude dostupná pro sledování jinými servery.</p>
+
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="https://github.com/papiscze/czbot">GitHub</a>
+                <span class="footer-separator">•</span>
+                <a href="https://discord.gg/hk6PdtVxbm">Support Server</a>
+                <span class="footer-separator">•</span>
+                <a href="https://github.com/papiscze/czbot/wiki">GitHub dokumentace</a>
+                <span class="footer-separator">•</span>
+                <a href="mailto:admin@ofpmafia.eu">Kontakt</a>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 CZbot. Verze webu 1.0. Všechna práva vyhrazena</p>
+                <p class="footer-credit">Šablona inspirována <a href="https://templatemo.com" target="_blank" rel="noopener nofollow">TemplateMo</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../templatemo-nexus-scripts.js"></script>
+
+</body>
+</html>

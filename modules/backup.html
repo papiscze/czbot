@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CZBOT - Modul Zálohování a Obnova Serverů</title>
+    
+    <link href="../templatemo-nexus-style.css" rel="stylesheet">
+    <link href="../module-styles.css" rel="stylesheet"> 
+    
+</head>
+<body id="top" class="module-page"> 
+
+    <div class="cyber-bg">
+        <div class="cyber-gradient"></div>
+        <div class="matrix-rain" id="matrixRain"></div>
+    </div>
+    <div class="scanlines"></div>
+    <div class="noise-overlay"></div>
+    <nav>
+        <div class="nav-container">
+            <a href="../index.html" class="logo">CZbot</a>
+            
+            <ul class="nav-links">
+                <li><a href="../commands.html">Příkazy</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Moduly ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="auditlogger.html">Auditlogger</a></li>
+                        <li><a href="audio_stream.html">Audio Stream</a></li>
+                        <li><a href="autopublish.html">Automatické publikování zpráv z kanálů oznámení</a></li>
+                        <li><a href="autorole.html">Autorole, Ověřování uživatelů a Reakční role</a></li>
+                        <li><a href="basic_user_commands.html">Běžné uživatelské a zábavné příkazy</a></li>
+                        <li><a href="basic_mod_commands.html">Běžné moderátorské příkazy</a></li>
+                        <li class="active"><a href="bot_localization.html">Bot localization and Language Settings</a></li>
+                        <li><a href="crossban.html">Crossban</a></li>
+                        <li><a href="temp_voice.html">Dočasné hlasové kanály</a></li>
+                        <li><a href="giveaway.html">Giveaway(e)</a></li>
+                        <li><a href="birthdays.html">Narozeniny</a></li>
+                        <li><a href="patreon.html">Patreon</a></li>
+                        <li><a href="counting.html">Počítání</a></li>
+                        <li><a href="advanced_schedules.html">Pokročilé plánované zprávy</a></li>
+                        <li><a href="reactions.html">Reakce smajlíky na zprávy</a></li>
+                        <li><a href="reputation.html">Reputace</a></li>
+                        <li><a href="rss_reader.html">RSS Čtečka</a></li>
+                        <li><a href="scam_prevence.html">Scam Prevence</a></li>
+                        <li><a href="schedules.html">Schedules ‐ Plánované zprávy</a></li>
+                        <li><a href="stats.html">Statistiky serveru</a></li>
+                        <li><a href="holidays.html">Svátky (CZ SK)</a></li>
+                        <li><a href="feedback.html">Systém zpětné vazby a návrhů</a></li>
+                        <li><a href="tickets.html">Tikety</a></li>
+                        <li><a href="translate.html">Translate modul</a></li>
+                        <li><a href="threads.html">Tvorba vláken na zprávy</a></li>
+                        <li><a href="welcome_leave.html">Uvítací a odchodové zprávy (Welcome Leave)</a></li>
+                        <li><a href="vote.html">Vote ‐ Hlasování</a></li>
+                        <li><a href="watermark.html">Vodoznak s vlastním textem na obrázky</a></li>
+                        <li><a href="xp.html">XP systém a úrovně</a></li>
+                        <li><a href="backup.html">Zálohování a Obnova Serverů</a></li>
+                        <li><a href="confessions.html">Zpovědi (Anonymní Zprávy)</a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Nástroje ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../crongenerator.html">Cron Generátor</a></li>
+                        <li><a href="../embedgenerator.html">Embed Generátor</a></li>
+                        <li><a href="https://github.com/users/papiscze/projects/9">Roadmapa</a></li>
+                        <li><a href="../stats.html">Statistiky bota</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="../warns.html">Moderátorské záznamy</a></li>
+                <li><a href="https://rs422cznas.myds.me:5038/stats/">Statistiky serveru</a></li>
+                <li><a href="../privacy.html">GDPR / ToS</a></li>
+            </ul>
+
+            <div class="nav-bottom">
+                <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Pozvat bota</a>
+            </div>
+
+            <button class="mobile-menu-button" id="mobileMenuBtn">
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </button>
+        </div>
+    </nav>
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <a href="../index.html" class="mobile-menu-logo">CZbot</a>
+            <button class="mobile-menu-close" id="mobileMenuClose">✕</button>
+        </div>
+        <div class="mobile-menu-cta">
+            <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Přidat bota</a>
+        </div>
+        <nav class="mobile-menu-nav">
+            <ul>
+                <li><a href="../commands.html">Příkazy</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Nástroje ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../crongenerator.html">Cron Generátor</a></li>
+                        <li><a href="../embedgenerator.html">Embed Generátor</a></li>
+                        <li><a href="https://github.com/users/papiscze/projects/9">Roadmapa</a></li>
+                        <li><a href="../stats.html">Statistiky bota</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="../warns.html">Moderátorské záznamy</a></li>
+                <li><a href="https://rs422cznas.myds.me:5038/stats/">Statistiky serveru</a></li>
+                <li><a href="../privacy.html">GDPR / ToS</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Moduly ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="auditlogger.html">Auditlogger</a></li>
+                        <li><a href="audio_stream.html">Audio Stream</a></li>
+                        <li><a href="autopublish.html">Automatické publikování zpráv z kanálů oznámení</a></li>
+                        <li><a href="autorole.html">Autorole, Ověřování uživatelů a Reakční role</a></li>
+                        <li><a href="basic_user_commands.html">Běžné uživatelské a zábavné příkazy</a></li>
+                        <li><a href="basic_mod_commands.html">Běžné moderátorské příkazy</a></li>
+                        <li><a href="bot_localization.html">Bot localization and Language Settings</a></li>
+                        <li><a href="crossban.html">Crossban</a></li>
+                        <li><a href="temp_voice.html">Dočasné hlasové kanály</a></li>
+                        <li><a href="giveaway.html">Giveaway(e)</a></li>
+                        <li><a href="birthdays.html">Narozeniny</a></li>
+                        <li><a href="patreon.html">Patreon</a></li>
+                        <li><a href="counting.html">Počítání</a></li>
+                        <li><a href="advanced_schedules.html">Pokročilé plánované zprávy</a></li>
+                        <li><a href="reactions.html">Reakce smajlíky na zprávy</a></li>
+                        <li><a href="reputation.html">Reputace</a></li>
+                        <li><a href="rss_reader.html">RSS Čtečka</a></li>
+                        <li><a href="scam_prevence.html">Scam Prevence</a></li>
+                        <li><a href="schedules.html">Schedules ‐ Plánované zprávy</a></li>
+                        <li><a href="stats.html">Statistiky serveru</a></li>
+                        <li><a href="holidays.html">Svátky (CZ SK)</a></li>
+                        <li><a href="feedback.html">Systém zpětné vazby a návrhů</a></li>
+                        <li><a href="tickets.html">Tikety</a></li>
+                        <li><a href="translate.html">Translate modul</a></li>
+                        <li><a href="threads.html">Tvorba vláken na zprávy</a></li>
+                        <li><a href="welcome_leave.html">Uvítací a odchodové zprávy (Welcome Leave)</a></li>
+                        <li><a href="vote.html">Vote ‐ Hlasování</a></li>
+                        <li><a href="watermark.html">Vodoznak s vlastním textem na obrázky</a></li>
+                        <li><a href="xp.html">XP systém a úrovně</a></li>
+                        <li><a href="backup.html">Zálohování a Obnova Serverů</a></li>
+                        <li><a href="confessions.html">Zpovědi (Anonymní Zprávy)</a></li>
+                    </ul>
+                </li>           
+            </ul>
+        </nav>
+    </div>
+    </nav>
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        </div>
+    <div class="content-section">
+        <div class="content-container">
+
+            <h1 class="page-title">💾 Zálohování a Obnova Serverů</h1>
+            <p class="page-subtitle">Klíčový nástroj pro vytvoření šablony struktury serveru a rychlou obnovu nastavení.</p>
+
+            <div class="module-intro-box">
+                <p>
+                    Tento modul vytváří zálohu **struktury** vašeho Discord serveru (kanály, kategorie, role). Je ideální pro rychlé obnovení nastavení po nehodě nebo pro duplikaci serveru. Doporučujeme botovi přidělit oprávnění **Administrátor**.
+                </p>
+            </div>
+            
+            <h2 class="module-heading">💡 Co zálohujeme a co ne?</h2>
+            
+            <div class="two-column-list">
+                <div>
+                    <h3 class="module-subheading text-success">✅ Zálohovaná Struktura</h3>
+                    <ul class="bullet-list text-success">
+                        <li>**Role:** Názvy, barvy, oprávnění a nastavení.</li>
+                        <li>**Kanály a Kategorie:** Názvy, typy (text/hlas) a uspořádání.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="module-subheading text-danger">❌ Nezahrnutý Obsah</h3>
+                    <ul class="bullet-list text-danger">
+                        <li>**Historie zpráv:** Chat se neukládá.</li>
+                        <li>**Členové:** Seznam členů serveru se neobnovuje.</li>
+                        <li>**Emoji:** Vlastní emoji nejsou součástí zálohy.</li>
+                        <li>**Ikona serveru:** Ikona není obnovena.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="module-divider"></div>
+
+            <h2 class="module-heading">🛡️ Bezpečnost a Obnova (Ověřovací Kód)</h2>
+            
+            <div class="info-box">
+                <h4 class="info-box-title">Ověřovací kód (Jednorázový)</h4>
+                <p>Pro obnovu zálohy na **jiném serveru** než na původním je nutné použít **jednorázový kód**. Tím je zajištěno, že zálohu obnoví pouze administrátor, který ji vytvořil.</p>
+                <ol class="bullet-list">
+                    <li>Při <span class="command-code">/backup save</span> bot kód **vygeneruje**.</li>
+                    <li>Kód je zobrazen pouze vám a je dočasně uložen s ID serveru.</li>
+                    <li>Při <span class="command-code">/backup restore</span> na novém serveru musíte kód zadat.</li>
+                    <li>Po úspěšné obnově je kód **zneplatněn**.</li>
+                </ol>
+            </div>
+            
+            <div class="module-divider"></div>
+
+            <h2 class="module-heading">🚀 Příkazy pro Administrátory</h2>
+            
+            <h3 class="mt-4">1. Vytvoření zálohy: <span class="command-code">/backup save</span></h3>
+            <div class="command-box admin-command">
+                <h4 class="command-title">/backup save <span class="badge">ADMIN</span></h4>
+                <p>Uloží aktuální strukturu serveru a vygeneruje **jednorázový ověřovací kód**.</p>
+                <p>⏳ **Omezení:** Příkaz lze použít pouze **jednou za 24 hodin** na server.</p>
+            </div>
+
+            <h3 class="mt-4">2. Obnova ze zálohy: <span class="command-code">/backup restore</span></h3>
+            <div class="command-box admin-command">
+                <h4 class="command-title">/backup restore <span class="badge">ADMIN</span></h4>
+                <p>Obnoví server z dříve uložené šablony. Vyžaduje kód pro obnovu na **jiném** serveru.</p>
+                <table class="data-table small-font">
+                    <thead>
+                        <tr>
+                            <th>Parametr</th>
+                            <th>Popis</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="command-code">code</span></td>
+                            <td>**Volitelný.** Jednorázový ověřovací kód. Vyžadován POUZE pro obnovu na **novém** serveru.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h4 class="command-title mt-2">Příklad s kódem (na jiném serveru):</h4>
+                <span class="command-code-example">/backup restore code:ABC123XYZ</span>
+                <h4 class="command-title mt-2">Příklad bez kódu (na původním serveru):</h4>
+                <span class="command-code-example">/backup restore</span>
+            </div>
+
+            <div class="info-box mt-4 text-warning">
+                **⚠️ Důležité upozornění k obnově**
+                <ul class="bullet-list">
+                    <li>Obnova **PŘIDÁVÁ**, nemaže! Přidá nové kanály a role.</li>
+                    <li>Obnova na původním serveru (bez kódu) je možná jen na serveru, který je téměř **prázdný** (má maximálně 3 kanály a 3 role). Jinak se musíte ručně vyčistit.</li>
+                    <li>Při úspěšné obnově na novém serveru je kód **zneplatněn**.</li>
+                </ul>
+            </div>
+            
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="https://github.com/papiscze/czbot">GitHub</a>
+                <span class="footer-separator">•</span>
+                <a href="https://discord.gg/hk6PdtVxbm">Support Server</a>
+                <span class="footer-separator">•</span>
+                <a href="https://github.com/papiscze/czbot/wiki">GitHub dokumentace</a>
+                <span class="footer-separator">•</span>
+                <a href="mailto:admin@ofpmafia.eu">Kontakt</a>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 CZbot. Verze webu 1.0. Všechna práva vyhrazena</p>
+                <p class="footer-credit">Šablona inspirována <a href="https://templatemo.com" target="_blank" rel="noopener nofollow">TemplateMo</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../templatemo-nexus-scripts.js"></script>
+
+</body>
+</html>
