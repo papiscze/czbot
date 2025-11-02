@@ -4,6 +4,9 @@ https://templatemo.com/tm-594-nexus-flow
 */
 
 // JavaScript Document
+// =========================================================
+// 1. FUNKCE INICIALIZACE MOBILNÍHO MENU
+// =========================================================
 function initializeMobileMenu() {
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const mobileMenu = document.getElementById('mobileMenu');
@@ -24,16 +27,19 @@ function initializeMobileMenu() {
         mobileMenuBtn.classList.add('active');
         mobileMenu.classList.add('active');
         mobileMenuOverlay.classList.add('active');
+
+        // Zablokujeme posouvání pouze na pozadí, ale ne v samotném menu
         document.body.style.overflow = 'hidden';
-        
-        // Reset and trigger animations for links
+        document.body.style.height = '100vh';
+        document.body.style.touchAction = 'none'; // zabrání posouvání pozadí na mobilech
+
+        // Reset a animace odkazů
         mobileMenuLinks.forEach((link, index) => {
             if (link) {
                 link.style.animation = 'none';
                 link.style.opacity = '0';
                 link.style.transform = 'translateX(20px)';
-                
-                // Apply animation with delay
+
                 setTimeout(() => {
                     if (link) {
                         link.style.animation = `slideInLeft 0.4s ease forwards`;
@@ -41,13 +47,13 @@ function initializeMobileMenu() {
                 }, 250 + (index * 100));
             }
         });
-        
-        // Animate CTA button
+
+        // Animace CTA tlačítka
         if (mobileMenuCta) {
             mobileMenuCta.style.animation = 'none';
             mobileMenuCta.style.opacity = '0';
             mobileMenuCta.style.transform = 'translateY(20px)';
-            
+
             setTimeout(() => {
                 if (mobileMenuCta) {
                     mobileMenuCta.style.animation = 'slideInUp 0.4s ease forwards';
@@ -60,7 +66,11 @@ function initializeMobileMenu() {
         mobileMenuBtn.classList.remove('active');
         mobileMenu.classList.remove('active');
         mobileMenuOverlay.classList.remove('active');
+
+        // Vrátíme scroll těla
         document.body.style.overflow = '';
+        document.body.style.height = '';
+        document.body.style.touchAction = '';
     }
 
     // Toggle mobile menu
@@ -105,19 +115,10 @@ function initializeMobileMenu() {
             // Přepnout aktuální dropdown
             parent.classList.toggle('open');
             
-            // 💡 OPRAVA SKOKU 1: Dynamicky blokujeme scroll HLAVNÍHO menu
-            const isAnyDropdownOpen = document.querySelector('.mobile-menu-nav .dropdown.open');
-            if (mobileMenu) {
-                // Pokud je jakékoliv podmenu otevřené, skryj scroll hlavního menu
-                mobileMenu.style.overflowY = isAnyDropdownOpen ? 'hidden' : 'auto'; 
-            }
-            
             // Přidat jednoduchou animaci
             if (menu) {
                 if (parent.classList.contains('open')) {
-                    // Použijeme velkou hodnotu, protože skutečnou max-height pro scroll
-                    // řídíme přes '60vh' a 'overflow-y: auto' v CSS
-                    menu.style.maxHeight = '1000vh'; 
+                    menu.style.maxHeight = menu.scrollHeight + "px";
                 } else {
                     menu.style.maxHeight = "0";
                 }
@@ -158,26 +159,19 @@ function initializeMobileMenu() {
         }
     });
 
-    // 💡 OPRAVA iOS/SAFARI 1: Prevent body scroll when menu is open
+    // Prevent body scroll when menu is open
     if (mobileMenu) {
         mobileMenu.addEventListener('touchmove', (e) => {
-            e.stopPropagation();
-        }, { passive: false }); // KLÍČOVÝ FIX pro iOS
+            // pokud není menu aktivní, neřeš
+            if (!mobileMenu.classList.contains('active')) return;
+            e.stopPropagation(); // zabrání scrollování backgroundu
+        }, { passive: true });
     }
-
-    // 💡 OPRAVA iOS/SAFARI 2: Prevent body scroll when scrolling inside the dropdown menu
-    const mobileDropdownMenus = document.querySelectorAll('.mobile-menu-nav .dropdown-menu');
-
-    mobileDropdownMenus.forEach(menu => {
-        menu.addEventListener('touchmove', (e) => {
-            e.stopPropagation();
-        }, { passive: false }); // KLÍČOVÝ FIX pro iOS
-    });
 }
+
 // =========================================================
 // 2. FUNKCE PRO POZADÍ EFEKTY (OPRAVENO: Kontrola existence elementu)
 // =========================================================
-
 // Generate Matrix Rain Effect
 function generateMatrixRain() {
     const matrixRain = document.getElementById('matrixRain');
