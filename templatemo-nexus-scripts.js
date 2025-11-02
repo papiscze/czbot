@@ -105,10 +105,19 @@ function initializeMobileMenu() {
             // Přepnout aktuální dropdown
             parent.classList.toggle('open');
             
+            // 💡 OPRAVA SKOKU 1: Dynamicky blokujeme scroll HLAVNÍHO menu
+            const isAnyDropdownOpen = document.querySelector('.mobile-menu-nav .dropdown.open');
+            if (mobileMenu) {
+                // Pokud je jakékoliv podmenu otevřené, skryj scroll hlavního menu
+                mobileMenu.style.overflowY = isAnyDropdownOpen ? 'hidden' : 'auto'; 
+            }
+            
             // Přidat jednoduchou animaci
             if (menu) {
                 if (parent.classList.contains('open')) {
-                    menu.style.maxHeight = menu.scrollHeight + "px";
+                    // Použijeme velkou hodnotu, protože skutečnou max-height pro scroll
+                    // řídíme přes '60vh' a 'overflow-y: auto' v CSS
+                    menu.style.maxHeight = '1000vh'; 
                 } else {
                     menu.style.maxHeight = "0";
                 }
@@ -149,23 +158,22 @@ function initializeMobileMenu() {
         }
     });
 
-    // Prevent body scroll when menu is open
+    // 💡 OPRAVA iOS/SAFARI 1: Prevent body scroll when menu is open
     if (mobileMenu) {
         mobileMenu.addEventListener('touchmove', (e) => {
             e.stopPropagation();
-        });
+        }, { passive: false }); // KLÍČOVÝ FIX pro iOS
     }
 
+    // 💡 OPRAVA iOS/SAFARI 2: Prevent body scroll when scrolling inside the dropdown menu
     const mobileDropdownMenus = document.querySelectorAll('.mobile-menu-nav .dropdown-menu');
 
     mobileDropdownMenus.forEach(menu => {
         menu.addEventListener('touchmove', (e) => {
             e.stopPropagation();
-        });
+        }, { passive: false }); // KLÍČOVÝ FIX pro iOS
     });
-
 }
-
 // =========================================================
 // 2. FUNKCE PRO POZADÍ EFEKTY (OPRAVENO: Kontrola existence elementu)
 // =========================================================

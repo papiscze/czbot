@@ -732,15 +732,9 @@ https://templatemo.com/tm-594-nexus-flow
             transition: max-height 0.4s ease-out;
         }
         .mobile-menu-nav .dropdown.open .dropdown-menu {
-            /* Místo pevné 500px raději použijeme vh pro lepší responzivitu */
-            max-height: 60vh; /* Max 60% výšky okna. Toto by mělo stačit. */
-            
-            /* 💥 TATO VLASTNOST ŘEŠÍ VÁŠ PROBLÉM */
-            overflow-y: auto; 
-            
-            /* Zlepšení plynulosti scrollu na iOS */
-            -webkit-overflow-scrolling: touch; 
-            
+            max-height: 60vh; /* Omezená výška pro aktivaci scrollu */
+            overflow-y: auto; /* Povolí scroll */
+            -webkit-overflow-scrolling: touch; /* Zajistí plynulost na iOS */
             transition: max-height 0.5s ease-in;
         }
         .mobile-menu-nav .dropdown-menu li a {
