@@ -162,6 +162,25 @@ function initializeMobileMenu() {
             e.stopPropagation();
         });
     }
+    
+    // =========================================================
+    // 💡 OPRAVA: ZABRÁNĚNÍ SCROLLOVÁNÍ STRÁNKY PŘI SCROLLOVÁNÍ PODMENU
+    // =========================================================
+    
+    // Cílíme na všechny sub-menu (ul.dropdown-menu) uvnitř mobilní navigace
+    const mobileDropdownMenus = document.querySelectorAll('.mobile-menu-nav .dropdown-menu');
+
+    mobileDropdownMenus.forEach(menu => {
+        // Používáme e.stopPropagation() na události 'touchmove' pro zamezení
+        // šíření posunu na nadřazený element body.
+        menu.addEventListener('touchmove', (e) => {
+            e.stopPropagation();
+        });
+    });
+    // =========================================================
+    // ⬆️ KONEC NOVĚ PŘIDANÉHO KÓDU ⬆️
+    // =========================================================
+
 }
 
 // =========================================================
@@ -755,37 +774,3 @@ searchInput.addEventListener('input', filterRecords);
 
 // Načíst data při spuštění stránky
 document.addEventListener('DOMContentLoaded', loadData);
-
-// *** Logika mobilního menu (zachováno pro konzistenci) ***
-const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
-const mobileMenu = document.getElementById('mobileMenu');
-const mobileMenuClose = document.getElementById('mobileMenuClose');
-const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
-
-if (mobileMenuBtn && mobileMenuOverlay && mobileMenu && mobileMenuClose) {
-    mobileMenuBtn.addEventListener('click', () => {
-        mobileMenu.classList.add('active');
-        mobileMenuOverlay.classList.add('active');
-    });
-
-    mobileMenuClose.addEventListener('click', () => {
-        mobileMenu.classList.remove('active');
-        mobileMenuOverlay.classList.remove('active');
-    });
-
-    mobileMenuOverlay.addEventListener('click', () => {
-        mobileMenu.classList.remove('active');
-        mobileMenuOverlay.classList.remove('active');
-    });
-}
-
-dropdownToggles.forEach(toggle => {
-    toggle.addEventListener('click', (e) => {
-        e.preventDefault();
-        const parentLi = toggle.closest('li.dropdown');
-        if (parentLi) {
-            parentLi.classList.toggle('open');
-        }
-    });
-});
