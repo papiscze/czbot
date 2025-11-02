@@ -28,6 +28,7 @@ function initializeMobileMenu() {
         mobileMenu.classList.add('active');
         mobileMenuOverlay.classList.add('active');
         document.body.style.overflow = 'hidden';
+        document.documentElement.style.overflow = 'hidden'; // <-- PŘIDAT TOTO
         
         // Reset and trigger animations for links
         mobileMenuLinks.forEach((link, index) => {
@@ -64,6 +65,7 @@ function initializeMobileMenu() {
         mobileMenu.classList.remove('active');
         mobileMenuOverlay.classList.remove('active');
         document.body.style.overflow = '';
+        document.documentElement.style.overflow = ''; // <-- PŘIDAT TOTO
     }
 
     // Toggle mobile menu
