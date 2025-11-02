@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CZBOT - Statistiky Serveru - TEST</title>
+    <link href="templatemo-nexus-style.css" rel="stylesheet">
+    <style>
+        /* Speciální CSS pro Cyberpunk STATS karty */
+        .stats-card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .stats-card {
+            background-color: rgba(33, 44, 55, 0.6); /* Tmavší, průhledné pozadí */
+            border: 1px solid #00fffb; /* Cyber modrý okraj */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 255, 251, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+        }
+        .stats-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0, 255, 251, 0.4);
+        }
+        .stats-card h3 {
+            font-size: 0.9em;
+            color: #00fffb; /* Světle modrý nadpis */
+            margin-bottom: 5px;
+        }
+        .stats-value {
+            font-size: 2.2em;
+            font-weight: bold;
+            color: #57F287; /* Zelená barva pro hodnoty */
+            font-family: 'Roboto Mono', monospace;
+        }
+        .stats-value-secondary {
+            color: #F23F43; /* Červená pro odchody/negativní */
+        }
+
+        .chart-container {
+            width: 100%;
+            height: 350px;
+            margin-top: 30px;
+            background-color: rgba(33, 44, 55, 0.6);
+            padding: 20px;
+            border: 1px solid #5a5a7a;
+            border-radius: 8px;
+        }
+
+        .list-group {
+            list-style: none;
+            padding: 0;
+        }
+        .list-group-item {
+            background-color: rgba(33, 44, 55, 0.5);
+            border: 1px solid #2a2a3e;
+            padding: 10px 15px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .list-group-item strong {
+            color: #00fffb;
+        }
+        .list-group-item span {
+            font-family: 'Roboto Mono', monospace;
+            font-weight: bold;
+            color: #57F287;
+        }
+    </style>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+</head>
+<body id="top">
+    <div class="cyber-bg"><div class="cyber-gradient"></div><div class="matrix-rain" id="matrixRain"></div></div>
+    <div class="particles" id="particlesContainer"></div>
+    <div class="data-streams" id="dataStreams"></div>
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+    <div class="grid-overlay"><div class="grid-lines"></div><div class="grid-glow"></div></div>
+    <div class="scanlines"></div>
+    <div class="noise-overlay"></div>
+    
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">CZbot</a>
+            
+            <ul class="nav-links">
+                <li><a href="commands.html">Příkazy</a></li>
+                <li class="dropdown"><a href="#" class="dropdown-toggle">Moduly ▾</a><ul class="dropdown-menu"><li><a href="modules/auditlogger.html">Auditlogger</a></li></ul></li>
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Nástroje ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="crongenerator.html">Cron Generátor</a></li>
+                        <li><a href="embedgenerator.html">Embed Generátor</a></li>
+                        <li><a href="https://github.com/users/papiscze/projects/9">Roadmapa</a></li>
+                        <li><a href="server_stats.html">Statistiky Serveru 📊</a></li>
+                        <li><a href="stats.html">Statistiky Bota</a></li>
+                    </ul>
+                </li>
+                
+                <li><a href="warns.html">Moderátorské záznamy</a></li>
+                <li><a href="about.html">O Botovi</a></li>
+                <li><a href="privacy.html">GDPR / ToS</a></li>
+            </ul>
+
+            <div class="nav-bottom">
+                <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Pozvat bota</a>
+            </div>
+            </div>
+    </nav>
+    
+    <main class="content-container">
+        <div class="command-header-section">
+            <h1 class="page-title">📊 Analytické jádro Serveru: <span id="serverName">...</span></h1>
+            <p class="page-subtitle" id="periodDisplay">Načítám statistiky...</p>
+        </div>
+
+        <div class="content-section">
+            
+            <h2 class="section-title">▶ Aktivita Serveru</h2>
+            <div class="stats-card-grid" id="overallStatsCards">
+                
+                <div class="stats-card">
+                    <h3>Aktivní Členové</h3>
+                    <div class="stats-value text-info" id="liveMembers">...</div>
+                </div>
+                
+                <div class="stats-card">
+                    <h3>Celkem Členů</h3>
+                    <div class="stats-value" id="totalMembers">...</div>
+                </div>
+                
+                <div class="stats-card">
+                    <h3>Zpráv Celkem</h3>
+                    <div class="stats-value" id="totalMessages">...</div>
+                </div>
+                
+                <div class="stats-card">
+                    <h3>Hlasová Aktivita (doba)</h3>
+                    <div class="stats-value" id="totalVoiceDuration">...</div>
+                </div>
+                
+                <div class="stats-card">
+                    <h3>Příchody / Odchody</h3>
+                    <div class="stats-value"><span id="joins" class="text-success">...</span> / <span id="leaves" class="stats-value-secondary">...</span></div>
+                </div>
+                
+            </div>
+            
+            <div class="row-flex-2-col">
+                <div class="chart-container">
+                    <h2 class="section-title chart-title">Denní Aktivita Zpráv</h2>
+                    <canvas id="dailyMessagesChart"></canvas>
+                </div>
+                
+                <div class="chart-container">
+                    <h2 class="section-title chart-title">Online Stavy Členů</h2>
+                    <canvas id="onlineStatusChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="row-flex-2-col">
+                <div class="info-block">
+                    <h2 class="section-title">👑 Top 10 Uživatelů (Zprávy)</h2>
+                    <ul class="list-group" id="topUsersMessagesList">
+                        </ul>
+                    <p class="note">* = Uživatel opustil server.</p>
+                </div>
+                
+                <div class="info-block">
+                    <h2 class="section-title">💬 Top 10 Kanálů (Aktivita)</h2>
+                    <ul class="list-group" id="topChannelsList">
+                        </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">...</div>
+    </footer>
+
+    <script src="templatemo-nexus-scripts.js"></script>
+    
+    <script>
+        const API_BASE_URL = window.location.origin;
+        const TEST_GUILD_ID = '000000000000000000'; // Fiktivní ID pro test
+
+        // Konfigurace barev grafů pro Cyberpunk styl
+        Chart.defaults.color = '#00fffb'; // Primární barva textu
+        Chart.defaults.borderColor = 'rgba(0, 255, 251, 0.2)'; // Lehké mřížky
+
+        let dailyMessagesChartInstance = null;
+        let onlineStatusChartInstance = null;
+        
+        // --- POMOCNÉ FUNKCE ---
+        
+        // Formátuje sekundy na "Xh Ym Zs"
+        function formatTimeTicks(value) {
+            const seconds = Math.floor(value);
+            const d = Math.floor(seconds / (3600 * 24));
+            const h = Math.floor((seconds % (3600 * 24)) / 3600);
+            const m = Math.floor((seconds % 3600) / 60);
+            const s = seconds % 60;
+            let result = '';
+            if (d > 0) result += `${d}d `;
+            if (h > 0) result += `${h}h `;
+            if (m > 0) result += `${m}m `;
+            if (s > 0 && d === 0 && h === 0 && m === 0) result += `${s}s`;
+            return result.trim() || '0s';
+        }
+
+        // --- VYKRESLOVACÍ FUNKCE ---
+
+        function renderDailyActivityChart(activityData) {
+            const ctx = document.getElementById('dailyMessagesChart').getContext('2d');
+            if (dailyMessagesChartInstance) dailyMessagesChartInstance.destroy();
+            
+            const labels = activityData.map(item => item.datetime);
+            const dataCounts = activityData.map(item => item.count);
+            
+            const gradient = ctx.createLinearGradient(0, 0, 0, 350);
+            gradient.addColorStop(0, 'rgba(87, 242, 135, 0.5)'); // Zelená Cyber
+            gradient.addColorStop(1, 'rgba(87, 242, 135, 0.05)');
+            
+            dailyMessagesChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels,
+                    datasets: [{
+                        label: 'Počet zpráv',
+                        data: dataCounts,
+                        backgroundColor: gradient,
+                        borderColor: '#57F287',
+                        borderWidth: 3,
+                        tension: 0.4,
+                        fill: true,
+                        pointRadius: 4,
+                        pointHoverRadius: 6,
+                        pointBackgroundColor: '#57F287'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        x: {
+                            type: 'time',
+                            time: {
+                                unit: 'hour',
+                                tooltipFormat: 'dd. MM. yyyy HH:mm',
+                                displayFormats: { hour: 'HH:mm' }
+                            },
+                            grid: { color: 'rgba(0, 255, 251, 0.1)' },
+                            title: { display: true, text: 'Čas (HH:MM)', color: '#00fffb' }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: 'rgba(0, 255, 251, 0.1)' },
+                            title: { display: true, text: 'Počet zpráv', color: '#00fffb' }
+                        }
+                    },
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    animation: { duration: 1200, easing: 'easeOutQuart' }
+                }
+            });
+        }
+        
+        function renderOnlineStatusChart(statusData) {
+            const ctx = document.getElementById('onlineStatusChart').getContext('2d');
+            if (onlineStatusChartInstance) onlineStatusChartInstance.destroy();
+
+            const statuses = [
+                { key: 'online', label: 'Online', color: '#57F287' },
+                { key: 'idle', label: 'Neaktivní', color: '#FAA81A' },
+                { key: 'dnd', label: 'Nerušit', color: '#F23F43' },
+                { key: 'offline', label: 'Offline/Neviditelný', color: '#747F8D' }
+            ].filter(s => statusData[s.key] > 0);
+            
+            onlineStatusChartInstance = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: statuses.map(s => s.label),
+                    datasets: [{
+                        data: statuses.map(s => statusData[s.key]),
+                        backgroundColor: statuses.map(s => s.color),
+                        hoverOffset: 10,
+                        borderColor: '#1e1e2d', // Barva pozadí pro oddělení segmentů
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { padding: 15 } },
+                        tooltip: {
+                            callbacks: {
+                                label: ctx => {
+                                    const value = ctx.parsed;
+                                    const total = ctx.dataset.data.reduce((a, b) => a + b, 0);
+                                    const percent = total > 0 ? ((value / total) * 100).toFixed(1) + '%' : '0%';
+                                    return ` ${ctx.label}: ${value.toLocaleString()} (${percent})`;
+                                }
+                            }
+                        }
+                    },
+                    animation: { duration: 1000, easing: 'easeOutQuart' }
+                }
+            });
+        }
+
+        // --- HLAVNÍ FUNKCE PRO VLOŽENÍ DAT ---
+        
+        function updateStatsContent(data) {
+            
+            // 1. Vyplnění hlavičky
+            document.getElementById('serverName').textContent = data.server_name;
+            document.getElementById('periodDisplay').textContent = `Statistiky za ${data.period_display}.`;
+            
+            // 2. Vyplnění přehledových karet
+            document.getElementById('liveMembers').textContent = data.overall_stats.live_members_count.toLocaleString();
+            document.getElementById('totalMembers').textContent = data.overall_stats.member_count.toLocaleString();
+            document.getElementById('totalMessages').textContent = data.overall_stats.total_messages.toLocaleString();
+            document.getElementById('totalVoiceDuration').textContent = formatTimeTicks(data.overall_stats.total_voice_duration_seconds);
+            document.getElementById('joins').textContent = data.overall_stats.joins.toLocaleString();
+            document.getElementById('leaves').textContent = data.overall_stats.leaves.toLocaleString();
+
+            // 3. Vykreslení grafů
+            if (data.daily_message_activity) {
+                renderDailyActivityChart(data.daily_message_activity);
+            }
+            if (data.online_stats) {
+                renderOnlineStatusChart(data.online_stats);
+            }
+
+            // 4. Vyplnění seznamu kanálů
+            const topChannelsList = document.getElementById('topChannelsList');
+            topChannelsList.innerHTML = data.top_channels_messages.slice(0, 10).map((item, index) => `
+                <li class="list-group-item">
+                    <span>${index + 1}.</span>
+                    <strong>${item.name}</strong>
+                    <span>${item.count.toLocaleString()} zpráv</span>
+                </li>
+            `).join('');
+
+            // 5. Vyplnění seznamu uživatelů (Zprávy)
+            const topUsersMessagesList = document.getElementById('topUsersMessagesList');
+            topUsersMessagesList.innerHTML = data.top_users_messages.slice(0, 10).map((item, index) => {
+                const offServerMark = item.on_server ? '' : ' *';
+                return `
+                    <li class="list-group-item">
+                        <span>${index + 1}.</span>
+                        <strong>${item.name}${offServerMark}</strong>
+                        <span>${item.count.toLocaleString()} zpráv</span>
+                    </li>
+                `;
+            }).join('');
+            
+             // 6. Volitelná implementace: Zde by se daly podobně vkládat Top Voice a Top XP
+             // Pro zjednodušení je ponecháme prozatím jen Top Messages a Kanály.
+        }
+
+        // --- NAČÍTÁNÍ DAT (DEMO/FETCH) ---
+        
+        async function loadStats() {
+            // Používáme demo data, které jste poskytl
+            const demoData = {
+              "server_name": "OFP Community", "period_display": "posledních 24 hodin", "overall_stats": { "total_messages": 505, "total_voice_duration_seconds": 44556, "member_count": 2755, "joins": 13, "leaves": 8, "live_members_count": 682 }, "top_channels_messages": [ { "name": "🗣️┏obecná-diskuze", "count": 179 }, { "name": "📝┃sr-diskuze", "count": 83 }, { "name": "🚘┏autíčkáři", "count": 64 }, { "name": "🧳┃off-topic", "count": 34 }, { "name": "🍻┃jidlo-piti", "count": 30 }, { "name": "🤖┃bot-channel", "count": 23 }, { "name": "🔰┏mod-chat", "count": 18 }, { "name": "🎶┃hudba", "count": 14 }, { "name": "💬┃minecraft-chat", "count": 9 }, { "name": "💬┃ts-chat", "count": 9 } ], "top_users_messages": [ { "name": "Pan Papis", "count": 183, "on_server": true }, { "name": "D-RAILL 91 80 6193 699-6", "count": 30, "on_server": true }, { "name": "Snowy", "count": 23, "on_server": true }, { "name": "DreamGamingCZE", "count": 22, "on_server": true }, { "name": "Fandda_CZ", "count": 22, "on_server": true }, { "name": "SamuelLiang", "count": 17, "on_server": true }, { "name": "Majklis", "count": 17, "on_server": true }, { "name": "Trnda", "count": 15, "on_server": true }, { "name": "Tetka Soowa", "count": 13, "on_server": true }, { "name": "TheFloxiCz", "count": 13, "on_server": true } ], "top_users_voice": [ { "name": "Pan Papis", "duration_seconds": 28557, "voice_duration_formatted": "7h 55m 57s", "on_server": true }, { "name": "TomEeer", "duration_seconds": 15032, "voice_duration_formatted": "4h 10m 32s", "on_server": true }, { "name": "DreamGamingCZE", "duration_seconds": 460, "voice_duration_formatted": "7m 40s", "on_server": true }, { "name": "Marek Prokop", "duration_seconds": 199, "voice_duration_formatted": "3m 19s", "on_server": true }, { "name": "maty", "duration_seconds": 188, "voice_duration_formatted": "3m 8s", "on_server": true }, { "name": "D-RAILL 91 80 6193 699-6", "duration_seconds": 79, "voice_duration_formatted": "1m 19s", "on_server": true }, { "name": "kapry", "duration_seconds": 28, "voice_duration_formatted": "28s", "on_server": true }, { "name": "cynessanya~", "duration_seconds": 12, "voice_duration_formatted": "12s", "on_server": true }, { "name": "xizyno", "duration_seconds": 1, "voice_duration_formatted": "1s", "on_server": true } ], "daily_message_activity": [ { "datetime": "2025-10-31T22:00:00+01:00", "count": 13 }, { "datetime": "2025-10-31T23:00:00+01:00", "count": 7 }, { "datetime": "2025-11-01T00:00:00+01:00", "count": 3 }, { "datetime": "2025-11-01T01:00:00+01:00", "count": 29 }, { "datetime": "2025-11-01T02:00:00+01:00", "count": 2 }, { "datetime": "2025-11-01T03:00:00+01:00", "count": 0 }, { "datetime": "2025-11-01T04:00:00+01:00", "count": 0 }, { "datetime": "2025-11-01T05:00:00+01:00", "count": 0 }, { "datetime": "2025-11-01T06:00:00+01:00", "count": 1 }, { "datetime": "2025-11-01T07:00:00+01:00", "count": 4 }, { "datetime": "2025-11-01T08:00:00+01:00", "count": 1 }, { "datetime": "2025-11-01T09:00:00+01:00", "count": 4 }, { "datetime": "2025-11-01T10:00:00+01:00", "count": 38 }, { "datetime": "2025-11-01T11:00:00+01:00", "count": 48 }, { "datetime": "2025-11-01T12:00:00+01:00", "count": 3 }, { "datetime": "2025-11-01T13:00:00+01:00", "count": 12 }, { "datetime": "2025-11-01T14:00:00+01:00", "count": 6 }, { "datetime": "2025-11-01T15:00:00+01:00", "count": 35 }, { "datetime": "2025-11-01T16:00:00+01:00", "count": 55 }, { "datetime": "2025-11-01T17:00:00+01:00", "count": 96 }, { "datetime": "2025-11-01T18:00:00+01:00", "count": 78 }, { "datetime": "2025-11-01T19:00:00+01:00", "count": 24 }, { "datetime": "2025-11-01T20:00:00+01:00", "count": 15 }, { "datetime": "2025-11-01T21:00:00+01:00", "count": 31 }, { "datetime": "2025-11-01T22:00:00+01:00", "count": 0 } ], "online_stats": { "online": 312, "idle": 115, "dnd": 255, "offline": 2065 }, "member_evolution": [ { "date": "2025-10-31", "count": 2750 }, { "date": "2025-11-01", "count": 2747 } ], "member_count": 2747, "xp_enabled": true, "xp_leaderboard": [ { "rank": 1, "user_id": 312536409665699840, "name": "Pan Papis", "xp": 78045, "level": 17, "on_server": true }, { "rank": 2, "user_id": 1.1259402951886112e+18, "name": "Fandda_CZ", "xp": 61140, "level": 16, "on_server": true }, { "rank": 3, "user_id": 423454754144911360, "name": "michal_cz17", "xp": 40985, "level": 13, "on_server": true }, { "rank": 4, "user_id": 335485419447648260, "name": "D-RAILL 91 80 6193 699-6", "xp": 40370, "level": 13, "on_server": true }, { "rank": 5, "user_id": 329375333231099900, "name": "Tetka Soowa", "xp": 31995, "level": 12, "on_server": true }, { "rank": 6, "user_id": 724295969826668500, "name": "Trnda", "xp": 23660, "level": 11, "on_server": true }, { "rank": 7, "user_id": 400236765081763840, "name": "DreamGamingCZE", "xp": 22110, "level": 11, "on_server": true }, { "rank": 8, "user_id": 250000841065496580, "name": "TheFloxiCz", "xp": 19020, "level": 10, "on_server": true }, { "rank": 9, "user_id": 494548710785679360, "name": "VitoŠpageta", "xp": 11790, "level": 8, "on_server": true }, { "rank": 10, "user_id": 1.0396139006619935e+18, "name": "Maty", "xp": 11340, "level": 8, "on_server": true } ], "rep_positive_leaderboard": [ { "rank": 1, "user_id": "312536409665699840", "name": "Pan Papis", "rep": 231, "on_server": true }, { "rank": 2, "user_id": "329375333231099904", "name": "Tetka Soowa", "rep": 101, "on_server": true }, { "rank": 3, "user_id": "529726986805837824", "name": "ing.kuzza_96", "rep": 79, "on_server": true }, { "rank": 4, "user_id": "400236765081763840", "name": "DreamGamingCZE", "rep": 73, "on_server": true }, { "rank": 5, "user_id": "714430547421560922", "name": "𝘴𝘢𝘮𝘮𝘺", "rep": 60, "on_server": true }, { "rank": 6, "user_id": "1125940295188611172", "name": "Fandda_CZ", "rep": 47, "on_server": true }, { "rank": 7, "user_id": "840501482427908096", "name": "Citybus170", "rep": 45, "on_server": true }, { "rank": 8, "user_id": "1297868608562659351", "name": "Charle z varle", "rep": 37, "on_server": true }, { "rank": 9, "user_id": "1039613900661993533", "name": "Maty", "rep": 34, "on_server": true }, { "rank": 10, "user_id": "215375735181934593", "name": "NettysFall", "rep": 17, "on_server": true } ], "rep_negative_leaderboard": [ { "rank": 1, "user_id": "889771670271819776", "name": "stano de", "rep": -2, "on_server": false }, { "rank": 2, "user_id": "902877191086420008", "name": "czbot", "rep": -2, "on_server": true } ] };
+            
+            // --- SKUTEČNÉ NAČTENÍ DAT Z API (zakomentováno pro DEMO) ---
+            /*
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/stats/${TEST_GUILD_ID}?period=24h`);
+                if (!response.ok) throw new Error('Nepodařilo se načíst statistiky');
+                const data = await response.json();
+                updateStatsContent(data);
+            } catch (e) {
+                console.error("Chyba při načítání statistik:", e);
+                document.getElementById('serverName').textContent = 'CHYBA PŘI NAČÍTÁNÍ DAT';
+                document.getElementById('periodDisplay').textContent = e.message;
+            }
+            */
+
+            // Pro demonstraci s DEMO daty:
+            updateStatsContent(demoData);
+        }
+
+        document.addEventListener('DOMContentLoaded', loadStats);
+    </script>
+</body>
+</html>

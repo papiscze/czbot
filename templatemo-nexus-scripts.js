@@ -1,16 +1,9 @@
 /*
-
 TemplateMo 594 nexus flow
-
 https://templatemo.com/tm-594-nexus-flow
-
 */
 
 // JavaScript Document
-
-// =========================================================
-// 1. FUNKCE INICIALIZACE MOBILNÍHO MENU
-// =========================================================
 function initializeMobileMenu() {
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const mobileMenu = document.getElementById('mobileMenu');
@@ -162,24 +155,14 @@ function initializeMobileMenu() {
             e.stopPropagation();
         });
     }
-    
-    // =========================================================
-    // 💡 OPRAVA: ZABRÁNĚNÍ SCROLLOVÁNÍ STRÁNKY PŘI SCROLLOVÁNÍ PODMENU
-    // =========================================================
-    
-    // Cílíme na všechny sub-menu (ul.dropdown-menu) uvnitř mobilní navigace
+
     const mobileDropdownMenus = document.querySelectorAll('.mobile-menu-nav .dropdown-menu');
 
     mobileDropdownMenus.forEach(menu => {
-        // Používáme e.stopPropagation() na události 'touchmove' pro zamezení
-        // šíření posunu na nadřazený element body.
         menu.addEventListener('touchmove', (e) => {
             e.stopPropagation();
         });
     });
-    // =========================================================
-    // ⬆️ KONEC NOVĚ PŘIDANÉHO KÓDU ⬆️
-    // =========================================================
 
 }
 
