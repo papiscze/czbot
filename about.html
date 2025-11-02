@@ -170,135 +170,124 @@
 
 <main class="content-container">
     <div class="command-header-section">
-        <h1 class="page-title">🤖 Jak funguje náš Discord Bot? (Co dělá v pozadí)</h1>
-        <p class="page-subtitle">Tento dokument vám ukáže, co se děje "pod pokličkou" našeho Discord bota. Nemusíte být programátor, abyste pochopili, jak bot funguje a proč dělá to, co dělá!</p>
+        <h1 class="page-title">🤖 Jak funguje náš Discord Bot? <span class="text-glow">(Co dělá v pozadí)</span></h1>
+        <p class="page-subtitle">Ponořte se s námi pod pokličku. Zjistěte, jak bot reaguje na události, pamatuje si nastavení a automatizuje procesy na vašem serveru. Nemusíte být programátor, abyste pochopili, jak **CZbot** funguje!</p>
     </div>
 
     <div class="content-section">
         
-        <div class="info-block">
-            <h2 class="section-title">Jak přidat našeho bota na váš server?</h2>
-            <p>Abyste mohli našeho bota používat na svém Discord serveru, musíte ho nejprve pozvat. Je to jednoduché:</p>
-            <ul>
-                <li><strong>Pozvěte bota na server</strong>: K pozvání bota na váš server použijte <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008" target="_blank" rel="noopener">tento odkaz</a>.</li>
-                <li>Klikněte na odkaz.</li>
-                <li>Vyberte server, na který chcete bota přidat.</li>
-                <li>Potvrďte oprávnění, která bot potřebuje k fungování (například posílání zpráv, čtení historie chatu atd.). Nebojte, žádná citlivá data nesbíráme.</li>
-            </ul>
+        <div class="info-block info-cta">
+            <h2 class="section-title">✨ Rychlý start: Jak přidat bota a zpřístupnit příkazy</h2>
+            <p class="lead-text">Abyste mohli našeho bota plně využívat, stačí dva kroky:</p>
+            
+            <h3 class="subsection-title">1. Pozvěte bota na server</h3>
+            <ol>
+                <li>K pozvání bota použijte <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008" target="_blank" rel="noopener">tento odkaz</a>.</li>
+                <li>Vyberte server a potvrďte oprávnění. Vždy požadujeme jen ta, která jsou **nezbytná pro plné fungování**.</li>
+            </ol>
+            <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button small-button">Pozvat bota na server</a>
+            
+            <h3 class="subsection-title mt-3">2. Zpřístupněte si všechny /slash příkazy pro svůj profil</h3>
+            <p>Pro plné zobrazení všech <code>/slash</code> příkazů přímo v Discordu doporučujeme provést ověření pro **váš profil**:</p>
+            <ol>
+                <li>V seznamu členů na Discordu klikněte na našeho bota.</li>
+                <li>V okně bota klikněte na tlačítko "<strong>Přidat aplikaci</strong>".</li>
+                <li>Následně vyberte možnost "<strong>Přidat do mých aplikací</strong>".</li>
+            </ol>
+            <p class="note">✅ Poté se vám budou automaticky zobrazovat všechny dostupné příkazy, když začnete psát <code>/</code> do chatu.</p>
         </div>
         
         <hr>
 
         <div class="info-block">
-            <h2 class="section-title">Jak zobrazit všechny příkazy a mít je pro svůj profil?</h2>
-            <p>Pro plné využití všech příkazů a jejich zobrazení přímo v Discordu, doporučujeme <strong>ověřit bota pro váš profil</strong>. Tím se vám zpřístupní všechny <code>/slash</code> příkazy a budou se vám lépe používat:</p>
-            <ol>
-                <li><strong>Klikněte na bota</strong>: V seznamu členů na Discordu najděte našeho bota a klikněte na něj.</li>
-                <li><strong>Přidejte aplikaci</strong>: V okně, které se objeví, klikněte na tlačítko "<strong>Přidat aplikaci</strong>" (nebo podobný text).</li>
-                <li><strong>Přidat do mých aplikací</strong>: Následně vyberte možnost "<strong>Přidat do mých aplikací</strong>".</li>
-            </ol>
-            <p>Po tomto kroku by se vám měly automaticky zobrazovat všechny dostupné <code>/slash</code> příkazy, když začnete psát <code>/</code> do chatu.</p>
-        </div>
-
-        <hr>
-
-        <div class="info-block">
-            <h2 class="section-title">0. Nastavení kanálu pro oznámení (Aktualizace a údržba)</h2>
-            <p>Náš bot může automaticky posílat oznámení o <strong>aktualizacích</strong> a <strong>plánované údržbě</strong> do speciálního kanálu na vašem serveru. Abyste tyto důležité zprávy dostávali, je potřeba tento kanál nastavit pomocí jednoho příkazu:</p>
+            <h2 class="section-title">0️⃣ Základní nastavení: Oznámení o aktualizacích</h2>
+            <p>Doporučujeme nastavit **kanál pro oznámení** o aktualizacích a údržbě. Bot vám do něj automaticky pošle informace o nových funkcích nebo plánovaných odstávkách:</p>
             <ul>
-                <li><strong>Příkaz <code>/modchannel</code></strong>: Moderátoři (uživatelé s oprávněním "Spravovat zprávy") mohou použít tento příkaz k určení, do kterého kanálu má bot posílat oznámení.</li>
-                <li>Napište do chatu <code>/modchannel</code> a vyberte kanál, který chcete pro oznámení použít. Příklad: <code>/modchannel #oznameni-bota</code></li>
-                <li>Po nastavení bude bot automaticky odesílat zprávy o nových funkcích nebo plánovaných odstávkách do tohoto kanálu.</li>
+                <li>**Příkaz:** Použijte <code>/modchannel</code> (vyžaduje oprávnění "Spravovat zprávy").</li>
+                <li>**Jak:** Napište do chatu <code>/modchannel</code> a vyberte kanál. Příklad: <code>/modchannel #oznameni-bota</code></li>
             </ul>
         </div>
 
         <hr>
 
         <div class="info-block">
-            <h2 class="section-title">1. Co dělá bot hned po spuštění? (Start bota)</h2>
-            <p>Když se náš bot zapne a připojí k Discordu, děje se pár důležitých věcí:</p>
+            <h2 class="section-title">1️⃣ Start Bota: Co dělá hned po spuštění?</h2>
+            <p>Když se náš bot zapne a připojí k Discordu, provede sérii kritických kontrol a akcí:</p>
             <ul>
-                <li><strong>Rozumí všemu, co se děje</strong>: Náš bot je navržen tak, aby si všímal téměř všeho, co se na serveru děje – kdo se připojí, kdo odejde, jaké se posílají zprávy, nebo kdo se připojí do hlasového kanálu. Díky tomu může plnit všechny své funkce.</li>
-                <li><strong>Rozumí příkazům</strong>: Všechny příkazy, které bot umí (začínají na <code>/</code>), se "nahlásí" Discordu, aby je viděl každý uživatel.</li>
-                <li><strong>Zapne všechny své funkce</strong>: Bot má mnoho různých částí (nazýváme je "<strong>moduly</strong>" nebo "<strong>Cogy</strong>"), které se starají o specifické věci – například modul pro moderování, modul pro RSS novinky, nebo modul pro uvítání nových členů. Po spuštění se všechny tyto moduly zapnou a jsou připraveny k použití.</li>
-                <li><strong>Nastaví si hodinky</strong>: Aby bot vždy věděl, kolik je hodin a mohl správně fungovat s připomenutími, narozeninami nebo plánovanými zprávami, používá čas pro <strong>Českou republiku</strong>.</li>
-                <li><strong>Sleduje chyby</strong>: Pokud by se něco pokazilo, bot si to poznamená a pošle informaci vývojářům, abychom mohli chybu co nejdříve opravit.</li>
+                <li><strong>🌐 Vnímání Událostí:</strong> Bot si všímají téměř všeho, co se na serveru děje (připojení, odchody, zprávy, hlasové kanály).</li>
+                <li><strong>✅ Registrace Příkazů:</strong> Všechny <code>/slash</code> příkazy se "nahlásí" Discordu, aby je viděl každý uživatel.</li>
+                <li><strong>⚙️ Zapnutí Modulů (Cogů):</strong> Všechny jeho funkce, které nazýváme **moduly**, se aktivují a jsou připraveny k použití (např. moderování, RSS novinky, uvítání).</li>
+                <li><strong>⌚ Nastavení Času:</strong> Pro správnou funkci připomenutí, narozenin a plánovaných zpráv používá čas pro **Českou republiku**.</li>
+                <li><strong>🐛 Sledování Chyb:</strong> Bot aktivně monitoruje a zaznamenává potenciální chyby, které automaticky odesílá vývojářům k rychlé nápravě.</li>
             </ul>
         </div>
 
         <hr>
 
         <div class="info-block">
-            <h2 class="section-title">2. Bot si vše pamatuje (Používá databázi)</h2>
-            <p>Náš bot si pamatuje spoustu informací, aby mohl fungovat, i když se restartuje. Všechna důležitá data ukládá do speciálního "deníku", kterému říkáme <strong>databáze MySQL</strong>.</p>
-            <p><strong>Vše má zaznamenané</strong>: Databáze si pamatuje například:</p>
+            <h2 class="section-title">2️⃣ Paměť: Bot si vše pamatuje (Databáze MySQL)</h2>
+            <p>Náš bot ukládá veškerá důležitá data, aby mohl fungovat i po restartu. Vše se zapisuje do **databáze MySQL**, což je speciální digitální deník.</p>
+            <h3 class="subsection-title">Co si databáze pamatuje?</h3>
+            <div class="list-columns">
+                <ul>
+                    <li>🚨 **Moderátorské záznamy** (warns, mutes, bany) pro historii.</li>
+                    <li>📬 **Nastavení zpětné vazby** a kanálů pro návrhy.</li>
+                    <li>📰 **Sledované RSS kanály** pro automatické novinky.</li>
+                    <li>🛡️ **Pravidla** pro zakázaná slova a filtry.</li>
+                </ul>
+                <ul>
+                    <li>👥 **Autorole** a role pro ověřování členů.</li>
+                    <li>💌 **Texty** uvítacích a odchodových zpráv.</li>
+                    <li>🔔 **Vaše připomenutí** a plánované zprávy.</li>
+                    <li>🏆 **Úroveň a XP** pro systém odměn.</li>
+                </ul>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="info-block">
+            <h2 class="section-title">3️⃣ Akce a Reakce: Jak bot funguje v provozu?</h2>
+            <p>CZbot pracuje na dvou hlavních principech: **reaguje na události** a spouští **automatické úkoly**.</p>
+            
+            <h3 class="subsection-title">⚡ Reakce na události (V reálném čase)</h3>
             <ul>
-                <li><strong>Kdo koho a proč ztlumil, varoval nebo vykopl/zabanoval</strong>: Pro přehled a historii moderátorských zásahů.</li>
-                <li><strong>Kde posílat zpětnou vazbu a návrhy</strong>: Aby se vaše nápady dostaly na správné místo.</li>
-                <li><strong>Jaké novinky sledovat přes RSS</strong>: Aby vám neunikly žádné důležité zprávy z vašich oblíbených webů.</li>
-                <li><strong>Jaké role dát novým členům automaticky</strong>: Pro usnadnění onboarding procesu.</li>
-                <li><strong>Texty uvítacích a odchodových zpráv</strong>: Pro osobní přivítání a rozloučení.</li>
-                <li><strong>Vaše připomenutí</strong>: Aby na nic nezapomněl a připomněl vám to včas.</li>
-                <li><strong>Úroveň a XP členů</strong>: Pro zábavný systém odměn.</li>
-                <li><strong>Pravidla pro zakázaná slova</strong>: Pro automatické hlídání chatu.</li>
-                <li>A mnoho dalšího!</li>
+                <li>**Příchozí zprávy:** Kontrola zakázaných slov, udělování **XP bodů**, zpracování <code>/slash</code> příkazů a automatické překlady.</li>
+                <li>**Vstup/Výstup členů:** Odesílání uvítacích/odchodových zpráv a automatické přidělování rolí.</li>
+                <li>**Hlasové kanály:** Hlídání a vytváření **dočasných hlasových kanálů**.</li>
+                <li>**Tresty:** Posílání soukromých zpráv o **varování, zabanování nebo umlčení**.</li>
+            </ul>
+            
+            <h3 class="subsection-title">⏲️ Automatické úkoly (Běží samy)</h3>
+            <ul>
+                <li>**RSS Čtečka:** Pravidelně kontroluje sledované weby a posílá nové články.</li>
+                <li>**Připomenutí a Schedules:** Odesílá naplánované zprávy a připomenutí v přesně určený čas.</li>
             </ul>
         </div>
 
         <hr>
 
         <div class="info-block">
-            <h2 class="section-title">3. Bot slyší, reaguje a pracuje sám (Události a úkoly)</h2>
-            <p>Náš bot je neustále ve střehu a reaguje na různé situace na Discordu, a také má své vlastní "automatické úkoly".</p>
+            <h2 class="section-title">4️⃣ Administrace: Webové záznamy a oprávnění</h2>
+            
+            <h3 class="subsection-title">Kdo je považován za Moderátora?</h3>
             <ul>
-                <li><strong>Reaguje na zprávy</strong>: Když někdo pošle zprávu, bot ji "přečte". Může:
-                    <ul>
-                        <li>Zjistit, jestli zpráva neobsahuje zakázaná slova.</li>
-                        <li>Dát vám XP body za aktivitu (pokud je systém úrovní zapnutý).</li>
-                        <li>Reagovat na jednoduchá slova (jako "marco" -> "Polo!").</li>
-                        <li>Zpracovat vaše <code>/slash</code> příkazy.</li>
-                        <li>Provádět <strong>automatický překlad</strong>, pokud je kanál takto nastaven.</li>
-                    </ul>
-                </li>
-                <li><strong>Vítá a loučí se</strong>: Když se nový člen připojí, bot ho přivítá. Když někdo odejde, bot se rozloučí. Může mu také automaticky přidělit role.</li>
-                <li><strong>Hlídá hlasové kanály</strong>: Sleduje, kdo se připojí a odejde z hlasových kanálů, a umí například vytvářet dočasné hlasové kanály, které se samy smažou, když v nich nikdo není.</li>
-                <li><strong>Posílá soukromé zprávy</strong>: Pokud je někdo potrestán (umlčen, vykopnut, zabanován, varován), bot se mu pokusí poslat soukromou zprávu s informací o tom, co se stalo a proč.</li>
+                <li>Bot kontroluje pouze jedno oprávnění: **"Spravovat zprávy"**. Každý uživatel s tímto oprávněním (nebo role, která ho má) může používat moderátorské příkazy bota.</li>
             </ul>
-            <p><strong>Automatické úkoly (běží samy)</strong>: Bot má naplánované věci, které dělá automaticky v pravidelných intervalech, aniž byste ho museli žádat:</p>
+            
+            <h3 class="subsection-title">Webová stránka s moderátorskými záznamy</h3>
             <ul>
-                <li><strong>Kontroluje RSS novinky</strong>: Pravidelně zjišťuje, zda na sledovaných webech nejsou nové články nebo zprávy, a pokud ano, pošle je do správného kanálu.</li>
-                <li><strong>Posílá připomenutí</strong>: V určený čas vám pošle připomenutí, které jste si nastavili.</li>
+                <li>Pro přehled všech varování, ztlumení a banů slouží speciální webová stránka: <a href="warns.html">Moderátorské záznamy</a>. Přístup k datům je zabezpečen.</li>
             </ul>
         </div>
 
         <hr>
 
-        <div class="info-block">
-            <h2 class="section-title">4. Bot má i svou webovou stránku (Pro přehled)</h2>
-            <p>Náš bot má malou vestavěnou webovou stránku, která slouží pro přehled moderátorských akcí vůči uživatelům.</p>
-            <ul>
-                <li><strong>Stránka s varováními</strong>: Na adrese <code>https://papiscze.github.io/czbot/</code> si můžete prohlédnout veškeré záznamy o moderátorských akcích (kdo byl varován, umlčen, vykopnut nebo zabanován a proč). Toto je užitečné pro přehled, ale přístup k ní je zabezpečen.</li>
-            </ul>
-        </div>
-
-        <hr>
-
-        <div class="info-block">
-            <h2 class="section-title">5. Jak bot ví, kdo je moderátor?</h2>
-            <p>Bot má speciální "kontrolu" pro moderátorské příkazy:</p>
-            <ul>
-                <li>Bot považuje za moderátora každého, kdo má na Discord serveru oprávnění s názvem <strong>"Spravovat zprávy"</strong>. Pokud tedy chcete používat moderátorské příkazy bota, ujistěte se, že vaše role na serveru toto oprávnění má!</li>
-            </ul>
-        </div>
-
-        <hr>
-
-        <div class="info-block">
-            <h2 class="section-title">6. Kde získám podporu?</h2>
-            <p>Bot má speciální discord server, kde se můžete dozvědět o novinkách, oznamovat chyby nebo posílat náměty na vylepšení:</p>
-            <ul>
-                <li>Odkaz k připojení <a href="https://discord.gg/hk6PdtVxbm" target="_blank" rel="noopener">zde na tomto odkazu</a>.</li>
-            </ul>
+        <div class="info-block info-support">
+            <h2 class="section-title">❓ Kde získám podporu?</h2>
+            <p>Připojte se na náš **oficiální Support Server**! Je to nejlepší místo pro získání informací o novinkách, hlášení chyb nebo posílání námětů na vylepšení:</p>
+            <p>Klikněte pro rychlé připojení:</p>
+            <a href="https://discord.gg/hk6PdtVxbm" target="_blank" rel="noopener" class="cyber-button">Vstup na Support Server</a>
         </div>
         
         <p class="final-note">Doufáme, že vám tento přehled pomohl lépe pochopit, jak náš Discord bot funguje v zákulisí! Pokud máte jakékoli dotazy, neváhejte se zeptat.</p>
