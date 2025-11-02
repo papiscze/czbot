@@ -28,38 +28,12 @@ function initializeMobileMenu() {
         mobileMenu.classList.add('active');
         mobileMenuOverlay.classList.add('active');
 
-        // Zablokujeme posouvání pouze na pozadí, ale ne v samotném menu
+        // Zablokuj scroll pozadí, ale dovol scroll v menu
+        document.documentElement.style.overflow = 'hidden';
         document.body.style.overflow = 'hidden';
-        document.body.style.height = '100vh';
-        document.body.style.touchAction = 'none'; // zabrání posouvání pozadí na mobilech
-
-        // Reset a animace odkazů
-        mobileMenuLinks.forEach((link, index) => {
-            if (link) {
-                link.style.animation = 'none';
-                link.style.opacity = '0';
-                link.style.transform = 'translateX(20px)';
-
-                setTimeout(() => {
-                    if (link) {
-                        link.style.animation = `slideInLeft 0.4s ease forwards`;
-                    }
-                }, 250 + (index * 100));
-            }
-        });
-
-        // Animace CTA tlačítka
-        if (mobileMenuCta) {
-            mobileMenuCta.style.animation = 'none';
-            mobileMenuCta.style.opacity = '0';
-            mobileMenuCta.style.transform = 'translateY(20px)';
-
-            setTimeout(() => {
-                if (mobileMenuCta) {
-                    mobileMenuCta.style.animation = 'slideInUp 0.4s ease forwards';
-                }
-            }, 100);
-        }
+        document.body.style.position = 'fixed';
+        document.body.style.width = '100%';
+        document.body.style.touchAction = 'none';
     }
 
     function closeMobileMenu() {
@@ -67,11 +41,14 @@ function initializeMobileMenu() {
         mobileMenu.classList.remove('active');
         mobileMenuOverlay.classList.remove('active');
 
-        // Vrátíme scroll těla
+        // Obnov původní styl stránky
+        document.documentElement.style.overflow = '';
         document.body.style.overflow = '';
-        document.body.style.height = '';
+        document.body.style.position = '';
+        document.body.style.width = '';
         document.body.style.touchAction = '';
     }
+
 
     // Toggle mobile menu
     mobileMenuBtn.addEventListener('click', (e) => {
