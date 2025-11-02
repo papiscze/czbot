@@ -1,9 +1,13 @@
 /*
+
 TemplateMo 594 nexus flow
+
 https://templatemo.com/tm-594-nexus-flow
+
 */
 
 // JavaScript Document
+
 // =========================================================
 // 1. FUNKCE INICIALIZACE MOBILNÍHO MENU
 // =========================================================
@@ -27,28 +31,44 @@ function initializeMobileMenu() {
         mobileMenuBtn.classList.add('active');
         mobileMenu.classList.add('active');
         mobileMenuOverlay.classList.add('active');
-
-        // Zablokuj scroll pozadí, ale dovol scroll v menu
-        document.documentElement.style.overflow = 'hidden';
         document.body.style.overflow = 'hidden';
-        document.body.style.position = 'fixed';
-        document.body.style.width = '100%';
-        document.body.style.touchAction = 'none';
+        
+        // Reset and trigger animations for links
+        mobileMenuLinks.forEach((link, index) => {
+            if (link) {
+                link.style.animation = 'none';
+                link.style.opacity = '0';
+                link.style.transform = 'translateX(20px)';
+                
+                // Apply animation with delay
+                setTimeout(() => {
+                    if (link) {
+                        link.style.animation = `slideInLeft 0.4s ease forwards`;
+                    }
+                }, 250 + (index * 100));
+            }
+        });
+        
+        // Animate CTA button
+        if (mobileMenuCta) {
+            mobileMenuCta.style.animation = 'none';
+            mobileMenuCta.style.opacity = '0';
+            mobileMenuCta.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                if (mobileMenuCta) {
+                    mobileMenuCta.style.animation = 'slideInUp 0.4s ease forwards';
+                }
+            }, 100);
+        }
     }
 
     function closeMobileMenu() {
         mobileMenuBtn.classList.remove('active');
         mobileMenu.classList.remove('active');
         mobileMenuOverlay.classList.remove('active');
-
-        // Obnov původní styl stránky
-        document.documentElement.style.overflow = '';
         document.body.style.overflow = '';
-        document.body.style.position = '';
-        document.body.style.width = '';
-        document.body.style.touchAction = '';
     }
-
 
     // Toggle mobile menu
     mobileMenuBtn.addEventListener('click', (e) => {
@@ -139,16 +159,15 @@ function initializeMobileMenu() {
     // Prevent body scroll when menu is open
     if (mobileMenu) {
         mobileMenu.addEventListener('touchmove', (e) => {
-            // pokud není menu aktivní, neřeš
-            if (!mobileMenu.classList.contains('active')) return;
-            e.stopPropagation(); // zabrání scrollování backgroundu
-        }, { passive: true });
+            e.stopPropagation();
+        });
     }
 }
 
 // =========================================================
 // 2. FUNKCE PRO POZADÍ EFEKTY (OPRAVENO: Kontrola existence elementu)
 // =========================================================
+
 // Generate Matrix Rain Effect
 function generateMatrixRain() {
     const matrixRain = document.getElementById('matrixRain');
@@ -736,3 +755,37 @@ searchInput.addEventListener('input', filterRecords);
 
 // Načíst data při spuštění stránky
 document.addEventListener('DOMContentLoaded', loadData);
+
+// *** Logika mobilního menu (zachováno pro konzistenci) ***
+const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+const mobileMenu = document.getElementById('mobileMenu');
+const mobileMenuClose = document.getElementById('mobileMenuClose');
+const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+
+if (mobileMenuBtn && mobileMenuOverlay && mobileMenu && mobileMenuClose) {
+    mobileMenuBtn.addEventListener('click', () => {
+        mobileMenu.classList.add('active');
+        mobileMenuOverlay.classList.add('active');
+    });
+
+    mobileMenuClose.addEventListener('click', () => {
+        mobileMenu.classList.remove('active');
+        mobileMenuOverlay.classList.remove('active');
+    });
+
+    mobileMenuOverlay.addEventListener('click', () => {
+        mobileMenu.classList.remove('active');
+        mobileMenuOverlay.classList.remove('active');
+    });
+}
+
+dropdownToggles.forEach(toggle => {
+    toggle.addEventListener('click', (e) => {
+        e.preventDefault();
+        const parentLi = toggle.closest('li.dropdown');
+        if (parentLi) {
+            parentLi.classList.toggle('open');
+        }
+    });
+});
