@@ -419,10 +419,11 @@ https://templatemo.com/tm-594-nexus-flow
             border-left: 2px solid var(--border-color);
             z-index: 9999;
             transition: right 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-            overflow-y: auto;
-            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+            /* ODSTRANIT: overflow-y: auto; */
+            /* ZAJIŠTĚNO: */
             display: flex;
             flex-direction: column;
+            /* ... */
         }
         .mobile-menu.active { right: 0; }
         .mobile-menu-overlay {
@@ -493,7 +494,14 @@ https://templatemo.com/tm-594-nexus-flow
         }
         .mobile-menu-nav {
             padding: 0;
-            flex-grow: 1;
+            /* Toto zajistí, že navigační část obsadí zbytek místa */
+            flex-grow: 1; 
+            /* DŮLEŽITÉ: Povolí rolování, POUZE pokud je obsah delší než dostupná výška */
+            overflow-y: auto; 
+            /* Doporučené pro lepší odezvu na dotykových zařízeních */
+            -webkit-overflow-scrolling: touch;
+            /* Předejde problémům s výškou uvnitř Flexboxu (dobrá praxe) */
+            min-height: 0; 
         }
         .mobile-menu-nav ul {
             list-style: none;
