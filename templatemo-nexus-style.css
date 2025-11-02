@@ -492,14 +492,12 @@ https://templatemo.com/tm-594-nexus-flow
             transform: rotate(90deg);
         }
         .mobile-menu-nav {
-            flex: 1;
-            height: 100%;
-            overflow-y: auto !important;
+            padding: 0;
+            flex-grow: 1;
+            overflow-y: auto;
             -webkit-overflow-scrolling: touch;
-            overscroll-behavior: contain;
-            touch-action: pan-y;
-            position: relative;
-            z-index: 1;
+            overscroll-behavior: contain; /* 💡 Zabrání poskakování celé stránky */
+            touch-action: pan-y; /* Povolit jen vertikální gesta */
         }
         .mobile-menu-nav ul {
             list-style: none;
