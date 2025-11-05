@@ -308,7 +308,7 @@
                 for(const [name,status] of sortedCogs){
                     let cls="";
                     if(status==="Funkční") cls="status-ok";
-                    else if(status.toLowerCase().includes("chyba") || status.toLowerCase().includes("error") || status.toLowerCase().includes("offline")) cls="status-err";
+                    else if(status.toLowerCase().includes("offline") || status.toLowerCase().includes("error") || status.toLowerCase().includes("offline")) cls="status-err";
                     else cls="status-warn"; // Pro jiné stavy
                     
                     cogsList.appendChild(addCogItem(name, status, cls));
