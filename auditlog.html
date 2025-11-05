@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="cs" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord Audit Log</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    <style>
+        /* PŮVODNÍ STYLY - ZACHOVÁNY */
+        body { background: #1e1e2d; color: #d1d1d1; font-family: 'Poppins', sans-serif; }
+        .header-section { background: #2a2a3e; padding: 20px 0; border-bottom: 2px solid #5a5a7a; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); }
+        .log-container { background: #2a2a3e; border-radius: 12px; padding: 20px; box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); }
+        h1 { color: #57F287; font-weight: 700; }
+        .filter-card { background: #1e1e2d; border: 1px solid #3a3a5a; border-radius: 8px; padding: 15px; margin-bottom: 15px; }
+        .filter-category-title { font-weight: 600; color: #3498db; cursor: pointer; }
+        .event-filter-checkbox { margin-right: 5px; }
+        
+        /* Styl pro jednotlivý řádek logu */
+        .log-item { 
+            border-bottom: 1px solid #3a3a5a; 
+            padding: 10px 0; 
+        }
+        .log-item:last-child { border-bottom: none; }
+        .log-timestamp { font-size: 0.8rem; color: #9faab7; min-width: 100px; }
+        .log-content { flex-grow: 1; padding-left: 15px; }
+
+        /* Spinner a zprávy */
+        #loadingMessage, #errorMessage {
+            min-height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        
+        .form-select, .form-control { border-color:#5a5a7a; background-color:#2a2a3e !important; color:#d1d1d1 !important; }
+        .form-check-input:checked { background-color: #57F287; border-color: #57F287; }
+
+        /* NOVÉ STYLY pro zobrazení JSON dat */
+        .log-action-text { font-weight: 600; margin-bottom: 5px; }
+        .log-changes-title { 
+            font-size: 0.9rem;
+            color: #d1d1d1;
+            cursor: pointer;
+            padding: 5px 0;
+            display: block;
+            margin-top: 5px;
+        }
+        .log-changes-detail {
+            background: #1e1e2d; /* Tmavší pozadí pro detaily */
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 5px;
+            font-family: monospace;
+            font-size: 0.8rem;
+            white-space: pre-wrap;
+        }
+        
+    </style>
+</head>
+<body>
+
+<header class="header-section text-center">
+    <div class="container">
+        <a href="/api/auth/discord" class="btn btn-outline-info rounded-pill position-absolute top-0 end-0 mt-3 me-3" id="authButton" title="Přihlásit znovu přes Discord.">
+            <i class="bi bi-discord me-2"></i> Přihlásit se
+        </a>
+        <h1 class="display-5 fw-bold"><i class="bi bi-journal-text me-3"></i> Audit Log</h1>
+        <p class="lead text-secondary mt-2" id="serverInfo">Načítám servery...</p>
+    </div>
+</header>
+
+<main class="container py-5">
+    
+    <div class="row g-4">
+        <div class="col-lg-3">
+            <div class="filter-card">
+                <label for="guildSelect" class="form-label fw-bold"><i class="bi bi-server me-2"></i> Vybrat Server</label>
+                <select id="guildSelect" class="form-select" onchange="handleGuildChange()">
+                    <option value="">Načítání serverů...</option>
+                </select>
+            </div>
+
+            <div class="filter-card">
+                <label for="searchInput" class="form-label fw-bold"><i class="bi bi-search me-2"></i> Vyhledávání (Search)</label>
+                <input type="text" id="searchInput" class="form-control" placeholder="Moderátor, Cíl, Důvod, ID..." onkeyup="if(event.key === 'Enter') loadLog(1)">
+                <small class="text-secondary">Stiskněte Enter pro vyhledání.</small>
+            </div>
+
+            <div class="filter-card">
+                <label for="timeFilter" class="form-label fw-bold"><i class="bi bi-clock me-2"></i> Časové období (Ignorováno API)</label>
+                <select id="timeFilter" class="form-select">
+                    <option value="1h">Poslední 1 hodina</option>
+                    <option value="6h">Posledních 6 hodin</option>
+                    <option value="12h">Posledních 12 hodin</option>
+                    <option value="24h" selected>Posledních 24 hodin</option>
+                </select>
+            </div>
+
+            <div class="filter-card">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <span class="form-label fw-bold"><i class="bi bi-funnel me-2"></i> Filtrovat Události (Ignorováno API)</span>
+                    <button class="btn btn-sm btn-outline-secondary" onclick="toggleAllCheckboxes(true)">Vše</button>
+                    <button class="btn btn-sm btn-outline-secondary ms-2" onclick="toggleAllCheckboxes(false)">Žádné</button>
+            </div>
+                <div id="eventFilters">
+                    </div>
+                <button class="btn btn-sm btn-success w-100 mt-3" onclick="loadLog(1)">Použít Filtry / Hledání</button>
+            </div>
+        </div>
+
+        <div class="col-lg-9">
+            <div class="log-container">
+                <div id="loadingMessage" class="text-info" style="display: none;">
+                    <div class="spinner-border mb-3" role="status"></div>
+                    <p>Načítám logy...</p>
+                </div>
+                
+                <div id="errorMessage" class="text-danger" style="display: none;">
+                    <i class="bi bi-exclamation-triangle-fill fs-3 mb-2"></i>
+                    <p id="errorText">Nastala chyba při načítání dat.</p>
+                </div>
+
+                <div id="logContent">
+                    <p class="text-center text-secondary pt-5">Vyberte server pro zobrazení Audit Logu.</p>
+                </div>
+
+                <div class="d-flex justify-content-center mt-4">
+                    <nav>
+                        <ul class="pagination" id="pagination">
+                            </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // **************** KLÍČOVÁ ZMĚNA 1: Pevně nastavená URL ****************
+    const API_BASE_URL = "https://rs422cznas.myds.me:5038";
+    
+    let currentGuildId = null;
+    let currentPage = 1;
+    // Původní logLimit byl 20. Změněno na 100, což je maximum, které vaše API (pravděpodobně) vrací v jednom volání bez stránkování.
+    const logLimit = 100; 
+
+    // --- Mapa událostí pro zobrazení ---
+    // Původní mapa z vašeho kódu je rozšířena o Discord Audit Log akce
+    const ACTION_MAP = {
+        // Zprávy
+        'message_delete': { name: 'Smazaná zpráva', icon: '🗑️', color: 'text-danger' },
+        'message_edit': { name: 'Upravená zpráva', icon: '✍️', color: 'text-warning' },
+        
+        // Uživatelé a Moderace (Často Discord Audit Log akce)
+        'member_join': { name: 'Připojení uživatele', icon: '👋', color: 'text-success' },
+        'member_leave': { name: 'Odchod uživatele', icon: '🚶', color: 'text-secondary' },
+        'member_update': { name: 'Úprava uživatele (role/nick)', icon: '👤', color: 'text-warning' },
+        'member_ban': { name: 'Zabanování uživatele', icon: '🚫', color: 'text-danger' },
+        'member_unban': { name: 'Odbanování uživatele', icon: '✅', color: 'text-success' },
+        'member_kick': { name: 'Vyhození uživatele', icon: '👢', color: 'text-danger' },
+        'member_timeout': { name: 'Timeout uživatele', icon: '⏱️', color: 'text-danger' },
+        
+        // Kanály a Role (Discord Audit Log akce)
+        'channel_create': { name: 'Vytvoření kanálu', icon: '➕', color: 'text-success' },
+        'channel_update': { name: 'Úprava kanálu', icon: '✏️', color: 'text-warning' },
+        'channel_delete': { name: 'Smazání kanálu', icon: '➖', color: 'text-danger' },
+        'role_create': { name: 'Vytvoření role', icon: '✨', color: 'text-success' },
+        'role_update': { name: 'Úprava role', icon: '🔧', color: 'text-warning' },
+        'role_delete': { name: 'Smazání role', icon: '💥', color: 'text-danger' },
+
+        // Ostatní akce
+        'guild_update': { name: 'Úprava serveru', icon: '⚙️', color: 'text-warning' },
+        'emoji_update': { name: 'Úprava emotikonů', icon: '😀', color: 'text-warning' },
+        'invite_create': { name: 'Vytvoření pozvánky', icon: '📨', color: 'text-success' },
+        
+        // Zástupná akce pro neznámé typy
+        'default': { name: 'Discord Akce', icon: '❓', color: 'text-secondary' },
+        'command_usage': { name: 'Použití příkazu', icon: '✅', color: 'text-info' },
+    };
+
+
+    // --- Mapa událostí (PŮVODNÍ - zachována pouze pro UI logiku zobrazení filtrů) ---
+    const EVENT_CATEGORIES = {
+        "Zprávy": { "description": "Události týkající se zpráv.", "events": { "message_delete": {"name": "🗑️ Smazané zprávy"}, "message_edit": {"name": "✍️ Upravené zprávy"}, } },
+        "Uživatelé a Moderace": { "description": "Události týkající se uživatelů a moderátorských akcí.", "events": { "member_join": {"name": "👋 Připojení uživatele"}, "member_leave": {"name": "🚶 Odchod uživatele"}, "member_update": {"name": "👤 Úprava uživatele (role/nick)"}, "member_ban": {"name": "🚫 Zabanování uživatele"}, "member_unban": {"name": "✅ Odbanování uživatele"}, "member_kick": {"name": "👢 Vyhození uživatele"}, "member_timeout": {"name": "⏱️ Timeout uživatele"}, "member_server_mute": {"name": "🔇 Ztlumení mikrofonu uživatele"}, "member_server_unmute": {"name": "🔊 Odtlumení mikrofonu uživatele"}, "member_server_deafen": {"name": "🔕 Ztlumení sluchátek uživatele"}, "member_server_undeafen": {"name": "🔔 Odtlumení sluchátek uživatele"}, } },
+        "Hlasové kanály a Pódium": { "description": "Události v hlasových kanálech a fázích.", "events": { "voice_state_update": {"name": "🎤 Hlasové aktivity"}, "stage_instance_create": {"name": "🎙️ Pódium vytvořeno"}, "stage_instance_delete": {"name": "✖️ Pódium smazáno"}, "stage_instance_update": {"name": "📝 Pódium upraveno"}, } },
+        "Role a Kanály": { "description": "Události týkající se rolí a textových/hlasových kanálů.", "events": { "role_create": {"name": "✨ Vytvoření role"}, "role_delete": {"name": "💥 Smazání role"}, "channel_create": {"name": "➕ Vytvoření kanálu"}, "channel_delete": {"name": "➖ Smazání kanálu"}, "channel_update": {"name": "✏️ Úprava kanálu"}, } },
+        "Server a Pozvánky": { "description": "Obecné události serveru a pozvánek.", "events": { "guild_update": {"name": "⚙️ Úprava serveru"}, "emoji_update": {"name": "😀 Úprava emotikonů"}, "invite_create": {"name": "📨 Vytvoření pozvánky"}, "invite_delete": {"name": "🗑️ Smazání pozvánky"}, "webhooks_update": {"name": "🔗 Webhooky aktualizovány"}, } },
+        "Vlákna a Události": { "description": "Události týkající se vláken a plánovaných událostí serveru.", "events": { "thread_create": {"name": "💬 Vlákno vytvořeno"}, "thread_update": {"name": "✏️ Vlákno upraveno"}, "thread_delete": {"name": "❌ Vlákno smazáno"}, "scheduled_event_create": {"name": "🗓️ Událost vytvořena"}, "scheduled_event_update": {"name": "✍️ Událost upravena"}, "scheduled_event_delete": {"name": "🗑️ Událost smazána"}, } },
+        "Aktivity bota": { "description": "Události týkající se interakcí s botem.", "events": { "command_usage": {"name": "✅ Použití příkazu"}, } },
+    };
+
+
+    // --- Funkce pro zobrazení/skrytí prvků (ponecháno beze změny) ---
+    function showLoading() {
+        document.getElementById('logContent').innerHTML = '';
+        document.getElementById('errorMessage').style.display = 'none';
+        document.getElementById('loadingMessage').style.display = 'flex';
+        document.getElementById('pagination').innerHTML = '';
+    }
+
+    function showError(message) {
+        document.getElementById('loadingMessage').style.display = 'none';
+        document.getElementById('logContent').innerHTML = '';
+        document.getElementById('errorText').textContent = message;
+        document.getElementById('errorMessage').style.display = 'flex';
+        document.getElementById('pagination').innerHTML = '';
+    }
+
+    function hideMessages() {
+        document.getElementById('loadingMessage').style.display = 'none';
+        document.getElementById('errorMessage').style.display = 'none';
+    }
+
+    // --- Generování Filtrů (PŮVODNÍ - zachováno pro UI) ---
+    function generateEventFilters() {
+        const container = document.getElementById('eventFilters');
+        let html = '';
+
+        for (const categoryName in EVENT_CATEGORIES) {
+            const category = EVENT_CATEGORIES[categoryName];
+            const collapseId = `collapse-${categoryName.replace(/\s/g, '-')}`;
+
+            html += `
+                <div class="mb-3">
+                    <a class="filter-category-title d-block" data-bs-toggle="collapse" href="#${collapseId}" role="button" aria-expanded="false" aria-controls="${collapseId}">
+                        ${categoryName}
+                        <i class="bi bi-chevron-down float-end"></i>
+                    </a>
+                    <div class="collapse" id="${collapseId}">
+                        <small class="text-secondary">${category.description}</small>
+                        <div class="mt-2">
+            `;
+            
+            for (const eventKey in category.events) {
+                const event = category.events[eventKey];
+                html += `
+                    <div class="form-check">
+                        <input class="form-check-input event-filter-checkbox" type="checkbox" value="${eventKey}" id="check-${eventKey}" checked>
+                        <label class="form-check-label" for="check-${eventKey}">
+                            ${event.name}
+                        </label>
+                    </div>
+                `;
+            }
+
+            html += `
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        container.innerHTML = html;
+    }
+    
+    function toggleAllCheckboxes(checked) {
+        document.querySelectorAll('.event-filter-checkbox').forEach(checkbox => {
+            checkbox.checked = checked;
+        });
+    }
+
+    // --- Získání API volání (PŮVODNÍ - Nyní nepoužíváno, ale ponecháno pro UI/budoucnost) ---
+    function getSelectedEventKeys() {
+        return Array.from(document.querySelectorAll('.event-filter-checkbox:checked'))
+            .map(cb => cb.value)
+            .join(',');
+    }
+
+    // --- KLÍČOVÁ ZMĚNA 2: Hlavní funkce načítání Logu upravená pro backend loggeru ---
+    async function loadLog(page = 1) {
+        if (!currentGuildId) return;
+        
+        // currentPage = page; // Stránkování prozatím ignorujeme, API vrací pouze top 100
+
+        showLoading();
+
+        // Původní: const period = document.getElementById('timeFilter').value;
+        // Původní: const eventKeys = getSelectedEventKeys();
+        // Původní: const offset = (currentPage - 1) * logLimit;
+        
+        // NOVÉ: Získání vyhledávacího dotazu
+        const search = document.getElementById('searchInput').value.trim();
+
+        // NOVÁ URL: Pouze s limitem a vyhledáváním
+        let url = `${API_BASE_URL}/api/auditlog/${currentGuildId}?limit=${logLimit}`;
+        if (search) {
+            url += `&search=${encodeURIComponent(search)}`;
+        }
+
+        try {
+            const response = await fetch(url);
+
+            if (response.status === 404) {
+                 showError("Bot není na serveru, nemá přístup k logům, nebo endpoint neexistuje.");
+                return;
+            }
+            if (response.status === 401) {
+                showError("Neautorizováno. Zkuste se přihlásit znovu.");
+                return;
+            }
+            if (!response.ok) {
+                throw new Error(`Server vrátil chybu: ${response.status}`);
+            }
+
+            // Backend vrací pole logů
+            const logs = await response.json(); 
+
+            // Vykreslení Logů
+            renderLogEntries(logs); 
+            
+            // Stránkování (zatím se nepoužije, protože chybí total_count)
+            // renderPagination(data.total_count || 0);
+
+            hideMessages();
+
+        } catch (e) {
+            console.error("Chyba při načítání Audit Logu:", e);
+            showError(`Nepodařilo se načíst logy: ${e.message}. Zkontrolujte připojení k ${API_BASE_URL}.`);
+        }
+    }
+
+    // --- KLÍČOVÁ ZMĚNA 3: Vykreslení Záznamů podle nové struktury ---
+    function renderLogEntries(logs) {
+        const container = document.getElementById('logContent');
+        
+        // ZDE JE KLÍČOVÁ OPRAVA: Kontrola, zda logs je skutečně pole
+        if (!Array.isArray(logs) || logs.length === 0) {
+            // Může se stát, že API vrátí prázdný objekt, nebo null, proto tato kontrola zabrání pádu.
+            container.innerHTML = '<div class="text-center p-5 text-secondary">Žádné záznamy nebyly nalezeny (nebo API nevrátilo platné pole dat).</div>';
+            return;
+        }
+
+        container.innerHTML = logs.map((log, index) => {
+            // log.timestamp je UNIX EPOCH (v sekundách)
+            const timestamp = new Date(log.timestamp * 1000).toLocaleString('cs-CZ', { dateStyle: 'short', timeStyle: 'medium' });
+            
+            const actionDetail = ACTION_MAP[log.action] || ACTION_MAP['default'];
+            const collapseId = `changes-${index}`;
+
+            // Sestavení hlavní zprávy
+            let message = `<span class="fw-bold ${actionDetail.color}">${actionDetail.icon} ${actionDetail.name}</span>`;
+            
+            // Cílová entita (uživatel, kanál, role)
+            if (log.target_name && log.target_name !== 'N/A') {
+                message += ` na entitě <span class="fw-semibold text-info">${log.target_name}</span>`;
+            }
+            
+            // Moderátor (zdroj akce)
+            if (log.source_name && log.source_name !== 'N/A') {
+                message += ` moderátorem <span class="fw-semibold text-warning">${log.source_name}</span>.`;
+            } else {
+                 message += ` (Akce provedena systémem nebo neznámým zdrojem).`;
+            }
+
+            // Důvod
+            if (log.reason) {
+                message += `<br><small class="text-secondary">Důvod: ${log.reason}</small>`;
+            }
+
+            // Zobrazení detailů změn
+            let changesHtml = '';
+            if (log.changes && log.changes.length > 0) {
+                changesHtml = `
+                    <a class="log-changes-title" data-bs-toggle="collapse" href="#${collapseId}" role="button" aria-expanded="false" aria-controls="${collapseId}">
+                        <i class="bi bi-caret-right-fill me-1"></i> Zobrazit detaily změn (${log.changes.length})
+                    </a>
+                    <div class="collapse" id="${collapseId}">
+                        <div class="log-changes-detail">
+                            ${log.changes.map(change => {
+                                // Převod na hezky formátovaný JSON
+                                const oldValue = change.old_value !== undefined ? JSON.stringify(change.old_value, null, 2) : 'N/A';
+                                const newValue = change.new_value !== undefined ? JSON.stringify(change.new_value, null, 2) : 'N/A';
+                                
+                                return `
+                                    <div class="mb-2">
+                                        <span class="text-info fw-bold">${(change.key || 'neznámý klíč').replace(/_/g, ' ')}:</span>
+                                        <span class="d-block text-danger">Původní: ${oldValue}</span>
+                                        <span class="d-block text-success">Nová: ${newValue}</span>
+                                    </div>
+                                `;
+                            }).join('<hr class="my-2 border-secondary">')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Původní rozložení řádku logu
+            return `
+                <div class="log-item">
+                    <span class="log-timestamp">${timestamp}</span>
+                    <div class="log-content">
+                        <div class="log-action-text">${message}</div>
+                        ${changesHtml}
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+    
+    // --- Vykreslení Stránkování (PŮVODNÍ - Zachováno pro UI, ale nefunkční bez total_count) ---
+    function renderPagination(totalCount) {
+        const paginationUl = document.getElementById('pagination');
+        const totalPages = Math.ceil(totalCount / logLimit);
+        let html = '';
+        
+        let startPage = Math.max(1, currentPage - 2);
+        let endPage = Math.min(totalPages, currentPage + 2);
+
+        if (endPage - startPage < 4) {
+            if (startPage > 1) startPage = Math.max(1, endPage - 4);
+            else if (endPage < totalPages) endPage = Math.min(totalPages, startPage + 4);
+        }
+
+        // Tlačítko Předchozí
+        html += `<li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
+                     <a class="page-link" href="#" onclick="loadLog(${currentPage - 1})">Předchozí</a>
+                   </li>`;
+
+        // Čísla stránek
+        for (let i = startPage; i <= endPage; i++) {
+            html += `<li class="page-item ${i === currentPage ? 'active' : ''}">
+                         <a class="page-link" href="#" onclick="loadLog(${i})">${i}</a>
+                       </li>`;
+        }
+
+        // Tlačítko Další
+        html += `<li class="page-item ${currentPage === totalPages || totalPages === 0 ? 'disabled' : ''}">
+                     <a class="page-link" href="#" onclick="loadLog(${currentPage + 1})">Další</a>
+                   </li>`;
+
+        paginationUl.innerHTML = html;
+        if (totalPages <= 1) paginationUl.innerHTML = '';
+    }
+
+
+    // --- Logika pro výběr serveru (Upravena jen báze API) ---
+    async function loadInitialData() {
+        const select = document.getElementById('guildSelect');
+        const authButton = document.getElementById('authButton');
+        const serverInfo = document.getElementById('serverInfo');
+        
+        serverInfo.textContent = 'Kontroluji přihlášení...';
+        select.innerHTML = `<option value="">Načítám servery...</option>`;
+        select.disabled = true;
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/api/user/authorized_guilds`);
+
+            if (!response.ok) {
+                serverInfo.textContent = 'Pro zobrazení Audit Logu se prosím přihlaste.';
+                authButton.href = `${API_BASE_URL}/api/auth/discord?next=${encodeURIComponent(window.location.pathname)}`;
+                authButton.innerHTML = `<i class="bi bi-discord me-2"></i> Přihlásit se`;
+                return;
+            }
+
+            authButton.innerHTML = `<i class="bi bi-arrow-counterclockwise me-2"></i> Obnovit přístup`;
+            
+            const authorizedGuilds = await response.json();
+            
+            if (!authorizedGuilds || authorizedGuilds.length === 0) {
+                serverInfo.textContent = 'Nemáte přístup k žádným serverům s aktivním botem.';
+                select.innerHTML = `<option value="">Žádné servery</option>`;
+                return;
+            }
+            
+            select.innerHTML = authorizedGuilds.map(g => `<option value="${g.id}">${g.name}</option>`).join('');
+            select.disabled = false;
+            
+            let initialGuild = authorizedGuilds.find(g => g.id === window.location.pathname.split('/').pop()) || authorizedGuilds[0];
+            currentGuildId = initialGuild.id;
+            select.value = initialGuild.id;
+            window.history.replaceState({ guildId: initialGuild.id }, '', `/auditlog/${initialGuild.id}`);
+            serverInfo.textContent = `Audit Log pro server: ${initialGuild.name}`;
+
+            await loadLog();
+            
+        } catch (e) {
+            console.error("Chyba při načítání serverů:", e);
+            showError(`Nepodařilo se načíst servery: ${e.message}`);
+        }
+    }
+
+    async function handleGuildChange() {
+        const select = document.getElementById('guildSelect');
+        const newId = select.value;
+        
+        if (newId && newId !== currentGuildId) {
+            currentGuildId = newId;
+            const guildName = select.options[select.selectedIndex].text;
+            document.getElementById('serverInfo').textContent = `Audit Log pro server: ${guildName}`;
+            
+            window.history.pushState({ guildId: newId }, '', `/auditlog/${newId}`);
+            
+            await loadLog(1);
+        }
+    }
+
+
+    // --- Inicializace ---
+    document.addEventListener('DOMContentLoaded', () => {
+        generateEventFilters();
+        loadInitialData();
+    });
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+</body>
+</html>
