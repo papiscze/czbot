@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CZBOT - Modul Minihry (Minigames)</title>
+    
+    <link href="../templatemo-nexus-style.css" rel="stylesheet">
+    <link href="../module-styles.css" rel="stylesheet"> 
+    
+</head>
+<body id="top" class="module-page"> 
+
+    <div class="cyber-bg">
+        <div class="cyber-gradient"></div>
+        <div class="matrix-rain" id="matrixRain"></div>
+    </div>
+    <div class="scanlines"></div>
+    <div class="noise-overlay"></div>
+    <nav>
+        <div class="nav-container">
+            <a href="../index.html" class="logo">CZbot</a>
+            
+            <ul class="nav-links">
+                <li><a href="../commands.html">Příkazy</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Moduly ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="auditlogger.html">Auditlogger</a></li>
+                        <li><a href="audio_stream.html">Audio Stream</a></li>
+                        <li><a href="autopublish.html">Automatické publikování zpráv z kanálů oznámení</a></li>
+                        <li><a href="autorole.html">Autorole, Ověřování uživatelů a Reakční role</a></li>
+                        <li><a href="basic_user_commands.html">Běžné uživatelské a zábavné příkazy</a></li>
+                        <li><a href="basic_mod_commands.html">Běžné moderátorské příkazy</a></li>
+                        <li class="active"><a href="bot_localization.html">Bot localization and Language Settings</a></li>
+                        <li><a href="crossban.html">Crossban</a></li>
+                        <li><a href="temp_voice.html">Dočasné hlasové kanály</a></li>
+                        <li><a href="giveaway.html">Giveaway(e)</a></li>
+                        <li><a href="birthdays.html">Narozeniny</a></li>
+                        <li><a href="patreon.html">Patreon</a></li>
+                        <li class="active"><a href="minigames.html">Minihry</a></li> 
+                        <li><a href="advanced_schedules.html">Pokročilé plánované zprávy</a></li>
+                        <li><a href="reactions.html">Reakce smajlíky na zprávy</a></li>
+                        <li><a href="reputation.html">Reputace</a></li>
+                        <li><a href="rss_reader.html">RSS Čtečka</a></li>
+                        <li><a href="scam_prevence.html">Scam Prevence</a></li>
+                        <li><a href="schedules.html">Schedules ‐ Plánované zprávy</a></li>
+                        <li><a href="stats.html">Statistiky serveru</a></li>
+                        <li><a href="holidays.html">Svátky (CZ SK)</a></li>
+                        <li><a href="feedback.html">Systém zpětné vazby a návrhů</a></li>
+                        <li><a href="tickets.html">Tikety</a></li>
+                        <li><a href="translate.html">Translate modul</a></li>
+                        <li><a href="threads.html">Tvorba vláken na zprávy</a></li>
+                        <li><a href="welcome_leave.html">Uvítací a odchodové zprávy (Welcome Leave)</a></li>
+                        <li><a href="vote.html">Vote ‐ Hlasování</a></li>
+                        <li><a href="watermark.html">Vodoznak s vlastním textem na obrázky</a></li>
+                        <li><a href="xp.html">XP systém a úrovně</a></li>
+                        <li><a href="backup.html">Zálohování a Obnova Serverů</a></li>
+                        <li><a href="confessions.html">Zpovědi (Anonymní Zprávy)</a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Nástroje ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../crongenerator.html">Cron Generátor</a></li>
+                        <li><a href="../embedgenerator.html">Embed Generátor</a></li>
+                        <li><a href="https://github.com/users/papiscze/projects/9">Roadmapa</a></li>
+                        <li><a href="../stats.html">Statistiky bota</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="../warns.html">Moderátorské záznamy</a></li>
+                <li><a href="https://rs422cznas.myds.me:5038/stats/">Statistiky serveru</a></li>
+                <li><a href="../privacy.html">GDPR / ToS</a></li>
+            </ul>
+
+            <div class="nav-bottom">
+                <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Pozvat bota</a>
+            </div>
+
+            <button class="mobile-menu-button" id="mobileMenuBtn">
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </button>
+        </div>
+    </nav>
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="mobile-menu-header">
+            <a href="../index.html" class="mobile-menu-logo">CZbot</a>
+            <button class="mobile-menu-close" id="mobileMenuClose">✕</button>
+        </div>
+        <div class="mobile-menu-cta">
+            <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Přidat bota</a>
+        </div>
+        <nav class="mobile-menu-nav">
+            <ul>
+                <li><a href="../commands.html">Příkazy</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Nástroje ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../crongenerator.html">Cron Generátor</a></li>
+                        <li><a href="../embedgenerator.html">Embed Generátor</a></li>
+                        <li><a href="https://github.com/users/papiscze/projects/9">Roadmapa</a></li>
+                        <li><a href="../stats.html">Statistiky bota</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="../warns.html">Moderátorské záznamy</a></li>
+                <li><a href="https://rs422cznas.myds.me:5038/stats/">Statistiky serveru</a></li>
+                <li><a href="../privacy.html">GDPR / ToS</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle">Moduly ▾</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="auditlogger.html">Auditlogger</a></li>
+                        <li><a href="audio_stream.html">Audio Stream</a></li>
+                        <li><a href="autopublish.html">Automatické publikování zpráv z kanálů oznámení</a></li>
+                        <li><a href="autorole.html">Autorole, Ověřování uživatelů a Reakční role</a></li>
+                        <li><a href="basic_user_commands.html">Běžné uživatelské a zábavné příkazy</a></li>
+                        <li><a href="basic_mod_commands.html">Běžné moderátorské příkazy</a></li>
+                        <li><a href="bot_localization.html">Bot localization and Language Settings</a></li>
+                        <li><a href="crossban.html">Crossban</a></li>
+                        <li><a href="temp_voice.html">Dočasné hlasové kanály</a></li>
+                        <li><a href="giveaway.html">Giveaway(e)</a></li>
+                        <li><a href="birthdays.html">Narozeniny</a></li>
+                        <li><a href="patreon.html">Patreon</a></li>
+                        <li><a href="minigames.html">Minihry</a></li> 
+                        <li><a href="advanced_schedules.html">Pokročilé plánované zprávy</a></li>
+                        <li><a href="reactions.html">Reakce smajlíky na zprávy</a></li>
+                        <li><a href="reputation.html">Reputace</a></li>
+                        <li><a href="rss_reader.html">RSS Čtečka</a></li>
+                        <li><a href="scam_prevence.html">Scam Prevence</a></li>
+                        <li><a href="schedules.html">Schedules ‐ Plánované zprávy</a></li>
+                        <li><a href="stats.html">Statistiky serveru</a></li>
+                        <li><a href="holidays.html">Svátky (CZ SK)</a></li>
+                        <li><a href="feedback.html">Systém zpětné vazby a návrhů</a></li>
+                        <li><a href="tickets.html">Tikety</a></li>
+                        <li><a href="translate.html">Translate modul</a></li>
+                        <li><a href="threads.html">Tvorba vláken na zprávy</a></li>
+                        <li><a href="welcome_leave.html">Uvítací a odchodové zprávy (Welcome Leave)</a></li>
+                        <li><a href="vote.html">Vote ‐ Hlasování</a></li>
+                        <li><a href="watermark.html">Vodoznak s vlastním textem na obrázky</a></li>
+                        <li><a href="xp.html">XP systém a úrovně</a></li>
+                        <li><a href="backup.html">Zálohování a Obnova Serverů</a></li>
+                        <li><a href="confessions.html">Zpovědi (Anonymní Zprávy)</a></li>
+                    </ul>
+                </li>           
+            </ul>
+        </nav>
+    </div>
+    <div class="content-section">
+        <div class="content-container">
+
+            <h1 class="page-title">🎉 Modul Minihry (Minigames)</h1>
+            <p class="page-subtitle">Modul sdružuje sadu jednoduchých, ale zábavných her navržených k podpoře aktivity a interakce v komunitě.</p>
+
+            <div class="module-intro-box">
+                <p>
+                    Modul <strong>Minihry</strong> nabízí hry od **Počítání čísel** v řadě až po **Slovní řetěz** a rychlé hry jako **Kámen, Nůžky, Papír**. Tyto hry jsou skvělý způsob, jak oživit a aktivovat členy serveru.
+                </p>
+            </div>
+
+            <h2 class="module-heading">⚙️ Důležitá oprávnění bota pro správnou funkci</h2>
+            <p>Aby modul <strong>Minihry</strong> fungoval bez problémů, ujistěte se, že váš bot má na Discord serveru a v kanálech následující <strong>oprávnění</strong>:</p>
+
+            <div class="info-box">
+                <ul class="bullet-list">
+                    <li><strong>Číst zprávy/Zobrazit kanály</strong>: Bot potřebuje vidět kanály s aktivními hrami.</li>
+                    <li><strong>Spravovat zprávy</strong> (<span class="command-code">manage_messages</span>): <strong>Klíčové</strong> – nutné pro hru Počítání (mazání chybných zpráv) a pro spuštění/správu Slovního řetězu.</li>
+                    <li><strong>Posílat zprávy</strong>: Pro odesílání zpráv (výsledky, upozornění, chyby).</li>
+                    <li><strong>Používat externí emoji / Přidat reakce</strong>: Pro reakce na zprávy (např. v Hádání čísel a Slovním řetězu).</li>
+                    <li><strong>Používat příkazy aplikací</strong>: Aby bot mohl reagovat na <span class="command-code">/slash</span> příkazy.</li>
+                </ul>
+            </div>
+
+            <div class="module-divider"></div>
+
+            <h2 class="module-heading">🎲 Hra 1: Počítání (Counting Game)</h2>
+            <p>Hra, kde se členové střídají v psaní čísel v řadě (1, 2, 3...) s cílem dosáhnout co nejvyššího čísla.</p>
+
+            <h3 class="module-heading">💡 Klíčové akce při chybě</h3>
+            <p>Při nastavení hry můžete zvolit, jak bot zareaguje na chyby. Dostupné akce jsou:</p>
+            <table class="data-table small-font">
+                <thead>
+                    <tr>
+                        <th>Akce</th>
+                        <th>Popis</th>
+                        <th>Typ chyby, kde lze použít</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="command-code">reset</span></td>
+                        <td>Hra se okamžitě <strong>restartuje</strong> od čísla <strong>1</strong>.</td>
+                        <td>Všechny typy chyb.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="command-code">upozornění</span></td>
+                        <td>Bot zobrazí varování/chybovou zprávu. <strong>Hra pokračuje</strong> (zpráva se smaže).</td>
+                        <td>Špatné číslo, Dvojitý příspěvek, Ne-číselné zprávy.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="command-code">ignorovat</span></td>
+                        <td>Zpráva je zcela ignorována. Ne-číselná zpráva zůstane v chatu.</td>
+                        <td>Špatné číslo, Ne-číselné zprávy.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 class="module-heading mt-4">🚀 Příkazy pro správu: <span class="command-code">/pocitani</span></h3>
+            <p>Příkazy pro správu jsou omezeny na uživatele s oprávněním <span class="command-code">Spravovat zprávy</span> (<span class="command-code">manage_messages</span>).</p>
+
+            <h4 class="mt-4">Nastavení/Editace parametrů:</h4>
+            <p>Parametry určují pravidla pro chybné příspěvky:</p>
+            <table class="data-table small-font">
+                <thead>
+                    <tr>
+                        <th>Parametr</th>
+                        <th>Typ chyby</th>
+                        <th>Dostupné akce</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="command-code">wrong_number_action</span></td>
+                        <td>Špatné číslo (např. napsání 5 po 3)</td>
+                        <td><span class="command-code">reset</span>, <span class="command-code">upozornění</span>, <span class="command-code">ignorovat</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="command-code">double_post_action</span></td>
+                        <td>Dvojitý příspěvek (dvakrát za sebou)</td>
+                        <td><span class="command-code">reset</span>, <span class="command-code">upozornění</span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="command-code">non_number_action</span></td>
+                        <td>Ne-číselná zpráva (text, emoji)</td>
+                        <td><span class="command-code">reset</span>, <span class="command-code">upozornění</span>, <span class="command-code">ignorovat</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="command-box">
+                <h4 class="command-title">Příklady použití <span class="command-code">/pocitani</span>:</h4>
+                <p><strong>Spuštění/Nastavení:</strong> Spustí hru s pravidly, kde špatná čísla jen dostanou <strong>upozornění</strong>.</p>
+                <span class="command-code-example">/pocitani nastavit channel:#pocitaci-kanal wrong_number_action:upozornění double_post_action:reset</span>
+                <p><strong>Editace:</strong> Změní akci pro ne-číselné zprávy na <strong>ignorovat</strong>, bez resetu aktuálního čísla.</p>
+                <span class="command-code-example">/pocitani edit non_number_action:ignorovat</span>
+            </div>
+            
+            <h4 class="mt-4">Řízení a stav:</h4>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Příkaz</th>
+                        <th>Popis</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="command-code">/pocitani reset</span></td>
+                        <td>Okamžitě resetuje počítání zpět na číslo <strong>1</strong>.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="command-code">/pocitani smazat</span></td>
+                        <td>Trvale ukončí hru a smaže všechna data z databáze.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="command-code">/pocitani info</span></td>
+                        <td>Zobrazí aktuální číslo, kanál a nastavená pravidla.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="module-divider"></div>
+
+            <h2 class="module-heading">🎮 Hra 2, 3 a 4: Rychlé hry – <span class="command-code">/hra</span></h2>
+            <p>Tyto hry se spravují pod jednou skupinou příkazů. Hádání čísel a Slovní řetěz mohou mít na serveru aktivní <strong>jen jednu instanci</strong>.</p>
+
+            <h3 class="module-heading">1. Kámen, Nůžky, Papír: <span class="command-code">/hra kamen</span> 🪨📄✂️</h3>
+            <div class="command-box">
+                <h4 class="command-title">Použití:</h4>
+                <span class="command-code-example">/hra kamen</span>
+                <p>Hráč hraje proti botovi pomocí tlačítek v interaktivní zprávě. Jednoduchá, rychlá hra jeden na jednoho.</p>
+            </div>
+
+            <h3 class="module-heading">2. Hádání čísel: <span class="command-code">/hra cislo</span> 🔢</h3>
+            <p>Hra, kde hráči hádají tajné číslo v definovaném rozsahu, dokud není uhodnuto.</p>
+            <div class="command-box">
+                <h4 class="command-title">Spuštění:</h4>
+                <span class="command-code-example">/hra cislo akce:start minimum:1 maximum:100</span>
+                <p>Volitelné parametry <span class="command-code">minimum</span> a <span class="command-code">maximum</span> definují rozsah.</p>
+                <h4 class="command-title">Zastavení:</h4>
+                <span class="command-code-example">/hra cislo akce:stop</span>
+                <p>Zastaví hru a oznámí tajné číslo a počet pokusů. Hra se automaticky zastaví i po uhodnutí.</p>
+                <p><strong>Mechanika:</strong> Bot dává zpětnou vazbu (<span class="command-code">🔼</span> - vyšší, <span class="command-code">🔽</span> - nižší) a dynamicky aktualizuje hádací rozmezí.</p>
+            </div>
+
+            <h3 class="module-heading">3. Slovní řetěz: <span class="command-code">/hra retez</span> 🐍</h3>
+            <p>Perzistentní hra, která pokračuje i po restartu bota. Slovo musí začínat na poslední písmeno slova předchozího. Správa vyžaduje oprávnění <span class="command-code">Spravovat server</span>.</p>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Příkaz</th>
+                        <th>Popis</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="command-code">/hra retez action:start</span></td>
+                        <td>Spustí hru v kanále, odkud byl příkaz zadán.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="command-code">/hra retez action:reset</span></td>
+                        <td>Smaže aktuální slovo a začíná se od nuly. Hra zůstane aktivní.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="command-code">/hra retez action:stop</span></td>
+                        <td>Ukončí hru a smaže data z databáze.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="https://github.com/papiscze/czbot">GitHub</a>
+                <span class="footer-separator">•</span>
+                <a href="https://discord.gg/hk6PdtVxbm">Support Server</a>
+                <span class="footer-separator">•</span>
+                <a href="https://github.com/papiscze/czbot/wiki">GitHub dokumentace</a>
+                <span class="footer-separator">•</span>
+                <a href="mailto:admin@ofpmafia.eu">Kontakt</a>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 CZbot. Verze webu 1.0. Všechna práva vyhrazena</p>
+                <p class="footer-credit">Šablona inspirována <a href="https://templatemo.com" target="_blank" rel="noopener nofollow">TemplateMo</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../templatemo-nexus-scripts.js"></script>
+
+</body>
+</html>
