@@ -3,20 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CZBOT - Statistiky Bota</title>
-    
+    <title>CZBOT - Název Podstránky</title>
     <link href="templatemo-nexus-style.css" rel="stylesheet">
-    <link href="module-styles.css" rel="stylesheet"> 
-    
-    </head>
-<body id="top"> 
-
+</head>
+<body id="top">
     <div class="cyber-bg">
         <div class="cyber-gradient"></div>
         <div class="matrix-rain" id="matrixRain"></div>
     </div>
+    
+    <div class="particles" id="particlesContainer"></div>
+    
+    <div class="data-streams" id="dataStreams"></div>
+    
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+    
+    <div class="grid-overlay">
+        <div class="grid-lines"></div>
+        <div class="grid-glow"></div>
+    </div>
+    
     <div class="scanlines"></div>
     <div class="noise-overlay"></div>
+    
     <nav>
         <div class="nav-container">
             <a href="index.html" class="logo">CZbot</a>
@@ -34,7 +45,7 @@
                         <li><a href="modules/basic_user_commands.html">Běžné uživatelské a zábavné příkazy</a></li>
                         <li><a href="modules/basic_mod_commands.html">Běžné moderátorské příkazy</a></li>
                         <li><a href="modules/bot_localization.html">Bot localization and Language Settings</a></li>
-                        <li><a href="modules/modules/crossban.html">Crossban</a></li>
+                        <li><a href="modules/crossban.html">Crossban</a></li>
                         <li><a href="modules/temp_voice.html">Dočasné hlasové kanály</a></li>
                         <li><a href="modules/giveaway.html">Giveaway(e)</a></li>
                         <li><a href="modules/birthdays.html">Narozeniny</a></li>
@@ -112,11 +123,6 @@
                         <li><a href="stats.html">Statistiky bota</a></li>
                     </ul>
                 </li>
-
-                <li><a href="warns.html">Moderátorské záznamy</a></li>
-                <li><a href="https://rs422cznas.myds.me:5038/stats/">Statistiky serveru</a></li>
-                <li><a href="privacy.html">GDPR / ToS</a></li>
-
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle">Moduly ▾</a>
                     <ul class="dropdown-menu">
@@ -127,7 +133,7 @@
                         <li><a href="modules/basic_user_commands.html">Běžné uživatelské a zábavné příkazy</a></li>
                         <li><a href="modules/basic_mod_commands.html">Běžné moderátorské příkazy</a></li>
                         <li><a href="modules/bot_localization.html">Bot localization and Language Settings</a></li>
-                        <li><a href="modules/modules/crossban.html">Crossban</a></li>
+                        <li><a href="modules/crossban.html">Crossban</a></li>
                         <li><a href="modules/temp_voice.html">Dočasné hlasové kanály</a></li>
                         <li><a href="modules/giveaway.html">Giveaway(e)</a></li>
                         <li><a href="modules/birthdays.html">Narozeniny</a></li>
@@ -152,71 +158,14 @@
                         <li><a href="modules/backup.html">Zálohování a Obnova Serverů</a></li>
                         <li><a href="modules/confessions.html">Zpovědi (Anonymní Zprávy)</a></li>
                     </ul>
-                </li>           
+                </li>  
+                <li><a href="warns.html">Moderátorské záznamy</a></li>
+                <li><a href="https://rs422cznas.myds.me:5038/stats/">Statistiky serveru</a></li>
+                <li><a href="privacy.html">GDPR / ToS</a></li>              
             </ul>
         </nav>
     </div>
-    </nav>
-    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
-    <div class="mobile-menu" id="mobileMenu">
-        </div>
-    <div class="content-section">
-        <div class="content-container">
 
-            <h1 class="page-title">Statistiky a Status Bota</h1>
-            <p class="page-subtitle">Aktuální přehled provozu a výkonu Discord Bota <strong>CZbot.</strong></p>
-
-            <div class="warn-box" id="warnBox" style="display:none;"></div> 
-
-            <div class="stats-grid">
-                
-                <div class="stat-card">
-                    <h4>Status Bota</h4>
-                    <span class="value" id="statStatus">Načítám...</span> 
-                </div>
-
-                <div class="stat-card">
-                    <h4>Počet Serverů</h4>
-                    <span class="value" id="statServers">Načítám...</span>
-                </div>
-                
-                <div class="stat-card">
-                    <h4>Uptime</h4>
-                    <span class="value" id="statUptime">Načítám...</span>
-                </div>
-                
-                <div class="stat-card">
-                    <h4>Využití CPU</h4>
-                    <span class="value" id="statCPU">Načítám...</span>
-                </div>
-
-                <div class="stat-card">
-                    <h4>Využití RAM</h4>
-                    <span class="value" id="statRAM">Načítám...</span>
-                </div>
-                
-                <div class="stat-card">
-                    <h4>API a DB Status</h4>
-                    <span class="value" id="statAPI">Načítám...</span> 
-                </div>
-                
-            </div>
-
-            <div class="chart-container">
-                <h3>Stav Modulů (Cogs)</h3>
-                <ul class="cogs-list" id="cogsList">
-                    <li>Načítám moduly...</li> 
-                </ul>
-            </div>
-            
-            <div class="chart-container">
-                <h3>Historie Ping a Využití (Placeholder)</h3>
-                <p>Dynamické grafy budou implementovány později. Zde se budou zobrazovat historické metriky.</p>
-                <canvas id="pingChart" width="400" height="150" aria-label="Graf historie ping"></canvas>
-            </div>
-            
-        </div>
-    </div>
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-links">
@@ -236,111 +185,6 @@
     </footer>
 
     <script src="templatemo-nexus-scripts.js"></script>
-    
-    <script>
-        const cogs_to_load = ["Audio Streaming","Administrátorský cog","Administrátorský 2 cog","Crossban","Pokročilé plánované zprávy","Auditlogger","Automatické publikace zpráv","Automatické role","Dočasné hlasové kanály","Giveaway","Hlasování","Kolo štěstí","Lokalizace","Moderátorské příkazy","Narozeniny","Ověřování a Reakční role","Patreon","Minihry","Překlad","RAID ochrana","Reputace","RSS čtečka", "Zálohování serverů", "Plánované zprávy","Scam ochrana","Statistiky","Svátky","Tikety","Uvítací/odchodové zprávy","Uživatelské příkazy","Vlákna a reakce na zprávy","Vodoznaky","XP úrovně","AI cog", "Zpovědi"];
 
-        async function fetchStatus() {
-            // Získání elementů z HTML
-            const statStatus = document.getElementById("statStatus");
-            const statServers = document.getElementById("statServers");
-            const statUptime = document.getElementById("statUptime");
-            const statCPU = document.getElementById("statCPU");
-            const statRAM = document.getElementById("statRAM");
-            const statAPI = document.getElementById("statAPI");
-            const cogsList = document.getElementById("cogsList");
-            const warnBox = document.getElementById("warnBox");
-
-            // 🟠 sem napiš vlastní status zprávu (pokud nechceš žádnou, nech to prázdné)
-            const warn_message = ""; 
-
-            // zobrazení nebo skrytí varovného boxu
-            if (warn_message && warn_message.trim() !== "") {
-                warnBox.textContent = "🚨 UPOZORNĚNÍ: " + warn_message; // Přidáme kybernetický prefix
-                warnBox.classList.add("warn-box-active"); 
-                warnBox.style.display = "block";
-            } else {
-                warnBox.classList.remove("warn-box-active");
-                warnBox.style.display = "none";
-            }
-
-            // Nastavení počátečních hodnot při načítání
-            [statStatus, statServers, statUptime, statCPU, statRAM, statAPI].forEach(el => el.textContent = "Načítám...");
-            cogsList.innerHTML="<li>Načítám moduly...</li>";
-
-            // Pomocná funkce pro vytvoření položky Cogs
-            function addCogItem(name, status, cls=""){ 
-                const li = document.createElement("li"); 
-                // Stylizace pro seznam modulů
-                li.innerHTML = `<span class="cog-label">${name}</span><span class="cog-value ${cls}">${status}</span>`; 
-                return li;
-            }
-
-            try {
-                const res = await fetch("https://rs422cznas.myds.me:5038/status");
-                const data = await res.json();
-
-                const uptime_sec = data.uptime_seconds || 0;
-                const hours = Math.floor(uptime_sec/3600);
-                const minutes = Math.floor((uptime_sec%3600)/60);
-                const seconds = Math.floor(uptime_sec%60);
-                const uptime_str = `${hours}h ${minutes}m ${seconds}s`;
-                
-                // 1. Vložení dat do karet
-                // Status bota
-                statStatus.textContent = data.bot_status.toUpperCase();
-                statStatus.className = data.bot_status === "online" ? "value status-online" : "value status-offline";
-                
-                // Ostatní metriky
-                statServers.textContent = data.guilds.toLocaleString('cs-CZ');
-                statUptime.textContent = uptime_str;
-                statCPU.textContent = `${data.cpu_percent} %`;
-                statRAM.textContent = `${data.ram_mb} MB`;
-                
-                // API a DB status
-                statAPI.textContent = data.api_db_status === "OK" ? "OK" : "PROBLÉM";
-                statAPI.className = data.api_db_status === "OK" ? "value status-ok" : "value status-err";
-
-                // 2. Vložení stavu modulů (Cogs)
-                cogsList.innerHTML="";
-                const sortedCogs = Object.entries(data.cogs).sort((a,b) => a[0].localeCompare(b[0], 'cs'));
-                
-                for(const [name,status] of sortedCogs){
-                    let cls="";
-                    if(status==="Funkční") cls="status-ok";
-                    else if(status.toLowerCase().includes("offline") || status.toLowerCase().includes("error") || status.toLowerCase().includes("offline")) cls="status-err";
-                    else cls="status-warn"; // Pro jiné stavy
-                    
-                    cogsList.appendChild(addCogItem(name, status, cls));
-                }
-                
-            } catch(err){
-                // 3. Zpracování chyby
-                console.error("Chyba při načítání statusu API:", err);
-                
-                // Nastavení chybových hodnot pro karty
-                statStatus.textContent = "OFFLINE";
-                statStatus.className = "value status-err"; 
-                statServers.textContent = "-";
-                statUptime.textContent = "-";
-                statCPU.textContent = "- %";
-                statRAM.textContent = "- MB";
-                statAPI.textContent = "NEDOSTUPNÉ";
-                statAPI.className = "value status-err";
-                
-                // Nastavení chybových hodnot pro Cogs
-                cogsList.innerHTML="";
-                cogs_to_load.forEach(label => {
-                    cogsList.appendChild(addCogItem(label, "Nedostupné", "status-err"));
-                });
-            }
-        }
-
-        // Spuštění načítání statusu
-        fetchStatus();
-        // Nastavení automatického refresh 
-        setInterval(fetchStatus, 30000); // Obnoví data každých 30 sekund
-    </script>
-
-</body>
+    </body>
 </html>
