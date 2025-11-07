@@ -184,10 +184,10 @@
                 <button class="tag-button" data-tag="CROSSBAN">Crossban</button>
                 <button class="tag-button" data-tag="HLASOVYKANAL">Dočasné hlasové kanály</button>
                 <button class="tag-button" data-tag="GIVEAWAY">Giveaway(e)</button>
+                <button class="tag-button" data-tag="MINIHRY">Minihry</button>                
                 <button class="tag-button" data-tag="NAROZENINY">Narozeniny</button>
                 <button class="tag-button" data-tag="PATREON">Patreon</button>
                 <button class="tag-button" data-tag="PLANEDZPREZPOK">Pokročilé plánované zprávy</button>
-                <button class="tag-button" data-tag="MINIHRY">Minihry</button>
                 <button class="tag-button" data-tag="REAKCESMAJLIKY">Reakce smajlíky na zprávy</button>
                 <button class="tag-button" data-tag="REPUTACE">Reputace</button>
                 <button class="tag-button" data-tag="RSS">RSS Čtečka</button>
@@ -1588,7 +1588,7 @@
                     <div class="command-detail-row" aria-hidden="true">
                         <div class="detail-content">
                             <p>Nastaví hru a její kanál. Lze nastavit, zda se po chybě hra <strong>restartuje</strong>, <strong>upozorní</strong> nebo <strong>ignoruje</strong> zprávu.</p>
-                            <div class="syntax">Syntaxe: <span class="command-code">/pocitani nastavit channel:&lt;#kanál> [wrong_number_action:&lt;akce>] [double_post_action:&lt;akce>] [non_number_action:&lt;akce>]</span></div>
+                            <div class="syntax">Syntaxe: /pocitani nastavit channel:&lt;#kanál> [wrong_number_action:&lt;akce>] [double_post_action:&lt;akce>] [non_number_action:&lt;akce>]</div>
                             <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat zprávy</strong>. Akce mohou být <code>reset</code>, <code>upozornění</code>, <code>ignorovat</code> (jen pro některé chyby).</div>
                         </div>
                     </div>
@@ -1604,7 +1604,7 @@
                     <div class="command-detail-row" aria-hidden="true">
                         <div class="detail-content">
                             <p>Umožňuje měnit akce pro různé typy chyb (špatné číslo, dvojitý příspěvek, ne-číselná zpráva).</p>
-                            <div class="syntax">Syntaxe: <span class="command-code">/pocitani edit [wrong_number_action:&lt;akce>] [double_post_action:&lt;akce>] [non_number_action:&lt;akce>]</span></div>
+                            <div class="syntax">Syntaxe: /pocitani edit [wrong_number_action:&lt;akce>] [double_post_action:&lt;akce>] [non_number_action:&lt;akce>]</div>
                             <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat zprávy</strong>. Akce mohou být <code>reset</code>, <code>upozornění</code>, <code>ignorovat</code>.</div>
                         </div>
                     </div>
@@ -1620,7 +1620,7 @@
                     <div class="command-detail-row" aria-hidden="true">
                         <div class="detail-content">
                             <p>Hra začne znovu od jedničky. Hodí se, pokud se počítání dostalo do nežádoucího stavu.</p>
-                            <div class="syntax">Syntaxe: <span class="command-code">/pocitani reset</span></div>
+                            <div class="syntax">Syntaxe: /pocitani reset</div>
                             <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat zprávy</strong>.</div>
                         </div>
                     </div>
@@ -1636,7 +1636,7 @@
                     <div class="command-detail-row" aria-hidden="true">
                         <div class="detail-content">
                             <p>Zruší modul Počítání na serveru. Hra se automaticky neobnoví po restartu bota.</p>
-                            <div class="syntax">Syntaxe: <span class="command-code">/pocitani smazat</span></div>
+                            <div class="syntax">Syntaxe: /pocitani smazat</div>
                             <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat zprávy</strong>.</div>
                         </div>
                     </div>
@@ -1652,7 +1652,7 @@
                     <div class="command-detail-row" aria-hidden="true">
                         <div class="detail-content">
                             <p>Zobrazí aktuální číslo, kanál, kde se počítá, a nastavené chybové akce pro každý typ chyby.</p>
-                            <div class="syntax">Syntaxe: <span class="command-code">/pocitani info</span></div>
+                            <div class="syntax">Syntaxe: /pocitani info</div>
                             <div class="module-link-small">Dostupné pro <strong>všechny uživatele</strong>.</div>
                         </div>
                     </div>
@@ -1669,7 +1669,7 @@
                     <div class="command-detail-row" aria-hidden="true">
                         <div class="detail-content">
                             <p>Jednoduchá, rychlá hra. Hráč vybere volbu pomocí tlačítek a bot okamžitě odpoví výsledkem.</p>
-                            <div class="syntax">Syntaxe: <span class="command-code">/hra kamen</span></div>
+                            <div class="syntax">Syntaxe: /hra kamen</div>
                             <div class="module-link-small">Dostupné pro <strong>všechny uživatele</strong>.</div>
                         </div>
                     </div>
@@ -1685,8 +1685,8 @@
                     <div class="command-detail-row" aria-hidden="true">
                         <div class="detail-content">
                             <p>Hráči hádají tajné číslo v zadaném rozsahu. Bot dává nápovědy (vyšší/nižší).</p>
-                            <div class="syntax">Syntaxe Start: <span class="command-code">/hra cislo akce:start [minimum:&lt;číslo>] [maximum:&lt;číslo>]</span></div>
-                            <div class="syntax">Syntaxe Stop: <span class="command-code">/hra cislo akce:stop</span></div>
+                            <div class="syntax">Syntaxe Start: /hra cislo akce:start [minimum:&lt;číslo>] [maximum:&lt;číslo>]</span></div>
+                            <div class="syntax">Syntaxe Stop: /hra cislo akce:stop</div>
                             <div class="module-link-small">Dostupné pro <strong>všechny uživatele</strong>.</div>
                         </div>
                     </div>
@@ -1702,10 +1702,10 @@
                     <div class="command-detail-row" aria-hidden="true">
                         <div class="detail-content">
                             <p>Hráči se střídají v psaní slov. Každé slovo musí začínat na poslední písmeno předchozího.</p>
-                            <div class="syntax">Syntaxe Start: <span class="command-code">/hra retez action:start</span></div>
-                            <div class="syntax">Syntaxe Reset: <span class="command-code">/hra retez action:reset</span></div>
-                            <div class="syntax">Syntaxe Stop: <span class="command-code">/hra retez action:stop</span></div>
-                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat server</strong> (<span class="command-code">manage_guild</span>).</div>
+                            <div class="syntax">Syntaxe Start: /hra retez action:start</div>
+                            <div class="syntax">Syntaxe Reset: /hra retez action:reset</div>
+                            <div class="syntax">Syntaxe Stop: /hra retez action:stop</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat server</strong> (manage_guild</span>).</div>
                         </div>
                     </div>
                 </div>
