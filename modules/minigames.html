@@ -37,9 +37,9 @@
                         <li><a href="crossban.html">Crossban</a></li>
                         <li><a href="temp_voice.html">Dočasné hlasové kanály</a></li>
                         <li><a href="giveaway.html">Giveaway(e)</a></li>
+                        <li class="active"><a href="minigames.html">Minihry</a></li>
                         <li><a href="birthdays.html">Narozeniny</a></li>
                         <li><a href="patreon.html">Patreon</a></li>
-                        <li class="active"><a href="minigames.html">Minihry</a></li> 
                         <li><a href="advanced_schedules.html">Pokročilé plánované zprávy</a></li>
                         <li><a href="reactions.html">Reakce smajlíky na zprávy</a></li>
                         <li><a href="reputation.html">Reputace</a></li>
@@ -130,9 +130,9 @@
                         <li><a href="crossban.html">Crossban</a></li>
                         <li><a href="temp_voice.html">Dočasné hlasové kanály</a></li>
                         <li><a href="giveaway.html">Giveaway(e)</a></li>
-                        <li><a href="birthdays.html">Narozeniny</a></li>
-                        <li><a href="patreon.html">Patreon</a></li>
                         <li><a href="minigames.html">Minihry</a></li> 
+                        <li><a href="birthdays.html">Narozeniny</a></li>
+                        <li><a href="patreon.html">Patreon</a></li>                       
                         <li><a href="advanced_schedules.html">Pokročilé plánované zprávy</a></li>
                         <li><a href="reactions.html">Reakce smajlíky na zprávy</a></li>
                         <li><a href="reputation.html">Reputace</a></li>
@@ -164,7 +164,7 @@
 
             <div class="module-intro-box">
                 <p>
-                    Modul <strong>Minihry</strong> nabízí hry od **Počítání čísel** v řadě až po **Slovní řetěz** a rychlé hry jako **Kámen, Nůžky, Papír**. Tyto hry jsou skvělý způsob, jak oživit a aktivovat členy serveru.
+                    Modul <strong>Minihry</strong> nabízí hry od **Počítání čísel** v řadě až po **Slovní fotbal** a rychlé hry jako **Kámen, Nůžky, Papír**. Tyto hry jsou skvělý způsob, jak oživit a aktivovat členy serveru.
                 </p>
             </div>
 
@@ -174,9 +174,9 @@
             <div class="info-box">
                 <ul class="bullet-list">
                     <li><strong>Číst zprávy/Zobrazit kanály</strong>: Bot potřebuje vidět kanály s aktivními hrami.</li>
-                    <li><strong>Spravovat zprávy</strong> (<span class="command-code">manage_messages</span>): <strong>Klíčové</strong> – nutné pro hru Počítání (mazání chybných zpráv) a pro spuštění/správu Slovního řetězu.</li>
+                    <li><strong>Spravovat zprávy</strong> (<span class="command-code">manage_messages</span>): <strong>Klíčové</strong> – nutné pro hru Počítání (mazání chybných zpráv) a pro spuštění/správu Slovního fotbalu.</li>
                     <li><strong>Posílat zprávy</strong>: Pro odesílání zpráv (výsledky, upozornění, chyby).</li>
-                    <li><strong>Používat externí emoji / Přidat reakce</strong>: Pro reakce na zprávy (např. v Hádání čísel a Slovním řetězu).</li>
+                    <li><strong>Používat externí emoji / Přidat reakce</strong>: Pro reakce na zprávy (např. v Hádání čísel a Slovním fotbalu).</li>
                     <li><strong>Používat příkazy aplikací</strong>: Aby bot mohl reagovat na <span class="command-code">/slash</span> příkazy.</li>
                 </ul>
             </div>
@@ -282,7 +282,7 @@
             <div class="module-divider"></div>
 
             <h2 class="module-heading">🎮 Hra 2, 3 a 4: Rychlé hry – <span class="command-code">/hra</span></h2>
-            <p>Tyto hry se spravují pod jednou skupinou příkazů. Hádání čísel a Slovní řetěz mohou mít na serveru aktivní <strong>jen jednu instanci</strong>.</p>
+            <p>Tyto hry se spravují pod jednou skupinou příkazů. Hádání čísel a Slovní fotbal mohou mít na serveru aktivní <strong>jen jednu instanci</strong>.</p>
 
             <h3 class="module-heading">1. Kámen, Nůžky, Papír: <span class="command-code">/hra kamen</span> 🪨📄✂️</h3>
             <div class="command-box">
@@ -303,7 +303,7 @@
                 <p><strong>Mechanika:</strong> Bot dává zpětnou vazbu (<span class="command-code">🔼</span> - vyšší, <span class="command-code">🔽</span> - nižší) a dynamicky aktualizuje hádací rozmezí.</p>
             </div>
 
-            <h3 class="module-heading">3. Slovní řetěz: <span class="command-code">/hra retez</span> 🐍</h3>
+            <h3 class="module-heading">3. Slovní fotbal: <span class="command-code">/hra fotbal</span> 🐍</h3>
             <p>Perzistentní hra, která pokračuje i po restartu bota. Slovo musí začínat na poslední písmeno slova předchozího. Správa vyžaduje oprávnění <span class="command-code">Spravovat server</span>.</p>
             <table class="data-table">
                 <thead>
@@ -314,15 +314,15 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><span class="command-code">/hra retez action:start</span></td>
+                        <td><span class="command-code">/hra fotbal action:start</span></td>
                         <td>Spustí hru v kanále, odkud byl příkaz zadán.</td>
                     </tr>
                     <tr>
-                        <td><span class="command-code">/hra retez action:reset</span></td>
+                        <td><span class="command-code">/hra fotbal action:reset</span></td>
                         <td>Smaže aktuální slovo a začíná se od nuly. Hra zůstane aktivní.</td>
                     </tr>
                     <tr>
-                        <td><span class="command-code">/hra retez action:stop</span></td>
+                        <td><span class="command-code">/hra fotbal action:stop</span></td>
                         <td>Ukončí hru a smaže data z databáze.</td>
                     </tr>
                 </tbody>
