@@ -483,6 +483,49 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="command-group" data-tags="MODERACE">
+                    <div class="command-item">
+                        <div class="command-name">/modchannel</div>
+                        <div class="command-description">Nastavení kanálu pro získávání oznámení od bota.</div>
+                        <div class="command-module-tag">Běžné moderátorské příkazy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Nastavení kanálu pro získávání zpráv od bota. Crossban, oznámení aktualizací, chybějící práva a další.</p>
+                            <div class="syntax">Syntaxe: `/modchannel channel:<#kanál>`</div>
+                        </div>
+                </div>  
+
+                <div class="command-group" data-tags="MODERACE">
+                    <div class="command-item">
+                        <div class="command-name">/automodpridat</div>
+                        <div class="command-description">Přidá zakázané slovo do AutoMod systému s určenou akcí (blokace, timeout, upozornění).</div>
+                        <div class="command-module-tag">Automatická moderace</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>
+                                Umožňuje moderátorům přidat nová zakázaná slova do vestavěného AutoMod systému Discordu.  
+                                Podle zvolené akce může bot zprávu zablokovat, udělit timeout nebo odeslat upozornění do vybraného kanálu.
+                            </p>
+                            <div class="syntax">
+                                Syntaxe: `/automodpridat word:<slovo> action:<akce> [timeout_duration_minutes:<minuty>] [alert_message:<zpráva>] [log_channel:<#kanál>]`
+                            </div>
+                            <div class="module-link-small">
+                                <strong>Možnosti akce:</strong><br>
+                                - <code>block_message</code> – blokuje zprávy obsahující zakázané slovo.<br>
+                                - <code>timeout</code> – udělí timeout uživateli (výchozí 10 minut).<br>
+                                - <code>alert</code> – odešle upozornění do kanálu s volitelnou zprávou.<br><br>
+                                Vyžaduje oprávnění <strong>Spravovat zprávy</strong>.<br>
+                                Bot musí mít oprávnění <strong>Spravovat server</strong> pro úpravu AutoMod pravidel.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="command-group" data-tags="MODERACE">
                     <div class="command-item">
                         <div class="command-name">/mute</div>
