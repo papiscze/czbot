@@ -7,9 +7,11 @@ function createServerItem(server) {
     const iconDiv = document.createElement('div');
     iconDiv.className = 'server-icon';
 
-    if (server.iconUrl && server.iconUrl.startsWith('http')) {
+    // ➡️ ZMĚNA ZDE: Používáme server.icon_url (podtržítko)
+    if (server.icon_url && server.icon_url.startsWith('http')) { 
         const img = document.createElement('img');
-        img.src = server.iconUrl;
+        // ➡️ ZMĚNA ZDE: Používáme server.icon_url (podtržítko)
+        img.src = server.icon_url; 
         img.alt = server.name;
         iconDiv.appendChild(img);
     } else {
