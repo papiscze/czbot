@@ -35,7 +35,7 @@ async function loadServers() {
 
     try {
         // POZOR: Předpokládá se, že API endpoint pro servery je na '/servers/'
-        const res = await fetch('https://rs422cznas.myds.me:5038/servers/'); 
+        const res = await fetch('https://rs422cznas.myds.me:5038/servers'); 
         
         if (!res.ok) {
             throw new Error(`API odpovědělo s chybovým stavem ${res.status}`);
