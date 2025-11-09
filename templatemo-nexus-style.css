@@ -3129,12 +3129,6 @@ https://templatemo.com/tm-594-nexus-flow
     min-height: 140px; 
 }
 
-.carousel-track {
-    display: flex;
-    white-space: nowrap; /* Zabrání zalomení prvků pod sebe */
-    animation: scroll-left 30s linear infinite; /* Animace posouvání */
-}
-
 .server-item {
     display: inline-flex;
     flex-direction: column;
@@ -3182,15 +3176,27 @@ https://templatemo.com/tm-594-nexus-flow
     line-height: 1.2; /* Volitelné, pro lepší čitelnost */
 }
 
-/* Keyframes pro animaci posuvu zprava doleva (beze změny) */
+/* Keyframes pro animaci posuvu zprava doleva (opraveno) */
 @keyframes scroll-left {
     0% {
+        /* Začíná na pozici prvního setu */
         transform: translateX(0%);
     }
     100% {
-        /* Posun o -50% pro nekonečnou smyčku, protože obsah bude duplikovaný */
-        transform: translateX(-50%); 
+        /* 💡 ZMĚNA: Posun o přesně 1/3 (nebo 1/2, pokud necháte duplikaci 2x)
+           Díky duplikaci 3x, je -33.3333% přesně šířka jednoho setu.
+           V tento moment prohlížeč skočí zpět na 0% (neviditelný skok). */
+        transform: translateX(-33.3333%); /* Upraveno z -50% */
     }
+}
+
+/* 💡 DŮLEŽITÉ: Musíme také prodloužit dobu animace, jinak by to bylo moc rychlé
+   a skok by byl vidět. Zde jsem zvolil 60s pro 3x duplikovaný obsah. */
+.carousel-track {
+    display: flex;
+    white-space: nowrap; 
+    /* 💡 ZMĚNA: Pro delší smyčku a 3x duplikovaný obsah je potřeba delší čas. */
+    animation: scroll-left 30s linear infinite; 
 }
 
 /* Styl pro chybovou hlášku (beze změny) */

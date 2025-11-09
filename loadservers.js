@@ -36,7 +36,6 @@ async function loadServers() {
     track.innerHTML = ''; // Vyčistíme předchozí obsah
 
     try {
-        // POZOR: Předpokládá se, že API endpoint pro servery je na '/servers/'
         const res = await fetch('https://rs422cznas.myds.me:5038/servers'); 
         
         if (!res.ok) {
@@ -50,16 +49,20 @@ async function loadServers() {
             return;
         }
 
-        // Vložíme seznam 2x pro efekt nekonečné smyčky
-        for (let i = 0; i < 2; i++) {
+        // 💡 ZMĚNA: Vložíme seznam 3x pro plynulejší nekonečnou smyčku.
+        // Tímto se zajistí, že vizuální skok se stane mimo zorné pole.
+        for (let i = 0; i < 3; i++) { // Změna z 2 na 3
             servers.forEach(server => {
                 track.appendChild(createServerItem(server));
             });
         }
+        
+        // Zde je klíčová část: Musíme nastavit šířku "track" na takovou,
+        // aby se tam vešly VŠECHNY položky, a pak spustit animaci.
+        // Dále budeme muset upravit CSS Keyframes.
 
     } catch (e) {
         console.error("Chyba při načítání serverů z API:", e);
-        // Zobrazíme chybovou hlášku, pokud načítání selhalo
         trackWrapper.innerHTML = '<span class="server-error">API chyba: Nepodařilo se načíst servery.</span>';
     }
 }
