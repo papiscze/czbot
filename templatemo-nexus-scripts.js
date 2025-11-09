@@ -576,10 +576,16 @@ async function loadServers() {
 
 document.addEventListener('DOMContentLoaded', () => {
     // Statické statistiky
-    loadStats();
-    setInterval(loadStats, 30000);
+    
+    // ➡️ ÚPRAVA: Zkontrolujeme, zda funkce loadStats existuje PŘED jejím voláním.
+    if (typeof loadStats === 'function') { 
+        loadStats();
+        setInterval(loadStats, 30000);
+    }
     
     // Server carousel
+    // Funkce loadServers by měla být definována ve všech souborech, kde se má spustit.
     loadServers();
-    // Rotující seznam není třeba aktualizovat tak často
+    // Pokud chcete aktualizovat servery každých 5 minut, přidejte interval sem:
+    // setInterval(loadServers, 300000); 
 });
