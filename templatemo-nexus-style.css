@@ -3103,7 +3103,7 @@ https://templatemo.com/tm-594-nexus-flow
      }
 }
 
-/* --- Sekce Server Carousel --- */
+/* --- Sekce Server Carousel - SEZNAM SERVERŮ NA DOMOVSKÉ STRÁNCE--- */
 .server-carousel {
     padding: 60px 0;
     overflow: hidden; /* Skryje části, které jsou mimo viditelnou oblast */
@@ -3141,12 +3141,12 @@ https://templatemo.com/tm-594-nexus-flow
     align-items: center;
     justify-content: center;
     text-align: center;
-    margin: 0 30px; /* Mezera mezi ikonami */
+    margin: 0 30px; 
     padding: 10px;
-    width: 100px; /* Zvětšeno z 80px */
+    width: 120px; /* ⬅️ ZVĚTŠENO pro lepší zalamování/delší text */
     transition: transform 0.3s ease, opacity 0.3s ease;
     cursor: default;
-    flex-shrink: 0; /* Zabrání zmenšování prvků */
+    flex-shrink: 0;
 }
 
 .server-icon {
@@ -3177,8 +3177,9 @@ https://templatemo.com/tm-594-nexus-flow
     text-shadow: 0 0 5px #0ff;
     max-width: 100%;
     overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    text-overflow: clip; /* Odstraní "..." */
+    white-space: normal; /* ⬅️ POVOLÍ VÍCE ŘÁDKŮ */
+    line-height: 1.2; /* Volitelné, pro lepší čitelnost */
 }
 
 /* Keyframes pro animaci posuvu zprava doleva (beze změny) */
