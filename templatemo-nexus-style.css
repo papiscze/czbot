@@ -3108,7 +3108,7 @@ https://templatemo.com/tm-594-nexus-flow
     padding: 60px 0;
     overflow: hidden; /* Skryje části, které jsou mimo viditelnou oblast */
     
-    /* PŮVODNÍ ŘÁDEK background: rgba(0, 0, 0, 0.4); BYL ODSTRANĚN NEBO ZMĚNĚN NA transparent */
+    /* Zajišťuje transparentní pozadí, aby sekce splynula s pozadím webu */
     background-color: transparent; 
 
     border-top: 1px solid rgba(0, 255, 255, 0.1);
@@ -3133,11 +3133,6 @@ https://templatemo.com/tm-594-nexus-flow
     display: flex;
     white-space: nowrap; /* Zabrání zalomení prvků pod sebe */
     animation: scroll-left 60s linear infinite; /* Animace posouvání */
-}
-
-/* Pauza animace při najetí myší */
-.carousel-track-wrapper:hover .carousel-track {
-    animation-play-state: paused;
 }
 
 .server-item {
@@ -3186,7 +3181,7 @@ https://templatemo.com/tm-594-nexus-flow
     white-space: nowrap;
 }
 
-/* Keyframes pro animaci posuvu zprava doleva */
+/* Keyframes pro animaci posuvu zprava doleva (beze změny) */
 @keyframes scroll-left {
     0% {
         transform: translateX(0%);
@@ -3197,7 +3192,7 @@ https://templatemo.com/tm-594-nexus-flow
     }
 }
 
-/* Styl pro chybovou hlášku */
+/* Styl pro chybovou hlášku (beze změny) */
 .server-error {
     color: #ff0044;
     font-size: 1.1rem;
