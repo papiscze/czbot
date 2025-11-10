@@ -3196,7 +3196,7 @@ https://templatemo.com/tm-594-nexus-flow
     display: flex;
     white-space: nowrap; 
     /* 💡 ZMĚNA: Pro delší smyčku a 3x duplikovaný obsah je potřeba delší čas. */
-    animation: scroll-left 30s linear infinite; 
+    animation: scroll-left 60s linear infinite; 
 }
 
 /* Styl pro chybovou hlášku (beze změny) */
