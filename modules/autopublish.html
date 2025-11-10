@@ -168,10 +168,10 @@
 
             <div class="module-intro-box">
                 <p>
-                    Tento modul umožňuje automaticky <strong>zveřejňovat (<span class="command-code">publish</span>)</strong> zprávy z vybraných Discord <strong>kanálů oznámení</strong>. Když je zpráva zveřejněna, může být automaticky šířena na jiné servery, které váš kanál sledují. To je ideální pro důležité novinky a aktualizace.
+                    Tento modul umožňuje automaticky <strong>zveřejňovat (<span class="command-code-modules">publish</span>)</strong> zprávy z vybraných Discord <strong>kanálů oznámení</strong>. Když je zpráva zveřejněna, může být automaticky šířena na jiné servery, které váš kanál sledují. To je ideální pro důležité novinky a aktualizace.
                 </p>
                 <div class="warning-box mt-4">
-                    <strong>Poznámka:</strong> Kanály oznámení (<span class="command-code">Announcement Channels</span>) jsou dostupné pouze na serverech, které mají aktivované <strong>Nastavení Komunity</strong> (<span class="command-code">Community Enabled</span>).
+                    <strong>Poznámka:</strong> Kanály oznámení (<span class="command-code-modules">Announcement Channels</span>) jsou dostupné pouze na serverech, které mají aktivované <strong>Nastavení Komunity</strong> (<span class="command-code-modules">Community Enabled</span>).
                 </div>
             </div>
 
@@ -181,7 +181,7 @@
             <div class="info-box">
                 <ul>
                     <li><strong>Číst zprávy</strong> a <strong>Zobrazit kanály</strong></li>
-                    <li><strong>Spravovat kanály</strong> nebo <strong>Publikovat zprávy</strong> (<span class="command-code">Manage Channels</span> nebo <span class="command-code">Publish Messages</span>) - Klíčové oprávnění.</li>
+                    <li><strong>Spravovat kanály</strong> nebo <strong>Publikovat zprávy</strong> (<span class="command-code-modules">Manage Channels</span> nebo <span class="command-code-modules">Publish Messages</span>) - Klíčové oprávnění.</li>
                     <li><strong>Používat příkazy aplikací</strong></li>
                 </ul>
             </div>
@@ -213,17 +213,17 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><span class="command-code">/autopublish add</span></td>
+                        <td><span class="command-code-modules">/autopublish add</span></td>
                         <td>Přidá kanál pro automatické publikování.</td>
-                        <td><span class="command-code">channel</span>, <span class="command-code">publish_bots</span> (volitelné)</td>
+                        <td><span class="command-code-modules">channel</span>, <span class="command-code-modules">publish_bots</span> (volitelné)</td>
                     </tr>
                     <tr>
-                        <td><span class="command-code">/autopublish remove</span></td>
+                        <td><span class="command-code-modules">/autopublish remove</span></td>
                         <td>Zastaví automatické publikování pro daný kanál.</td>
-                        <td><span class="command-code">channel</span></td>
+                        <td><span class="command-code-modules">channel</span></td>
                     </tr>
                     <tr>
-                        <td><span class="command-code">/autopublish list</span></td>
+                        <td><span class="command-code-modules">/autopublish list</span></td>
                         <td>Zobrazí seznam všech nastavených kanálů.</td>
                         <td>Žádné</td>
                     </tr>
@@ -237,17 +237,17 @@
                 <div class="command-details">
                     <div class="command-detail-row">
                         <span class="command-label">Parametry:</span>
-                        <span><span class="command-code">channel</span>: Kanál oznámení k přidání.<br>
-                        <span class="command-code">publish_bots</span>:
+                        <span><span class="command-code-modules">channel</span>: Kanál oznámení k přidání.<br>
+                        <span class="command-code-modules">publish_bots</span>:
                             <ul>
-                                <li><span class="command-code-example">Pouze zprávy od uživatelů</span> (výchozí)</li>
-                                <li><span class="command-code-example">Všechny zprávy (včetně botů)</span></li>
+                                <li><span class="command-code-modules-example">Pouze zprávy od uživatelů</span> (výchozí)</li>
+                                <li><span class="command-code-modules-example">Všechny zprávy (včetně botů)</span></li>
                             </ul>
                         </span>
                     </div>
                     <div class="command-detail-row">
                         <span class="command-label">Příklad (včetně botů):</span>
-                        <span class="command-code-example">/autopublish add channel:#rss-novinky publish_bots:Všechny zprávy (včetně botů)</span>
+                        <span class="command-code-modules-example">/autopublish add channel:#rss-novinky publish_bots:Všechny zprávy (včetně botů)</span>
                     </div>
                 </div>
             </div>
@@ -259,7 +259,7 @@
                 <div class="command-details">
                     <div class="command-detail-row">
                         <span class="command-label">Příklad:</span>
-                        <span class="command-code-example">/autopublish remove channel:#staré-oznámení</span>
+                        <span class="command-code-modules-example">/autopublish remove channel:#staré-oznámení</span>
                     </div>
                 </div>
             </div>
@@ -279,10 +279,10 @@
             <div class="module-divider"></div>
 
             <h2 class="module-heading">❓ Jak to funguje v praxi?</h2>
-            <p>Jakmile je kanál přidán do seznamu (<span class="command-code">/autopublish add</span>), bot bude <strong>naslouchat všem novým zprávám</strong> v tomto kanálu.</p>
+            <p>Jakmile je kanál přidán do seznamu (<span class="command-code-modules">/autopublish add</span>), bot bude <strong>naslouchat všem novým zprávám</strong> v tomto kanálu.</p>
             <ul class="bullet-list">
                 <li>Pokud je zpráva od <strong>uživatele</strong>, bot ji vždy publikuje.</li>
-                <li>Pokud je zpráva od <strong>bota</strong>, bot ji publikuje jen v případě, že jste zvolili možnost <span class="command-code-example">Všechny zprávy (včetně botů)</span>.</li>
+                <li>Pokud je zpráva od <strong>bota</strong>, bot ji publikuje jen v případě, že jste zvolili možnost <span class="command-code-modules-example">Všechny zprávy (včetně botů)</span>.</li>
             </ul>
             <p>Pokud má bot správná oprávnění a kanál je kanál oznámení, zpráva se objeví jako "Zveřejněná" a bude dostupná pro sledování jinými servery.</p>
 

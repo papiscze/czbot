@@ -190,7 +190,7 @@
                 <h4>Omezení Modulu:</h4>
                 <ul>
                     <li>Bot podporuje <strong>pouze jeden aktivní stream na celou guildu (server)</strong>.</li>
-                    <li>Bot <strong>zůstane</strong> v hlasovém kanále a bude pokračovat ve streamování, i když ho <strong>všichni uživatelé opustí</strong>. Streamování se zastaví pouze příkazem <span class="command-code">/stream stop</span>.</li>
+                    <li>Bot <strong>zůstane</strong> v hlasovém kanále a bude pokračovat ve streamování, i když ho <strong>všichni uživatelé opustí</strong>. Streamování se zastaví pouze příkazem <span class="command-code-modules">/stream stop</span>.</li>
                     <li>URL adresy vedoucí na video platformy jako <strong>YouTube</strong> jsou <strong>explicitně blokovány</strong>. <strong>Streamování videa není podporováno!</strong> 🚫</li>
                 </ul>
             </div>
@@ -203,7 +203,7 @@
             <div class="info-box">
                 <ul>
                     <li><strong>Stabilní streamování</strong>: Využívá FFmpeg s optimalizovanými parametry.</li>
-                    <li><strong>Rozšířená podpora odkazů</strong>: Zpracovává přímé audio URL a <strong>playlisty</strong> (<span class="command-code">.pls</span>, <span class="command-code">.m3u</span>).</li>
+                    <li><strong>Rozšířená podpora odkazů</strong>: Zpracovává přímé audio URL a <strong>playlisty</strong> (<span class="command-code-modules">.pls</span>, <span class="command-code-modules">.m3u</span>).</li>
                     <li><strong>Extrakce přímé URL</strong>: Automaticky stáhne obsah playlistu, extrahuje skutečnou streamovací URL a tu předá FFmpeg. ✅</li>
                     <li><strong>Dynamická hlasitost</strong>: Umožňuje uživatelům nastavit hlasitost streamu v reálném čase.</li>
                     <li><strong>Lokalizace</strong>: Všechny zprávy jsou plně lokalizovány (CZ/EN).</li>
@@ -213,7 +213,7 @@
             <div class="module-divider"></div>
 
             <h2 class="module-heading">🚀 Příkazy</h2>
-            <p>Všechny příkazy patří do skupiny <span class="command-code">/stream</span>. Pro použití musíte být v <strong>jakémkoli hlasovém kanálu</strong>.</p>
+            <p>Všechny příkazy patří do skupiny <span class="command-code-modules">/stream</span>. Pro použití musíte být v <strong>jakémkoli hlasovém kanálu</strong>.</p>
             
             <h3>Seznam příkazů</h3>
             
@@ -227,19 +227,19 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><span class="command-code">/stream play</span></td>
+                        <td><span class="command-code-modules">/stream play</span></td>
                         <td>Připojí se a spustí stream z dané URL.</td>
-                        <td><span class="command-code">url</span></td>
+                        <td><span class="command-code-modules">url</span></td>
                     </tr>
                     <tr>
-                        <td><span class="command-code">/stream stop</span></td>
+                        <td><span class="command-code-modules">/stream stop</span></td>
                         <td>Zastaví přehrávání a opustí kanál.</td>
                         <td>Žádné</td>
                     </tr>
                     <tr>
-                        <td><span class="command-code">/stream volume</span></td>
+                        <td><span class="command-code-modules">/stream volume</span></td>
                         <td>Nastaví hlasitost streamu v %.</td>
-                        <td><span class="command-code">volume</span> (0-100)</td>
+                        <td><span class="command-code-modules">volume</span> (0-100)</td>
                     </tr>
                 </tbody>
             </table>
@@ -251,11 +251,11 @@
                 <div class="command-details">
                     <div class="command-detail-row">
                         <span class="command-label">Parametr:</span>
-                        <span><span class="command-code">url</span>: Přímý odkaz na audio stream (např. <span class="command-code">.mp3</span>) <strong>NEBO playlist</strong> (např. <span class="command-code">.pls</span>).</span>
+                        <span><span class="command-code-modules">url</span>: Přímý odkaz na audio stream (např. <span class="command-code-modules">.mp3</span>) <strong>NEBO playlist</strong> (např. <span class="command-code-modules">.pls</span>).</span>
                     </div>
                     <div class="command-detail-row">
                         <span class="command-label">Příklad:</span>
-                        <span class="command-code-example">/stream play url:https://radioabc.cz/stream.mp3</span>
+                        <span class="command-code-modules-example">/stream play url:https://radioabc.cz/stream.mp3</span>
                     </div>
                     <div class="command-detail-row">
                         <span class="command-label">Odpověď bota:</span>
@@ -283,11 +283,11 @@
                 <div class="command-details">
                     <div class="command-detail-row">
                         <span class="command-label">Parametr:</span>
-                        <span><span class="command-code">volume</span>: Celé číslo od <strong>0</strong> (ticho) do <strong>100</strong> (maximální hlasitost).</span>
+                        <span><span class="command-code-modules">volume</span>: Celé číslo od <strong>0</strong> (ticho) do <strong>100</strong> (maximální hlasitost).</span>
                     </div>
                     <div class="command-detail-row">
                         <span class="command-label">Příklad:</span>
-                        <span class="command-code-example">/stream volume volume:50</span>
+                        <span class="command-code-modules-example">/stream volume volume:50</span>
                     </div>
                     <div class="command-detail-row">
                         <span class="command-label">Odpověď bota:</span>

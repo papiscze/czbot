@@ -171,7 +171,7 @@
                     Tento modul je navržen tak, aby chránil váš server před škodlivým obsahem. Bot monitoruje zprávy a přílohy a v případě detekce scamu automaticky zasáhne: zprávu <strong>smaže</strong> a v mnoha případech uživateli udělí <strong>1 hodinu timeout</strong>.
                 </p>
                 <div class="info-box mt-4">
-                    <strong>Klíčové oprávnění:</strong> Pro správu a konfiguraci modulu je vyžadováno oprávnění <strong>Spravovat zprávy</strong> (<span class="command-code">manage_messages</span>).
+                    <strong>Klíčové oprávnění:</strong> Pro správu a konfiguraci modulu je vyžadováno oprávnění <strong>Spravovat zprávy</strong> (<span class="command-code-modules">manage_messages</span>).
                 </div>
             </div>
 
@@ -193,21 +193,21 @@
                         <td>Uživatel s rolí nastavenou jako výjimka neaktivuje žádnou akci.</td>
                     </tr>
                     <tr>
-                        <td><strong>Moderátor</strong> (s <span class="command-code">Spravovat zprávy</span>)</td>
+                        <td><strong>Moderátor</strong> (s <span class="command-code-modules">Spravovat zprávy</span>)</td>
                         <td><strong>Smaže</strong> zprávu, <strong>NEUDĚLÍ</strong> timeout.</td>
-                        <td>Zaznamenáno jako upozornění (<span class="command-code">WARNING</span>) do changelog kanálu.</td>
+                        <td>Zaznamenáno jako upozornění (<span class="command-code-modules">WARNING</span>) do changelog kanálu.</td>
                     </tr>
                     <tr>
                         <td><strong>Běžný uživatel</strong></td>
                         <td><strong>Smaže</strong> zprávu a <strong>udělí timeout na 1 hodinu</strong>.</td>
-                        <td>Zaznamenáno jako informace (<span class="command-code">INFO</span>) do logů.</td>
+                        <td>Zaznamenáno jako informace (<span class="command-code-modules">INFO</span>) do logů.</td>
                     </tr>
                 </tbody>
             </table>
 
             <div class="module-divider"></div>
 
-            <h2 class="module-heading">🤖 Příkazy pro správu: <span class="command-code">/scamochrana</span></h2>
+            <h2 class="module-heading">🤖 Příkazy pro správu: <span class="command-code-modules">/scamochrana</span></h2>
             
             <table class="data-table">
                 <thead>
@@ -219,41 +219,41 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><span class="command-code">/scamochrana zapnout</span></td>
+                        <td><span class="command-code-modules">/scamochrana zapnout</span></td>
                         <td>Zapne ochranu proti scamu na serveru.</td>
-                        <td><span class="command-code">/scamochrana zapnout</span></td>
+                        <td><span class="command-code-modules">/scamochrana zapnout</span></td>
                     </tr>
                     <tr>
-                        <td><span class="command-code">/scamochrana vypnout</span></td>
+                        <td><span class="command-code-modules">/scamochrana vypnout</span></td>
                         <td>Vypne ochranu proti scamu na serveru.</td>
-                        <td><span class="command-code">/scamochrana vypnout</span></td>
+                        <td><span class="command-code-modules">/scamochrana vypnout</span></td>
                     </tr>
                     <tr>
-                        <td><span class="command-code">/scamochrana list</span></td>
+                        <td><span class="command-code-modules">/scamochrana list</span></td>
                         <td>Zobrazí seznam blokovaných slov a rolí s výjimkou.</td>
-                        <td><span class="command-code">/scamochrana list</span></td>
+                        <td><span class="command-code-modules">/scamochrana list</span></td>
                     </tr>
                     <tr>
-                        <td><span class="command-code">/scamochrana status</span></td>
+                        <td><span class="command-code-modules">/scamochrana status</span></td>
                         <td>Zobrazí aktuální stav zapnutí/vypnutí ochrany.</td>
-                        <td><span class="command-code">/scamochrana status</span></td>
+                        <td><span class="command-code-modules">/scamochrana status</span></td>
                     </tr>
                 </tbody>
             </table>
 
-            <h3 class="mt-4">Správa výjimek pro role: <span class="command-code">/scamochrana vyjimka</span></h3>
+            <h3 class="mt-4">Správa výjimek pro role: <span class="command-code-modules">/scamochrana vyjimka</span></h3>
             <p>Nastavuje role, pro které je ochrana proti scamu ignorována.</p>
 
             <div class="command-box">
                 <h4 class="command-title">Příklad: Přidání výjimky</h4>
-                <p>Přidá roli <span class="command-code">@Moderátoři</span> na seznam výjimek.</p>
-                <span class="command-code-example">/scamochrana vyjimka akce:pridat role:@Moderátoři</span>
+                <p>Přidá roli <span class="command-code-modules">@Moderátoři</span> na seznam výjimek.</p>
+                <span class="command-code-modules-example">/scamochrana vyjimka akce:pridat role:@Moderátoři</span>
             </div>
             
             <div class="command-box">
                 <h4 class="command-title">Příklad: Odebrání výjimky</h4>
-                <p>Odebere roli <span class="command-code">@Správci</span> ze seznamu výjimek.</p>
-                <span class="command-code-example">/scamochrana vyjimka akce:odebrat role:@Správci</span>
+                <p>Odebere roli <span class="command-code-modules">@Správci</span> ze seznamu výjimek.</p>
+                <span class="command-code-modules-example">/scamochrana vyjimka akce:odebrat role:@Správci</span>
             </div>
 
             <div class="module-divider"></div>

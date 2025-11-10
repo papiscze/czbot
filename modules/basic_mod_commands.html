@@ -180,12 +180,12 @@
                 <table class="data-table small-font">
                     <thead><tr><th>Parametr</th><th>Popis</th></tr></thead>
                     <tbody>
-                        <tr><td><span class="command-code">user</span></td><td><strong>Povinné.</strong> Uživatel k umlčení.</td></tr>
-                        <tr><td><span class="command-code">duration</span></td><td><strong>Povinné.</strong> Délka (`30m`, `2h`, `7d`).</td></tr>
-                        <tr><td><span class="command-code">reason</span></td><td><strong>Volitelné.</strong> Důvod umlčení.</td></tr>
+                        <tr><td><span class="command-code-modules">user</span></td><td><strong>Povinné.</strong> Uživatel k umlčení.</td></tr>
+                        <tr><td><span class="command-code-modules">duration</span></td><td><strong>Povinné.</strong> Délka (`30m`, `2h`, `7d`).</td></tr>
+                        <tr><td><span class="command-code-modules">reason</span></td><td><strong>Volitelné.</strong> Důvod umlčení.</td></tr>
                     </tbody>
                 </table>
-                <span class="command-code-example mt-2">/mute user:@JanNovak duration:2h reason:Spamování</span>
+                <span class="command-code-modules-example mt-2">/mute user:@JanNovak duration:2h reason:Spamování</span>
             </div>
 
             <div class="command-box mod-command">
@@ -194,11 +194,11 @@
                 <table class="data-table small-font">
                     <thead><tr><th>Parametr</th><th>Popis</th></tr></thead>
                     <tbody>
-                        <tr><td><span class="command-code">user</span></td><td><strong>Povinné.</strong> Uživatel k varování.</td></tr>
-                        <tr><td><span class="command-code">reason</span></td><td><strong>Povinné.</strong> Důvod varování.</td></tr>
+                        <tr><td><span class="command-code-modules">user</span></td><td><strong>Povinné.</strong> Uživatel k varování.</td></tr>
+                        <tr><td><span class="command-code-modules">reason</span></td><td><strong>Povinné.</strong> Důvod varování.</td></tr>
                     </tbody>
                 </table>
-                <span class="command-code-example mt-2">/warn user:@PetraDvorakova reason:Nevhodné chování</span>
+                <span class="command-code-modules-example mt-2">/warn user:@PetraDvorakova reason:Nevhodné chování</span>
             </div>
 
             <div class="command-box mod-command">
@@ -207,12 +207,12 @@
                 <table class="data-table small-font">
                     <thead><tr><th>Parametr</th><th>Popis</th></tr></thead>
                     <tbody>
-                        <tr><td><span class="command-code">member</span></td><td><strong>Povinné.</strong> Uživatel k vyhození.</td></tr>
-                        <tr><td><span class="command-code">reason</span></td><td><strong>Volitelné.</strong> Důvod.</td></tr>
-                        <tr><td><span class="command-code">delete_messages_days</span></td><td><strong>Volitelné.</strong> Množství dní, za které se mají smazat zprávy (0, 1, 2, 7).</td></tr>
+                        <tr><td><span class="command-code-modules">member</span></td><td><strong>Povinné.</strong> Uživatel k vyhození.</td></tr>
+                        <tr><td><span class="command-code-modules">reason</span></td><td><strong>Volitelné.</strong> Důvod.</td></tr>
+                        <tr><td><span class="command-code-modules">delete_messages_days</span></td><td><strong>Volitelné.</strong> Množství dní, za které se mají smazat zprávy (0, 1, 2, 7).</td></tr>
                     </tbody>
                 </table>
-                <span class="command-code-example mt-2">/kick member:@MichalKadlec reason:Opakované porušování delete_messages_days:1</span>
+                <span class="command-code-modules-example mt-2">/kick member:@MichalKadlec reason:Opakované porušování delete_messages_days:1</span>
             </div>
             
             <div class="command-box mod-command">
@@ -221,19 +221,19 @@
                 <table class="data-table small-font">
                     <thead><tr><th>Parametr</th><th>Popis</th></tr></thead>
                     <tbody>
-                        <tr><td><span class="command-code">user</span></td><td><strong>Povinné.</strong> Uživatel k zabanování.</td></tr>
-                        <tr><td><span class="command-code">reason</span></td><td><strong>Volitelné.</strong> Důvod.</td></tr>
-                        <tr><td><span class="command-code">delete_messages_days</span></td><td><strong>Volitelné.</strong> Množství dní, za které se mají smazat zprávy (0, 1, 2, 7).</td></tr>
+                        <tr><td><span class="command-code-modules">user</span></td><td><strong>Povinné.</strong> Uživatel k zabanování.</td></tr>
+                        <tr><td><span class="command-code-modules">reason</span></td><td><strong>Volitelné.</strong> Důvod.</td></tr>
+                        <tr><td><span class="command-code-modules">delete_messages_days</span></td><td><strong>Volitelné.</strong> Množství dní, za které se mají smazat zprávy (0, 1, 2, 7).</td></tr>
                     </tbody>
                 </table>
-                <span class="command-code-example mt-2">/ban user:@EvaProchazkova reason:Těžké porušení delete_messages_days:7</span>
+                <span class="command-code-modules-example mt-2">/ban user:@EvaProchazkova reason:Těžké porušení delete_messages_days:7</span>
             </div>
 
             <div class="module-divider"></div>
             
             <h2 class="module-heading">2. Správa Kanálů a Zpráv <span class="badge">MOD</span></h2>
 
-            <h3 class="mt-4">Smazání zpráv: <span class="command-code">/clear</span></h3>
+            <h3 class="mt-4">Smazání zpráv: <span class="command-code-modules">/clear</span></h3>
             <p>Skupina příkazů pro přesné smazání zpráv.</p>
             
             <table class="data-table command-table full-width">
@@ -246,19 +246,19 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><span class="command-code">/clear pocet</span></td>
+                        <td><span class="command-code-modules">/clear pocet</span></td>
                         <td>Smaže zadaný počet nejnovějších zpráv (1-100).</td>
-                        <td><span class="command-code-example">/clear pocet množství:50</span></td>
+                        <td><span class="command-code-modules-example">/clear pocet množství:50</span></td>
                     </tr>
                     <tr>
-                        <td><span class="command-code">/clear od_zpravy</span></td>
+                        <td><span class="command-code-modules">/clear od_zpravy</span></td>
                         <td>Smaže všechny novější zprávy od zadaného ID zprávy.</td>
-                        <td><span class="command-code-example">/clear od_zpravy id:140...</span></td>
+                        <td><span class="command-code-modules-example">/clear od_zpravy id:140...</span></td>
                     </tr>
                     <tr>
-                        <td><span class="command-code">/clear uzivatel</span></td>
+                        <td><span class="command-code-modules">/clear uzivatel</span></td>
                         <td>Smaže zprávy od konkrétního uživatele (prohledá max. zadané množství).</td>
-                        <td><span class="command-code-example">/clear uzivatel uživatel:@Jana množství:200</span></td>
+                        <td><span class="command-code-modules-example">/clear uzivatel uživatel:@Jana množství:200</span></td>
                     </tr>
                 </tbody>
             </table>
@@ -269,18 +269,18 @@
                 <table class="data-table small-font">
                     <thead><tr><th>Parametr</th><th>Popis</th></tr></thead>
                     <tbody>
-                        <tr><td><span class="command-code">seconds</span></td><td><strong>Povinné.</strong> Počet sekund čekání (0 pro vypnutí). Max 21600.</td></tr>
+                        <tr><td><span class="command-code-modules">seconds</span></td><td><strong>Povinné.</strong> Počet sekund čekání (0 pro vypnutí). Max 21600.</td></tr>
                     </tbody>
                 </table>
-                <span class="command-code-example mt-2">/slowmode seconds:10</span>
-                <span class="command-code-example mt-2">/slowmode seconds:0 (vypnutí)</span>
+                <span class="command-code-modules-example mt-2">/slowmode seconds:10</span>
+                <span class="command-code-modules-example mt-2">/slowmode seconds:0 (vypnutí)</span>
             </div>
 
             <div class="module-divider"></div>
             
             <h2 class="module-heading">3. Automatické Odpovědi a Připomínky <span class="badge">MOD</span></h2>
 
-            <h3 class="mt-4">Automatické odpovědi: <span class="command-code">/autoodpoved</span></h3>
+            <h3 class="mt-4">Automatické odpovědi: <span class="command-code-modules">/autoodpoved</span></h3>
             <p>Bot automaticky odpoví, pokud uživatel napíše přesně zadané klíčové slovo.</p>
             
             <table class="data-table command-table full-width">
@@ -293,25 +293,25 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><span class="command-code">/autoodpoved add</span></td>
+                        <td><span class="command-code-modules">/autoodpoved add</span></td>
                         <td>Přidá nebo aktualizuje auto-odpověď. <span class="text-secondary">(keyword, response)</span></td>
-                        <td><span class="command-code-example">/autoodpoved add keyword:praha response:Hlavní město</span></td>
+                        <td><span class="command-code-modules-example">/autoodpoved add keyword:praha response:Hlavní město</span></td>
                     </tr>
                     <tr>
-                        <td><span class="command-code">/autoodpoved remove</span></td>
+                        <td><span class="command-code-modules">/autoodpoved remove</span></td>
                         <td>Odebere auto-odpověď. <span class="text-secondary">(keyword)</span></td>
-                        <td><span class="command-code-example">/autoodpoved remove keyword:praha</span></td>
+                        <td><span class="command-code-modules-example">/autoodpoved remove keyword:praha</span></td>
                     </tr>
                     <tr>
-                        <td><span class="command-code">/autoodpoved list</span></td>
+                        <td><span class="command-code-modules">/autoodpoved list</span></td>
                         <td>Zobrazí seznam všech nastavených odpovědí.</td>
-                        <td><span class="command-code-example">/autoodpoved list</span></td>
+                        <td><span class="command-code-modules-example">/autoodpoved list</span></td>
                     </tr>
                 </tbody>
             </table>
 
-            <h3 class="mt-4">Správa DISBOARD Připomínek: <span class="command-code">/bumpalert</span></h3>
-            <p>Nastavení automatické připomínky pro <span class="command-code">!d bump</span> po uplynutí cooldownu.</p>
+            <h3 class="mt-4">Správa DISBOARD Připomínek: <span class="command-code-modules">/bumpalert</span></h3>
+            <p>Nastavení automatické připomínky pro <span class="command-code-modules">!d bump</span> po uplynutí cooldownu.</p>
             
             <table class="data-table command-table full-width">
                 <thead>
@@ -323,24 +323,24 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><span class="command-code">on</span></td>
+                        <td><span class="command-code-modules">on</span></td>
                         <td>Zapne funkci, volitelně uloží nový text. <span class="text-secondary">(text)</span></td>
-                        <td><span class="command-code-example">/bumpalert on text:Nezapomeňte na bump! 🎉</span></td>
+                        <td><span class="command-code-modules-example">/bumpalert on text:Nezapomeňte na bump! 🎉</span></td>
                     </tr>
                     <tr>
-                        <td><span class="command-code">off</span></td>
+                        <td><span class="command-code-modules">off</span></td>
                         <td>Vypne funkci a smaže uložený text.</td>
-                        <td><span class="command-code-example">/bumpalert off</span></td>
+                        <td><span class="command-code-modules-example">/bumpalert off</span></td>
                     </tr>
                     <tr>
-                        <td><span class="command-code">reset</span></td>
+                        <td><span class="command-code-modules">reset</span></td>
                         <td>Zapne funkci a nastaví výchozí text bota.</td>
-                        <td><span class="command-code-example">/bumpalert reset</span></td>
+                        <td><span class="command-code-modules-example">/bumpalert reset</span></td>
                     </tr>
                     <tr>
-                        <td><span class="command-code">info</span></td>
+                        <td><span class="command-code-modules">info</span></td>
                         <td>Zobrazí aktuální stav a text připomínky.</td>
-                        <td><span class="command-code-example">/bumpalert info</span></td>
+                        <td><span class="command-code-modules-example">/bumpalert info</span></td>
                     </tr>
                 </tbody>
             </table>
@@ -350,21 +350,21 @@
             <h2 class="module-heading">4. Dynamické Kanály se Statistikami <span class="badge">MOD</span></h2>
             <p>Dynamická aktualizace názvů hlasových kanálů s různými statistikami serveru (aktualizace probíhá každých 10 minut).</p>
 
-            <h3 class="mt-4">Nastavení statistiky: <span class="command-code">/statistiky nastavit</span></h3>
+            <h3 class="mt-4">Nastavení statistiky: <span class="command-code-modules">/statistiky nastavit</span></h3>
             <table class="data-table small-font">
                 <thead><tr><th>Parametr</th><th>Popis</th></tr></thead>
                 <tbody>
-                    <tr><td><span class="command-code">channel</span></td><td><strong>Povinné.</strong> Hlasový kanál, jehož název se bude aktualizovat.</td></tr>
-                    <tr><td><span class="command-code">action</span></td><td><strong>Povinné.</strong> Typ statistiky (`Počet členů`, `Počet botů`, `Počet rolí`, `Počet lidí s rolí`).</td></tr>
-                    <tr><td><span class="command-code">role</span></td><td><strong>Povinné</strong> pro akci `Počet lidí s rolí`.</td></tr>
+                    <tr><td><span class="command-code-modules">channel</span></td><td><strong>Povinné.</strong> Hlasový kanál, jehož název se bude aktualizovat.</td></tr>
+                    <tr><td><span class="command-code-modules">action</span></td><td><strong>Povinné.</strong> Typ statistiky (`Počet členů`, `Počet botů`, `Počet rolí`, `Počet lidí s rolí`).</td></tr>
+                    <tr><td><span class="command-code-modules">role</span></td><td><strong>Povinné</strong> pro akci `Počet lidí s rolí`.</td></tr>
                 </tbody>
             </table>
-            <span class="command-code-example mt-2">/statistiky nastavit channel:👥-počet-členů action:Počet členů</span>
+            <span class="command-code-modules-example mt-2">/statistiky nastavit channel:👥-počet-členů action:Počet členů</span>
             
-            <h3 class="mt-4">Odstranění statistiky: <span class="command-code">/statistiky odstranit</span></h3>
+            <h3 class="mt-4">Odstranění statistiky: <span class="command-code-modules">/statistiky odstranit</span></h3>
             <div class="command-box mod-command">
                 <p>Odstraní statistiku z daného hlasového kanálu. Kanál se vrátí do normálního stavu.</p>
-                <span class="command-code-example">/statistiky odstranit channel:👥-počet-členů</span>
+                <span class="command-code-modules-example">/statistiky odstranit channel:👥-počet-členů</span>
             </div>
 
             <div class="module-divider"></div>
@@ -378,18 +378,18 @@
                 <p>Při detekci bot: 1) Upozorní moderátory a 2) Zvýší verifikační úroveň serveru na <strong>Nejvyšší</strong> (vyžaduje ověřené telefonní číslo pro připojení).</p>
             </div>
 
-            <h3 class="mt-4">Nastavení upozornění: <span class="command-code">/raid setalertchannel</span></h3>
+            <h3 class="mt-4">Nastavení upozornění: <span class="command-code-modules">/raid setalertchannel</span></h3>
             <p>Nastaví kanál, kam budou chodit `@here` upozornění na raidy.</p>
-            <span class="command-code-example">/raid setalertchannel channel:#mod-log</span>
+            <span class="command-code-modules-example">/raid setalertchannel channel:#mod-log</span>
 
-            <h3 class="mt-4">Odstranění upozornění: <span class="command-code">/raid removealertchannel</span></h3>
+            <h3 class="mt-4">Odstranění upozornění: <span class="command-code-modules">/raid removealertchannel</span></h3>
             <p>Odstraní nastavený kanál pro upozornění.</p>
-            <span class="command-code-example">/raid removealertchannel</span>
+            <span class="command-code-modules-example">/raid removealertchannel</span>
 
-            <h3 class="mt-4">Resetování módu: <span class="command-code">/raid resetmode</span> <span class="badge">ADMIN</span></h3>
+            <h3 class="mt-4">Resetování módu: <span class="command-code-modules">/raid resetmode</span> <span class="badge">ADMIN</span></h3>
             <p>Vynuluje interní stav bota po ukončení raidu a umožní další detekci.</p>
             <p>⚠️ <strong>Důležité</strong>: <strong>NEVRACÍ</strong> verifikační úroveň serveru! Tuto změnu musíte provést ručně v nastavení serveru.</p>
-            <span class="command-code-example">/raid resetmode</span>
+            <span class="command-code-modules-example">/raid resetmode</span>
             
         </div>
     </div>

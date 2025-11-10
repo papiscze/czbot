@@ -185,7 +185,7 @@
             <h2 class="module-heading">💡 Základní Funkcionalita a Transparentnost</h2>
             <p>CrossBan funguje na principu <strong>oboustranné peer-to-peer federace</strong> (server-to-server):</p>
             <ol>
-                <li><strong>Iniciace Banu:</strong> Když moderátor na <strong>Serveru A</strong> spustí příkaz <span class="command-code">/crossban ban</span>, uživatel je zabanován na Serveru A a je zapsán do centrálního *crossban listu*.</li>
+                <li><strong>Iniciace Banu:</strong> Když moderátor na <strong>Serveru A</strong> spustí příkaz <span class="command-code-modules">/crossban ban</span>, uživatel je zabanován na Serveru A a je zapsán do centrálního *crossban listu*.</li>
                 <li><strong>Notifikace:</strong> Bot zjistí, které servery navázaly partnerství se Serverem A.</li>
                 <li><strong>Akce Partnera:</strong> Všem těmto partnerům je odeslána notifikace. Konkrétní reakce závisí na jejich <strong>Nastaveném Tieru</strong> (viz níže).</li>
                 <li><strong>Auto-Ban (Tier 2):</strong> Pokud má partner nastavený Tier 2, ban je proveden <strong>automaticky</strong>.</li>
@@ -214,19 +214,19 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><span class="command-code">/crossban tier 0</span></td>
+                        <td><span class="command-code-modules">/crossban tier 0</span></td>
                         <td>Vypnuto</td>
                         <td><strong>IGNOROVAT</strong> všechny crossbany. Bot nebude reagovat. (Výchozí stav)</td>
                         <td>Žádné</td>
                     </tr>
                     <tr>
-                        <td><span class="command-code">/crossban tier 1</span></td>
+                        <td><span class="command-code-modules">/crossban tier 1</span></td>
                         <td>Upozornění</td>
-                        <td><strong>NOTIFIKOVAT</strong> moderátory (v <span class="command-code">mod_channel</span>) a <strong>zobrazit tlačítka</strong> pro ruční schválení/ignorování.</td>
-                        <td><strong>Moderační kanál</strong> (pomocí <span class="command-code">mod_channel</span>)</td>
+                        <td><strong>NOTIFIKOVAT</strong> moderátory (v <span class="command-code-modules">mod_channel</span>) a <strong>zobrazit tlačítka</strong> pro ruční schválení/ignorování.</td>
+                        <td><strong>Moderační kanál</strong> (pomocí <span class="command-code-modules">mod_channel</span>)</td>
                     </tr>
                     <tr>
-                        <td><span class="command-code">/crossban tier 2</span></td>
+                        <td><span class="command-code-modules">/crossban tier 2</span></td>
                         <td>Auto-Ban</td>
                         <td><strong>AUTOMATICKY BANUJEME</strong> každého, kdo je na listu od partnera.</td>
                         <td><strong>Moderační kanál</strong> (doporučeno pro log)</td>
@@ -234,7 +234,7 @@
                 </tbody>
             </table>
             <p class="mt-2">
-                <strong>Příklad:</strong> <span class="command-code-example">/crossban tier 1 mod_channel:#mod-log</span>
+                <strong>Příklad:</strong> <span class="command-code-modules-example">/crossban tier 1 mod_channel:#mod-log</span>
             </p>
 
             <h3 class="mt-4">2. Správa Partnerství (Federace)</h3>
@@ -244,7 +244,7 @@
             <div class="command-box">
                 <h4 class="command-title">/crossban partner_code</h4>
                 <div class="command-details">
-                    <p>Bot vygeneruje a zobrazí <strong>unikátní, trvalý kód</strong> (např. <span class="command-code">CB1A7B2X9</span>), který sdělíte serveru, jenž se k Vám chce připojit.</p>
+                    <p>Bot vygeneruje a zobrazí <strong>unikátní, trvalý kód</strong> (např. <span class="command-code-modules">CB1A7B2X9</span>), který sdělíte serveru, jenž se k Vám chce připojit.</p>
                 </div>
             </div>
 
@@ -271,7 +271,7 @@
             <div class="command-box">
                 <h4 class="command-title">/crossban dissolve &lt;kód&gt;</h4>
                 <div class="command-details">
-                    <p><strong>Permanentní vazba se zruší pro oba servery</strong>. Použijte <strong>tajný kód partnerství</strong>, který se zobrazí v <span class="command-code">/crossban partners</span>.</p>
+                    <p><strong>Permanentní vazba se zruší pro oba servery</strong>. Použijte <strong>tajný kód partnerství</strong>, který se zobrazí v <span class="command-code-modules">/crossban partners</span>.</p>
                 </div>
             </div>
             
@@ -289,11 +289,11 @@
                     </div>
                     <div class="command-detail-row">
                         <span class="command-label">Oprávnění:</span>
-                        <span><span class="command-code">Zabanovat členy</span></span>
+                        <span><span class="command-code-modules">Zabanovat členy</span></span>
                     </div>
                     <div class="command-detail-row">
                         <span class="command-label">Příklad:</span>
-                        <span class="command-code-example">/crossban ban @BadGuy Raiding a spamování soukromých zpráv.</span>
+                        <span class="command-code-modules-example">/crossban ban @BadGuy Raiding a spamování soukromých zpráv.</span>
                     </div>
                 </div>
             </div>
@@ -355,7 +355,7 @@
                     </tr>
                     <tr>
                         <td><strong>Připojení crossbanovaného uživatele</strong></td>
-                        <td><strong>Okamžitě zabanuje</strong> uživatele při vstupu (<span class="command-code">on_member_join</span>).</td>
+                        <td><strong>Okamžitě zabanuje</strong> uživatele při vstupu (<span class="command-code-modules">on_member_join</span>).</td>
                     </tr>
                 </tbody>
             </table>

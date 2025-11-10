@@ -172,7 +172,7 @@
                     <br>
                     1. <strong>Kontextové menu</strong> pro rychlý překlad zpráv.
                     <br>
-                    2. Příkaz <span class="command-code">/prelozit</span> pro překlad zadaného textu.
+                    2. Příkaz <span class="command-code-modules">/prelozit</span> pro překlad zadaného textu.
                     <br>
                     3. <strong>Automatický překlad</strong> kanálů pro mezinárodní komunity.
                 </p>
@@ -187,14 +187,14 @@
                     <li>Klikněte <strong>pravým tlačítkem</strong> na zprávu, kterou chcete přeložit.</li>
                     <li>V menu vyberte <strong>Aplikace</strong> (Apps).</li>
                     <li>Zvolte položku <strong>[BETA] Přeložit</strong>.</li>
-                    <li>Zadejte <strong>kód jazyka</strong> (např. <span class="command-code">CS</span>) do cílového pole a odešlete.</li>
+                    <li>Zadejte <strong>kód jazyka</strong> (např. <span class="command-code-modules">CS</span>) do cílového pole a odešlete.</li>
                 </ol>
                 <p class="mt-2">Překlad se zobrazí pouze vám (<strong>ephemeralní</strong> odpověď).</p>
             </div>
             
             <div class="module-divider"></div>
 
-            <h2 class="module-heading">2. Překlad textu pomocí příkazu <span class="command-code">/prelozit</span></h2>
+            <h2 class="module-heading">2. Překlad textu pomocí příkazu <span class="command-code-modules">/prelozit</span></h2>
             <p>Použijte, pokud chcete přeložit text, který píšete sami nebo který ještě není v chatu.</p>
 
             <div class="command-box user-command">
@@ -208,17 +208,17 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td><span class="command-code">lang</span></td>
-                            <td><strong>Kód cílového jazyka</strong> (např. <span class="command-code">DE</span> pro Němčinu).</td>
+                            <td><span class="command-code-modules">lang</span></td>
+                            <td><strong>Kód cílového jazyka</strong> (např. <span class="command-code-modules">DE</span> pro Němčinu).</td>
                         </tr>
                         <tr>
-                            <td><span class="command-code">text</span></td>
+                            <td><span class="command-code-modules">text</span></td>
                             <td><strong>Text k přeložení</strong>.</td>
                         </tr>
                     </tbody>
                 </table>
                 <h4 class="command-title mt-2">Příklad:</h4>
-                <span class="command-code-example">/prelozit lang:es text:Dobrý den, jak se máte?</span>
+                <span class="command-code-modules-example">/prelozit lang:es text:Dobrý den, jak se máte?</span>
             </div>
 
             <div class="module-divider"></div>
@@ -229,13 +229,13 @@
             <div class="command-box mod-command">
                 <h4 class="command-title">/autopreklad setup <span class="badge">MOD</span></h4>
                 <p>Zapne automatický překlad pro daný kanál.</p>
-                <span class="command-code-example">/autopreklad setup channel:#english-chat lang:en-gb</span>
+                <span class="command-code-modules-example">/autopreklad setup channel:#english-chat lang:en-gb</span>
             </div>
             
             <div class="command-box mod-command">
                 <h4 class="command-title">/autopreklad remove <span class="badge">MOD</span></h4>
                 <p>Zruší automatický překlad v daném kanálu.</p>
-                <span class="command-code-example">/autopreklad remove channel:#english-chat</span>
+                <span class="command-code-modules-example">/autopreklad remove channel:#english-chat</span>
             </div>
             
             <div class="command-box mod-command">
@@ -260,18 +260,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr><td><span class="command-code">BG</span></td><td>Bulharština</td><td><span class="command-code">EN-GB</span></td><td>Angličtina (britská)</td><td><span class="command-code">NL</span></td><td>Holandština</td></tr>
-                    <tr><td><span class="command-code">CS</span></td><td>Čeština</td><td><span class="command-code">ES</span></td><td>Španělština</td><td><span class="command-code">PL</span></td><td>Polština</td></tr>
-                    <tr><td><span class="command-code">DA</span></td><td>Dánština</td><td><span class="command-code">ET</span></td><td>Estonština</td><td><span class="command-code">PT</span></td><td>Portugalština</td></tr>
-                    <tr><td><span class="command-code">DE</span></td><td>Němčina</td><td><span class="command-code">FI</span></td><td>Finština</td><td><span class="command-code">RO</span></td><td>Rumunština</td></tr>
-                    <tr><td><span class="command-code">EL</span></td><td>Řečtina</td><td><span class="command-code">FR</span></td><td>Francouzština</td><td><span class="command-code">RU</span></td><td>Ruština</td></tr>
-                    <tr><td><span class="command-code">EN</span></td><td>Angličtina (US)</td><td><span class="command-code">HU</span></td><td>Maďarština</td><td><span class="command-code">SK</span></td><td>Slovenština</td></tr>
-                    <tr><td><span class="command-code">EN-US</span></td><td>Angličtina (US)</td><td><span class="command-code">ID</span></td><td>Indonéština</td><td><span class="command-code">SL</span></td><td>Slovinština</td></tr>
-                    <tr><td><span class="command-code">EN-GB</span></td><td>Angličtina (GB)</td><td><span class="command-code">IT</span></td><td>Italština</td><td><span class="command-code">SV</span></td><td>Švédština</td></tr>
-                    <tr><td><span class="command-code">EN</span></td><td>Angličtina (Neurčená)</td><td><span class="command-code">JA</span></td><td>Japonština</td><td><span class="command-code">TR</span></td><td>Turečtina</td></tr>
-                    <tr><td><span class="command-code">AR</span></td><td>Arabština</td><td><span class="command-code">KO</span></td><td>Korejština</td><td><span class="command-code">UK</span></td><td>Ukrajinština</td></tr>
-                    <tr><td><span class="command-code">DA</span></td><td>Dánština</td><td><span class="command-code">LT</span></td><td>Litevština</td><td><span class="command-code">ZH</span></td><td>Čínština</td></tr>
-                    <tr><td><span class="command-code">NB</span></td><td>Norština (Bokmål)</td><td><span class="command-code">LV</span></td><td>Lotyština</td></tr>
+                    <tr><td><span class="command-code-modules">BG</span></td><td>Bulharština</td><td><span class="command-code-modules">EN-GB</span></td><td>Angličtina (britská)</td><td><span class="command-code-modules">NL</span></td><td>Holandština</td></tr>
+                    <tr><td><span class="command-code-modules">CS</span></td><td>Čeština</td><td><span class="command-code-modules">ES</span></td><td>Španělština</td><td><span class="command-code-modules">PL</span></td><td>Polština</td></tr>
+                    <tr><td><span class="command-code-modules">DA</span></td><td>Dánština</td><td><span class="command-code-modules">ET</span></td><td>Estonština</td><td><span class="command-code-modules">PT</span></td><td>Portugalština</td></tr>
+                    <tr><td><span class="command-code-modules">DE</span></td><td>Němčina</td><td><span class="command-code-modules">FI</span></td><td>Finština</td><td><span class="command-code-modules">RO</span></td><td>Rumunština</td></tr>
+                    <tr><td><span class="command-code-modules">EL</span></td><td>Řečtina</td><td><span class="command-code-modules">FR</span></td><td>Francouzština</td><td><span class="command-code-modules">RU</span></td><td>Ruština</td></tr>
+                    <tr><td><span class="command-code-modules">EN</span></td><td>Angličtina (US)</td><td><span class="command-code-modules">HU</span></td><td>Maďarština</td><td><span class="command-code-modules">SK</span></td><td>Slovenština</td></tr>
+                    <tr><td><span class="command-code-modules">EN-US</span></td><td>Angličtina (US)</td><td><span class="command-code-modules">ID</span></td><td>Indonéština</td><td><span class="command-code-modules">SL</span></td><td>Slovinština</td></tr>
+                    <tr><td><span class="command-code-modules">EN-GB</span></td><td>Angličtina (GB)</td><td><span class="command-code-modules">IT</span></td><td>Italština</td><td><span class="command-code-modules">SV</span></td><td>Švédština</td></tr>
+                    <tr><td><span class="command-code-modules">EN</span></td><td>Angličtina (Neurčená)</td><td><span class="command-code-modules">JA</span></td><td>Japonština</td><td><span class="command-code-modules">TR</span></td><td>Turečtina</td></tr>
+                    <tr><td><span class="command-code-modules">AR</span></td><td>Arabština</td><td><span class="command-code-modules">KO</span></td><td>Korejština</td><td><span class="command-code-modules">UK</span></td><td>Ukrajinština</td></tr>
+                    <tr><td><span class="command-code-modules">DA</span></td><td>Dánština</td><td><span class="command-code-modules">LT</span></td><td>Litevština</td><td><span class="command-code-modules">ZH</span></td><td>Čínština</td></tr>
+                    <tr><td><span class="command-code-modules">NB</span></td><td>Norština (Bokmål)</td><td><span class="command-code-modules">LV</span></td><td>Lotyština</td></tr>
                 </tbody>
             </table>
             

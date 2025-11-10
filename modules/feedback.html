@@ -170,33 +170,33 @@
                 <p>
                     Tento robustní systém je rozdělen na dvě části:
                     <br>
-                    1. <strong>Anonymní zpětná vazba</strong> (<span class="command-code">/feedback</span>): Pro sběr upřímných a soukromých podnětů.
+                    1. <strong>Anonymní zpětná vazba</strong> (<span class="command-code-modules">/feedback</span>): Pro sběr upřímných a soukromých podnětů.
                     <br>
-                    2. <strong>Veřejné návrhy</strong> (<span class="command-code">/suggest</span>): Pro transparentní nápady, které komunita může hodnotit.
+                    2. <strong>Veřejné návrhy</strong> (<span class="command-code-modules">/suggest</span>): Pro transparentní nápady, které komunita může hodnotit.
                 </p>
             </div>
 
-            <h2 class="module-heading">1. Anonymní zpětná vazba (<span class="command-code">/feedback</span>)</h2>
+            <h2 class="module-heading">1. Anonymní zpětná vazba (<span class="command-code-modules">/feedback</span>)</h2>
             <p>Umožňuje uživatelům odeslat zprávu administraci, aniž by byla odhalena jejich identita.</p>
 
             <h3 class="mt-4">Pro moderátory: Nastavení kanálu</h3>
             <div class="command-box mod-command">
                 <h4 class="command-title">/feedback nastavit <span class="badge">MOD</span></h4>
                 <p>Nastaví kanál pro příjem anonymní zpětné vazby.</p>
-                <span class="command-code-example">/feedback nastavit channel:#feedback</span>
+                <span class="command-code-modules-example">/feedback nastavit channel:#feedback</span>
             </div>
 
             <div class="command-box mod-command">
                 <h4 class="command-title">/feedback odstranit <span class="badge">MOD</span></h4>
                 <p>Vypne systém zpětné vazby.</p>
-                <span class="command-code-example">/feedback odstranit</span>
+                <span class="command-code-modules-example">/feedback odstranit</span>
             </div>
 
             <h3 class="mt-4">Pro uživatele: Odeslání zprávy</h3>
             <div class="command-box user-command">
                 <h4 class="command-title">/feedback poslat <span class="badge">UŽIVATEL</span></h4>
                 <p>Odešle vaši zprávu anonymně do nastaveného kanálu.</p>
-                <span class="command-code-example">/feedback poslat message:Mám nápad na event!</span>
+                <span class="command-code-modules-example">/feedback poslat message:Mám nápad na event!</span>
             </div>
 
             <div class="module-divider"></div>
@@ -208,14 +208,14 @@
             <div class="command-box mod-command">
                 <h4 class="command-title">/setsuggestionchannel <span class="badge">MOD</span></h4>
                 <p>Nastaví kanál pro příjem veřejných návrhů.</p>
-                <span class="command-code-example">/setsuggestionchannel channel:#návrhy-serveru</span>
+                <span class="command-code-modules-example">/setsuggestionchannel channel:#návrhy-serveru</span>
             </div>
 
             <h3 class="mt-4">Pro uživatele: Odeslání návrhu</h3>
             <div class="command-box user-command">
                 <h4 class="command-title">/suggest <span class="badge">UŽIVATEL</span></h4>
                 <p>Odešle váš návrh s vaším jménem a automatickými reakcemi pro hlasování.</p>
-                <span class="command-code-example">/suggest suggestion:Navrhuji nové pravidlo pro chat.</span>
+                <span class="command-code-modules-example">/suggest suggestion:Navrhuji nové pravidlo pro chat.</span>
             </div>
 
             <h3 class="mt-4">Pro moderátory: Správa návrhů</h3>
@@ -232,22 +232,22 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td><span class="command-code">suggestion_id</span></td>
+                            <td><span class="command-code-modules">suggestion_id</span></td>
                             <td><strong>ID zprávy</strong> s návrhem, kterou spravujete.</td>
                         </tr>
                         <tr>
-                            <td><span class="command-code">action</span></td>
+                            <td><span class="command-code-modules">action</span></td>
                             <td><strong>schválit</strong> nebo <strong>zamítnout</strong>.</td>
                         </tr>
                         <tr>
-                            <td><span class="command-code">response</span></td>
-                            <td>Váš důvod (např. <span class="command-code">Skvělý nápad, děkujeme!</span>)</td>
+                            <td><span class="command-code-modules">response</span></td>
+                            <td>Váš důvod (např. <span class="command-code-modules">Skvělý nápad, děkujeme!</span>)</td>
                         </tr>
                     </tbody>
                 </table>
 
                 <h4 class="command-title mt-2">Příklad schválení:</h4>
-                <span class="command-code-example">/suggestion suggestion_id:123456789... action:schválit response:Skvělý nápad, implementujeme!</span>
+                <span class="command-code-modules-example">/suggestion suggestion_id:123456789... action:schválit response:Skvělý nápad, implementujeme!</span>
             </div>
             
         </div>

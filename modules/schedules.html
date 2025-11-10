@@ -188,28 +188,28 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><span class="command-code">repeat:0</span></td>
+                        <td><span class="command-code-modules">repeat:0</span></td>
                         <td>Jednorázové odeslání.</td>
                         <td>Zpráva se odešle <strong>jen jednou</strong> a poté se automaticky smaže ze seznamu.</td>
                     </tr>
                     <tr>
-                        <td><span class="command-code">repeat:1</span> a více</td>
+                        <td><span class="command-code-modules">repeat:1</span> a více</td>
                         <td>Omezené opakování.</td>
                         <td>Zpráva se odešle zadaný počet opakování a poté se smaže.</td>
                     </tr>
                     <tr>
-                        <td><span class="command-code">repeat:999</span> (nebo vysoké číslo)</td>
+                        <td><span class="command-code-modules">repeat:999</span> (nebo vysoké číslo)</td>
                         <td>Opakování do smazání.</td>
-                        <td>Zpráva se opakuje prakticky <strong>nekonečně dlouho</strong>, dokud ji ručně nesmažete příkazem <span class="command-code">/schedules remove</span>.</td>
+                        <td>Zpráva se opakuje prakticky <strong>nekonečně dlouho</strong>, dokud ji ručně nesmažete příkazem <span class="command-code-modules">/schedules remove</span>.</td>
                     </tr>
                 </tbody>
             </table>
 
             <div class="module-divider"></div>
 
-            <h2 class="module-heading">🚀 Příkazy pro správu: <span class="command-code">/schedules</span></h2>
+            <h2 class="module-heading">🚀 Příkazy pro správu: <span class="command-code-modules">/schedules</span></h2>
 
-            <h3 class="mt-4">1. Naplánování nové zprávy: <span class="command-code">/schedules schedule</span></h3>
+            <h3 class="mt-4">1. Naplánování nové zprávy: <span class="command-code-modules">/schedules schedule</span></h3>
             
             <table class="data-table">
                 <thead>
@@ -221,29 +221,29 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><span class="command-code">zprava</span></td>
+                        <td><span class="command-code-modules">zprava</span></td>
                         <td>Ano</td>
-                        <td>Text zprávy (např. <span class="command-code">Dneska hrajeme!</span>)</td>
+                        <td>Text zprávy (např. <span class="command-code-modules">Dneska hrajeme!</span>)</td>
                     </tr>
                     <tr>
-                        <td><span class="command-code">channel</span></td>
+                        <td><span class="command-code-modules">channel</span></td>
                         <td>Ano</td>
-                        <td>Textový kanál (např. <span class="command-code">#oznámení</span>)</td>
+                        <td>Textový kanál (např. <span class="command-code-modules">#oznámení</span>)</td>
                     </tr>
                     <tr>
-                        <td><span class="command-code">time</span></td>
+                        <td><span class="command-code-modules">time</span></td>
                         <td>Ano</td>
-                        <td>Čas HH:MM (např. <span class="command-code">16:30</span>)</td>
+                        <td>Čas HH:MM (např. <span class="command-code-modules">16:30</span>)</td>
                     </tr>
                     <tr>
-                        <td><span class="command-code">day_of_week</span></td>
+                        <td><span class="command-code-modules">day_of_week</span></td>
                         <td>Ano</td>
-                        <td>Anglický název dne (např. <span class="command-code">monday</span>) nebo <span class="command-code">everyday</span></td>
+                        <td>Anglický název dne (např. <span class="command-code-modules">monday</span>) nebo <span class="command-code-modules">everyday</span></td>
                     </tr>
                     <tr>
-                        <td><span class="command-code">repeat</span></td>
+                        <td><span class="command-code-modules">repeat</span></td>
                         <td>Ano</td>
-                        <td>Počet opakování (např. <span class="command-code">0</span>, <span class="command-code">10</span>, <span class="command-code">999</span>)</td>
+                        <td>Počet opakování (např. <span class="command-code-modules">0</span>, <span class="command-code-modules">10</span>, <span class="command-code-modules">999</span>)</td>
                     </tr>
                 </tbody>
             </table>
@@ -252,25 +252,25 @@
             <div class="command-box">
                 <h4 class="command-title">Každé pondělí v 8:00</h4>
                 <p>Odesílá zprávu každé pondělí v 8:00, dokud není ručně odstraněna.</p>
-                <span class="command-code-example">/schedules schedule zprava:Hezký start týdne! channel:#obecny time:08:00 day_of_week:monday repeat:999</span>
+                <span class="command-code-modules-example">/schedules schedule zprava:Hezký start týdne! channel:#obecny time:08:00 day_of_week:monday repeat:999</span>
             </div>
 
-            <h3 class="mt-4">2. Výpis naplánovaných zpráv: <span class="command-code">/schedules list</span></h3>
+            <h3 class="mt-4">2. Výpis naplánovaných zpráv: <span class="command-code-modules">/schedules list</span></h3>
             <p>Zobrazí seznam naplánovaných zpráv.</p>
 
             <div class="command-box">
                 <h4 class="command-title">/schedules list</h4>
                 <p><strong>Upozornění:</strong> Zprávu může odstranit pouze <strong>autor</strong> nebo <strong>moderátor</strong> serveru.</p>
-                <span class="command-code-example">Moderátoři uvidí všechny zprávy, běžní uživatelé jen své vlastní.</span>
+                <span class="command-code-modules-example">Moderátoři uvidí všechny zprávy, běžní uživatelé jen své vlastní.</span>
             </div>
 
-            <h3 class="mt-4">3. Odstranění naplánované zprávy: <span class="command-code">/schedules remove</span></h3>
+            <h3 class="mt-4">3. Odstranění naplánované zprávy: <span class="command-code-modules">/schedules remove</span></h3>
             <p>Odstraní zprávu na základě jejího unikátního ID.</p>
 
             <div class="command-box">
                 <h4 class="command-title">Příklad odstranění</h4>
                 <p>Odstraní naplánovanou zprávu s daným ID.</p>
-                <span class="command-code-example">/schedules remove message_id:abcdef12-3456-7890-abcd-ef1234567890</span>
+                <span class="command-code-modules-example">/schedules remove message_id:abcdef12-3456-7890-abcd-ef1234567890</span>
             </div>
             
         </div>

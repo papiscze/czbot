@@ -179,27 +179,27 @@
                 <ul class="bullet-list">
                     <li><strong>Posílat zprávy</strong>: Pro odesílání naplánovaných zpráv.</li>
                     <li><strong>Číst zprávy / Zobrazit kanály</strong>: Pro přístup ke kanálu.</li>
-                    <li><strong>Používat příkazy aplikací</strong>: Pro práci s příkazy <span class="command-code">/planzpravu</span>.</li>
+                    <li><strong>Používat příkazy aplikací</strong>: Pro práci s příkazy <span class="command-code-modules">/planzpravu</span>.</li>
                 </ul>
             </div>
             
             <div class="module-divider"></div>
 
-            <h2 class="module-heading">🚀 Příkazy pro plánování: <span class="command-code">/planzpravu</span></h2>
+            <h2 class="module-heading">🚀 Příkazy pro plánování: <span class="command-code-modules">/planzpravu</span></h2>
             
-            <h3 class="mt-4">1. Jednorázové plánování: <span class="command-code">/planzpravu pridat_jednorazovou</span></h3>
+            <h3 class="mt-4">1. Jednorázové plánování: <span class="command-code-modules">/planzpravu pridat_jednorazovou</span></h3>
             <p>Zpráva se odešle pouze jednou v přesně definovaný čas.</p>
 
             <div class="command-box">
                 <h4 class="command-title">Příklad:</h4>
-                <p>Naplánuje zprávu s informací o schůzce na 7. srpna 2025 v 08:03 do kanálu <span class="command-code">#oznameni</span>.</p>
-                <span class="command-code-example">/planzpravu pridat_jednorazovou datum:2025-08-07 cas:08:03 channel:#oznameni zprava:Schůzka začíná v 08:03!</span>
+                <p>Naplánuje zprávu s informací o schůzce na 7. srpna 2025 v 08:03 do kanálu <span class="command-code-modules">#oznameni</span>.</p>
+                <span class="command-code-modules-example">/planzpravu pridat_jednorazovou datum:2025-08-07 cas:08:03 channel:#oznameni zprava:Schůzka začíná v 08:03!</span>
             </div>
 
             <div class="module-divider"></div>
 
-            <h3 class="mt-4">2. Pokročilé opakování: <span class="command-code">/planzpravu pridat_cron</span></h3>
-            <p>Opakuje zprávu podle komplexního <strong>CRON výrazu</strong>. <strong>Důležité:</strong> Nový řádek v textu zprávy lze zadat pomocí symbolu <span class="command-code">|</span>.</p>
+            <h3 class="mt-4">2. Pokročilé opakování: <span class="command-code-modules">/planzpravu pridat_cron</span></h3>
+            <p>Opakuje zprávu podle komplexního <strong>CRON výrazu</strong>. <strong>Důležité:</strong> Nový řádek v textu zprávy lze zadat pomocí symbolu <span class="command-code-modules">|</span>.</p>
             
             <div class="warning-box">
                 ⚠️ <strong>Důležité pro CRON!</strong> V našem systému (APScheduler) platí: <strong>Pondělí = 0</strong>, Úterý = 1, Středa = 2, Čtvrtek = 3, Pátek = 4, Sobota = 5, Neděle = 6.
@@ -219,19 +219,19 @@
                     <tr>
                         <td>Pondělí</td>
                         <td>0</td>
-                        <td><span class="command-code">0 10 * * *</span></td>
+                        <td><span class="command-code-modules">0 10 * * *</span></td>
                         <td>každý den v 10:00</td>
                     </tr>
                     <tr>
                         <td>Středa</td>
                         <td>2</td>
-                        <td><span class="command-code">0 12 * * 0-4</span></td>
+                        <td><span class="command-code-modules">0 12 * * 0-4</span></td>
                         <td>každý pracovní den v 12:00</td>
                     </tr>
                     <tr>
                         <td>Neděle</td>
                         <td>6</td>
-                        <td><span class="command-code">0 10 1,15 * *</span></td>
+                        <td><span class="command-code-modules">0 10 1,15 * *</span></td>
                         <td>1. a 15. den v měsíci v 10:00</td>
                     </tr>
                 </tbody>
@@ -240,37 +240,37 @@
             <h4 class="mt-4">Příklad příkazu:</h4>
             <p>Naplánuje zprávu, která se odešle každou <strong>první středu v měsíci</strong> ve 12:00.</p>
             <div class="command-box">
-                <span class="command-code-example">/planzpravu pridat_cron cron_vyraz:0 12 1-7 * 2 channel:#obecny zprava:Dnes je první středa v měsíci!|Nezapomeňte na schůzku.</span>
+                <span class="command-code-modules-example">/planzpravu pridat_cron cron_vyraz:0 12 1-7 * 2 channel:#obecny zprava:Dnes je první středa v měsíci!|Nezapomeňte na schůzku.</span>
             </div>
 
             <div class="module-divider"></div>
 
-            <h3 class="mt-4">3. Intervalové opakování: <span class="command-code">/planzpravu pridat_interval</span></h3>
+            <h3 class="mt-4">3. Intervalové opakování: <span class="command-code-modules">/planzpravu pridat_interval</span></h3>
             <p>Jednoduché opakování zprávy po pevném časovém intervalu (dny, hodiny, minuty).</p>
 
             <h4 class="mt-4">Příklad: každých 30 minut</h4>
             <div class="command-box">
-                <span class="command-code-example">/planzpravu pridat_interval minuty:30 channel:#obecny zprava:Pauza na kávu!</span>
+                <span class="command-code-modules-example">/planzpravu pridat_interval minuty:30 channel:#obecny zprava:Pauza na kávu!</span>
             </div>
 
             <h4 class="mt-4">Příklad: jednou za 3 dny a 6 hodin</h4>
             <div class="command-box">
-                <span class="command-code-example">/planzpravu pridat_interval dny:3 hodiny:6 channel:#obecny zprava:Opakovaná zpráva s delším intervalem.</span>
+                <span class="command-code-modules-example">/planzpravu pridat_interval dny:3 hodiny:6 channel:#obecny zprava:Opakovaná zpráva s delším intervalem.</span>
             </div>
 
             <div class="module-divider"></div>
 
             <h2 class="module-heading">📊 Správa plánovaných zpráv</h2>
 
-            <h3 class="mt-4">Výpis zpráv: <span class="command-code">/planzpravu list</span></h3>
+            <h3 class="mt-4">Výpis zpráv: <span class="command-code-modules">/planzpravu list</span></h3>
             <p>Zobrazí seznam naplánovaných úloh. <strong>Běžní uživatelé</strong> vidí jen své úlohy, <strong>Moderátoři</strong> vidí všechny. Uvidíte <strong>ID</strong>, které je klíčové pro odstranění úlohy.</p>
             
-            <h3 class="mt-4">Odstranění zprávy: <span class="command-code">/planzpravu odebrat</span></h3>
+            <h3 class="mt-4">Odstranění zprávy: <span class="command-code-modules">/planzpravu odebrat</span></h3>
             <p>Odstraní naplánovanou zprávu na základě jejího <strong>ID</strong>.</p>
             <div class="command-box">
                 <h4 class="command-title">Příklad:</h4>
-                <p>Odstraní úlohu s daným ID (které získáte přes <span class="command-code">/planzpravu list</span>).</p>
-                <span class="command-code-example">/planzpravu odebrat job_id:abcdef12-3456-7890-abcd-ef1234567890</span>
+                <p>Odstraní úlohu s daným ID (které získáte přes <span class="command-code-modules">/planzpravu list</span>).</p>
+                <span class="command-code-modules-example">/planzpravu odebrat job_id:abcdef12-3456-7890-abcd-ef1234567890</span>
             </div>
             
         </div>

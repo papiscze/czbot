@@ -177,9 +177,9 @@
 
             <div class="info-box">
                 <ul class="bullet-list">
-                    <li><strong>Spravovat kanály</strong> (<span class="command-code">manage_channels</span>): <strong>Klíčové</strong> pro vytváření, úpravu oprávnění a mazání kanálů.</li>
-                    <li><strong>Přesouvat členy</strong> (<span class="command-code">move_members</span>): K přesunu uživatele do nově vytvořeného kanálu.</li>
-                    <li><strong>Ztlumit členy</strong> a <strong>Odhlučnit členy</strong> (<span class="command-code">mute_members</span>, <span class="command-code">deafen_members</span>): Pro správu členů v kanálu jeho tvůrcem.</li>
+                    <li><strong>Spravovat kanály</strong> (<span class="command-code-modules">manage_channels</span>): <strong>Klíčové</strong> pro vytváření, úpravu oprávnění a mazání kanálů.</li>
+                    <li><strong>Přesouvat členy</strong> (<span class="command-code-modules">move_members</span>): K přesunu uživatele do nově vytvořeného kanálu.</li>
+                    <li><strong>Ztlumit členy</strong> a <strong>Odhlučnit členy</strong> (<span class="command-code-modules">mute_members</span>, <span class="command-code-modules">deafen_members</span>): Pro správu členů v kanálu jeho tvůrcem.</li>
                     <li><strong>Zobrazit kanály</strong>: Pro sledování hlasových kanálů.</li>
                 </ul>
             </div>
@@ -196,17 +196,17 @@
                 <ul class="bullet-list">
                     <li><strong>Automatické vytváření</strong>: Připojením se do "vytvářecího kanálu" se automaticky vytvoří nová místnost.</li>
                     <li><strong>Vlastnictví kanálu</strong>: Tvůrce kanálu se stává jeho vlastníkem a získává plná oprávnění pro jeho správu.</li>
-                    <li><strong>Soukromí</strong>: Nové kanály jsou ve výchozím nastavení skryté pro <span class="command-code">@everyone</span> (dokud je vlastník nezpřístupní).</li>
+                    <li><strong>Soukromí</strong>: Nové kanály jsou ve výchozím nastavení skryté pro <span class="command-code-modules">@everyone</span> (dokud je vlastník nezpřístupní).</li>
                     <li><strong>Automatické mazání</strong>: Jakmile odejde poslední uživatel, kanál se automaticky smaže.</li>
                     <li><strong>Prevence duplicit</strong>: Bot přesune uživatele do již existujícího kanálu (v téže kategorii), pokud jej má aktivní.</li>
-                    <li><strong>Název kanálu</strong>: Automaticky nastaveno na <span class="command-code-example">🎙️ [Jméno uživatele]'s Channel</span>.</li>
+                    <li><strong>Název kanálu</strong>: Automaticky nastaveno na <span class="command-code-modules-example">🎙️ [Jméno uživatele]'s Channel</span>.</li>
                 </ul>
             </div>
 
             <div class="module-divider"></div>
 
             <h2 class="module-heading">🚀 Příkazy pro správu (POUZE MODERÁTOŘI)</h2>
-            <p>Správa "vytvářecích" kanálů se provádí pomocí příkazu <span class="command-code">/voicetemp</span>.</p>
+            <p>Správa "vytvářecích" kanálů se provádí pomocí příkazu <span class="command-code-modules">/voicetemp</span>.</p>
             
             <table class="data-table">
                 <thead>
@@ -218,17 +218,17 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><span class="command-code">/voicetemp pridat</span></td>
+                        <td><span class="command-code-modules">/voicetemp pridat</span></td>
                         <td>Nastaví hlasový kanál, do kterého se uživatelé připojují pro vytvoření dočasného kanálu.</td>
-                        <td><span class="command-code">create_channel</span>: Hlasový kanál.</td>
+                        <td><span class="command-code-modules">create_channel</span>: Hlasový kanál.</td>
                     </tr>
                     <tr>
-                        <td><span class="command-code">/voicetemp odstranit</span></td>
+                        <td><span class="command-code-modules">/voicetemp odstranit</span></td>
                         <td>Zruší nastavení kanálu pro vytváření dočasných místností.</td>
-                        <td><span class="command-code">create_channel</span>: Hlasový kanál k odebrání.</td>
+                        <td><span class="command-code-modules">create_channel</span>: Hlasový kanál k odebrání.</td>
                     </tr>
                     <tr>
-                        <td><span class="command-code">/voicetemp list</span></td>
+                        <td><span class="command-code-modules">/voicetemp list</span></td>
                         <td>Zobrazí seznam všech aktuálně nastavených "vytvářecích" kanálů na serveru.</td>
                         <td>Žádné</td>
                     </tr>
@@ -241,7 +241,7 @@
                 <div class="command-details">
                     <div class="command-detail-row">
                         <span class="command-label">Akce:</span>
-                        <span>Nastaví kanál <span class="command-code">#Vytvoř-si-kanál</span> jako trigger pro vytváření dočasných místností ve stejné kategorii.</span>
+                        <span>Nastaví kanál <span class="command-code-modules">#Vytvoř-si-kanál</span> jako trigger pro vytváření dočasných místností ve stejné kategorii.</span>
                     </div>
                     <div class="command-detail-row">
                         <span class="command-label">Odpověď bota:</span>

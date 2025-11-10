@@ -173,11 +173,11 @@
             </div>
 
             <h2 class="module-heading">⚙️ Důležitá oprávnění bota</h2>
-            <p>Pro bezproblémové fungování je <strong>klíčové oprávnění</strong> <span class="command-code">Spravovat zprávy</span>, které bot potřebuje pro úpravu giveaway zpráv a manipulaci s reakcemi.</p>
+            <p>Pro bezproblémové fungování je <strong>klíčové oprávnění</strong> <span class="command-code-modules">Spravovat zprávy</span>, které bot potřebuje pro úpravu giveaway zpráv a manipulaci s reakcemi.</p>
 
             <div class="info-box">
                 <ul class="bullet-list">
-                    <li><strong>Spravovat zprávy</strong> (<span class="command-code">manage_messages</span>): <strong>Klíčové</strong> – pro úpravu zpráv a reakcí.</li>
+                    <li><strong>Spravovat zprávy</strong> (<span class="command-code-modules">manage_messages</span>): <strong>Klíčové</strong> – pro úpravu zpráv a reakcí.</li>
                     <li><strong>Posílat zprávy</strong> / <strong>Přidávat reakce</strong> / <strong>Číst historii zpráv</strong>: Nezbytné pro komunikaci a zaznamenávání účastníků.</li>
                     <li><strong>Odesílat zprávy do soukromých zpráv (DM)</strong>: Pro informování uživatelů, kteří nesplňují požadavky.</li>
                 </ul>
@@ -192,7 +192,7 @@
                     <li><strong>Spouštění nových soutěží</strong> s určenou délkou, počtem vítězů a cenou.</li>
                     <li><strong>Omezení účasti</strong> pomocí <strong>Požadované role</strong> nebo <strong>Minimální úrovně</strong> (vyžaduje XP systém).</li>
                     <li><strong>Automatické ukončení</strong> po uplynutí času.</li>
-                    <li><strong>Ruční ukončení</strong> a <strong>Opětovné vylosování vítězů</strong> (<span class="command-code">reroll</span>).</li>
+                    <li><strong>Ruční ukončení</strong> a <strong>Opětovné vylosování vítězů</strong> (<span class="command-code-modules">reroll</span>).</li>
                     <li><strong>Zaznamenávání účastníků</strong> kliknutím na reakci 🎁 a automatická kontrola jejich oprávnění.</li>
                 </ul>
             </div>
@@ -200,15 +200,15 @@
             <div class="module-divider"></div>
 
             <h2 class="module-heading">🚀 Příkazy pro správu (POUZE MODERÁTOŘI)</h2>
-            <p>Všechny příkazy jsou dostupné jako <strong>slash příkazy</strong> pod <span class="command-code">/giveaway</span>. Jsou omezeny na uživatele s oprávněním <span class="command-code">Spravovat zprávy</span>.</p>
+            <p>Všechny příkazy jsou dostupné jako <strong>slash příkazy</strong> pod <span class="command-code-modules">/giveaway</span>. Jsou omezeny na uživatele s oprávněním <span class="command-code-modules">Spravovat zprávy</span>.</p>
 
-            <h3 class="mt-4">1. Spuštění nového giveawaye: <span class="command-code">/giveaway start</span></h3>
-            <p>Doba trvání se zadává s jednotkou (<span class="command-code">s, m, h, d</span>), např. <span class="command-code">1h30m</span>.</p>
+            <h3 class="mt-4">1. Spuštění nového giveawaye: <span class="command-code-modules">/giveaway start</span></h3>
+            <p>Doba trvání se zadává s jednotkou (<span class="command-code-modules">s, m, h, d</span>), např. <span class="command-code-modules">1h30m</span>.</p>
             
             <div class="command-box">
                 <h4 class="command-title">Příklad s požadavky na role a úroveň:</h4>
                 <p>Spustí giveaway na 3 dny s 3 vítězi v kanále `#souteze`, pouze pro členy s rolí <strong>@Věrný-člen</strong> a min. úrovní <strong>10</strong>.</p>
-                <span class="command-code-example">/giveaway start duration:3d winners:3 prize:Steam Hra channel:#souteze required_role:@Věrný-člen min_level:10</span>
+                <span class="command-code-modules-example">/giveaway start duration:3d winners:3 prize:Steam Hra channel:#souteze required_role:@Věrný-člen min_level:10</span>
             </div>
 
             <h3 class="mt-4">2. Ostatní příkazy pro správu</h3>
@@ -223,17 +223,17 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><span class="command-code">/giveaway end</span></td>
+                        <td><span class="command-code-modules">/giveaway end</span></td>
                         <td>Okamžitě ukončí zadaný giveaway a vybere vítěze.</td>
-                        <td><span class="command-code">message_id</span>: ID zprávy giveawaye.</td>
+                        <td><span class="command-code-modules">message_id</span>: ID zprávy giveawaye.</td>
                     </tr>
                     <tr>
-                        <td><span class="command-code">/giveaway reroll</span></td>
+                        <td><span class="command-code-modules">/giveaway reroll</span></td>
                         <td>Vybere nové vítěze pro již ukončený giveaway.</td>
-                        <td><span class="command-code">message_id</span>: ID zprávy giveawaye.</td>
+                        <td><span class="command-code-modules">message_id</span>: ID zprávy giveawaye.</td>
                     </tr>
                     <tr>
-                        <td><span class="command-code">/giveaway seznam</span></td>
+                        <td><span class="command-code-modules">/giveaway seznam</span></td>
                         <td>Zobrazí seznam všech probíhajících giveawayů na serveru.</td>
                         <td>Žádné.</td>
                     </tr>

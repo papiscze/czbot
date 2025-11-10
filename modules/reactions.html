@@ -177,7 +177,7 @@
 
             <div class="info-box">
                 <ul class="bullet-list">
-                    <li><strong>Přidávat reakce</strong> (<span class="command-code">add_reactions</span>): <strong>Klíčové</strong> – bez tohoto oprávnění bot nemůže smajlíky ke zprávám přidat.</li>
+                    <li><strong>Přidávat reakce</strong> (<span class="command-code-modules">add_reactions</span>): <strong>Klíčové</strong> – bez tohoto oprávnění bot nemůže smajlíky ke zprávám přidat.</li>
                     <li><strong>Používat externí emoji</strong>: Vyžadováno, pokud používáte vlastní smajlíky serveru.</li>
                     <li><strong>Číst zprávy / Zobrazit kanály</strong>: Pro detekci nových zpráv.</li>
                 </ul>
@@ -185,10 +185,10 @@
             
             <div class="module-divider"></div>
 
-            <h2 class="module-heading">🚀 Příkazy pro správu: <span class="command-code">/reactions</span></h2>
+            <h2 class="module-heading">🚀 Příkazy pro správu: <span class="command-code-modules">/reactions</span></h2>
             <p>Tyto příkazy jsou dostupné <strong>pouze pro moderátory</strong> serveru.</p>
 
-            <h3 class="mt-4">1. Přidání reakce: <span class="command-code">/reactions add</span></h3>
+            <h3 class="mt-4">1. Přidání reakce: <span class="command-code-modules">/reactions add</span></h3>
             <p>Nastaví konkrétní smajlík, který se má automaticky přidávat ke zprávám v daném kanále.</p>
 
             <table class="data-table">
@@ -201,14 +201,14 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><span class="command-code">channel</span></td>
+                        <td><span class="command-code-modules">channel</span></td>
                         <td>Textový kanál, do kterého se mají reakce přidávat.</td>
-                        <td><span class="command-code">#oznámení</span></td>
+                        <td><span class="command-code-modules">#oznámení</span></td>
                     </tr>
                     <tr>
-                        <td><span class="command-code">emoji</span></td>
+                        <td><span class="command-code-modules">emoji</span></td>
                         <td>Smajlík (Unicode nebo vlastní serverový smajlík s ID).</td>
-                        <td><span class="command-code">👍</span> nebo <span class="command-code"><:ano:123456789012345678></span></td>
+                        <td><span class="command-code-modules">👍</span> nebo <span class="command-code-modules"><:ano:123456789012345678></span></td>
                     </tr>
                 </tbody>
             </table>
@@ -219,14 +219,14 @@
                 <div class="command-details">
                     <div class="command-detail-row">
                         <span class="command-label">Akce:</span>
-                        <span>Ke každé nové zprávě v kanále <span class="command-code">#hlasovani</span> bude automaticky přidán smajlík ✅.</span>
+                        <span>Ke každé nové zprávě v kanále <span class="command-code-modules">#hlasovani</span> bude automaticky přidán smajlík ✅.</span>
                     </div>
                 </div>
             </div>
 
             <div class="module-divider"></div>
 
-            <h3 class="mt-4">2. Odstranění reakce: <span class="command-code">/reactions remove</span></h3>
+            <h3 class="mt-4">2. Odstranění reakce: <span class="command-code-modules">/reactions remove</span></h3>
             <p>Odebere konkrétní smajlík ze seznamu automatických reakcí pro daný kanál.</p>
 
             <table class="data-table">
@@ -239,14 +239,14 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><span class="command-code">channel</span></td>
+                        <td><span class="command-code-modules">channel</span></td>
                         <td>Textový kanál, ze kterého se má reakce odstranit.</td>
-                        <td><span class="command-code">#diskuze</span></td>
+                        <td><span class="command-code-modules">#diskuze</span></td>
                     </tr>
                     <tr>
-                        <td><span class="command-code">emoji</span></td>
+                        <td><span class="command-code-modules">emoji</span></td>
                         <td>Smajlík, který má být odstraněn (musí odpovídat formátu, ve kterém byl přidán).</td>
-                        <td><span class="command-code">👍</span></td>
+                        <td><span class="command-code-modules">👍</span></td>
                     </tr>
                 </tbody>
             </table>
@@ -257,7 +257,7 @@
                 <div class="command-details">
                     <div class="command-detail-row">
                         <span class="command-label">Akce:</span>
-                        <span>Odstraní automatické přidávání smajlíku 👍 z kanálu <span class="command-code">#diskuze</span>.</span>
+                        <span>Odstraní automatické přidávání smajlíku 👍 z kanálu <span class="command-code-modules">#diskuze</span>.</span>
                     </div>
                 </div>
             </div>

@@ -179,7 +179,7 @@
 
             <h2 class="module-heading">🚀 Příkazy pro Správu (pouze MOD)</h2>
 
-            <h3 class="mt-4">1. Přidání nového zdroje: <span class="command-code">/rss add</span></h3>
+            <h3 class="mt-4">1. Přidání nového zdroje: <span class="command-code-modules">/rss add</span></h3>
             <div class="command-box mod-command">
                 <h4 class="command-title">/rss add <span class="badge">MOD</span></h4>
                 <p>Začne sledovat RSS zdroj a posílat novinky do kanálu.</p>
@@ -193,57 +193,57 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td><span class="command-code">rss_feed_url</span></td>
+                            <td><span class="command-code-modules">rss_feed_url</span></td>
                             <td><strong>Povinné.</strong> URL adresa RSS kanálu.</td>
                         </tr>
                         <tr>
-                            <td><span class="command-code">channel_id</span></td>
+                            <td><span class="command-code-modules">channel_id</span></td>
                             <td><strong>Povinné.</strong> Discord kanál, kam se mají novinky posílat.</td>
                         </tr>
                         <tr>
-                            <td><span class="command-code">include_description</span></td>
+                            <td><span class="command-code-modules">include_description</span></td>
                             <td><strong>True/False.</strong> Zda má zpráva obsahovat i popis článku.</td>
                         </tr>
                         <tr>
-                            <td><span class="command-code">custom_text</span></td>
+                            <td><span class="command-code-modules">custom_text</span></td>
                             <td><strong>Volitelné.</strong> Vlastní úvodní text před každou novinkou.</td>
                         </tr>
                         <tr>
-                            <td><span class="command-code">ignore_youtube_shorts</span></td>
+                            <td><span class="command-code-modules">ignore_youtube_shorts</span></td>
                             <td><strong>Volitelné.</strong> Při odběru YT kanálů ignoruje shorts videa.</td>
                         </tr>
                     </tbody>
                 </table>
-                <span class="command-code-example mt-2">/rss add rss_feed_url:[URL] channel_id:#novinky include_description:true</span>
+                <span class="command-code-modules-example mt-2">/rss add rss_feed_url:[URL] channel_id:#novinky include_description:true</span>
             </div>
 
-            <h3 class="mt-4">2. Úprava existujícího zdroje: <span class="command-code">/rss edit</span></h3>
+            <h3 class="mt-4">2. Úprava existujícího zdroje: <span class="command-code-modules">/rss edit</span></h3>
             <div class="command-box mod-command">
                 <h4 class="command-title">/rss edit <span class="badge">MOD</span></h4>
                 <p>Změní nastavení (kanál, popis, vlastní text) existujícího RSS zdroje.</p>
-                <span class="command-code-example">/rss edit rss_feed_url:[URL] new_channel:#dulezite-info custom_text:"Důležité info:"</span>
+                <span class="command-code-modules-example">/rss edit rss_feed_url:[URL] new_channel:#dulezite-info custom_text:"Důležité info:"</span>
             </div>
 
-            <h3 class="mt-4">3. Odebrání zdroje: <span class="command-code">/rss remove</span></h3>
+            <h3 class="mt-4">3. Odebrání zdroje: <span class="command-code-modules">/rss remove</span></h3>
             <div class="command-box mod-command">
                 <h4 class="command-title">/rss remove <span class="badge">MOD</span></h4>
                 <p>Přestane sledovat RSS zdroj a smaže jeho záznamy.</p>
-                <span class="command-code-example">/rss remove rss_feed_url:[URL]</span>
+                <span class="command-code-modules-example">/rss remove rss_feed_url:[URL]</span>
             </div>
 
-            <h3 class="mt-4">4. Zobrazení seznamu: <span class="command-code">/rss list</span></h3>
+            <h3 class="mt-4">4. Zobrazení seznamu: <span class="command-code-modules">/rss list</span></h3>
             <div class="command-box mod-command">
                 <h4 class="command-title">/rss list <span class="badge">MOD</span></h4>
                 <p>Zobrazí seznam všech sledovaných RSS zdrojů na serveru s podporou listování.</p>
-                <span class="command-code-example">/rss list</span>
+                <span class="command-code-modules-example">/rss list</span>
             </div>
 
-            <h3 class="mt-4">5. Manuální aktualizace: <span class="command-code">/rss update</span></h3>
+            <h3 class="mt-4">5. Manuální aktualizace: <span class="command-code-modules">/rss update</span></h3>
             <div class="command-box mod-command">
                 <h4 class="command-title">/rss update <span class="badge">MOD</span></h4>
                 <p>Okamžitě zkontroluje všechny RSS zdroje, bez čekání na automatickou kontrolu.</p>
                 <p>⏳ <strong>Omezení:</strong> Lze použít jen <strong>jednou za 5 minut</strong>.</p>
-                <span class="command-code-example">/rss update</span>
+                <span class="command-code-modules-example">/rss update</span>
             </div>
 
             <div class="module-divider"></div>
@@ -252,11 +252,11 @@
             
             <div class="info-box">
                 <p>Pro odběr YouTube kanálu musíte znát jeho <strong>Channel ID</strong> (`UC...`), které vložíte do univerzálního RSS formátu:</p>
-                <span class="command-code-example mb-3">https://www.youtube.com/feeds/videos.xml?channel_id=[VAŠE_YOUTUBE_CHANNEL_ID]</span>
+                <span class="command-code-modules-example mb-3">https://www.youtube.com/feeds/videos.xml?channel_id=[VAŠE_YOUTUBE_CHANNEL_ID]</span>
                 <ol class="bullet-list">
                     <li>Navštivte stránku kanálu.</li>
                     <li>Stiskněte <strong>Ctrl+U</strong> (Zobrazit zdrojový kód stránky).</li>
-                    <li>Stiskněte <strong>Ctrl+F</strong> a hledejte text <span class="command-code">channelId</span>.</li>
+                    <li>Stiskněte <strong>Ctrl+F</strong> a hledejte text <span class="command-code-modules">channelId</span>.</li>
                     <li>Zkopírujte celé ID (`UC...`) a vložte jej do odkazu výše.</li>
                 </ol>
             </div>
@@ -269,7 +269,7 @@
                 <p><del>Funkce sledování podcastů byla v rámci optimalizace kódu bota odstraněna. Pro sledování podcastů doporučujeme použít běžný RSS feed a příkazy z části 1, pokud je k dispozici RSS odkaz podcastu.</del></p>
 
                 <h4 class="info-box-title mt-3"><del>1. Přidání nového podcastu: /podcastadd</del></h4>
-                <p><del>Tento příkaz sloužil k přidání podcastu do sledování. Původní parametry: <span class="command-code">podcast_name</span>, <span class="command-code">podcast_rss_feed</span>, <span class="command-code">target_channel</span>.</del></p>
+                <p><del>Tento příkaz sloužil k přidání podcastu do sledování. Původní parametry: <span class="command-code-modules">podcast_name</span>, <span class="command-code-modules">podcast_rss_feed</span>, <span class="command-code-modules">target_channel</span>.</del></p>
 
                 <h4 class="info-box-title mt-3"><del>2. Zobrazení sledovaných podcastů: /podcastlist</del></h4>
                 <p><del>Tento příkaz zobrazoval seznam sledovaných podcastů.</del></p>

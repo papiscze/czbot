@@ -201,9 +201,9 @@
                 <h4 class="info-box-title">Ověřovací kód (Jednorázový)</h4>
                 <p>Pro obnovu zálohy na <strong>jiném serveru</strong> než na původním je nutné použít <strong>jednorázový kód</strong>. Tím je zajištěno, že zálohu obnoví pouze administrátor, který ji vytvořil.</p>
                 <ol class="bullet-list">
-                    <li>Při <span class="command-code">/backup save</span> bot kód <strong>vygeneruje</strong>.</li>
+                    <li>Při <span class="command-code-modules">/backup save</span> bot kód <strong>vygeneruje</strong>.</li>
                     <li>Kód je zobrazen pouze vám a je dočasně uložen s ID serveru.</li>
-                    <li>Při <span class="command-code">/backup restore</span> na novém serveru musíte kód zadat.</li>
+                    <li>Při <span class="command-code-modules">/backup restore</span> na novém serveru musíte kód zadat.</li>
                     <li>Po úspěšné obnově je kód <strong>zneplatněn</strong>.</li>
                 </ol>
             </div>
@@ -212,14 +212,14 @@
 
             <h2 class="module-heading">🚀 Příkazy pro Administrátory</h2>
             
-            <h3 class="mt-4">1. Vytvoření zálohy: <span class="command-code">/backup save</span></h3>
+            <h3 class="mt-4">1. Vytvoření zálohy: <span class="command-code-modules">/backup save</span></h3>
             <div class="command-box admin-command">
                 <h4 class="command-title">/backup save <span class="badge">ADMIN</span></h4>
                 <p>Uloží aktuální strukturu serveru a vygeneruje <strong>jednorázový ověřovací kód</strong>.</p>
                 <p>⏳ <strong>Omezení:</strong> Příkaz lze použít pouze <strong>jednou za 24 hodin</strong> na server.</p>
             </div>
 
-            <h3 class="mt-4">2. Obnova ze zálohy: <span class="command-code">/backup restore</span></h3>
+            <h3 class="mt-4">2. Obnova ze zálohy: <span class="command-code-modules">/backup restore</span></h3>
             <div class="command-box admin-command">
                 <h4 class="command-title">/backup restore <span class="badge">ADMIN</span></h4>
                 <p>Obnoví server z dříve uložené šablony. Vyžaduje kód pro obnovu na <strong>jiném</strong> serveru.</p>
@@ -232,15 +232,15 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td><span class="command-code">code</span></td>
+                            <td><span class="command-code-modules">code</span></td>
                             <td><strong>Volitelný.</strong> Jednorázový ověřovací kód. Vyžadován POUZE pro obnovu na <strong>novém</strong> serveru.</td>
                         </tr>
                     </tbody>
                 </table>
                 <h4 class="command-title mt-2">Příklad s kódem (na jiném serveru):</h4>
-                <span class="command-code-example">/backup restore code:ABC123XYZ</span>
+                <span class="command-code-modules-example">/backup restore code:ABC123XYZ</span>
                 <h4 class="command-title mt-2">Příklad bez kódu (na původním serveru):</h4>
-                <span class="command-code-example">/backup restore</span>
+                <span class="command-code-modules-example">/backup restore</span>
             </div>
 
             <div class="info-box mt-4 text-warning">
