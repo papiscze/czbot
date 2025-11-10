@@ -109,7 +109,7 @@
     color: #ffffff !important; 
     line-height: 1.5;
 }
-.command-code,
+.command-code-modules,
 .command-code-example {
     padding: 6px 6px !important; 
     line-height: 0.8 !important; 
@@ -120,7 +120,7 @@
     font-size: 0.95em;
     font-family: monospace, sans-serif;
 }
-.command-code {
+.command-code-modules {
     background-color: rgba(0, 150, 255, 0.15); 
     color: var(--color-neon-blue, #00ffff) !important;
     border: 1px solid rgba(0, 150, 255, 0.4);
