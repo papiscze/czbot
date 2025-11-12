@@ -61,6 +61,13 @@
         .cyber-button {
             width: 100%;
         }
+        
+        /* Styl pro vycentrování Buy Me a Coffee obrázku */
+        .bmc-button-container {
+            display: block;
+            margin: 0 auto;
+            text-decoration: none; /* Zrušíme podtržení odkazu */
+        }
     </style>
 </head>
 <body id="top">
@@ -112,7 +119,11 @@
                 <div class="support-card">
                     <h3>Buy Me a Coffee - Rychlá a jednoduchá podpora</h3>
                     <p>Nejjednodušší způsob, jak nás podpořit jednorázovým virtuálním "kafíčkem". I malá podpora nám pomáhá s náklady na hosting.</p>
-                    <a href="https://buymeacoffee.com/czbot" class="cyber-button primary">Koupit Kafíčko</a>
+                    
+                    <!-- VLOŽENÍ OFICIÁLNÍHO BMC OBRÁZKOVÉHO TLAČÍTKA -->
+                    <a href="https://www.buymeacoffee.com/czbot" target="_blank" class="bmc-button-container">
+                        <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important; width: 217px !important; max-width: 100%; border-radius: 5px;">
+                    </a>
                 </div>
 
                 <div class="support-card">
@@ -136,6 +147,9 @@
 
     <div id="footer-placeholder"></div>
 
+    <!-- SKRIPT PRO PLOVOUCÍ BMC TLAČÍTKO -->
+    <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="czbot" data-color="#FFDD00" data-emoji="" data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#000000" data-coffee-color="#ffffff" ></script>
+    
     <script src="templatemo-nexus-scripts.js"></script>
 </body>
 </html>
