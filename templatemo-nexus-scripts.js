@@ -2,9 +2,6 @@
 TemplateMo 594 nexus flow
 https://templatemo.com/tm-594-nexus-flow
 */
-
-// JavaScript Document
-
 // =========================================================
 // 1. FUNKCE INICIALIZACE MOBILNÍHO MENU
 // =========================================================
@@ -19,8 +16,10 @@ function initializeMobileMenu() {
     const mobileMenuLogo = document.querySelector('.mobile-menu-logo');
     const dropdownToggles = document.querySelectorAll('.mobile-menu-nav .dropdown-toggle');
 
-    // Check if essential elements exist
+    // Kontrola, zda existují klíčové prvky (nyní by měly existovat)
     if (!mobileMenuBtn || !mobileMenu || !mobileMenuOverlay || !mobileMenuClose) {
+        // Pokud se to spustí, ale prvky nejsou, znamená to chybu v načítání HTML.
+        console.warn("Chybí klíčové prvky pro inicializaci mobilního menu. Zkontrolujte header.html.");
         return;
     }
 
@@ -30,14 +29,13 @@ function initializeMobileMenu() {
         mobileMenuOverlay.classList.add('active');
         document.body.style.overflow = 'hidden';
         
-        // Reset and trigger animations for links
+        // Reset a spuštění animace pro odkazy (zde je kód animace, neupravuji ho)
         mobileMenuLinks.forEach((link, index) => {
             if (link) {
                 link.style.animation = 'none';
                 link.style.opacity = '0';
                 link.style.transform = 'translateX(20px)';
                 
-                // Apply animation with delay
                 setTimeout(() => {
                     if (link) {
                         link.style.animation = `slideInLeft 0.4s ease forwards`;
@@ -46,7 +44,7 @@ function initializeMobileMenu() {
             }
         });
         
-        // Animate CTA button
+        // Animace CTA tlačítka
         if (mobileMenuCta) {
             mobileMenuCta.style.animation = 'none';
             mobileMenuCta.style.opacity = '0';
@@ -99,17 +97,20 @@ function initializeMobileMenu() {
             const parent = toggle.closest('.dropdown');
             const menu = parent.querySelector('.dropdown-menu');
 
-            // Zavřít ostatní dropdowny (volitelné)
+            // Zavřít ostatní dropdowny
             document.querySelectorAll('.mobile-menu-nav .dropdown.open').forEach(openDropdown => {
                 if (openDropdown !== parent) {
                     openDropdown.classList.remove('open');
+                     // Zavřít i animaci výšky
+                    const openMenu = openDropdown.querySelector('.dropdown-menu');
+                    if(openMenu) openMenu.style.maxHeight = "0";
                 }
             });
 
             // Přepnout aktuální dropdown
             parent.classList.toggle('open');
             
-            // Přidat jednoduchou animaci
+            // Přidat jednoduchou animaci výšky
             if (menu) {
                 if (parent.classList.contains('open')) {
                     menu.style.maxHeight = menu.scrollHeight + "px";
@@ -124,7 +125,8 @@ function initializeMobileMenu() {
     mobileMenuLinks.forEach(link => {
         if (link && !link.classList.contains('dropdown-toggle')) {
             link.addEventListener('click', () => {
-                closeMobileMenu();
+                // Přidáno zpoždění, aby se kliknutí stihlo dokončit, než se menu zavře
+                setTimeout(closeMobileMenu, 100); 
             });
         }
     });
@@ -162,13 +164,13 @@ function initializeMobileMenu() {
 }
 
 // =========================================================
-// 2. FUNKCE PRO POZADÍ EFEKTY (OPRAVENO: Kontrola existence elementu)
+// 2. FUNKCE PRO POZADÍ EFEKTY
 // =========================================================
+// ... (Zde následují funkce generateMatrixRain, generateParticles, generateDataStreams, které se nemění) ...
 
 // Generate Matrix Rain Effect
 function generateMatrixRain() {
     const matrixRain = document.getElementById('matrixRain');
-    // **OPRAVA**: Zabraňuje chybě, pokud element neexistuje
     if (!matrixRain) {
         return; 
     }
@@ -183,7 +185,6 @@ function generateMatrixRain() {
         column.style.animationDuration = `${Math.random() * 5 + 10}s`;
         column.style.animationDelay = `${Math.random() * 5}s`;
         
-        // Generate random characters for the column
         let text = '';
         const charCount = Math.floor(Math.random() * 20 + 10);
         for (let j = 0; j < charCount; j++) {
@@ -198,7 +199,6 @@ function generateMatrixRain() {
 // Generate Floating Particles
 function generateParticles() {
     const particlesContainer = document.getElementById('particlesContainer');
-    // **OPRAVA**: Zabraňuje chybě, pokud element neexistuje (Zde byla původní chyba)
     if (!particlesContainer) {
         return; 
     }
@@ -219,7 +219,6 @@ function generateParticles() {
 // Generate Data Streams
 function generateDataStreams() {
     const dataStreams = document.getElementById('dataStreams');
-    // **OPRAVA**: Zabraňuje chybě, pokud element neexistuje
     if (!dataStreams) {
         return; 
     }
@@ -238,10 +237,6 @@ function generateDataStreams() {
     }
 }
 
-// =========================================================
-// 3. CENTRÁLNÍ INICIALIZACE A SPÁROVÁNÍ S DOMContentLoaded
-// =========================================================
-
 // Nová funkce pro spuštění všech efektů
 function initializeBackgroundEffects() {
     generateMatrixRain();
@@ -249,13 +244,42 @@ function initializeBackgroundEffects() {
     generateDataStreams();
 }
 
-// Inicializovat menu a efekty, jakmile je DOM připraven (tím se vyhneme chybě)
+
+// =========================================================
+// 3. CENTRÁLNÍ INICIALIZACE A SPÁROVÁNÍ S DOMContentLoaded
+// =========================================================
+
+/**
+ * Inicializuje vkládání obsahu a spouští inicializaci menu
+ * po úspěšném vložení headeru.
+ */
+function initializePageContent() {
+    // Použijeme Promise.all pro zajištění, že se menu inicializuje AŽ po načtení headeru
+    
+    const headerPromise = new Promise(resolve => {
+        // Vkládáme header a v resolve spustíme callback
+        includeHTML('header.html', 'header-placeholder', resolve);
+    });
+    
+    const footerPromise = new Promise(resolve => {
+        // Vkládáme footer, nepotřebujeme callback
+        includeHTML('footer.html', 'footer-placeholder', resolve);
+    });
+
+    // Jakmile se header VLOŽÍ, můžeme inicializovat mobilní menu
+    headerPromise.then(() => {
+        initializeMobileMenu();
+    });
+
+    // Spustíme i efekty na pozadí
+    initializeBackgroundEffects();
+}
+
+// Inicializace po načtení DOM (nahrazuje původní blok)
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeMobileMenu);
-    document.addEventListener('DOMContentLoaded', initializeBackgroundEffects); // Přidáno spuštění efektů
+    document.addEventListener('DOMContentLoaded', initializePageContent);
 } else {
-    initializeMobileMenu();
-    initializeBackgroundEffects(); // Přidáno spuštění efektů
+    initializePageContent();
 }
 
 // Regenerate matrix rain on window resize
@@ -264,7 +288,6 @@ window.addEventListener('resize', () => {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => {
         const matrixRain = document.getElementById('matrixRain');
-        // Kontrola před manipulací s innerHTML
         if (matrixRain) {
              matrixRain.innerHTML = '';
         }
@@ -274,9 +297,9 @@ window.addEventListener('resize', () => {
 
 // =========================================================
 // 4. OSTATNÍ SKRIPTY (INTERAKCE, SCROLL, ANIMACE)
+// ... (Tato sekce zůstává nezměněna) ...
 // =========================================================
 
-// Interactive mouse glow effect (throttled for performance)
 let mouseTimer;
 document.addEventListener('mousemove', (e) => {
     if (!mouseTimer) {
@@ -284,7 +307,6 @@ document.addEventListener('mousemove', (e) => {
             const mouseX = e.clientX;
             const mouseY = e.clientY;
             
-            // Move orbs slightly based on mouse position
             const orbs = document.querySelectorAll('.orb');
             orbs.forEach((orb, index) => {
                 const speed = (index + 1) * 0.02;
@@ -293,7 +315,6 @@ document.addEventListener('mousemove', (e) => {
                 orb.style.transform = `translate(${x}px, ${y}px)`;
             });
             
-            // Make nearby particles glow brighter (desktop only)
             if (window.innerWidth > 768) {
                 const particles = document.querySelectorAll('.particle');
                 particles.forEach(particle => {
@@ -318,7 +339,6 @@ document.addEventListener('mousemove', (e) => {
     }
 });
 
-// Add a glow that follows the cursor (desktop only)
 if (window.innerWidth > 768) {
     const cursorGlow = document.createElement('div');
     cursorGlow.style.cssText = `
@@ -333,7 +353,6 @@ if (window.innerWidth > 768) {
         transition: opacity 0.3s ease;
         opacity: 0;
     `;
-    // **OPRAVA**: Zde je volána metoda appendChild, ale je to na document.body, což je v pořádku.
     document.body.appendChild(cursorGlow);
 
     document.addEventListener('mousemove', (e) => {
@@ -347,11 +366,9 @@ if (window.innerWidth > 768) {
     });
 }
 
-// Smooth scrolling
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         const href = this.getAttribute('href');
-        // Only prevent default and scroll if href is more than just '#'
         if (href && href.length > 1) {
             e.preventDefault();
             if (href === '#top') {
@@ -372,7 +389,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Navbar scroll effect
 window.addEventListener('scroll', () => {
     const nav = document.querySelector('nav');
     if (nav) {
@@ -386,7 +402,6 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Scroll animations
 const observerOptions = {
     threshold: 0.1,
     rootMargin: '0px 0px -100px 0px'
@@ -404,7 +419,6 @@ document.querySelectorAll('.fade-up').forEach(el => {
     observer.observe(el);
 });
 
-// Button effects
 document.querySelectorAll('.btn-primary, .btn-secondary').forEach(button => {
     button.addEventListener('mouseenter', function() {
         this.style.boxShadow = '0 0 30px rgba(0, 255, 255, 0.6)';
@@ -415,11 +429,9 @@ document.querySelectorAll('.btn-primary, .btn-secondary').forEach(button => {
     });
 });
 
-// Stats counter animation
 const animateStats = () => {
     const stats = document.querySelectorAll('.stat-number');
     stats.forEach(stat => {
-        // Preskoci botStatus
         if (stat.id === 'botStatus') return;
 
         const initialText = stat.textContent;
@@ -434,16 +446,15 @@ const animateStats = () => {
                 clearInterval(timer);
                 count = target;
             }
-            const suffix = initialText.replace(/[\d\s,.]/g, ''); // Uchova jen necisla
+            const suffix = initialText.replace(/[\d\s,.]/g, ''); 
             stat.textContent = Math.floor(count).toLocaleString('cs-CZ') + suffix;
         }, 20);
     });
 };
 
-// Trigger stats animation when section is visible
 const statsObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-        const statsSection = document.querySelector('.stats'); // Kontrola, zda sekce existuje
+        const statsSection = document.querySelector('.stats');
         if (entry.isIntersecting && entry.target === statsSection) {
             animateStats();
             statsObserver.unobserve(entry.target);
@@ -456,7 +467,6 @@ if (statsSection) {
     statsObserver.observe(statsSection);
 }
 
-// Glitch effect on hover for feature cards
 document.querySelectorAll('.feature-card').forEach(card => {
     card.addEventListener('mouseenter', function() {
         this.style.animation = 'glitch1 0.3s ease-in-out';
@@ -466,7 +476,6 @@ document.querySelectorAll('.feature-card').forEach(card => {
     });
 });
 
-// Random cyber text effects
 const cyberTexts = ['CONNECTING...', 'NEURAL LINK ESTABLISHED', 'QUANTUM SYNC ACTIVE', 'REALITY MATRIX LOADED'];
 
 setInterval(() => {
@@ -489,14 +498,12 @@ setInterval(() => {
     document.body.appendChild(tempElement);
     
     setTimeout(() => {
-        // Kontrola před odstraněním
         if (document.body.contains(tempElement)) {
             document.body.removeChild(tempElement);
         }
     }, 3000);
 }, 5000);
 
-// Add fadeOut animation
 const style = document.createElement('style');
 style.textContent = `
     @keyframes fadeOut {
@@ -510,36 +517,26 @@ document.head.appendChild(style);
 // FUNKCE PRO DYNAMICKÉ NAČÍTÁNÍ DISCORD AVATARŮ S HASHEM
 // =========================================================
 function loadDiscordAvatars() {
-    // Najdeme všechny karty, které mají definované přispěvatele
     const cards = document.querySelectorAll('.contributor-card');
 
     cards.forEach(card => {
         const discordId = card.getAttribute('data-discord-id');
-        // Nový atribut pro uložení hashe
         const avatarHash = card.getAttribute('data-avatar-hash'); 
         const avatarImg = card.querySelector('.avatar-img');
 
         if (discordId && avatarImg) {
             let avatarUrl;
 
-            // Zkusíme sestavit přesnou URL, pokud je hash k dispozici
             if (avatarHash) {
-                // Sestavíme přesnou URL avatara s hashem a požadovanou velikostí
-                // Použijeme formát .png se size=128 pro dobrou kvalitu
                 avatarUrl = `https://cdn.discordapp.com/avatars/${discordId}/${avatarHash}.png?size=128`;
             } else {
-                // Pokud hash není uveden, použijeme generický Discord avatar 
-                // (index 0-5 se určí z ID modula 6)
                 const defaultIndex = discordId % 6;
                 avatarUrl = `https://cdn.discordapp.com/embed/avatars/${defaultIndex}.png`;
             }
             
-            // Nastavíme URL
             avatarImg.src = avatarUrl;
             
-            // Přidáme fallback pro případ, že se obrázek s hashem nepodaří načíst
             avatarImg.onerror = function() {
-                // Při selhání se pokusíme o generický Discord avatar
                 const defaultIndex = discordId % 6;
                 this.src = `https://cdn.discordapp.com/embed/avatars/${defaultIndex}.png`;
             };
@@ -553,14 +550,13 @@ window.addEventListener('load', loadDiscordAvatars);
 // =========================================================
 // FUNKCE PRO VKLÁDÁNÍ EXTERNÍHO HTML OBSAHU
 // =========================================================
-function includeHTML(url, targetElementId) {
+function includeHTML(url, targetElementId, callback) {
     const element = document.getElementById(targetElementId);
-    if (!element) return; // Ukončí, pokud kontejner neexistuje
+    if (!element) return; 
 
     fetch(url)
         .then(response => {
             if (!response.ok) {
-                // Zobrazí chybu v konzoli, pokud soubor nebyl nalezen (např. 404)
                 console.error(`Chyba při načítání ${url}: ${response.statusText}`);
                 element.innerHTML = `<p style="color:red;">Chyba: Nelze načíst ${url}</p>`;
                 return ''; 
@@ -569,16 +565,11 @@ function includeHTML(url, targetElementId) {
         })
         .then(data => {
             if (data) {
-                // Vloží načtený obsah do kontejneru
                 element.innerHTML = data;
                 
                 // Speciální manipulace s HTML po vložení (např. aktivní třída menu)
-                // Pokud navigace obsahuje mobilní menu, je potřeba znovu inicializovat posluchače událostí:
                 if (targetElementId === 'header-placeholder') {
-                    // Příklad re-inicializace mobilního menu, pokud ho máte v JS
-                    // initMobileMenu(); 
                     
-                    // Přidání aktivní třídy (.active) pro aktuální stránku
                     const currentPath = window.location.pathname.split("/").pop();
                     const links = element.querySelectorAll('a');
                     links.forEach(link => {
@@ -586,7 +577,6 @@ function includeHTML(url, targetElementId) {
                         if (linkPath === currentPath) {
                             link.classList.add('active');
                             
-                            // Pro dropdown, označí i rodiče jako aktivní
                             let parentLi = link.closest('li.dropdown');
                             while(parentLi) {
                                 parentLi.classList.add('active-parent');
@@ -596,22 +586,22 @@ function includeHTML(url, targetElementId) {
                     });
                 }
             }
+            // Zde je KLÍČOVÝ KROK: Spustíme callback po úspěšném vložení
+            if (callback) {
+                callback();
+            }
         })
-        .catch(error => console.error('Chyba Fetch API:', error));
+        .catch(error => {
+            console.error('Chyba Fetch API:', error);
+            // Spustíme callback i při chybě, aby se zkusilo menu inicializovat
+            if (callback) {
+                callback();
+            }
+        });
 }
 
-// Spuštění vkládání obsahu po načtení stránky
-window.addEventListener('load', function() {
-    // Načte navigaci a vloží ji do #header-placeholder
-    includeHTML('header.html', 'header-placeholder'); 
-    
-    // Načte patičku a vloží ji do #footer-placeholder
-    includeHTML('footer.html', 'footer-placeholder'); 
-
-    // Ponechte zde i spouštění funkce loadDiscordAvatars(), pokud ji používáte
-    // loadDiscordAvatars(); 
-    
-    // Zde by měly být volány všechny ostatní inicializační funkce (např. pro mobilní menu)
-    // initMobileMenu(); 
-});
-
+// Původní spouštěcí bloky, které rušíme, jsou zakomentovány nebo nahrazeny.
+// window.addEventListener('load', function() {
+//     includeHTML('header.html', 'header-placeholder'); 
+//     includeHTML('footer.html', 'footer-placeholder'); 
+// });
