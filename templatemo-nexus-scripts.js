@@ -505,3 +505,113 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
+// =========================================================
+// FUNKCE PRO DYNAMICKÉ NAČÍTÁNÍ DISCORD AVATARŮ S HASHEM
+// =========================================================
+function loadDiscordAvatars() {
+    // Najdeme všechny karty, které mají definované přispěvatele
+    const cards = document.querySelectorAll('.contributor-card');
+
+    cards.forEach(card => {
+        const discordId = card.getAttribute('data-discord-id');
+        // Nový atribut pro uložení hashe
+        const avatarHash = card.getAttribute('data-avatar-hash'); 
+        const avatarImg = card.querySelector('.avatar-img');
+
+        if (discordId && avatarImg) {
+            let avatarUrl;
+
+            // Zkusíme sestavit přesnou URL, pokud je hash k dispozici
+            if (avatarHash) {
+                // Sestavíme přesnou URL avatara s hashem a požadovanou velikostí
+                // Použijeme formát .png se size=128 pro dobrou kvalitu
+                avatarUrl = `https://cdn.discordapp.com/avatars/${discordId}/${avatarHash}.png?size=128`;
+            } else {
+                // Pokud hash není uveden, použijeme generický Discord avatar 
+                // (index 0-5 se určí z ID modula 6)
+                const defaultIndex = discordId % 6;
+                avatarUrl = `https://cdn.discordapp.com/embed/avatars/${defaultIndex}.png`;
+            }
+            
+            // Nastavíme URL
+            avatarImg.src = avatarUrl;
+            
+            // Přidáme fallback pro případ, že se obrázek s hashem nepodaří načíst
+            avatarImg.onerror = function() {
+                // Při selhání se pokusíme o generický Discord avatar
+                const defaultIndex = discordId % 6;
+                this.src = `https://cdn.discordapp.com/embed/avatars/${defaultIndex}.png`;
+            };
+        }
+    });
+}
+
+// Spuštění po načtení stránky, aby se načetly avatary
+window.addEventListener('load', loadDiscordAvatars);
+
+// =========================================================
+// FUNKCE PRO VKLÁDÁNÍ EXTERNÍHO HTML OBSAHU
+// =========================================================
+function includeHTML(url, targetElementId) {
+    const element = document.getElementById(targetElementId);
+    if (!element) return; // Ukončí, pokud kontejner neexistuje
+
+    fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                // Zobrazí chybu v konzoli, pokud soubor nebyl nalezen (např. 404)
+                console.error(`Chyba při načítání ${url}: ${response.statusText}`);
+                element.innerHTML = `<p style="color:red;">Chyba: Nelze načíst ${url}</p>`;
+                return ''; 
+            }
+            return response.text();
+        })
+        .then(data => {
+            if (data) {
+                // Vloží načtený obsah do kontejneru
+                element.innerHTML = data;
+                
+                // Speciální manipulace s HTML po vložení (např. aktivní třída menu)
+                // Pokud navigace obsahuje mobilní menu, je potřeba znovu inicializovat posluchače událostí:
+                if (targetElementId === 'header-placeholder') {
+                    // Příklad re-inicializace mobilního menu, pokud ho máte v JS
+                    // initMobileMenu(); 
+                    
+                    // Přidání aktivní třídy (.active) pro aktuální stránku
+                    const currentPath = window.location.pathname.split("/").pop();
+                    const links = element.querySelectorAll('a');
+                    links.forEach(link => {
+                        const linkPath = link.href.split("/").pop();
+                        if (linkPath === currentPath) {
+                            link.classList.add('active');
+                            
+                            // Pro dropdown, označí i rodiče jako aktivní
+                            let parentLi = link.closest('li.dropdown');
+                            while(parentLi) {
+                                parentLi.classList.add('active-parent');
+                                parentLi = parentLi.parentElement.closest('li.dropdown');
+                            }
+                        }
+                    });
+                }
+            }
+        })
+        .catch(error => console.error('Chyba Fetch API:', error));
+}
+
+// Spuštění vkládání obsahu po načtení stránky
+window.addEventListener('load', function() {
+    // Načte navigaci a vloží ji do #header-placeholder
+    includeHTML('header.html', 'header-placeholder'); 
+    
+    // Načte patičku a vloží ji do #footer-placeholder
+    includeHTML('footer.html', 'footer-placeholder'); 
+
+    // Ponechte zde i spouštění funkce loadDiscordAvatars(), pokud ji používáte
+    // loadDiscordAvatars(); 
+    
+    // Zde by měly být volány všechny ostatní inicializační funkce (např. pro mobilní menu)
+    // initMobileMenu(); 
+});
+

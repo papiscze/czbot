@@ -3208,3 +3208,121 @@ https://templatemo.com/tm-594-nexus-flow
     display: block;
     width: 100%;
 }
+
+/* =========================================================
+   STYLY PRO SEKCI PODĚKOVÁNÍ (thanks.html)
+   ========================================================= */
+
+/* --- Obecná mřížka pro karty --- */
+.acknowledgement-grid {
+    display: grid;
+    /* Dva sloupce pro desktop, flexibilní velikost */
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.contributor-card {
+    background-color: rgba(30, 40, 50, 0.6); /* Tmavší pozadí pro kartu */
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
+    /* Cyber záře, využívající primární barvu */
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.2); 
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    
+    display: flex;
+    flex-direction: column; 
+    align-items: flex-start; /* Zarovnání obsahu doleva */
+    position: relative;
+    overflow: hidden;
+}
+
+.contributor-card::after {
+    /* Vizuální prvek v pozadí karty */
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    right: -10px;
+    width: 50px;
+    height: 50px;
+    border-right: 3px solid var(--primary-magenta);
+    border-bottom: 3px solid var(--primary-magenta);
+    opacity: 0.3;
+}
+
+.contributor-card:hover {
+    transform: translateY(-5px); /* Efekt při najetí myší */
+    box-shadow: 0 5px 30px rgba(0, 255, 255, 0.6);
+}
+
+/* --- Styly pro Avatar --- */
+.contributor-avatar {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%; /* Kulatý tvar */
+    overflow: hidden;
+    margin-bottom: 15px;
+    /* Kybernetický rámeček s barvou */
+    border: 3px solid var(--primary-cyan-light); 
+    box-shadow: 0 0 12px var(--primary-cyan);
+    background-color: #111; 
+    flex-shrink: 0;
+}
+
+.avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* --- Styly pro text v kartě --- */
+.contributor-name {
+    color: var(--primary-magenta); /* Použijeme magenta barvu pro jméno */
+    font-size: 1.4rem;
+    margin-top: 0;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.contributor-role {
+    color: var(--text-color);
+    font-size: 0.95rem;
+    opacity: 0.9;
+}
+
+
+/* --- Zvláštní styly pro sekci s protokolem (tabulky) --- */
+/* Zde ponecháváme pouze nové styly, které byly přidány v předchozí odpovědi (viz hero-archive-box) */
+.hero-archive-box {
+    margin-top: 40px;
+    padding: 30px;
+    background-color: rgba(0, 0, 0, 0.4); 
+    border: 1px solid var(--primary-cyan-transparent);
+    border-radius: 5px;
+    box-shadow: 0 0 25px rgba(0, 255, 255, 0.15); 
+    position: relative;
+}
+
+.hero-archive-box::before {
+    content: "ARCHIVE STATUS: ONLINE / ENTITIES FOUND";
+    position: absolute;
+    top: 0;
+    left: 20px;
+    font-size: 0.8rem;
+    color: var(--primary-cyan);
+    background: rgba(0, 0, 0, 0.8);
+    padding: 2px 8px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    text-shadow: 1px 0 0 rgba(255, 0, 255, 0.5), -1px 0 0 rgba(0, 255, 255, 0.5); 
+}
+/* ... ostatní styly hero-table, protocol-entry atd. */
+
+/* --- RESPONZIVITA --- */
+@media screen and (max-width: 768px) {
+    .acknowledgement-grid {
+        grid-template-columns: 1fr; /* Jeden sloupec pro mobily */
+    }
+}
