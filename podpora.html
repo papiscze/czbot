@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CZBOT - Dobrovolná podpora</title>
+    <link href="templatemo-nexus-style.css" rel="stylesheet"> 
+    <style>
+        /* Speciální styly pro tuto stránku */
+        .support-options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .support-card {
+            background-color: rgba(30, 40, 50, 0.7); /* Tmavší pozadí */
+            border: 2px solid #00f0ff; /* Neonový okraj */
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            /* Flex box, aby se tlačítka vyrovnala */
+            display: flex; 
+            flex-direction: column;
+            justify-content: space-between; 
+        }
+
+        .support-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 25px rgba(0, 240, 255, 0.8);
+        }
+
+        .support-card h3 {
+            color: #ff00ff; /* Výrazný cyberpunk odstín */
+            margin-top: 0;
+            font-size: 1.8em;
+            text-transform: uppercase;
+            text-shadow: 0 0 5px #ff00ff;
+        }
+        
+        .support-card p {
+            color: #ccc;
+            margin-bottom: 25px;
+        }
+        
+        .zero-cost-badge {
+            display: inline-block;
+            background-color: #4CAF50; /* Zelená pro pozitivní zprávu */
+            color: white;
+            padding: 5px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+        
+        /* Vrátíme šířku 100% pro konzistentní cyber-button design */
+        .cyber-button {
+            width: 100%;
+        }
+    </style>
+</head>
+<body id="top">
+    <div class="cyber-bg">
+        <div class="cyber-gradient"></div>
+        <div class="matrix-rain" id="matrixRain"></div>
+    </div>
+    <div class="particles" id="particlesContainer"></div>
+    <div class="data-streams" id="dataStreams"></div>
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+    <div class="grid-overlay">
+        <div class="grid-lines"></div>
+        <div class="grid-glow"></div>
+    </div>
+    <div class="scanlines"></div>
+    <div class="noise-overlay"></div>
+    
+    <div id="header-placeholder"></div> 
+
+    <div class="content-section">
+        <div class="content-container">
+
+            <h1 class="page-title">Podpořte CZbot: Vše Zdarma Navždy</h1>
+            
+            <p class="page-subtitle">Náš závazek je jednoduchý: všechny funkce CZbota jsou a vždy budou <strong>100% zdarma</strong>. Žádné placené moduly, žádné Premium uzamykání.</p>
+
+            <div class="zero-cost-badge">100% FREE. ZÁVAZEK CZBOT TÝMU.</div>
+
+            <div class="cron-instructions-box">
+                <h2>Proč potřebujeme vaši podporu? Odlišnost CZbot</h2>
+
+                <p>CZbot se zásadně odlišuje od konkurence. Zatímco většina velkých botů si účtuje za pokročilé moduly (např. automatické publikování, zálohování, pokročilé plánování, XP systémy, tiketovací systémy, apod.), které jsou schované za "paywallem" jako Premium funkce, <strong>CZbot Vám je dává zcela zdarma.</strong></p>
+
+                <p>Naše dobrovolná podpora je oceněna a **použita výhradně** na zlepšování a udržování těchto služeb, které jsou pro Vás k dispozici bez jakýchkoli poplatků. Vaše podpora jde přímo do provozu a vývoje.</p>
+                
+                <ul class="command-fields">
+                    <li><span class="field-name">Hosting a Serverové Poplatky:</span> Krytí měsíčních nákladů na spolehlivou infrastrukturu.</li>
+                    <li><span class="field-name">API a Licence:</span> Plánované rozšíření o pokročilé funkce, které mohou vyžadovat placené služby.</li>
+                    <li><span class="field-name">Motivace Vývojářů:</span> Pohon k práci na nových bezplatných funkcích!</li>
+                </ul>
+            </div>
+            
+            <h2 style="text-align: center; margin-top: 50px;">Vyberte si způsob podpory</h2>
+
+            <div class="support-options-grid">
+                
+                <div class="support-card">
+                    <h3>Buy Me a Coffee - Rychlá a jednoduchá podpora</h3>
+                    <p>Nejjednodušší způsob, jak nás podpořit jednorázovým virtuálním "kafíčkem". I malá podpora nám pomáhá s náklady na hosting.</p>
+                    <a href="https://buymeacoffee.com/czbot" class="cyber-button primary">Koupit Kafíčko</a>
+                </div>
+
+                <div class="support-card">
+                    <h3>Jednorázový Dar (PayPal)</h3>
+                    <p>Chcete jen říct "Díky" za skvělý modul nebo pomoc na Support Serveru? Můžete nám poslat jednorázovou částku dle vašeho uvážení.</p>
+                    
+                    <!-- PŘÍMÝ ODKAZ NA PAYPAL DAROVACÍ STRÁNKU (Měna je určena formulářem) -->
+                    <a href="https://www.paypal.com/donate/?hosted_button_id=RZQF9SLGJCLT8" class="cyber-button secondary" target="_blank">Darovat přes PayPal</a>
+                </div>
+            </div>
+
+            <div class="cron-instructions-box" style="margin-top: 50px; text-align: center;">
+                <h2>Komunitní poděkování (Hall of Fame)</h2>
+                <p>Na stránce Poděkování najdete uznání pro nejužitečnější členy komunity, kteří aktivně pomáhají při vývoji bota.</p>
+                <p>Děkujeme všem, kteří nám pomáhají jako <strong>Bughunteři</strong> nebo přinášejí <strong>zásadní návrhy na vylepšení</strong>.</p>
+                <a href="thanks.html" class="cyber-button small-button">Zobrazit Bughuntery a Přispěvatele</a>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="templatemo-nexus-scripts.js"></script>
+</body>
+</html>
