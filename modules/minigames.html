@@ -95,7 +95,7 @@
         <div class="mobile-menu-header">
             <a href="../index.html" class="mobile-menu-logo">CZbot</a>
             <button class="mobile-menu-close" id="mobileMenuClose">✕</button>
-        </div>
+            </div>
         <div class="mobile-menu-cta">
             <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="cyber-button">Přidat bota</a>
         </div>
@@ -164,7 +164,7 @@
 
             <div class="module-intro-box">
                 <p>
-                    Modul <strong>Minihry</strong> nabízí hry od **Počítání čísel** v řadě až po **Slovní fotbal** a rychlé hry jako **Kámen, Nůžky, Papír**. Tyto hry jsou skvělý způsob, jak oživit a aktivovat členy serveru.
+                    Modul <strong>Minihry</strong> nabízí hry od <strong>Počítání čísel</strong> v řadě až po <strong>Slovní fotbal</strong> a rychlé hry jako <strong>Kámen, Nůžky, Papír</strong>. Tyto hry jsou skvělý způsob, jak oživit a aktivovat členy serveru.
                 </p>
             </div>
 
@@ -205,7 +205,6 @@
                     <tr>
                         <td><span class="command-code-modules">upozornění</span></td>
                         <td>Bot zobrazí varování/chybovou zprávu. <strong>Hra pokračuje</strong> (zpráva se smaže).</td>
-                        <td>Špatné číslo, Dvojitý příspěvek, Ne-číselné zprávy.</td>
                     </tr>
                     <tr>
                         <td><span class="command-code-modules">ignorovat</span></td>
@@ -327,6 +326,11 @@
                     </tr>
                 </tbody>
             </table>
+            
+            <div class="info-box mt-4">
+                <h4 class="command-title">ČESKÁ PRAVIDLA (Fallback Logika):</h4>
+                <p>Pokud poslední slovo končí na <strong>problematický český znak</strong> (např. *á, é, í, ó, ú, ý, ů, ě, ť, ď, ň*), další slovo musí začínat <strong>předposledním písmenem</strong> z předchozího slova. Bot okamžitě po tahu problematickým slovem odešle informaci, jakým písmenem se má pokračovat.</p>
+            </div>
 
         </div>
     </div>
