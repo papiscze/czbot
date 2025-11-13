@@ -132,7 +132,7 @@
                         <li><a href="giveaway.html">Giveaway(e)</a></li>
                         <li><a href="minigames.html">Minihry</a></li> 
                         <li><a href="birthdays.html">Narozeniny</a></li>
-                        <li><a href="patreon.html">Patreon</a></li>                       
+                        <li><a href="patreon.html">Patreon</a></li>                       
                         <li><a href="advanced_schedules.html">Pokročilé plánované zprávy</a></li>
                         <li><a href="reactions.html">Reakce smajlíky na zprávy</a></li>
                         <li><a href="reputation.html">Reputace</a></li>
@@ -152,7 +152,7 @@
                         <li><a href="backup.html">Zálohování a Obnova Serverů</a></li>
                         <li><a href="confessions.html">Zpovědi (Anonymní Zprávy)</a></li>
                     </ul>
-                </li>           
+                </li>           
             </ul>
         </nav>
     </div>
@@ -160,13 +160,9 @@
         <div class="content-container">
 
             <h1 class="page-title">🎉 Modul Minihry (Minigames)</h1>
-            <p class="page-subtitle">Modul sdružuje sadu jednoduchých, ale zábavných her navržených k podpoře aktivity a interakce v komunitě.</p>
+            <p class="page-subtitle">Modul <strong>Minihry</strong> sdružuje sadu jednoduchých, ale zábavných her navržených k podpoře aktivity a interakce mezi členy serveru. Od počítání čísel v řadě až po Slovní fotbálek – tento modul je skvělý pro oživení komunity.</p>
 
-            <div class="module-intro-box">
-                <p>
-                    Modul <strong>Minihry</strong> nabízí hry od <strong>Počítání čísel</strong> v řadě až po <strong>Slovní fotbal</strong> a rychlé hry jako <strong>Kámen, Nůžky, Papír</strong>. Tyto hry jsou skvělý způsob, jak oživit a aktivovat členy serveru.
-                </p>
-            </div>
+            <div class="module-divider"></div>
 
             <h2 class="module-heading">⚙️ Důležitá oprávnění bota pro správnou funkci</h2>
             <p>Aby modul <strong>Minihry</strong> fungoval bez problémů, ujistěte se, že váš bot má na Discord serveru a v kanálech následující <strong>oprávnění</strong>:</p>
@@ -174,57 +170,77 @@
             <div class="info-box">
                 <ul class="bullet-list">
                     <li><strong>Číst zprávy/Zobrazit kanály</strong>: Bot potřebuje vidět kanály s aktivními hrami.</li>
-                    <li><strong>Spravovat zprávy</strong> (<span class="command-code-modules">manage_messages</span>): <strong>Klíčové</strong> – nutné pro hru Počítání (mazání chybných zpráv) a pro spuštění/správu Slovního fotbalu.</li>
-                    <li><strong>Posílat zprávy</strong>: Pro odesílání zpráv (výsledky, upozornění, chyby).</li>
-                    <li><strong>Používat externí emoji / Přidat reakce</strong>: Pro reakce na zprávy (např. v Hádání čísel a Slovním fotbalu).</li>
-                    <li><strong>Používat příkazy aplikací</strong>: Aby bot mohl reagovat na <span class="command-code-modules">/slash</span> příkazy.</li>
+                    <li><strong>Spravovat zprávy</strong> (<span class="command-code-modules">manage_messages</span>): <strong>Klíčové oprávnění pro Počítání!</strong> Bot jej potřebuje k mazání chybných zpráv v rámci hry Počítání.</li>
+                    <li><strong>Posílat zprávy</strong>: Bot potřebuje odesílat zprávy (výsledky, upozornění, chyby).</li>
+                    <li><strong>Používat externí emoji / Přidat reakce</strong>: Pro reakce na zprávy (např. v Hádání čísel a Slovním fotbálku).</li>
+                    <li><strong>Používat příkazy aplikací</strong>: Aby bot mohl reagovat na <span class="command-code-modules">/slash</span> příkazy (např. <span class="command-code-modules">/hra</span> a <span class="command-code-modules">/pocitani</span>).</li>
                 </ul>
             </div>
 
             <div class="module-divider"></div>
 
             <h2 class="module-heading">🎲 Hra 1: Počítání (Counting Game)</h2>
-            <p>Hra, kde se členové střídají v psaní čísel v řadě (1, 2, 3...) s cílem dosáhnout co nejvyššího čísla.</p>
+            <p>Jednoduchá, ale návyková hra, kde se členové střídají v psaní čísel s cílem dosáhnout co nejvyššího čísla.</p>
 
-            <h3 class="module-heading">💡 Klíčové akce při chybě</h3>
-            <p>Při nastavení hry můžete zvolit, jak bot zareaguje na chyby. Dostupné akce jsou:</p>
-            <table class="data-table small-font">
+            <h3 class="module-heading">💡 Co modul Počítání umí?</h3>
+            <ul class="bullet-list">
+                <li><strong>Start/Nastavení hry</strong>: Umožňuje nastavit, ve kterém kanále bude hra probíhat, a spustit ji.</li>
+                <li><strong>Úprava pravidel</strong>: Umožňuje upravit pravidla hry, aniž by se musela resetovat.</li>
+                <li><strong>Přizpůsobitelné chybové akce</strong>: Můžete si vybrat, zda se po chybě hra <strong>restartuje</strong> nebo se jen zobrazí <strong>upozornění</strong> a hra pokračuje.</li>
+                <li><strong>Automatický restart</strong>: Po každé chybě s akcí <span class="command-code-modules">reset</span> se počítání automaticky restartuje od čísla <strong>1</strong>.</li>
+                <li><strong>Správa databáze</strong>: Bot si pamatuje aktuální číslo, posledního uživatele a kanál.</li>
+                <li><strong>Zrušení hry</strong>: Umožňuje trvale zrušit hru a vymazat veškerá data pro daný server.</li>
+            </ul>
+
+            <h3 class="module-heading mt-4">🚀 Jak používat Počítání?</h3>
+            <p>Správu hry Počítání zajišťuje skupina příkazů <span class="command-code-modules">/pocitani</span>. Tyto příkazy jsou omezeny na uživatele s oprávněním <strong>Spravovat zprávy</strong> (<span class="command-code-modules">manage_messages</span>).</p>
+
+            <h4 class="mt-4">Základní použití: <span class="command-code-modules">/pocitani [podpříkaz]</span></h4>
+            <table class="data-table">
                 <thead>
                     <tr>
-                        <th>Akce</th>
+                        <th>Podpříkaz</th>
                         <th>Popis</th>
-                        <th>Typ chyby, kde lze použít</th>
+                        <th>Omezení</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><span class="command-code-modules">reset</span></td>
-                        <td>Hra se okamžitě <strong>restartuje</strong> od čísla <strong>1</strong>.</td>
-                        <td>Všechny typy chyb.</td>
+                        <td><strong><span class="command-code-modules">/pocitani nastavit</span></strong></td>
+                        <td>Určí kanál a nastaví pravidla pro novou hru.</td>
+                        <td><span class="command-code-modules">manage_messages</span></td>
                     </tr>
                     <tr>
-                        <td><span class="command-code-modules">upozornění</span></td>
-                        <td>Bot zobrazí varování/chybovou zprávu. <strong>Hra pokračuje</strong> (zpráva se smaže).</td>
+                        <td><strong><span class="command-code-modules">/pocitani edit</span></strong></td>
+                        <td>Změní pravidla hry (akce při chybách) bez resetování čísla.</td>
+                        <td><span class="command-code-modules">manage_messages</span></td>
                     </tr>
                     <tr>
-                        <td><span class="command-code-modules">ignorovat</span></td>
-                        <td>Zpráva je zcela ignorována. Ne-číselná zpráva zůstane v chatu.</td>
-                        <td>Špatné číslo, Ne-číselné zprávy.</td>
+                        <td><strong><span class="command-code-modules">/pocitani reset</span></strong></td>
+                        <td>Okamžitě resetuje počítání zpět na číslo <strong>1</strong>.</td>
+                        <td><span class="command-code-modules">manage_messages</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong><span class="command-code-modules">/pocitani smazat</span></strong></td>
+                        <td>Trvale ukončí hru na serveru a smaže data.</td>
+                        <td><span class="command-code-modules">manage_messages</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong><span class="command-code-modules">/pocitani info</span></strong></td>
+                        <td>Zobrazí aktuální stav hry (číslo, kanál, pravidla).</td>
+                        <td>Všichni</td>
                     </tr>
                 </tbody>
             </table>
 
-            <h3 class="module-heading mt-4">🚀 Příkazy pro správu: <span class="command-code-modules">/pocitani</span></h3>
-            <p>Příkazy pro správu jsou omezeny na uživatele s oprávněním <span class="command-code-modules">Spravovat zprávy</span> (<span class="command-code-modules">manage_messages</span>).</p>
-
-            <h4 class="mt-4">Nastavení/Editace parametrů:</h4>
-            <p>Parametry určují pravidla pro chybné příspěvky:</p>
-            <table class="data-table small-font">
+            <h4 class="mt-4">Podrobnější parametry pro Nastavení/Editaci:</h4>
+            <table class="data-table">
                 <thead>
                     <tr>
                         <th>Parametr</th>
                         <th>Typ chyby</th>
                         <th>Dostupné akce</th>
+                        <th>Doporučená volba</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -232,105 +248,96 @@
                         <td><span class="command-code-modules">wrong_number_action</span></td>
                         <td>Špatné číslo (např. napsání 5 po 3)</td>
                         <td><span class="command-code-modules">reset</span>, <span class="command-code-modules">upozornění</span>, <span class="command-code-modules">ignorovat</span></td>
+                        <td><strong>reset</strong></td>
                     </tr>
                     <tr>
                         <td><span class="command-code-modules">double_post_action</span></td>
                         <td>Dvojitý příspěvek (dvakrát za sebou)</td>
                         <td><span class="command-code-modules">reset</span>, <span class="command-code-modules">upozornění</span></td>
+                        <td><strong>reset</strong></td>
                     </tr>
                     <tr>
                         <td><span class="command-code-modules">non_number_action</span></td>
                         <td>Ne-číselná zpráva (text, emoji)</td>
                         <td><span class="command-code-modules">reset</span>, <span class="command-code-modules">upozornění</span>, <span class="command-code-modules">ignorovat</span></td>
+                        <td><strong>ignorovat</strong></td>
                     </tr>
                 </tbody>
             </table>
 
             <div class="command-box">
-                <h4 class="command-title">Příklady použití <span class="command-code-modules">/pocitani</span>:</h4>
-                <p><strong>Spuštění/Nastavení:</strong> Spustí hru s pravidly, kde špatná čísla jen dostanou <strong>upozornění</strong>.</p>
-                <span class="command-code-modules-example">/pocitani nastavit channel:#pocitaci-kanal wrong_number_action:upozornění double_post_action:reset</span>
-                <p><strong>Editace:</strong> Změní akci pro ne-číselné zprávy na <strong>ignorovat</strong>, bez resetu aktuálního čísla.</p>
-                <span class="command-code-modules-example">/pocitani edit non_number_action:ignorovat</span>
+                <p><strong>Příklad:</strong></p>
+                <span class="command-code-modules-example">/pocitani nastavit channel:#pocitaci-kanal wrong_number_action:upozornění non_number_action:ignorovat</span>
             </div>
-            
-            <h4 class="mt-4">Řízení a stav:</h4>
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>Příkaz</th>
-                        <th>Popis</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><span class="command-code-modules">/pocitani reset</span></td>
-                        <td>Okamžitě resetuje počítání zpět na číslo <strong>1</strong>.</td>
-                    </tr>
-                    <tr>
-                        <td><span class="command-code-modules">/pocitani smazat</span></td>
-                        <td>Trvale ukončí hru a smaže všechna data z databáze.</td>
-                    </tr>
-                    <tr>
-                        <td><span class="command-code-modules">/pocitani info</span></td>
-                        <td>Zobrazí aktuální číslo, kanál a nastavená pravidla.</td>
-                    </tr>
-                </tbody>
-            </table>
 
             <div class="module-divider"></div>
 
-            <h2 class="module-heading">🎮 Hra 2, 3 a 4: Rychlé hry – <span class="command-code-modules">/hra</span></h2>
-            <p>Tyto hry se spravují pod jednou skupinou příkazů. Hádání čísel a Slovní fotbal mohou mít na serveru aktivní <strong>jen jednu instanci</strong>.</p>
+            <h2 class="module-heading">🎮 Hra 2, 3 a 4: Rychlé hry</h2>
+            <p>Tyto hry se spravují pod jednou skupinou příkazů <span class="command-code-modules">/hra</span>. Můžou běžet <strong>současně</strong> s Počítáním, ale <strong>Hádání čísel</strong> a <strong>Slovní fotbal</strong> mohou mít na serveru aktivní <strong>jen jednu instanci</strong> (v jednom kanále).</p>
 
-            <h3 class="module-heading">1. Kámen, Nůžky, Papír: <span class="command-code-modules">/hra kamen</span> 🪨📄✂️</h3>
-            <div class="command-box">
-                <h4 class="command-title">Použití:</h4>
-                <span class="command-code-modules-example">/hra kamen</span>
-                <p>Hráč hraje proti botovi pomocí tlačítek v interaktivní zprávě. Jednoduchá, rychlá hra jeden na jednoho.</p>
-            </div>
-
-            <h3 class="module-heading">2. Hádání čísel: <span class="command-code-modules">/hra cislo</span> 🔢</h3>
-            <p>Hra, kde hráči hádají tajné číslo v definovaném rozsahu, dokud není uhodnuto.</p>
-            <div class="command-box">
-                <h4 class="command-title">Spuštění:</h4>
-                <span class="command-code-modules-example">/hra cislo akce:start minimum:1 maximum:100</span>
-                <p>Volitelné parametry <span class="command-code-modules">minimum</span> a <span class="command-code-modules">maximum</span> definují rozsah.</p>
-                <h4 class="command-title">Zastavení:</h4>
-                <span class="command-code-modules-example">/hra cislo akce:stop</span>
-                <p>Zastaví hru a oznámí tajné číslo a počet pokusů. Hra se automaticky zastaví i po uhodnutí.</p>
-                <p><strong>Mechanika:</strong> Bot dává zpětnou vazbu (<span class="command-code-modules">🔼</span> - vyšší, <span class="command-code-modules">🔽</span> - nižší) a dynamicky aktualizuje hádací rozmezí.</p>
-            </div>
-
-            <h3 class="module-heading">3. Slovní fotbal: <span class="command-code-modules">/hra fotbal</span> 🐍</h3>
-            <p>Perzistentní hra, která pokračuje i po restartu bota. Slovo musí začínat na poslední písmeno slova předchozího. Správa vyžaduje oprávnění <span class="command-code-modules">Spravovat server</span>.</p>
+            <h3 class="module-heading mt-4">Základní použití: <span class="command-code-modules">/hra [jméno_hry] [akce]</span></h3>
             <table class="data-table">
                 <thead>
                     <tr>
-                        <th>Příkaz</th>
+                        <th>Hra</th>
                         <th>Popis</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><span class="command-code-modules">/hra fotbal action:start</span></td>
-                        <td>Spustí hru v kanále, odkud byl příkaz zadán.</td>
+                        <td><strong>Kámen, Nůžky, Papír</strong> (<span class="command-code-modules">/hra kamen</span>)</td>
+                        <td>Hráč hraje proti botovi pomocí tlačítek.</td>
                     </tr>
                     <tr>
-                        <td><span class="command-code-modules">/hra fotbal action:reset</span></td>
-                        <td>Smaže aktuální slovo a začíná se od nuly. Hra zůstane aktivní.</td>
+                        <td><strong>Hádání čísel</strong> (<span class="command-code-modules">/hra cislo</span>)</td>
+                        <td>Hráč hádá tajné číslo v zadaném rozsahu.</td>
                     </tr>
                     <tr>
-                        <td><span class="command-code-modules">/hra fotbal action:stop</span></td>
-                        <td>Ukončí hru a smaže data z databáze.</td>
+                        <td><strong>Slovní fotbal</strong> (<span class="command-code-modules">/hra fotbal</span>)</td>
+                        <td>Perzistentní hra, kde hráči střídavě posílají slova, která začínají na poslední písmeno předchozího slova.</td>
                     </tr>
                 </tbody>
             </table>
-            
-            <div class="info-box mt-4">
-                <h4 class="command-title">ČESKÁ PRAVIDLA (Fallback Logika):</h4>
-                <p>Pokud poslední slovo končí na <strong>problematický český znak</strong> (např. *á, é, í, ó, ú, ý, ů, ě, ť, ď, ň*), další slovo musí začínat <strong>předposledním písmenem</strong> z předchozího slova. Bot okamžitě po tahu problematickým slovem odešle informaci, jakým písmenem se má pokračovat.</p>
-            </div>
+
+            <h3 class="module-heading mt-4">1. Kámen, Nůžky, Papír: <span class="command-code-modules">/hra kamen</span> 🪨📄✂️</h3>
+            <ul class="bullet-list">
+                <li><strong>Použití</strong>: <span class="command-code-modules">/hra kamen</span></li>
+                <li><strong>Mechanika</strong>: Bot odešle embed s tlačítky. Hráč kliknutím vybere a bot okamžitě určí výsledek.</li>
+                <li><strong>Pravidla</strong>: Jednoduchá hra jeden na jednoho s botem.</li>
+            </ul>
+
+            <h3 class="module-heading mt-4">2. Hádání čísel: <span class="command-code-modules">/hra cislo</span> 🔢</h3>
+            <p>Tato hra vyžaduje explicitní spuštění a zastavení. Probíhá v jednom konkrétním kanále.</p>
+            <ul class="bullet-list">
+                <li><strong>Spuštění</strong>: <span class="command-code-modules">/hra cislo akce:start minimum:1 maximum:100</span>
+                    <ul class="nested-list">
+                        <li>(Volitelné) <span class="command-code-modules">minimum</span> a <span class="command-code-modules">maximum</span> definují hádací rozsah.</li>
+                    </ul>
+                </li>
+                <li><strong>Zastavení</strong>: <span class="command-code-modules">/hra cislo akce:stop</span>
+                    <ul class="nested-list">
+                        <li>Zastaví hru a oznámí tajné číslo a počet pokusů.</li>
+                    </ul>
+                </li>
+                <li><strong>Mechanika</strong>: Uživatelé v kanále píší čísla. Bot dává zpětnou vazbu (<span class="command-code-modules">🔼</span> - vyšší, <span class="command-code-modules">🔽</span> - nižší) a dynamicky zobrazuje aktuální rozmezí.</li>
+            </ul>
+
+            <h3 class="module-heading mt-4">3. Slovní fotbálek: <span class="command-code-modules">/hra fotbal</span> 🐍</h3>
+            <p>Perzistentní hra, která pokračuje i po restartu bota, dokud není explicitně zastavena. Spravovat (start/stop/reset) mohou jen uživatelé s oprávněním <strong>Spravovat server</strong>.</p>
+            <ul class="bullet-list">
+                <li><strong>Spuštění</strong>: <span class="command-code-modules">/hra fotbal action:start</span> (Spustí hru v kanále, odkud byl příkaz zadán.)</li>
+                <li><strong>Resetování</strong>: <span class="command-code-modules">/hra fotbal action:reset</span> (Smaže aktuální slovo a začíná se od nuly, ale hra zůstane aktivní v kanále.)</li>
+                <li><strong>Zastavení</strong>: <span class="command-code-modules">/hra fotbal action:stop</span> (Ukončí hru a smaže data z databáze.)</li>
+                <li><strong>Pravidla</strong>:
+                    <ul class="nested-list">
+                        <li>Hráč nemůže napsat dvě slova za sebou.</li>
+                        <li>Každé nové slovo musí začínat na poslední písmeno slova předchozího.</li>
+                        <li><strong>ČESKÁ PRAVIDLA (Fallback)</strong>: Pokud poslední slovo končí na <strong>problematický český znak</strong> (např. *á, é, í, ó, ú, ý, ů, ě, ť, ď, ň*), další slovo musí začínat <strong>předposledním písmenem</strong> z předchozího slova. Bot okamžitě po tahu problematickým slovem odešle informaci, jakým písmenem se má pokračovat.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <p class="mt-4">Šťastnou hru! 🎮</p>
 
         </div>
     </div>
