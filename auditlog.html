@@ -20,10 +20,13 @@
         .log-item { 
             border-bottom: 1px solid #3a3a5a; 
             padding: 10px 0; 
+            display: flex; /* Použito pro lepší zarovnání timestampu */
+            align-items: flex-start;
         }
         .log-item:last-child { border-bottom: none; }
-        .log-timestamp { font-size: 0.8rem; color: #9faab7; min-width: 100px; }
-        .log-content { flex-grow: 1; padding-left: 15px; }
+        /* ZMĚNA: Přidán margin-right pro oddělení timestampu */
+        .log-timestamp { font-size: 0.8rem; color: #9faab7; min-width: 100px; margin-right: 15px; } 
+        .log-content { flex-grow: 1; }
 
         /* Spinner a zprávy */
         #loadingMessage, #errorMessage {
@@ -83,7 +86,7 @@
             </div>
 
             <div class="filter-card">
-                <label for="searchInput" class="form-label fw-bold"><i class="bi bi-search me-2"></i> Vyhledávání (Search)</label>
+                <label for="searchInput" class="form-label fw-bold"><i class="bi bi-search me-2"></i> Vyhledávání (Ignorováno API)</label>
                 <input type="text" id="searchInput" class="form-control" placeholder="Moderátor, Cíl, Důvod, ID..." onkeyup="if(event.key === 'Enter') loadLog(1)">
                 <small class="text-secondary">Stiskněte Enter pro vyhledání.</small>
             </div>
@@ -103,7 +106,7 @@
                     <span class="form-label fw-bold"><i class="bi bi-funnel me-2"></i> Filtrovat Události (Ignorováno API)</span>
                     <button class="btn btn-sm btn-outline-secondary" onclick="toggleAllCheckboxes(true)">Vše</button>
                     <button class="btn btn-sm btn-outline-secondary ms-2" onclick="toggleAllCheckboxes(false)">Žádné</button>
-            </div>
+                </div>
                 <div id="eventFilters">
                     </div>
                 <button class="btn btn-sm btn-success w-100 mt-3" onclick="loadLog(1)">Použít Filtry / Hledání</button>
@@ -145,17 +148,16 @@
     
     let currentGuildId = null;
     let currentPage = 1;
-    // Původní logLimit byl 20. Změněno na 100, což je maximum, které vaše API (pravděpodobně) vrací v jednom volání bez stránkování.
-    const logLimit = 100; 
+    // Použijeme limit 50, jak je definováno ve vašem API handleru pro stabilní stránkování
+    const logLimit = 50; 
 
     // --- Mapa událostí pro zobrazení ---
-    // Původní mapa z vašeho kódu je rozšířena o Discord Audit Log akce
     const ACTION_MAP = {
         // Zprávy
         'message_delete': { name: 'Smazaná zpráva', icon: '🗑️', color: 'text-danger' },
         'message_edit': { name: 'Upravená zpráva', icon: '✍️', color: 'text-warning' },
         
-        // Uživatelé a Moderace (Často Discord Audit Log akce)
+        // Uživatelé a Moderace (Discord Audit Log akce)
         'member_join': { name: 'Připojení uživatele', icon: '👋', color: 'text-success' },
         'member_leave': { name: 'Odchod uživatele', icon: '🚶', color: 'text-secondary' },
         'member_update': { name: 'Úprava uživatele (role/nick)', icon: '👤', color: 'text-warning' },
@@ -183,7 +185,7 @@
     };
 
 
-    // --- Mapa událostí (PŮVODNÍ - zachována pouze pro UI logiku zobrazení filtrů) ---
+    // --- Mapa událostí pro UI filtry (Ponecháno pro funkční design) ---
     const EVENT_CATEGORIES = {
         "Zprávy": { "description": "Události týkající se zpráv.", "events": { "message_delete": {"name": "🗑️ Smazané zprávy"}, "message_edit": {"name": "✍️ Upravené zprávy"}, } },
         "Uživatelé a Moderace": { "description": "Události týkající se uživatelů a moderátorských akcí.", "events": { "member_join": {"name": "👋 Připojení uživatele"}, "member_leave": {"name": "🚶 Odchod uživatele"}, "member_update": {"name": "👤 Úprava uživatele (role/nick)"}, "member_ban": {"name": "🚫 Zabanování uživatele"}, "member_unban": {"name": "✅ Odbanování uživatele"}, "member_kick": {"name": "👢 Vyhození uživatele"}, "member_timeout": {"name": "⏱️ Timeout uživatele"}, "member_server_mute": {"name": "🔇 Ztlumení mikrofonu uživatele"}, "member_server_unmute": {"name": "🔊 Odtlumení mikrofonu uživatele"}, "member_server_deafen": {"name": "🔕 Ztlumení sluchátek uživatele"}, "member_server_undeafen": {"name": "🔔 Odtlumení sluchátek uživatele"}, } },
@@ -216,7 +218,7 @@
         document.getElementById('errorMessage').style.display = 'none';
     }
 
-    // --- Generování Filtrů (PŮVODNÍ - zachováno pro UI) ---
+    // --- Generování Filtrů a Checkboxy (Ponecháno pro UI) ---
     function generateEventFilters() {
         const container = document.getElementById('eventFilters');
         let html = '';
@@ -263,57 +265,59 @@
         });
     }
 
-    // --- Získání API volání (PŮVODNÍ - Nyní nepoužíváno, ale ponecháno pro UI/budoucnost) ---
+    // --- Získání API volání (Ponecháno pro UI) ---
     function getSelectedEventKeys() {
         return Array.from(document.querySelectorAll('.event-filter-checkbox:checked'))
             .map(cb => cb.value)
             .join(',');
     }
 
-    // --- KLÍČOVÁ ZMĚNA 2: Hlavní funkce načítání Logu upravená pro backend loggeru ---
+    // --- KLÍČOVÁ ZMĚNA 2: Hlavní funkce načítání Logu upravená pro BACKEND API ---
     async function loadLog(page = 1) {
         if (!currentGuildId) return;
         
-        // currentPage = page; // Stránkování prozatím ignorujeme, API vrací pouze top 100
+        currentPage = page; 
 
         showLoading();
 
-        // Původní: const period = document.getElementById('timeFilter').value;
-        // Původní: const eventKeys = getSelectedEventKeys();
-        // Původní: const offset = (currentPage - 1) * logLimit;
+        const limit = logLimit; // Použijeme globální logLimit (50)
         
-        // NOVÉ: Získání vyhledávacího dotazu
-        const search = document.getElementById('searchInput').value.trim();
-
-        // NOVÁ URL: Pouze s limitem a vyhledáváním
-        let url = `${API_BASE_URL}/api/auditlog/${currentGuildId}?limit=${logLimit}`;
-        if (search) {
-            url += `&search=${encodeURIComponent(search)}`;
-        }
+        // Stránkování - URL se musí shodovat s routou '/api/auditlogs/{guild_id}'
+        let url = `${API_BASE_URL}/api/auditlogs/${currentGuildId}?page=${currentPage}&limit=${limit}`;
+        
+        // Vyhledávání zatím neřešíme, dokud nebude API podporovat query parametr 'search'
+        // const search = document.getElementById('searchInput').value.trim();
+        // if (search) {
+        //     url += `&search=${encodeURIComponent(search)}`;
+        // }
 
         try {
             const response = await fetch(url);
 
             if (response.status === 404) {
-                 showError("Bot není na serveru, nemá přístup k logům, nebo endpoint neexistuje.");
-                return;
+                 showError("Server nenalezen/nedostupný. Možná bot není na serveru.");
+                 return;
             }
             if (response.status === 401) {
-                showError("Neautorizováno. Zkuste se přihlásit znovu.");
+                showError("Neautorizováno. Zkuste se přihlásit znovu. (401)");
+                return;
+            }
+            if (response.status === 403) {
+                showError("Nemáte dostatečná oprávnění pro zobrazení audit logů. (403)");
                 return;
             }
             if (!response.ok) {
                 throw new Error(`Server vrátil chybu: ${response.status}`);
             }
 
-            // Backend vrací pole logů
-            const logs = await response.json(); 
+            // Backend vrací objekt s pagination a logs
+            const data = await response.json(); 
 
-            // Vykreslení Logů
-            renderLogEntries(logs); 
+            // Vykreslení Logů - předáme pouze pole 'logs'
+            renderLogEntries(data.logs); 
             
-            // Stránkování (zatím se nepoužije, protože chybí total_count)
-            // renderPagination(data.total_count || 0);
+            // Vykreslení Stránkování - použijeme data z objektu 'pagination'
+            renderPagination(data.pagination.total_records || 0, data.pagination.total_pages || 0);
 
             hideMessages();
 
@@ -323,37 +327,36 @@
         }
     }
 
-    // --- KLÍČOVÁ ZMĚNA 3: Vykreslení Záznamů podle nové struktury ---
+    // --- KLÍČOVÁ ZMĚNA 3: Vykreslení Záznamů podle struktury API ---
     function renderLogEntries(logs) {
         const container = document.getElementById('logContent');
         
-        // ZDE JE KLÍČOVÁ OPRAVA: Kontrola, zda logs je skutečně pole
         if (!Array.isArray(logs) || logs.length === 0) {
-            // Může se stát, že API vrátí prázdný objekt, nebo null, proto tato kontrola zabrání pádu.
-            container.innerHTML = '<div class="text-center p-5 text-secondary">Žádné záznamy nebyly nalezeny (nebo API nevrátilo platné pole dat).</div>';
+            container.innerHTML = '<div class="text-center p-5 text-secondary">Žádné záznamy nebyly nalezeny.</div>';
             return;
         }
 
         container.innerHTML = logs.map((log, index) => {
-            // log.timestamp je UNIX EPOCH (v sekundách)
-            const timestamp = new Date(log.timestamp * 1000).toLocaleString('cs-CZ', { dateStyle: 'short', timeStyle: 'medium' });
+            // log.timestamp je ISO 8601 string, který vrací vaše API
+            const timestamp = new Date(log.timestamp).toLocaleString('cs-CZ', { dateStyle: 'short', timeStyle: 'medium' });
             
-            const actionDetail = ACTION_MAP[log.action] || ACTION_MAP['default'];
-            const collapseId = `changes-${index}`;
+            // Přístup k event_type
+            const actionDetail = ACTION_MAP[log.event_type] || ACTION_MAP['default'];
+            const collapseId = `changes-${index}-${currentPage}`; // Unikátní ID pro každou stránku
 
             // Sestavení hlavní zprávy
             let message = `<span class="fw-bold ${actionDetail.color}">${actionDetail.icon} ${actionDetail.name}</span>`;
             
-            // Cílová entita (uživatel, kanál, role)
-            if (log.target_name && log.target_name !== 'N/A') {
-                message += ` na entitě <span class="fw-semibold text-info">${log.target_name}</span>`;
-            }
+            // Používáme ID, protože API nevrací jména
+            let targetId = log.target_user_id || log.channel_id || 'N/A';
+            let moderatorId = log.moderator_id || 'N/A';
             
-            // Moderátor (zdroj akce)
-            if (log.source_name && log.source_name !== 'N/A') {
-                message += ` moderátorem <span class="fw-semibold text-warning">${log.source_name}</span>.`;
+            message += ` (Cíl ID: <span class="fw-semibold text-info">${targetId}</span>)`;
+            
+            if (moderatorId !== 'N/A') {
+                message += ` Moderátor ID: <span class="fw-semibold text-warning">${moderatorId}</span>.`;
             } else {
-                 message += ` (Akce provedena systémem nebo neznámým zdrojem).`;
+                message += ` (Akce provedena systémem/neznámým zdrojem).`;
             }
 
             // Důvod
@@ -361,33 +364,21 @@
                 message += `<br><small class="text-secondary">Důvod: ${log.reason}</small>`;
             }
 
-            // Zobrazení detailů změn
+            // Zobrazení detailů databáze (`data` JSON objekt)
             let changesHtml = '';
-            if (log.changes && log.changes.length > 0) {
+            if (log.data) {
                 changesHtml = `
                     <a class="log-changes-title" data-bs-toggle="collapse" href="#${collapseId}" role="button" aria-expanded="false" aria-controls="${collapseId}">
-                        <i class="bi bi-caret-right-fill me-1"></i> Zobrazit detaily změn (${log.changes.length})
+                        <i class="bi bi-caret-right-fill me-1"></i> Zobrazit JSON Data / Změny
                     </a>
                     <div class="collapse" id="${collapseId}">
                         <div class="log-changes-detail">
-                            ${log.changes.map(change => {
-                                // Převod na hezky formátovaný JSON
-                                const oldValue = change.old_value !== undefined ? JSON.stringify(change.old_value, null, 2) : 'N/A';
-                                const newValue = change.new_value !== undefined ? JSON.stringify(change.new_value, null, 2) : 'N/A';
-                                
-                                return `
-                                    <div class="mb-2">
-                                        <span class="text-info fw-bold">${(change.key || 'neznámý klíč').replace(/_/g, ' ')}:</span>
-                                        <span class="d-block text-danger">Původní: ${oldValue}</span>
-                                        <span class="d-block text-success">Nová: ${newValue}</span>
-                                    </div>
-                                `;
-                            }).join('<hr class="my-2 border-secondary">')}
+                            ${JSON.stringify(log.data, null, 2)}
                         </div>
                     </div>
                 `;
             }
-
+            
             // Původní rozložení řádku logu
             return `
                 <div class="log-item">
@@ -401,12 +392,17 @@
         }).join('');
     }
     
-    // --- Vykreslení Stránkování (PŮVODNÍ - Zachováno pro UI, ale nefunkční bez total_count) ---
-    function renderPagination(totalCount) {
+    // --- Vykreslení Stránkování (UPRAVENO) ---
+    function renderPagination(totalCount, totalPages) {
         const paginationUl = document.getElementById('pagination');
-        const totalPages = Math.ceil(totalCount / logLimit);
         let html = '';
         
+        // Zajištění, že se nic nevykreslí, pokud je pouze jedna stránka
+        if (totalPages <= 1) {
+            paginationUl.innerHTML = '';
+            return;
+        }
+
         let startPage = Math.max(1, currentPage - 2);
         let endPage = Math.min(totalPages, currentPage + 2);
 
@@ -418,22 +414,32 @@
         // Tlačítko Předchozí
         html += `<li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
                      <a class="page-link" href="#" onclick="loadLog(${currentPage - 1})">Předchozí</a>
-                   </li>`;
+                    </li>`;
+
+        // Zobrazení elipsy na začátku
+        if (startPage > 1) {
+            html += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
+        }
 
         // Čísla stránek
         for (let i = startPage; i <= endPage; i++) {
             html += `<li class="page-item ${i === currentPage ? 'active' : ''}">
-                         <a class="page-link" href="#" onclick="loadLog(${i})">${i}</a>
-                       </li>`;
+                           <a class="page-link" href="#" onclick="loadLog(${i})">${i}</a>
+                           </li>`;
+        }
+        
+        // Zobrazení elipsy na konci
+        if (endPage < totalPages) {
+            html += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
         }
 
+
         // Tlačítko Další
-        html += `<li class="page-item ${currentPage === totalPages || totalPages === 0 ? 'disabled' : ''}">
+        html += `<li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
                      <a class="page-link" href="#" onclick="loadLog(${currentPage + 1})">Další</a>
-                   </li>`;
+                    </li>`;
 
         paginationUl.innerHTML = html;
-        if (totalPages <= 1) paginationUl.innerHTML = '';
     }
 
 
@@ -452,7 +458,7 @@
 
             if (!response.ok) {
                 serverInfo.textContent = 'Pro zobrazení Audit Logu se prosím přihlaste.';
-                authButton.href = `${API_BASE_URL}/api/auth/discord?next=${encodeURIComponent(window.location.pathname)}`;
+                authButton.href = `${API_BASE_URL}/oauth/login?next=${encodeURIComponent(window.location.pathname)}`;
                 authButton.innerHTML = `<i class="bi bi-discord me-2"></i> Přihlásit se`;
                 return;
             }
@@ -473,7 +479,8 @@
             let initialGuild = authorizedGuilds.find(g => g.id === window.location.pathname.split('/').pop()) || authorizedGuilds[0];
             currentGuildId = initialGuild.id;
             select.value = initialGuild.id;
-            window.history.replaceState({ guildId: initialGuild.id }, '', `/auditlog/${initialGuild.id}`);
+            // ZMĚNA: URL pro Audit Log
+            window.history.replaceState({ guildId: initialGuild.id }, '', `/auditlogs/${initialGuild.id}`);
             serverInfo.textContent = `Audit Log pro server: ${initialGuild.name}`;
 
             await loadLog();
@@ -493,7 +500,8 @@
             const guildName = select.options[select.selectedIndex].text;
             document.getElementById('serverInfo').textContent = `Audit Log pro server: ${guildName}`;
             
-            window.history.pushState({ guildId: newId }, '', `/auditlog/${newId}`);
+            // ZMĚNA: URL pro Audit Log
+            window.history.pushState({ guildId: newId }, '', `/auditlogs/${newId}`);
             
             await loadLog(1);
         }
