@@ -400,7 +400,7 @@
                     <div class="command-detail-row" aria-hidden="true">
                         <div class="detail-content">
                             <p>Omezí schopnost uživatele komunikovat na serveru po zadanou dobu.</p>
-                            <div class="syntax">Syntaxe: `/mute user:<@uživatel> duration:<délka> [reason:<důvod>]`</div>
+                            <div class="syntax">Syntaxe: `/mute user:<@uživatel> duration:<délka> [reason:<důvod>] [log_to_db:True/False]`</div>
                             <div class="module-link-small">
                                 <strong>duration formát:</strong> Např. <code>30m</code> (minuty), <code>2h</code> (hodiny), <code>7d</code> (dny).<br>
                                 Vyžaduje oprávnění <strong>Umlčet členy</strong>.
@@ -467,7 +467,7 @@
                     <div class="command-detail-row" aria-hidden="true">
                         <div class="detail-content">
                             <p>Odešle upozornění do DM uživatele (pokud má DM otevřené) a zaznamená porušení pravidel.</p>
-                            <div class="syntax">Syntaxe: `/warn user:<@uživatel> reason:<důvod>`</div>
+                            <div class="syntax">Syntaxe: `/warn user:<@uživatel> reason:<důvod> log_to_db:<True/False>`</div>
                             <div class="module-link-small">Vyžaduje oprávnění <strong>Kopnout členy</strong>.</div>
                         </div>
                     </div>
@@ -483,7 +483,7 @@
                     <div class="command-detail-row" aria-hidden="true">
                         <div class="detail-content">
                             <p>Vykopne uživatele ze serveru. Je možné smazat jeho poslední zprávy (max 7 dní).</p>
-                            <div class="syntax">Syntaxe: `/kick member:<@uživatel> [reason:<důvod>] [delete_messages_days:<dny>]`</div>
+                            <div class="syntax">Syntaxe: `/kick member:<@uživatel> [reason:<důvod>] [delete_messages_days:<dny>] [log_to_db:True/False]`</div>
                             <div class="module-link-small">Vyžaduje oprávnění <strong>Vykopnout členy</strong>.</div>
                         </div>
                     </div>
@@ -499,7 +499,7 @@
                     <div class="command-detail-row" aria-hidden="true">
                         <div class="detail-content">
                             <p>Trvalé zabanování uživatele se serveru. Je možné smazat jeho poslední zprávy (max 7 dní).</p>
-                            <div class="syntax">Syntaxe: `/ban user:<@uživatel> [reason:<důvod>] [delete_messages_days:<dny>]`</div>
+                            <div class="syntax">Syntaxe: `/ban user:<@uživatel> [reason:<důvod>] [delete_messages_days:<dny>] [log_to_db:True/False]`</div>
                             <div class="module-link-small">Vyžaduje oprávnění <strong>Zabanovat členy</strong>.</div>
                         </div>
                     </div>
