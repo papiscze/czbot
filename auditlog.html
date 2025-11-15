@@ -7,16 +7,62 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
     <style>
-        /* PŮVODNÍ STYLY */
-        body { background: #1e1e2d; color: #d1d1d1; font-family: 'Poppins', sans-serif; }
-        .header-section { background: #2a2a3e; padding: 20px 0; border-bottom: 2px solid #5a5a7a; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); }
+        /* --- JEDNOTNÉ STYLY NAVIGACE --- */
+        * {
+            box-sizing: border-box;
+        }
+        body { 
+            background: #1e1e2d; 
+            color: #d1d1d1; 
+            font-family: 'Poppins', sans-serif; 
+            padding-top: 56px; 
+        }
+        .navbar-custom {
+            background-color: #2a2a3e;
+            border-bottom: 2px solid #5a5a7a;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1030;
+        }
+        .navbar-toggler-icon {
+            filter: invert(1);
+        }
+        .nav-link.active, .navbar-brand {
+            color: #57F287 !important;
+            font-weight: 600;
+        }
+        .nav-link:hover:not(.active) {
+            color: #3498db !important;
+        }
+        .dropdown-menu-custom {
+            background-color: #1e1e2d;
+            border: 1px solid #5a5a7a;
+        }
+        .dropdown-item-custom {
+            color: #d1d1d1;
+        }
+        .dropdown-item-custom:hover {
+            background-color: #3a3a5a;
+            color: #ffffff;
+        }
+        .dropdown-toggle::after {
+            filter: invert(1);
+        }
+        
+        /* --- STYLY SPECIFICKÉ PRO TUTO STRÁNKU (AUDIT LOG) --- */
+        .header-section { 
+            background: #2a2a3e; 
+            padding: 20px 0; 
+            border-bottom: 2px solid #5a5a7a; 
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); 
+        }
         .log-container { background: #2a2a3e; border-radius: 12px; padding: 20px; box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); }
         h1 { color: #57F287; font-weight: 700; }
         .filter-card { background: #1e1e2d; border: 1px solid #3a3a5a; border-radius: 8px; padding: 15px; margin-bottom: 15px; }
         .filter-category-title { font-weight: 600; color: #3498db; cursor: pointer; }
         .event-filter-checkbox { margin-right: 5px; }
-        
-        /* Styl pro jednotlivý řádek logu */
         .log-item { 
             border-bottom: 1px solid #3a3a5a; 
             padding: 10px 0; 
@@ -24,10 +70,16 @@
             align-items: flex-start;
         }
         .log-item:last-child { border-bottom: none; }
-        .log-timestamp { font-size: 0.8rem; color: #9faab7; min-width: 100px; margin-right: 15px; } 
-        .log-content { flex-grow: 1; }
-
-        /* Spinner a zprávy */
+        .log-timestamp { 
+            font-size: 0.8rem; 
+            color: #9faab7; 
+            min-width: 100px; 
+            flex-shrink: 0;
+        }
+        .log-content { 
+            flex-grow: 1; 
+            padding-left: 15px;
+        }
         #loadingMessage, #errorMessage {
             min-height: 200px;
             display: flex;
@@ -35,11 +87,10 @@
             align-items: center;
             flex-direction: column;
         }
-        
         .form-select, .form-control { border-color:#5a5a7a; background-color:#2a2a3e !important; color:#d1d1d1 !important; }
         .form-check-input:checked { background-color: #57F287; border-color: #57F287; }
 
-        /* NOVÉ STYLY pro zobrazení JSON dat */
+        /* Styly pro zobrazení JSON dat */
         .log-action-text { font-weight: 600; margin-bottom: 5px; }
         .log-changes-title { 
             font-size: 0.9rem;
@@ -50,24 +101,70 @@
             margin-top: 5px;
         }
         .log-changes-detail {
-            background: #1e1e2d; /* Tmavší pozadí pro detaily */
+            background: #1e1e2d; 
             padding: 10px;
             border-radius: 6px;
             margin-top: 5px;
             font-family: monospace;
             font-size: 0.8rem;
-            white-space: pre-wrap;
+            white-space: pre-wrap; 
+            overflow-x: auto;
+            line-height: 1.2; 
         }
-        
+        .log-changes-detail > div {
+            margin-bottom: 5px !important; 
+        }
+        /* Zajištění, že vnitřní bloky pro JSON jsou kompaktní */
+        .log-changes-detail > div > span.d-block {
+            padding-left: 5px; /* Mírné odsazení pro čitelnost */
+        }
     </style>
 </head>
 <body>
 
-<header class="header-section text-center">
-    <div class="container">
-        <a href="/api/auth/discord" class="btn btn-outline-info rounded-pill position-absolute top-0 end-0 mt-3 me-3" id="authButton" title="Přihlásit znovu přes Discord.">
+<nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">
+            <i class="bi bi-robot me-2"></i> Discord Utility Bot
+        </a>
+        <a href="/api/auth/discord" class="btn btn-outline-info rounded-pill ms-auto me-3 d-none d-lg-block" id="authButtonLg" title="Přihlásit znovu přes Discord.">
             <i class="bi bi-discord me-2"></i> Přihlásit se
         </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/crongenerator.html"><i class="bi bi-clock-history me-1"></i> Cron Generator</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/embedgenerator.html"><i class="bi bi-card-heading me-1"></i> Embed Generator</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/commands.html"><i class="bi bi-terminal me-1"></i> Příkazy</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-server me-1"></i> Správa Serveru
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-custom">
+                        <li><a class="dropdown-item dropdown-item-custom active" href="/auditlog.html"><i class="bi bi-journal-text me-2"></i> Audit Log</a></li>
+                        <li><a class="dropdown-item dropdown-item-custom" href="/stats.html"><i class="bi bi-graph-up me-2"></i> Statistiky</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item dropdown-item-custom" href="#"><i class="bi bi-gear-fill me-2"></i> Nastavení Bota (WIP)</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <a href="/api/auth/discord" class="btn btn-outline-info rounded-pill w-100 mt-2 mb-2 d-lg-none" id="authButtonSm" title="Přihlásit znovu přes Discord.">
+                <i class="bi bi-discord me-2"></i> Přihlásit se
+            </a>
+        </div>
+    </div>
+</nav>
+
+<header class="header-section text-center">
+    <div class="container">
         <h1 class="display-5 fw-bold"><i class="bi bi-journal-text me-3"></i> Audit Log</h1>
         <p class="lead text-secondary mt-2" id="serverInfo">Načítám servery...</p>
     </div>
@@ -85,13 +182,13 @@
             </div>
 
             <div class="filter-card">
-                <label for="searchInput" class="form-label fw-bold"><i class="bi bi-search me-2"></i> Vyhledávání (Ignorováno API)</label>
-                <input type="text" id="searchInput" class="form-control" placeholder="Moderátor, Cíl, Důvod, ID..." onkeyup="if(event.key === 'Enter') loadLog(1)">
-                <small class="text-secondary">Stiskněte Enter pro vyhledání.</small>
+                <label for="searchInput" class="form-label fw-bold"><i class="bi bi-search me-2"></i> Vyhledávání (Search)</label>
+                <input type="text" id="searchInput" class="form-control" placeholder="Moderátor, Cíl, Důvod, ID..." onkeyup="if(event.key === 'Enter') applyClientFilters()">
+                <small class="text-secondary">Stiskněte Enter nebo "Použít Filtry".</small>
             </div>
 
             <div class="filter-card">
-                <label for="timeFilter" class="form-label fw-bold"><i class="bi bi-clock me-2"></i> Časové období (Ignorováno API)</label>
+                <label for="timeFilter" class="form-label fw-bold"><i class="bi bi-clock me-2"></i> Časové období</label>
                 <select id="timeFilter" class="form-select">
                     <option value="1h">Poslední 1 hodina</option>
                     <option value="6h">Posledních 6 hodin</option>
@@ -102,13 +199,13 @@
 
             <div class="filter-card">
                 <div class="d-flex justify-content-between align-items-center mb-2">
-                    <span class="form-label fw-bold"><i class="bi bi-funnel me-2"></i> Filtrovat Události (Ignorováno API)</span>
+                    <span class="form-label fw-bold"><i class="bi bi-funnel me-2"></i> Filtrovat Události</span>
                     <button class="btn btn-sm btn-outline-secondary" onclick="toggleAllCheckboxes(true)">Vše</button>
                     <button class="btn btn-sm btn-outline-secondary ms-2" onclick="toggleAllCheckboxes(false)">Žádné</button>
-                </div>
+            </div>
                 <div id="eventFilters">
                     </div>
-                <button class="btn btn-sm btn-success w-100 mt-3" onclick="loadLog(1)">Použít Filtry / Hledání</button>
+                <button class="btn btn-sm btn-success w-100 mt-3" onclick="applyClientFilters()">Použít Filtry / Hledání</button>
             </div>
         </div>
 
@@ -141,13 +238,17 @@
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    // **************** KLÍČOVÁ ZMĚNA 1: Pevně nastavená URL ****************
+    // **************** Pevně nastavená URL ****************
     const API_BASE_URL = "https://rs422cznas.myds.me:5038";
     
     let currentGuildId = null;
     let currentPage = 1;
-    const logLimit = 50; 
+    const logLimit = 100; 
+    let allLogs = []; // Pole pro uložení všech stažených logů (pro klientské filtrování)
 
     // --- Mapa událostí pro zobrazení ---
     const ACTION_MAP = {
@@ -157,7 +258,7 @@
         'member_leave': { name: 'Odchod uživatele', icon: '🚶', color: 'text-secondary' },
         'member_update': { name: 'Úprava uživatele (role/nick)', icon: '👤', color: 'text-warning' },
         'member_ban': { name: 'Zabanování uživatele', icon: '🚫', color: 'text-danger' },
-        'member_unban': { name: 'Odbanování uživatele', icon: '✅', color: 'text-success' },
+        'member_unban': { name: 'Odbanování uživatele', icon: '✅', 'color': 'text-success' },
         'member_kick': { name: 'Vyhození uživatele', icon: '👢', color: 'text-danger' },
         'member_timeout': { name: 'Timeout uživatele', icon: '⏱️', color: 'text-danger' },
         'channel_create': { name: 'Vytvoření kanálu', icon: '➕', color: 'text-success' },
@@ -171,14 +272,25 @@
         'invite_create': { name: 'Vytvoření pozvánky', icon: '📨', color: 'text-success' },
         'default': { name: 'Discord Akce', icon: '❓', color: 'text-secondary' },
         'command_usage': { name: 'Použití příkazu', icon: '✅', color: 'text-info' },
-        // Zde by měly být všechny typy událostí, které vrací vaše API
-        'member_server_mute': { name: '🔇 Ztlumení mikrofonu', icon: '🔇', color: 'text-danger' }, 
-        'voice_state_update': { name: '🎤 Hlasové aktivity', icon: '🎤', color: 'text-info' },
-        'thread_create': { name: '💬 Vlákno vytvořeno', icon: '💬', color: 'text-success' },
+        // Doplnění eventů
+        'member_server_mute': { "name": "🔇 Ztlumení mikrofonu uživatele", "icon": "🔇", "color": "text-danger" }, 
+        'member_server_unmute': { "name": "🔊 Odtlumení mikrofonu uživatele", "icon": "🔊", "color": "text-success" }, 
+        'member_server_deafen': { "name": "🔕 Ztlumení sluchátek uživatele", "icon": "🔕", "color": "text-danger" }, 
+        'member_server_undeafen': { "name": "🔔 Odtlumení sluchátek uživatele", "icon": "🔔", "color": "text-success" }, 
+        'voice_state_update': { "name": "🎤 Hlasové aktivity", "icon": "🎤", "color": "text-info" }, 
+        'stage_instance_create': { "name": "🎙️ Pódium vytvořeno", "icon": "🎙️", "color": "text-success" }, 
+        'stage_instance_delete': { "name": "✖️ Pódium smazáno", "icon": "✖️", "color": "text-danger" }, 
+        'stage_instance_update': { "name": "📝 Pódium upraveno", "icon": "📝", "color": "text-warning" }, 
+        'invite_delete': { "name": "🗑️ Smazání pozvánky", "icon": "🗑️", "color": "text-danger" }, 
+        'webhooks_update': { "name": "🔗 Webhooky aktualizovány", "icon": "🔗", "color": "text-info" }, 
+        'thread_create': { "name": "💬 Vlákno vytvořeno", "icon": "💬", "color": "text-success" }, 
+        'thread_update': { "name": "✏️ Vlákno upraveno", "icon": "✏️", "color": "text-warning" }, 
+        'thread_delete': { "name": "❌ Vlákno smazáno", "icon": "❌", "color": "text-danger" }, 
+        'scheduled_event_create': { "name": "🗓️ Událost vytvořena", "icon": "🗓️", "color": "text-success" }, 
+        'scheduled_event_update': { "name": "✍️ Událost upravena", "icon": "✍️", "color": "text-warning" }, 
+        'scheduled_event_delete': { "name": "🗑️ Událost smazána", "icon": "🗑️", "color": "text-danger" }, 
     };
-
-
-    // --- Mapa událostí pro UI filtry (Ponecháno pro funkční design) ---
+    // --- Mapa událostí pro filtry ---
     const EVENT_CATEGORIES = {
         "Zprávy": { "description": "Události týkající se zpráv.", "events": { "message_delete": {"name": "🗑️ Smazané zprávy"}, "message_edit": {"name": "✍️ Upravené zprávy"}, } },
         "Uživatelé a Moderace": { "description": "Události týkající se uživatelů a moderátorských akcí.", "events": { "member_join": {"name": "👋 Připojení uživatele"}, "member_leave": {"name": "🚶 Odchod uživatele"}, "member_update": {"name": "👤 Úprava uživatele (role/nick)"}, "member_ban": {"name": "🚫 Zabanování uživatele"}, "member_unban": {"name": "✅ Odbanování uživatele"}, "member_kick": {"name": "👢 Vyhození uživatele"}, "member_timeout": {"name": "⏱️ Timeout uživatele"}, "member_server_mute": {"name": "🔇 Ztlumení mikrofonu uživatele"}, "member_server_unmute": {"name": "🔊 Odtlumení mikrofonu uživatele"}, "member_server_deafen": {"name": "🔕 Ztlumení sluchátek uživatele"}, "member_server_undeafen": {"name": "🔔 Odtlumení sluchátek uživatele"}, } },
@@ -188,16 +300,13 @@
         "Vlákna a Události": { "description": "Události týkající se vláken a plánovaných událostí serveru.", "events": { "thread_create": {"name": "💬 Vlákno vytvořeno"}, "thread_update": {"name": "✏️ Vlákno upraveno"}, "thread_delete": {"name": "❌ Vlákno smazáno"}, "scheduled_event_create": {"name": "🗓️ Událost vytvořena"}, "scheduled_event_update": {"name": "✍️ Událost upravena"}, "scheduled_event_delete": {"name": "🗑️ Událost smazána"}, } },
         "Aktivity bota": { "description": "Události týkající se interakcí s botem.", "events": { "command_usage": {"name": "✅ Použití příkazu"}, } },
     };
-
-
-    // --- Funkce pro zobrazení/skrytí prvků ---
+    // --- Pomocné funkce ---
     function showLoading() {
         document.getElementById('logContent').innerHTML = '';
         document.getElementById('errorMessage').style.display = 'none';
         document.getElementById('loadingMessage').style.display = 'flex';
         document.getElementById('pagination').innerHTML = '';
     }
-
     function showError(message) {
         document.getElementById('loadingMessage').style.display = 'none';
         document.getElementById('logContent').innerHTML = '';
@@ -205,21 +314,16 @@
         document.getElementById('errorMessage').style.display = 'flex';
         document.getElementById('pagination').innerHTML = '';
     }
-
     function hideMessages() {
         document.getElementById('loadingMessage').style.display = 'none';
         document.getElementById('errorMessage').style.display = 'none';
     }
-
-    // --- Generování Filtrů a Checkboxy (Ponecháno pro UI) ---
     function generateEventFilters() {
         const container = document.getElementById('eventFilters');
         let html = '';
-
         for (const categoryName in EVENT_CATEGORIES) {
             const category = EVENT_CATEGORIES[categoryName];
             const collapseId = `collapse-${categoryName.replace(/\s/g, '-')}`;
-
             html += `
                 <div class="mb-3">
                     <a class="filter-category-title d-block" data-bs-toggle="collapse" href="#${collapseId}" role="button" aria-expanded="false" aria-controls="${collapseId}">
@@ -230,7 +334,6 @@
                         <small class="text-secondary">${category.description}</small>
                         <div class="mt-2">
             `;
-            
             for (const eventKey in category.events) {
                 const event = category.events[eventKey];
                 html += `
@@ -242,7 +345,6 @@
                     </div>
                 `;
             }
-
             html += `
                         </div>
                     </div>
@@ -257,47 +359,33 @@
             checkbox.checked = checked;
         });
     }
-    
-    // --- Hlavní funkce načítání Logu upravená pro OAuth a nové API ---
-    async function loadLog(page = 1) {
-        if (!currentGuildId) {
-            showError("Vyberte server pro zobrazení Audit Logu.");
-            return;
-        }
-        
-        currentPage = page; 
-
+    // --- Hlavní funkce načítání Logu (stažení dat z API) ---
+    async function loadLog() {
+        if (!currentGuildId) return;
         showLoading();
-
-        const limit = logLimit;
-        
-        // ZMĚNA: Používá API endpoint, stránku a limit
-        let url = `${API_BASE_URL}/api/auditlogs/${currentGuildId}?page=${currentPage}&limit=${limit}`;
+        let url = `${API_BASE_URL}/api/auditlogs/${currentGuildId}`; 
 
         try {
-            // ZMĚNA: Přidán credentials 'include' pro odeslání cookies s autentizací
-            const response = await fetch(url, { credentials: 'include' }); 
+            const response = await fetch(url);
 
             if (response.status === 404) {
-                 showError("Server nenalezen/nedostupný. Možná bot není na serveru.");
+                 showError("Bot není na serveru, nemá přístup k logům, nebo endpoint neexistuje.");
                  return;
             }
-            if (response.status === 401 || response.status === 403) {
-                // Pokud není autorizováno nebo je zakázáno, vyzve k přihlášení
-                const authUrl = document.getElementById('authButton').href;
-                showError(`Neautorizováno / Zakázáno. Pro zobrazení logů se prosím <a href="${authUrl}" class="text-info fw-bold">přihlaste znovu</a>.`);
+            if (response.status === 401) {
+                showError("Neautorizováno. Zkuste se přihlásit znovu.");
                 return;
             }
             if (!response.ok) {
                 throw new Error(`Server vrátil chybu: ${response.status}`);
             }
 
-            const data = await response.json(); 
-
-            renderLogEntries(data.logs); 
+            const responseData = await response.json(); 
+            // Uložíme stažená data pro klientské filtrování
+            allLogs = Array.isArray(responseData.logs) ? responseData.logs : [];
             
-            renderPagination(data.pagination.total_records || 0, data.pagination.total_pages || 0);
-
+            // Aplikujeme filtry a vykreslíme logy
+            applyClientFilters(); 
             hideMessages();
 
         } catch (e) {
@@ -305,115 +393,183 @@
             showError(`Nepodařilo se načíst logy: ${e.message}. Zkontrolujte připojení k ${API_BASE_URL}.`);
         }
     }
+    // --- FUNKCE PRO KLIENTSKÉ FILTROVÁNÍ ---
+    function applyClientFilters(page = 1) {
+        currentPage = page;
+        let filteredLogs = [...allLogs];
+        
+        // 1. FILTR ČASOVÉHO OBDOBÍ
+        const timeFilterValue = document.getElementById('timeFilter').value;
+        let cutOffTime = 0; 
+        if (timeFilterValue) {
+            
+            // ⭐ OPRAVA: Bezpečnější parsování časové hodnoty (očekává např. "1h" nebo "24h")
+            const match = timeFilterValue.match(/(\d+)([hd])/i); 
+            
+            if (match) {
+                const amount = parseInt(match[1]);
+                const unit = match[2].toLowerCase();
 
-    // --- Vykreslení Záznamů ---
-    function renderLogEntries(logs) {
+                let ms;
+                if (unit === 'h') {
+                    ms = amount * 3600000; // Hodiny na milisekundy
+                } else if (unit === 'd') {
+                    ms = amount * 86400000; // Dny na milisekundy (přidáno pro budoucí rozšíření)
+                } else {
+                    ms = 0; 
+                }
+
+                if (ms > 0) {
+                    cutOffTime = Date.now() - ms;
+                    filteredLogs = filteredLogs.filter(log => new Date(log.timestamp).getTime() >= cutOffTime);
+                }
+            }
+        }
+        
+        // 2. FILTR UDÁLOSTÍ
+        const selectedEventTypes = Array.from(document.querySelectorAll('.event-filter-checkbox:checked')).map(cb => cb.value);
+        if (selectedEventTypes.length > 0) {
+            filteredLogs = filteredLogs.filter(log => selectedEventTypes.includes(log.action));
+        } else {
+             // Pokud není nic zaškrtnuto, nezobrazíme nic
+             filteredLogs = [];
+        }
+
+
+        // 3. FILTR VYHLEDÁVÁNÍ (SEARCH)
+        const search = document.getElementById('searchInput').value.trim().toLowerCase();
+        if (search) {
+            filteredLogs = filteredLogs.filter(log => {
+                const searchString = [
+                    log.user_name,
+                    log.target_name,
+                    log.action,
+                    log.reason,
+                    log.user_id,
+                    log.target_id
+                ].join(' ').toLowerCase();
+
+                return searchString.includes(search);
+            });
+        }  
+        // Vykreslení
+        renderLogEntries(filteredLogs);
+        renderPagination(filteredLogs.length); 
+    }
+    // --- Vykreslení Stránkování (Prozatím neaktivní) ---
+    function renderPagination(totalCount) {
+        const paginationUl = document.getElementById('pagination');
+        paginationUl.innerHTML = '';
+        if (totalCount === 0) return;
+    }
+    // --- Funkce Vykreslení Záznamů ---
+    function renderLogEntries(logs) { 
         const container = document.getElementById('logContent');
         
-        if (!Array.isArray(logs) || logs.length === 0) {
-            container.innerHTML = '<div class="text-center p-5 text-secondary">Žádné záznamy nebyly nalezeny.</div>';
+        if (logs.length === 0) {
+            container.innerHTML = '<div class="text-center p-5 text-secondary">Žádné záznamy neodpovídají zvoleným filtrům.</div>';
             return;
         }
 
         container.innerHTML = logs.map((log, index) => {
-            const timestamp = new Date(log.timestamp).toLocaleString('cs-CZ', { dateStyle: 'short', timeStyle: 'medium' });
             
-            const actionDetail = ACTION_MAP[log.event_type] || ACTION_MAP['default'];
-            const collapseId = `changes-${index}-${currentPage}`;
+            const timestamp = new Date(log.timestamp).toLocaleString('cs-CZ', { dateStyle: 'short', timeStyle: 'medium' });
+            const actionDetail = ACTION_MAP[log.action] || ACTION_MAP['default'];
+            const collapseId = `changes-${index}`;
+            
+            let changesArray = [];
+            let parsedData = {};
+            
+            if (log.data) {
+                try {
+                    parsedData = JSON.parse(log.data);
+                    for (const key in parsedData) {
+                        changesArray.push({
+                            key: key,
+                            new_value: parsedData[key],
+                            old_value: undefined 
+                        });
+                    }
+                } catch (e) {
+                    // Ignorujeme chybu parsování, data nebudou k dispozici
+                }
+            }
 
             let message = `<span class="fw-bold ${actionDetail.color}">${actionDetail.icon} ${actionDetail.name}</span>`;
             
-            let targetId = log.target_user_id || log.channel_id || 'N/A';
-            let moderatorId = log.moderator_id || 'N/A';
-            
-            message += ` (Cíl ID: <span class="fw-semibold text-info">${targetId}</span>)`;
-            
-            if (moderatorId !== 'N/A') {
-                message += ` Moderátor ID: <span class="fw-semibold text-warning">${moderatorId}</span>.`;
+            // --- ZJEDNODUŠENÍ TEXTU ZPRÁV ---
+            if (log.action === 'message_edit') {
+                 message += ` v kanálu <span class="fw-semibold text-info">${parsedData.channel_name || 'N/A'}</span>.`;
+            } else if (log.action === 'message_delete') {
+                const channelName = parsedData.channel_name_after || log.channel_id || 'N/A';
+                message += ` v kanálu <span class="fw-semibold text-info">${channelName}</span>.`;
             } else {
-                message += ` (Akce provedena systémem/neznámým zdrojem).`;
+                // Standardní text pro ostatní akce
+                 if (log.target_name && log.target_name !== 'N/A') {
+                     message += ` na entitě <span class="fw-semibold text-info">${log.target_name}</span>`;
+                 }
+                 if (log.user_name && log.user_name !== 'Neznámý USER') {
+                     message += ` moderátorem <span class="fw-semibold text-warning">${log.user_name}</span>.`;
+                 } else {
+                      message += ` (Akce provedena systémem nebo neznámým zdrojem).`;
+                 }
             }
-
+            // Přidání moderátora pro message_edit
+             if (log.action === 'message_edit' && log.user_name && log.user_name !== 'Neznámý USER') {
+                 message += ` Moderátor: <span class="fw-semibold text-warning">${log.user_name}</span>.`;
+             }
             if (log.reason) {
                 message += `<br><small class="text-secondary">Důvod: ${log.reason}</small>`;
             }
-
             let changesHtml = '';
-            if (log.data) {
+            if (changesArray.length > 0) {
+                
+                let renderedMessageEdit = false;
+                
+                // Generování detailů změn
+                const changeDetails = changesArray.map(change => {
+                     if (log.action === 'message_edit' && parsedData.content_before && !renderedMessageEdit) {
+                          renderedMessageEdit = true;
+                          // Minimalizace mezer
+                          return `<div class="mb-2"><span class="text-info fw-bold">Upravená zpráva v kanálu ${parsedData.channel_name || log.channel_id}:</span><span class="d-block text-danger">Před: ${parsedData.content_before || 'N/A'}</span><span class="d-block text-success">Po: ${parsedData.content_after || 'N/A'}</span></div>`;
+                     }
+                     if (log.action === 'message_edit') {
+                         return ''; // Ignorujeme duplicitní klíče
+                     }
+
+                    // Standardní vykreslení ostatních změn
+                    const oldValue = change.old_value !== undefined ? JSON.stringify(change.old_value, null, 2) : 'N/A';
+                    const newValue = change.new_value !== undefined ? JSON.stringify(change.new_value, null, 2) : 'N/A';
+                    
+                    // Minimalizace mezer
+                    return `<div class="mb-2"><span class="text-info fw-bold">${(change.key || 'neznámý klíč').replace(/_/g, ' ')}:</span><span class="d-block text-danger">Původní: ${oldValue}</span><span class="d-block text-success">Nová: ${newValue}</span></div>`;
+                }).filter(item => item !== '').join('<hr class="my-2 border-secondary">'); // Odstraníme prázdné položky
+
                 changesHtml = `
                     <a class="log-changes-title" data-bs-toggle="collapse" href="#${collapseId}" role="button" aria-expanded="false" aria-controls="${collapseId}">
-                        <i class="bi bi-caret-right-fill me-1"></i> Zobrazit JSON Data / Změny
+                        <i class="bi bi-caret-right-fill me-1"></i> Zobrazit detaily změn (${changesArray.length})
                     </a>
                     <div class="collapse" id="${collapseId}">
                         <div class="log-changes-detail">
-                            ${JSON.stringify(log.data, null, 2)}
+                            ${changeDetails}
                         </div>
                     </div>
                 `;
             }
-            
-            return `
-                <div class="log-item">
-                    <span class="log-timestamp">${timestamp}</span>
-                    <div class="log-content">
-                        <div class="log-action-text">${message}</div>
-                        ${changesHtml}
-                    </div>
-                </div>
-            `;
+
+            // Minimalizace mezer
+            return `<div class="log-item"><span class="log-timestamp">${timestamp}</span><div class="log-content"><div class="log-action-text">${message}</div>${changesHtml}</div></div>`;
         }).join('');
-    }
-    
-    // --- Vykreslení Stránkování ---
-    function renderPagination(totalCount, totalPages) {
-        const paginationUl = document.getElementById('pagination');
-        let html = '';
         
-        if (totalPages <= 1) {
-            paginationUl.innerHTML = '';
-            return;
+        if (logs.length === 0) {
+            container.innerHTML = '<div class="text-center p-5 text-secondary">Žádné záznamy neodpovídají zvoleným filtrům.</div>';
         }
-
-        let startPage = Math.max(1, currentPage - 2);
-        let endPage = Math.min(totalPages, currentPage + 2);
-
-        if (endPage - startPage < 4) {
-            if (startPage > 1) startPage = Math.max(1, endPage - 4);
-            else if (endPage < totalPages) endPage = Math.min(totalPages, startPage + 4);
-        }
-
-        // Tlačítko Předchozí
-        html += `<li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
-                     <a class="page-link" href="#" onclick="loadLog(${currentPage - 1})">Předchozí</a>
-                    </li>`;
-
-        if (startPage > 1) {
-            html += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
-        }
-
-        for (let i = startPage; i <= endPage; i++) {
-            html += `<li class="page-item ${i === currentPage ? 'active' : ''}">
-                           <a class="page-link" href="#" onclick="loadLog(${i})">${i}</a>
-                           </li>`;
-        }
-        
-        if (endPage < totalPages) {
-            html += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
-        }
-
-        // Tlačítko Další
-        html += `<li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
-                     <a class="page-link" href="#" onclick="loadLog(${currentPage + 1})">Další</a>
-                    </li>`;
-
-        paginationUl.innerHTML = html;
     }
-
-
-    // --- KLÍČOVÁ ZMĚNA 4: OAuth a Načítání Serverů ---
+    // --- Logika pro výběr serveru s opraveným přesměrováním ---
     async function loadInitialData() {
         const select = document.getElementById('guildSelect');
-        const authButton = document.getElementById('authButton');
+        const authButtonLg = document.getElementById('authButtonLg'); 
+        const authButtonSm = document.getElementById('authButtonSm'); 
         const serverInfo = document.getElementById('serverInfo');
         
         serverInfo.textContent = 'Kontroluji přihlášení...';
@@ -421,29 +577,33 @@
         select.disabled = true;
 
         try {
-            // ZMĚNA: Přidán credentials 'include' pro odeslání cookies
-            const response = await fetch(`${API_BASE_URL}/api/user/authorized_guilds`, { credentials: 'include' });
+            const response = await fetch(`${API_BASE_URL}/api/user/authorized_guilds`);
+            
+            // --- OPRVA ZDE: Definujeme URL pro přesměrování s použitím aktuální cesty ---
+            const currentPath = window.location.pathname;
+            const authUrl = `${API_BASE_URL}/api/auth/discord?next=${encodeURIComponent(currentPath)}`;
 
-            // ZMĚNA: Kontrola 401 (Neautorizováno) - přesměrování na Discord login
-            if (response.status === 401 || response.status === 403) {
-                serverInfo.textContent = 'Pro zobrazení Audit Logu se prosím přihlaste přes Discord.';
-                // ZMĚNA: Použití standardní Discord OAuth URL s přesměrováním zpět na aktuální stránku
-                const redirectUrl = window.location.protocol + '//' + window.location.host + window.location.pathname;
-                authButton.href = `${API_BASE_URL}/api/auth/discord?next=${encodeURIComponent(redirectUrl)}`;
-                authButton.innerHTML = `<i class="bi bi-discord me-2"></i> Přihlásit se`;
+
+            if (!response.ok) {
+                serverInfo.textContent = 'Pro zobrazení Audit Logu se prosím přihlaste.';
+                
+                authButtonLg.href = authUrl;
+                authButtonSm.href = authUrl;
+                authButtonLg.innerHTML = `<i class="bi bi-discord me-2"></i> Přihlásit se`;
+                authButtonSm.innerHTML = `<i class="bi bi-discord me-2"></i> Přihlásit se`;
                 return;
             }
-            
-            if (!response.ok) {
-                throw new Error(`Server vrátil chybu: ${response.status}`);
-            }
 
-            authButton.innerHTML = `<i class="bi bi-arrow-counterclockwise me-2"></i> Obnovit přístup`;
+            // Jsme přihlášeni
+            authButtonLg.innerHTML = `<i class="bi bi-arrow-counterclockwise me-2"></i> Obnovit přístup`;
+            authButtonSm.innerHTML = `<i class="bi bi-arrow-counterclockwise me-2"></i> Obnovit přístup`;
+            authButtonLg.href = authUrl;
+            authButtonSm.href = authUrl;
             
             const authorizedGuilds = await response.json();
             
             if (!authorizedGuilds || authorizedGuilds.length === 0) {
-                serverInfo.textContent = 'Nemáte přístup k žádným serverům s aktivním botem (Audit Log).';
+                serverInfo.textContent = 'Nemáte přístup k žádným serverům s aktivním botem.';
                 select.innerHTML = `<option value="">Žádné servery</option>`;
                 return;
             }
@@ -451,19 +611,31 @@
             select.innerHTML = authorizedGuilds.map(g => `<option value="${g.id}">${g.name}</option>`).join('');
             select.disabled = false;
             
-            // Pokusí se vybrat server z URL nebo první dostupný
-            const urlPathParts = window.location.pathname.split('/');
-            const urlGuildId = urlPathParts[urlPathParts.length - 1];
+            const pathSegments = window.location.pathname.split('/');
+            let initialGuildIdFromUrl = pathSegments[pathSegments.length - 1];
             
-            let initialGuild = authorizedGuilds.find(g => g.id === urlGuildId) || authorizedGuilds[0];
+            let initialGuild = authorizedGuilds.find(g => g.id === initialGuildIdFromUrl);
+
+            if (!initialGuild) {
+                initialGuild = authorizedGuilds[0];
+                // Ujistíme se, že i při prvním načtení se URL správně nahradí pro přesměrování
+                window.history.replaceState({ guildId: initialGuild.id }, '', `/auditlog/${initialGuild.id}`);
+                // **Důležité: Upravíme auth URL, aby vedla na konkrétní server**
+                const newAuthUrl = `${API_BASE_URL}/api/auth/discord?next=${encodeURIComponent(`/auditlog/${initialGuild.id}`)}`;
+                authButtonLg.href = newAuthUrl;
+                authButtonSm.href = newAuthUrl;
+            } else {
+                 // **Důležité: Upravíme auth URL, aby vedla na konkrétní server**
+                const newAuthUrl = `${API_BASE_URL}/api/auth/discord?next=${encodeURIComponent(window.location.pathname)}`;
+                authButtonLg.href = newAuthUrl;
+                authButtonSm.href = newAuthUrl;
+            }
             
             currentGuildId = initialGuild.id;
             select.value = initialGuild.id;
-            // Nastavení URL na server ID
-            window.history.replaceState({ guildId: initialGuild.id }, '', `/auditlogs/${initialGuild.id}`);
             serverInfo.textContent = `Audit Log pro server: ${initialGuild.name}`;
 
-            await loadLog();
+            await loadLog(); // Nejprve stáhneme data
             
         } catch (e) {
             console.error("Chyba při načítání serverů:", e);
@@ -473,6 +645,8 @@
 
     async function handleGuildChange() {
         const select = document.getElementById('guildSelect');
+        const authButtonLg = document.getElementById('authButtonLg'); 
+        const authButtonSm = document.getElementById('authButtonSm'); 
         const newId = select.value;
         
         if (newId && newId !== currentGuildId) {
@@ -480,9 +654,15 @@
             const guildName = select.options[select.selectedIndex].text;
             document.getElementById('serverInfo').textContent = `Audit Log pro server: ${guildName}`;
             
-            window.history.pushState({ guildId: newId }, '', `/auditlogs/${newId}`);
+            const newPath = `/auditlog/${newId}`;
+            window.history.pushState({ guildId: newId }, '', newPath);
+
+            // --- OPRAVA ZDE: Aktualizujeme auth URL po změně serveru ---
+            const newAuthUrl = `${API_BASE_URL}/api/auth/discord?next=${encodeURIComponent(newPath)}`;
+            authButtonLg.href = newAuthUrl;
+            authButtonSm.href = newAuthUrl;
             
-            await loadLog(1);
+            await loadLog(); // Změna serveru vyžaduje nové stažení dat
         }
     }
 
