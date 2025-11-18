@@ -1,7 +1,6 @@
 // --- KONSTANTY PRO API A STRÁNKOVÁNÍ ---
-// !!! TOTO JE VAŠE API URL !!!
 const API_URL = 'https://rs422cznas.myds.me:5038/logs'; 
-const RECORDS_PER_PAGE = 20; // Kolik záznamů zobrazit na jedné stránce
+const RECORDS_PER_PAGE = 20; 
 
 // DOM Elementy
 const warnsTableBody = document.querySelector('#warnsTable tbody');
@@ -11,10 +10,25 @@ const nextPageBtn = document.getElementById('nextPageBtn');
 const searchInput = document.getElementById('searchInput');
 const searchCountInfo = document.getElementById('searchCount');
 
+// NOVÉ: DOM Elementy pro tlačítka (ID musí souhlasit s HTML)
+const refreshBtn = document.getElementById('refreshBtn'); 
+const crossBanFilterBtn = document.getElementById('crossBanFilterBtn'); 
+
 // Stav aplikace
-let allRecords = []; // Uloží všechna načtená data
-let filteredRecords = []; // Uloží záznamy po vyhledávání
+let allRecords = []; 
+let filteredRecords = []; 
 let currentPage = 1;
+let showCrossBans = true; // NOVÉ: true = zobrazit i CrossBany (výchozí stav)
+
+
+/**
+ * 🛠️ Pomocná funkce pro získání parametru 'user' nebo 'search' z URL.
+ */
+function getQueryParam() {
+    const urlParams = new URLSearchParams(window.location.search);
+    // Hledáme 'user' nebo 'search'
+    return urlParams.get('user') || urlParams.get('search'); 
+}
 
 /**
  * 🛠️ Pomocná funkce pro formátování data
@@ -23,7 +37,6 @@ let currentPage = 1;
  */
 function formatDate(timestamp) {
     const date = new Date(timestamp);
-    // Přidáno "|| 'Neznámé datum'" pro případ chyby
     return date.toLocaleString('cs-CZ', { 
         year: 'numeric', 
         month: '2-digit', 
@@ -35,6 +48,7 @@ function formatDate(timestamp) {
 
 /**
  * 🛠️ Pomocná funkce pro získání CSS třídy pro odznak akce.
+ * (Přidán case pro 'crossban')
  * @param {string} action - Typ akce (ban, warn, kick, mute, unban, atd.).
  * @returns {string} CSS třída.
  */
@@ -50,8 +64,28 @@ function getActionClass(action) {
         case 'mute':
         case 'tempmute':
             return 'action-mute';
+        case 'crossban': // NOVÉ
+            return 'action-crossban';
         default:
             return 'action-default';
+    }
+}
+
+/**
+ * 🛠️ NOVÉ: Aplikuje lokální CrossBan filtr na sadu záznamů.
+ */
+function applyCrossBanFilter(records) {
+    if (showCrossBans) {
+        crossBanFilterBtn.textContent = 'Skrýt CrossBany';
+        crossBanFilterBtn.classList.remove('active-filter');
+        return records;
+    } else {
+        crossBanFilterBtn.textContent = 'Zobrazit CrossBany';
+        crossBanFilterBtn.classList.add('active-filter');
+        // Filtruje záznamy, kde akce NENÍ 'CrossBan'
+        return records.filter(record => 
+            record.action && record.action.toLowerCase() !== 'crossban'
+        );
     }
 }
 
@@ -62,13 +96,11 @@ function createTableRow(record) {
     const actionClass = getActionClass(record.action);
     const actionDisplay = (record.action || 'Default').toUpperCase();
 
-    // Sestavení sloupce Důvod (přidání duration, pokud existuje)
     let reasonText = record.reason || 'Důvod nezadán';
     if (record.duration) {
         reasonText += ` (Trvání: ${record.duration})`;
     }
     
-    // Zajištění, že všechny hodnoty jsou stringy, pokud by byly null
     const userName = record.user_name || 'Neznámý uživatel';
     const moderatorName = record.moderator_name || 'Systém';
     const guildName = record.guild_name || 'Neznámý server';
@@ -117,7 +149,7 @@ function updatePaginationControls(totalRecords, page) {
     const totalPages = Math.ceil(totalRecords / RECORDS_PER_PAGE);
     
     pageStatusSpan.textContent = `Strana ${totalRecords > 0 ? page : 0} z ${totalPages}`;
-    searchCountInfo.textContent = `Načteno posledních ${totalRecords} záznamů z API.`;
+    searchCountInfo.textContent = `Zobrazeno ${totalRecords} záznamů.`; // Úprava textu
     
     prevPageBtn.classList.toggle('disabled-btn', page <= 1);
     prevPageBtn.disabled = page <= 1;
@@ -147,17 +179,15 @@ function goToPage(newPage) {
 }
 
 /**
- * 5. Filtruje záznamy na základě textu v poli pro vyhledávání.
+ * 5. ÚPRAVA: Filtruje záznamy na základě textu v poli a stavu CrossBan filtru.
  */
 function filterRecords() {
     const query = searchInput.value.toLowerCase().trim();
+    let tempRecords = [...allRecords]; 
     
-    if (query.length < 2 && allRecords.length > 0) {
-        // Při krátkém dotazu, pokud už máme data, zobrazíme vše
-        filteredRecords = allRecords;
-        searchCountInfo.textContent = `Celkem nalezeno ${allRecords.length} záznamů.`;
-    } else if (allRecords.length > 0) {
-        filteredRecords = allRecords.filter(record => 
+    // KROK 1: Textové hledání
+    if (query.length > 0) {
+        tempRecords = tempRecords.filter(record => 
             (record.user_name && record.user_name.toLowerCase().includes(query)) ||
             (record.moderator_name && record.moderator_name.toLowerCase().includes(query)) ||
             (record.user_id && String(record.user_id).includes(query)) ||
@@ -165,18 +195,17 @@ function filterRecords() {
             (record.reason && record.reason.toLowerCase().includes(query)) ||
             (record.guild_name && record.guild_name.toLowerCase().includes(query))
         );
-    } else {
-        // Žádná data k filtrování
-        filteredRecords = [];
-        searchCountInfo.textContent = `Zadejte vyhledávací dotaz pro zobrazení záznamů.`;
     }
+    
+    // KROK 2: Aplikace CrossBan filtru
+    filteredRecords = applyCrossBanFilter(tempRecords);
     
     // Po filtrování se vždy vrátíme na první stránku
     goToPage(1);
 }
 
 /**
- * 6. Načte data z API.
+ * 6. ÚPRAVA: Načte data z API a inicializuje hledání z URL.
  */
 async function loadData() {
     console.log("STARTING API FETCH from:", API_URL); 
@@ -190,7 +219,6 @@ async function loadData() {
         const response = await fetch(API_URL);
         
         if (!response.ok) {
-            // Při chybném HTTP kódu (4xx, 5xx) zobrazí chybu
             throw new Error(`Chyba HTTP: ${response.status} - ${response.statusText}`);
         }
         
@@ -200,22 +228,26 @@ async function loadData() {
             console.log("Data loaded successfully. Total records:", data.length); 
             // Seřadit data od nejnovějšího po nejstarší (podle timestamp)
             allRecords = data.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-            filteredRecords = allRecords;
             
-            // Inicializace zobrazení
-            goToPage(1);
+            // NOVÝ KROK 1: Kontrola URL a nastavení do inputu
+            const initialSearch = getQueryParam();
+            if (initialSearch) {
+                searchInput.value = initialSearch;
+            }
+
+            // NOVÝ KROK 2: Spuštění filtrování (zohlední hledání z URL/inputu)
+            filterRecords(); 
+            
         } else {
             throw new Error("API vrátilo neočekávaný formát dat (nebylo pole).");
         }
         
     } catch (error) {
-        // Zobrazí chybovou zprávu přímo na stránce
         console.error("Fatal API Fetch Error:", error);
         let errorMsg = error.message;
 
-        // Kontrola, zda se jedná o nejpravděpodobnější chybu CORS/protokol
         if (errorMsg.includes("Failed to fetch") || errorMsg.includes("TypeError: Failed to fetch")) {
-             errorMsg = "Nepodařilo se připojit k API. Pravděpodobně jde o chybu CORS nebo HTTPS/HTTP protokolu. Zkontrolujte prosím Konzoli (F12) v prohlížeči pro detaily.";
+             errorMsg = "Nepodařilo se připojit k API. Pravděpodobně jde o chybu CORS nebo HTTPS/HTTP protokolu.";
         }
         
         warnsTableBody.innerHTML = `<tr><td colspan="6" class="loading-row status-err-text">CHYBA PŘI NAČÍTÁNÍ: ${errorMsg}</td></tr>`;
@@ -239,8 +271,17 @@ nextPageBtn.addEventListener('click', () => {
     }
 });
 
-// Vyhledávání
+// Vyhledávání (spustí filterRecords, který zohlední CrossBan)
 searchInput.addEventListener('input', filterRecords);
+
+// NOVÉ: CrossBan filtr
+crossBanFilterBtn.addEventListener('click', () => {
+    showCrossBans = !showCrossBans; // Přepnutí stavu
+    filterRecords();               // Spuštění filtru
+});
+
+// NOVÉ: Refresh
+refreshBtn.addEventListener('click', loadData);
 
 // Načíst data při spuštění stránky
 document.addEventListener('DOMContentLoaded', loadData);

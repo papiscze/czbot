@@ -2180,8 +2180,8 @@ https://templatemo.com/tm-594-nexus-flow
 }
 
 /* =========================================================
-   STYLY PRO MODERÁTORSKÉ ZÁZNAMY (warns.html)
-   ========================================================= */
+    STYLY PRO MODERÁTORSKÉ ZÁZNAMY (warns.html)
+    ========================================================= */
 
 /* --- Proměnné pro barvy akcí --- */
 :root {
@@ -2189,6 +2189,7 @@ https://templatemo.com/tm-594-nexus-flow
     --color-warn: #ffc40044;      /* Žlutá pro Warn */
     --color-kick: #ff8c0050;      /* Oranžová pro Kick */
     --color-mute: #8b5dff44;      /* Fialová pro Mute */
+    --color-crossban: #00ff7f33;   /* NOVÉ: Zelená pro CrossBan */
     --color-default: #008bba4f;   /* Modrá pro ostatní */
 }
 
@@ -2218,6 +2219,15 @@ https://templatemo.com/tm-594-nexus-flow
     text-align: center;
 }
 
+/* NOVÉ: Kontejner pro tlačítka (Refresh a CrossBan filtr) */
+.search-buttons-group {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
 .cyber-input {
     width: 100%;
     padding: 12px 18px;
@@ -2240,7 +2250,24 @@ https://templatemo.com/tm-594-nexus-flow
     margin-top: 8px;
     color: var(--text-muted);
     font-size: 0.9rem;
+    text-align: center;
 }
+
+/* ------------------- STYLY PRO TLAČÍTKA FILTRŮ ------------------- */
+
+/* Vizuální stav: Filtr je AKTIVNÍ (Zobrazuje se Jen bez CrossBanů) */
+/* Pravidlo pro :not(.active-filter) bylo odebráno, protože bylo prázdné a způsobovalo varování/chybu.
+   Standardní vzhled se aplikuje na všechny .cyber-button. */
+
+.cyber-button.active-filter {
+    /* Vizuální stav: Filtr je NEAKTIVNÍ (zobrazuje se Jen bez CrossBanů) 
+       Tato třída se aplikuje, když je filtr AKTIVNÍ (schovává CrossBany) */
+    background-color: var(--primary-magenta); /* Změna barvy, aby bylo vidět, že je aktivní */
+    color: var(--text-dark);
+    border-color: var(--primary-magenta);
+    box-shadow: 0 0 10px rgba(255, 0, 80, 0.7);
+}
+
 
 /* ------------------- TABULKA STYLY ------------------- */
 .table-container {
@@ -2251,7 +2278,7 @@ https://templatemo.com/tm-594-nexus-flow
 .cyber-table {
     width: 100%;
     border-collapse: collapse;
-    min-width: 900px; /* Zajištění čitelnosti na menších obrazovkách */
+    min-width: 900px; 
     font-size: 0.9rem;
 }
 
@@ -2263,14 +2290,14 @@ https://templatemo.com/tm-594-nexus-flow
     letter-spacing: 0.05em;
     padding: 15px 10px;
     border-bottom: 3px solid var(--primary-cyan);
-    text-align: center; /* Záhlaví do středu */
+    text-align: center;
 }
 
 .cyber-table tbody td {
     padding: 12px 10px;
     border-bottom: 1px solid rgba(0, 255, 255, 0.1);
     color: var(--text-light);
-    text-align: center; /* Obsah do středu */
+    text-align: center; 
     vertical-align: middle;
 }
 
@@ -2313,6 +2340,7 @@ https://templatemo.com/tm-594-nexus-flow
 .action-warn { background-color: var(--color-warn); }
 .action-kick { background-color: var(--color-kick); }
 .action-mute { background-color: var(--color-mute); color: white; }
+.action-crossban { background-color: var(--color-crossban); color: var(--text-dark); } 
 .action-default { background-color: var(--color-default); }
 
 /* Status Texty pro chyby/varování */
@@ -2332,6 +2360,17 @@ https://templatemo.com/tm-594-nexus-flow
     
     .logs-module-box {
         padding: 15px;
+    }
+
+    /* Responzivní pro panel tlačítek */
+    .search-buttons-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .search-buttons-group .cyber-button {
+        width: 100%;
+        min-width: auto;
     }
     
     /* Na užších obrazovkách skryjeme záhlaví a změníme zobrazení řádků */
