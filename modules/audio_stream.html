@@ -207,6 +207,7 @@
                     <li><strong>Extrakce přímé URL</strong>: Automaticky stáhne obsah playlistu, extrahuje skutečnou streamovací URL a tu předá FFmpeg. ✅</li>
                     <li><strong>Dynamická hlasitost</strong>: Umožňuje uživatelům nastavit hlasitost streamu v reálném čase.</li>
                     <li><strong>Lokalizace</strong>: Všechny zprávy jsou plně lokalizovány (CZ/EN).</li>
+                    <li><strong>Vyhledavač</strong>: Integrovaný vyhledavač rádií dle zadaného názvu.</li>
                 </ul>
             </div>
 
@@ -241,6 +242,11 @@
                         <td>Nastaví hlasitost streamu v %.</td>
                         <td><span class="command-code-modules">volume</span> (0-100)</td>
                     </tr>
+                    <tr>
+                        <td><span class="command-code-modules">/stream search</span></td>
+                        <td>Vyhledání rádia dle zadaného názvu.</td>
+                        <td><span class="command-code-modules">název</span></td>
+                    </tr>                    
                 </tbody>
             </table>
 
@@ -295,6 +301,18 @@
                     </div>
                 </div>
             </div>
+
+            <h3 class="mt-4">4. Vyhledání streamu dle názvu: `/stream search</h3>
+            <p>Podle zadaného názvu vyhledá přes API název a URL streamu rádia, po výběru stanice dojde ke spuštění streamu.</p>
+            <div class="command-box">
+                <h4 class="command-title">/stream search</h4>
+                <div class="command-details">
+                    <div class="command-detail-row">
+                        <span class="command-label">Odpověď bota:</span>
+                        <span class="command-response">Zobrazení okna s výběrem.</span>
+                    </div>
+                </div>
+            </div>            
             
             <div class="warning-box mt-4">
                 <strong>Důležitá poznámka</strong>: Ne všechny streamovací zdroje podporují softwarovou úpravu hlasitosti. V takovém případě příkaz <strong>nebude funkční</strong> a je nutné upravit hlasitost manuálně v Discordu.
