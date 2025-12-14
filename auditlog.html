@@ -505,9 +505,10 @@
             
             // --- ZJEDNODUŠENÍ TEXTU ZPRÁV ---
             if (log.action === 'message_edit') {
-                // 1. Kanál: Použijeme jméno z parsedData, jinak ID z hlavní tabulky.
-                const channelId = log.channel_id || 'N/A ID';
-                const channelDisplay = parsedData.channel_name || `#${channelId}`; 
+                // 🚨 OPRAVENÁ LOGIKA: Priorita: log.channel_name > ID kanálu
+                const channelDisplay = log.channel_name 
+                    ? `<span class="fw-semibold text-info">#${log.channel_name}</span>` // Zobrazíme zjištěné jméno
+                    : `kanálu ID: <span class="fw-semibold text-info">${log.channel_id || 'N/A ID'}</span>`; 
                 
                 // 2. Cíl (autor zprávy): Použijeme jméno, jinak ID.
                 const targetDisplay = log.target_name && log.target_name !== 'N/A' 
@@ -515,7 +516,7 @@
                     : `uživatelem s ID <span class="fw-semibold text-danger">${log.target_id || 'N/A ID'}</span>`;
                     
                 // 3. Sestavení zprávy pro hlavní nadpis
-                message += ` od ${targetDisplay} v kanálu <span class="fw-semibold text-info">${channelDisplay}</span>.`;
+                message += ` od ${targetDisplay} v ${channelDisplay}.`;
                 
                 // 4. Přidání moderátora
                 if (log.user_name && log.user_name !== 'Neznámý USER') {
@@ -523,11 +524,10 @@
                 }
 
             } else if (log.action === 'message_delete') {
-                // 1. Kanál: Priorita: Jméno po smazání > ID z hlavní tabulky.
-                const channelId = log.channel_id || 'N/A ID';
-                const channelDisplay = parsedData.channel_name_after 
-                    ? `${parsedData.channel_name_after}`
-                    : `#${channelId}`; 
+                // 🚨 OPRAVENÁ LOGIKA: Priorita: log.channel_name > ID kanálu
+                const channelDisplay = log.channel_name 
+                    ? `<span class="fw-semibold text-info">#${log.channel_name}</span>` 
+                    : `kanálu ID: <span class="fw-semibold text-info">${log.channel_id || 'N/A ID'}</span>`;
                 
                 // 2. Cíl (původní autor zprávy): Použijeme jméno, jinak ID.
                 const targetDisplay = log.target_name && log.target_name !== 'N/A' 
@@ -535,7 +535,7 @@
                     : `uživatele s ID <span class="fw-semibold text-danger">${log.target_id || 'N/A ID'}</span>`;
 
                 // 3. Sestavení zprávy pro hlavní nadpis
-                message += ` smazána (Původní autor: ${targetDisplay}) v kanálu <span class="fw-semibold text-info">${channelDisplay}</span>.`;
+                message += ` smazána (Původní autor: ${targetDisplay}) v ${channelDisplay}.`;
                 
                 // 4. Přidání moderátora
                 if (log.user_name && log.user_name !== 'Neznámý USER') {
@@ -545,10 +545,15 @@
             } else {
                 // Standardní text pro ostatní akce
                 
-                // 1. Ošetření cíle (target_name)
+                // 1. Ošetření cíle (target_name / log.channel_name)
                 let targetDisplay = '';
+                
+                // 🚨 OPRAVA ZDE (Pro pozvánky a jiné akce s kanálem): Použijeme target_name / channel_name
                 if (log.target_name && log.target_name !== 'N/A') {
                     targetDisplay = `<span class="fw-semibold text-info">${log.target_name}</span>`;
+                } else if (log.channel_name) {
+                    // Kanál, který nemá target_name (např. channel_create)
+                    targetDisplay = `<span class="fw-semibold text-info">Kanál: #${log.channel_name}</span>`;
                 } else if (log.target_id) {
                     // ID cíle je vždy k dispozici
                     targetDisplay = `<span class="fw-semibold text-info">ID: ${log.target_id}</span>`;
@@ -582,10 +587,10 @@
                 // Speciální vykreslení pro úpravu zprávy (content_before/content_after)
                 if (log.action === 'message_edit' && (parsedData.content_before || parsedData.content_after)) {
                     renderedMessageEdit = true;
-                    // FIX: Vypíšeme kanál i v detailním zobrazení pro konzistenci
-                    const detailChannelDisplay = parsedData.channel_name || `#${log.channel_id || 'N/A ID'}`;
+                    // FIX: Vypíšeme kanál i v detailním zobrazení s prioritou na log.channel_name
+                    const detailChannelDisplay = log.channel_name || parsedData.channel_name || `#${log.channel_id || 'N/A ID'}`;
                     
-                    changeDetails += `<div class="mb-2"><span class="text-info fw-bold">Upravená zpráva v kanálu ${detailChannelDisplay}:</span><span class="d-block text-danger">Před: ${parsedData.content_before || 'Nebylo v logu'}</span><span class="d-block text-success">Po: ${parsedData.content_after || 'Nebylo v logu'}</span></div>`;
+                    changeDetails += `<div class="mb-2"><span class="text-info fw-bold">Upravená zpráva v kanálu #${detailChannelDisplay}:</span><span class="d-block text-danger">Před: ${parsedData.content_before || 'Nebylo v logu'}</span><span class="d-block text-success">Po: ${parsedData.content_after || 'Nebylo v logu'}</span></div>`;
                 }
 
                 // Standardní vykreslení ostatních změn
