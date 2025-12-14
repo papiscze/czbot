@@ -238,9 +238,7 @@
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 <script>
     // **************** Pevně nastavená URL ****************
     const API_BASE_URL = "https://rs422cznas.myds.me:5038";
@@ -381,8 +379,16 @@
             }
 
             const responseData = await response.json(); 
-            // Uložíme stažená data pro klientské filtrování
-            allLogs = Array.isArray(responseData.logs) ? responseData.logs : [];
+            
+            // Uložíme a předzpracujeme stažená data (parsování log.data)
+            allLogs = Array.isArray(responseData.logs) ? responseData.logs.map(log => {
+                try {
+                    log.parsedData = log.data ? JSON.parse(log.data) : {};
+                } catch (e) {
+                    log.parsedData = {};
+                }
+                return log;
+            }) : [];
             
             // Aplikujeme filtry a vykreslíme logy
             applyClientFilters(); 
@@ -403,7 +409,6 @@
         let cutOffTime = 0; 
         if (timeFilterValue) {
             
-            // ⭐ OPRAVA: Bezpečnější parsování časové hodnoty (očekává např. "1h" nebo "24h")
             const match = timeFilterValue.match(/(\d+)([hd])/i); 
             
             if (match) {
@@ -414,7 +419,7 @@
                 if (unit === 'h') {
                     ms = amount * 3600000; // Hodiny na milisekundy
                 } else if (unit === 'd') {
-                    ms = amount * 86400000; // Dny na milisekundy (přidáno pro budoucí rozšíření)
+                    ms = amount * 86400000; // Dny na milisekundy
                 } else {
                     ms = 0; 
                 }
@@ -451,7 +456,7 @@
 
                 return searchString.includes(search);
             });
-        }  
+        } 
         // Vykreslení
         renderLogEntries(filteredLogs);
         renderPagination(filteredLogs.length); 
@@ -477,77 +482,113 @@
             const actionDetail = ACTION_MAP[log.action] || ACTION_MAP['default'];
             const collapseId = `changes-${index}`;
             
+            let parsedData = log.parsedData || {}; // Použijeme předzpracovaná data
             let changesArray = [];
-            let parsedData = {};
             
-            if (log.data) {
-                try {
-                    parsedData = JSON.parse(log.data);
-                    for (const key in parsedData) {
-                        changesArray.push({
-                            key: key,
-                            new_value: parsedData[key],
-                            old_value: undefined 
-                        });
-                    }
-                } catch (e) {
-                    // Ignorujeme chybu parsování, data nebudou k dispozici
+            // Generování changesArray z parsedData (ignorujeme ty, které se zobrazují ve zprávě)
+            for (const key in parsedData) {
+                 // Přidáme pouze, pokud není content_before/after - ty zpracujeme uvnitř zprávy
+                if (key !== 'content_before' && key !== 'content_after' && key !== 'channel_name' && key !== 'channel_name_after') {
+                    changesArray.push({
+                        key: key,
+                        new_value: parsedData[key],
+                        old_value: parsedData.hasOwnProperty('old_' + key) ? parsedData['old_' + key] : undefined // Pokusíme se najít starou hodnotu, pokud existuje
+                    });
                 }
             }
+
 
             let message = `<span class="fw-bold ${actionDetail.color}">${actionDetail.icon} ${actionDetail.name}</span>`;
             
             // --- ZJEDNODUŠENÍ TEXTU ZPRÁV ---
             if (log.action === 'message_edit') {
-                 message += ` v kanálu <span class="fw-semibold text-info">${parsedData.channel_name || 'N/A'}</span>.`;
+                const channelDisplay = parsedData.channel_name || log.channel_id;
+                const targetDisplay = log.target_name && log.target_name !== 'N/A' 
+                    ? `<span class="fw-semibold text-info">${log.target_name}</span>` 
+                    : `uživatelem s ID <span class="fw-semibold text-danger">${log.target_id || 'N/A ID'}</span>`;
+                    
+                message += ` od ${targetDisplay} v kanálu <span class="fw-semibold text-info">${channelDisplay}</span>.`;
+                
+                // Přidání moderátora, který smazal (je-li odlišný)
+                if (log.user_name && log.user_name !== 'Neznámý USER') {
+                    message += ` Zachyceno moderátorem <span class="fw-semibold text-warning">${log.user_name}</span>.`;
+                }
             } else if (log.action === 'message_delete') {
-                const channelName = parsedData.channel_name_after || log.channel_id || 'N/A';
-                message += ` v kanálu <span class="fw-semibold text-info">${channelName}</span>.`;
+                // Použijeme jméno kanálu, pokud je, jinak ID kanálu pro lepší kontext
+                const channelDisplay = parsedData.channel_name_after 
+                    ? `<span class="fw-semibold text-info">${parsedData.channel_name_after}</span>`
+                    : `<span class="fw-semibold text-danger">#${log.channel_id || 'N/A ID'}</span>`; 
+                
+                // Target Name je původní autor smazané zprávy
+                const targetDisplay = log.target_name && log.target_name !== 'N/A' 
+                    ? `<span class="fw-semibold text-info">${log.target_name}</span>` 
+                    : `uživatele s ID <span class="fw-semibold text-danger">${log.target_id || 'N/A ID'}</span>`;
+
+                message += ` smazána (Původní autor: ${targetDisplay}) v kanálu ${channelDisplay}.`;
+                
+                // Přidání moderátora, který smazal
+                if (log.user_name && log.user_name !== 'Neznámý USER') {
+                    message += ` Smazáno moderátorem <span class="fw-semibold text-warning">${log.user_name}</span>.`;
+                }
+
             } else {
                 // Standardní text pro ostatní akce
-                 if (log.target_name && log.target_name !== 'N/A') {
-                     message += ` na entitě <span class="fw-semibold text-info">${log.target_name}</span>`;
-                 }
-                 if (log.user_name && log.user_name !== 'Neznámý USER') {
-                     message += ` moderátorem <span class="fw-semibold text-warning">${log.user_name}</span>.`;
-                 } else {
-                      message += ` (Akce provedena systémem nebo neznámým zdrojem).`;
-                 }
+                
+                // 1. Ošetření cíle (target_name)
+                let targetDisplay = '';
+                if (log.target_name && log.target_name !== 'N/A') {
+                    targetDisplay = `<span class="fw-semibold text-info">${log.target_name}</span>`;
+                } else if (log.target_id) {
+                    targetDisplay = `<span class="fw-semibold text-danger">ID: ${log.target_id} (Neznámá entita)</span>`;
+                }
+
+                if (targetDisplay) {
+                    message += ` na entitě ${targetDisplay}`;
+                }
+
+                // 2. Ošetření moderátora (user_name)
+                if (log.user_name && log.user_name !== 'Neznámý USER') {
+                    message += ` moderátorem <span class="fw-semibold text-warning">${log.user_name}</span>.`;
+                } else {
+                    // Systémové akce nebo neznámý moderátor
+                    message += ` (Akce provedena systémem nebo neznámým zdrojem).`;
+                }
             }
-            // Přidání moderátora pro message_edit
-             if (log.action === 'message_edit' && log.user_name && log.user_name !== 'Neznámý USER') {
-                 message += ` Moderátor: <span class="fw-semibold text-warning">${log.user_name}</span>.`;
-             }
+            
+            // Přidání důvodu akce
             if (log.reason) {
                 message += `<br><small class="text-secondary">Důvod: ${log.reason}</small>`;
             }
-            let changesHtml = '';
-            if (changesArray.length > 0) {
-                
-                let renderedMessageEdit = false;
-                
-                // Generování detailů změn
-                const changeDetails = changesArray.map(change => {
-                     if (log.action === 'message_edit' && parsedData.content_before && !renderedMessageEdit) {
-                          renderedMessageEdit = true;
-                          // Minimalizace mezer
-                          return `<div class="mb-2"><span class="text-info fw-bold">Upravená zpráva v kanálu ${parsedData.channel_name || log.channel_id}:</span><span class="d-block text-danger">Před: ${parsedData.content_before || 'N/A'}</span><span class="d-block text-success">Po: ${parsedData.content_after || 'N/A'}</span></div>`;
-                     }
-                     if (log.action === 'message_edit') {
-                         return ''; // Ignorujeme duplicitní klíče
-                     }
 
-                    // Standardní vykreslení ostatních změn
-                    const oldValue = change.old_value !== undefined ? JSON.stringify(change.old_value, null, 2) : 'N/A';
-                    const newValue = change.new_value !== undefined ? JSON.stringify(change.new_value, null, 2) : 'N/A';
+            let changesHtml = '';
+            // Zobrazíme sekci změn, pokud existuje původní obsah (pro editaci zprávy) nebo jiné změny
+            if (parsedData.content_before || changesArray.length > 0) {
+                
+                let changeDetails = '';
+                let renderedMessageEdit = false;
+
+                // Speciální vykreslení pro úpravu zprávy (content_before/content_after)
+                if (log.action === 'message_edit' && parsedData.content_before) {
+                    renderedMessageEdit = true;
+                    changeDetails += `<div class="mb-2"><span class="text-info fw-bold">Upravená zpráva:</span><span class="d-block text-danger">Před: ${parsedData.content_before || 'N/A'}</span><span class="d-block text-success">Po: ${parsedData.content_after || 'N/A'}</span></div>`;
+                }
+
+                // Standardní vykreslení ostatních změn
+                changesArray.forEach(change => {
+                    if (changeDetails !== '') {
+                        changeDetails += '<hr class="my-2 border-secondary">';
+                    }
+                    const oldValue = change.old_value !== undefined ? JSON.stringify(change.old_value) : 'N/A';
+                    const newValue = change.new_value !== undefined ? JSON.stringify(change.new_value) : 'N/A';
                     
-                    // Minimalizace mezer
-                    return `<div class="mb-2"><span class="text-info fw-bold">${(change.key || 'neznámý klíč').replace(/_/g, ' ')}:</span><span class="d-block text-danger">Původní: ${oldValue}</span><span class="d-block text-success">Nová: ${newValue}</span></div>`;
-                }).filter(item => item !== '').join('<hr class="my-2 border-secondary">'); // Odstraníme prázdné položky
+                    changeDetails += `<div class="mb-2"><span class="text-info fw-bold">${(change.key || 'neznámý klíč').replace(/_/g, ' ')}:</span><span class="d-block text-danger">Původní: ${oldValue}</span><span class="d-block text-success">Nová: ${newValue}</span></div>`;
+                });
+
+                const totalChanges = changesArray.length + (renderedMessageEdit ? 1 : 0);
 
                 changesHtml = `
                     <a class="log-changes-title" data-bs-toggle="collapse" href="#${collapseId}" role="button" aria-expanded="false" aria-controls="${collapseId}">
-                        <i class="bi bi-caret-right-fill me-1"></i> Zobrazit detaily změn (${changesArray.length})
+                        <i class="bi bi-caret-right-fill me-1"></i> Zobrazit detaily změn (${totalChanges})
                     </a>
                     <div class="collapse" id="${collapseId}">
                         <div class="log-changes-detail">
@@ -671,9 +712,19 @@
     document.addEventListener('DOMContentLoaded', () => {
         generateEventFilters();
         loadInitialData();
+
+        // Přidání obsluhy událostí pro automatické filtrování
+        document.getElementById('timeFilter')?.addEventListener('change', () => applyClientFilters());
+        document.getElementById('searchInput')?.addEventListener('input', () => applyClientFilters());
+        document.getElementById('eventFilters')?.addEventListener('change', (e) => {
+            if (e.target.classList.contains('event-filter-checkbox')) {
+                applyClientFilters();
+            }
+        });
     });
 
 </script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
 </body>
 </html>
+
