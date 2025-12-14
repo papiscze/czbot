@@ -149,8 +149,8 @@
                         <i class="bi bi-server me-1"></i> Správa Serveru
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-custom">
-                        <li><a class="dropdown-item dropdown-item-custom active" href="/auditlog.html"><i class="bi bi-journal-text me-2"></i> Audit Log</a></li>
-                        <li><a class="dropdown-item dropdown-item-custom" href="/stats.html"><i class="bi bi-graph-up me-2"></i> Statistiky</a></li>
+                        <li><a class="dropdown-item dropdown-item-custom active" href="/auditlogs/"><i class="bi bi-journal-text me-2"></i> Audit Log</a></li>
+                        <li><a class="dropdown-item dropdown-item-custom" href="/stats/"><i class="bi bi-graph-up me-2"></i> Statistiky</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item dropdown-item-custom" href="#"><i class="bi bi-gear-fill me-2"></i> Nastavení Bota (WIP)</a></li>
                     </ul>
@@ -505,35 +505,39 @@
             
             // --- ZJEDNODUŠENÍ TEXTU ZPRÁV ---
             if (log.action === 'message_edit') {
-                // Kanál: Použijeme jméno, pokud je. Jinak ID z hlavní tabulky.
-                const channelDisplay = parsedData.channel_name || log.channel_id;
+                // 1. Kanál: Použijeme jméno z parsedData, jinak ID z hlavní tabulky.
+                const channelId = log.channel_id || 'N/A ID';
+                const channelDisplay = parsedData.channel_name || `#${channelId}`; 
                 
-                // Cíl (autor zprávy): Použijeme jméno, jinak ID.
+                // 2. Cíl (autor zprávy): Použijeme jméno, jinak ID.
                 const targetDisplay = log.target_name && log.target_name !== 'N/A' 
                     ? `<span class="fw-semibold text-info">${log.target_name}</span>` 
                     : `uživatelem s ID <span class="fw-semibold text-danger">${log.target_id || 'N/A ID'}</span>`;
                     
+                // 3. Sestavení zprávy pro hlavní nadpis
                 message += ` od ${targetDisplay} v kanálu <span class="fw-semibold text-info">${channelDisplay}</span>.`;
                 
-                // Přidání moderátora, který editaci zachytil/provedl
+                // 4. Přidání moderátora
                 if (log.user_name && log.user_name !== 'Neznámý USER') {
                     message += ` Moderátor: <span class="fw-semibold text-warning">${log.user_name}</span>.`;
                 }
 
             } else if (log.action === 'message_delete') {
-                // Kanál: Použijeme jméno, pokud je. Jinak ID z hlavní tabulky.
+                // 1. Kanál: Priorita: Jméno po smazání > ID z hlavní tabulky.
+                const channelId = log.channel_id || 'N/A ID';
                 const channelDisplay = parsedData.channel_name_after 
-                    ? `<span class="fw-semibold text-info">${parsedData.channel_name_after}</span>`
-                    : `<span class="fw-semibold text-danger">#${log.channel_id || 'N/A ID'}</span>`; 
+                    ? `${parsedData.channel_name_after}`
+                    : `#${channelId}`; 
                 
-                // Cíl (původní autor zprávy): Použijeme jméno, jinak ID.
+                // 2. Cíl (původní autor zprávy): Použijeme jméno, jinak ID.
                 const targetDisplay = log.target_name && log.target_name !== 'N/A' 
                     ? `<span class="fw-semibold text-info">${log.target_name}</span>` 
                     : `uživatele s ID <span class="fw-semibold text-danger">${log.target_id || 'N/A ID'}</span>`;
 
-                message += ` smazána (Původní autor: ${targetDisplay}) v kanálu ${channelDisplay}.`;
+                // 3. Sestavení zprávy pro hlavní nadpis
+                message += ` smazána (Původní autor: ${targetDisplay}) v kanálu <span class="fw-semibold text-info">${channelDisplay}</span>.`;
                 
-                // Přidání moderátora, který smazal
+                // 4. Přidání moderátora
                 if (log.user_name && log.user_name !== 'Neznámý USER') {
                     message += ` Smazáno moderátorem <span class="fw-semibold text-warning">${log.user_name}</span>.`;
                 }
@@ -578,7 +582,10 @@
                 // Speciální vykreslení pro úpravu zprávy (content_before/content_after)
                 if (log.action === 'message_edit' && (parsedData.content_before || parsedData.content_after)) {
                     renderedMessageEdit = true;
-                    changeDetails += `<div class="mb-2"><span class="text-info fw-bold">Upravená zpráva:</span><span class="d-block text-danger">Před: ${parsedData.content_before || 'Nebylo v logu'}</span><span class="d-block text-success">Po: ${parsedData.content_after || 'Nebylo v logu'}</span></div>`;
+                    // FIX: Vypíšeme kanál i v detailním zobrazení pro konzistenci
+                    const detailChannelDisplay = parsedData.channel_name || `#${log.channel_id || 'N/A ID'}`;
+                    
+                    changeDetails += `<div class="mb-2"><span class="text-info fw-bold">Upravená zpráva v kanálu ${detailChannelDisplay}:</span><span class="d-block text-danger">Před: ${parsedData.content_before || 'Nebylo v logu'}</span><span class="d-block text-success">Po: ${parsedData.content_after || 'Nebylo v logu'}</span></div>`;
                 }
 
                 // Standardní vykreslení ostatních změn
@@ -675,9 +682,9 @@
             if (!initialGuild) {
                 initialGuild = authorizedGuilds[0];
                 // Ujistíme se, že i při prvním načtení se URL správně nahradí pro přesměrování
-                window.history.replaceState({ guildId: initialGuild.id }, '', `/auditlog/${initialGuild.id}`);
+                window.history.replaceState({ guildId: initialGuild.id }, '', `/auditlogs/${initialGuild.id}`);
                 // **Důležité: Upravíme auth URL, aby vedla na konkrétní server**
-                const newAuthUrl = `${API_BASE_URL}/api/auth/discord?next=${encodeURIComponent(`/auditlog/${initialGuild.id}`)}`;
+                const newAuthUrl = `${API_BASE_URL}/api/auth/discord?next=${encodeURIComponent(`/auditlogs/${initialGuild.id}`)}`;
                 authButtonLg.href = newAuthUrl;
                 authButtonSm.href = newAuthUrl;
             } else {
@@ -710,7 +717,7 @@
             const guildName = select.options[select.selectedIndex].text;
             document.getElementById('serverInfo').textContent = `Audit Log pro server: ${guildName}`;
             
-            const newPath = `/auditlog/${newId}`;
+            const newPath = `/auditlogs/${newId}`;
             window.history.pushState({ guildId: newId }, '', newPath);
 
             // --- OPRAVA ZDE: Aktualizujeme auth URL po změně serveru ---
@@ -727,7 +734,7 @@
     document.addEventListener('DOMContentLoaded', () => {
         generateEventFilters();
         loadInitialData();
-
+        
         // Přidání obsluhy událostí pro automatické filtrování
         document.getElementById('timeFilter')?.addEventListener('change', () => applyClientFilters());
         document.getElementById('searchInput')?.addEventListener('input', () => applyClientFilters());
@@ -736,6 +743,8 @@
                 applyClientFilters();
             }
         });
+        // Přidání obsluhy události pro změnu serveru
+        document.getElementById('guildSelect')?.addEventListener('change', handleGuildChange);
     });
 
 </script>
