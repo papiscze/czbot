@@ -487,12 +487,15 @@
             
             // Generování changesArray z parsedData (ignorujeme ty, které se zobrazují ve zprávě)
             for (const key in parsedData) {
-                 // Přidáme pouze, pokud není content_before/after - ty zpracujeme uvnitř zprávy
+                 // Vyloučíme klíče, které jsou obsaženy v textu zprávy
                 if (key !== 'content_before' && key !== 'content_after' && key !== 'channel_name' && key !== 'channel_name_after') {
+                    // Speciální ošetření pro old/new value
+                    if (key.startsWith('old_')) continue;
+                    
                     changesArray.push({
                         key: key,
                         new_value: parsedData[key],
-                        old_value: parsedData.hasOwnProperty('old_' + key) ? parsedData['old_' + key] : undefined // Pokusíme se najít starou hodnotu, pokud existuje
+                        old_value: parsedData.hasOwnProperty('old_' + key) ? parsedData['old_' + key] : undefined
                     });
                 }
             }
@@ -502,24 +505,28 @@
             
             // --- ZJEDNODUŠENÍ TEXTU ZPRÁV ---
             if (log.action === 'message_edit') {
+                // Kanál: Použijeme jméno, pokud je. Jinak ID z hlavní tabulky.
                 const channelDisplay = parsedData.channel_name || log.channel_id;
+                
+                // Cíl (autor zprávy): Použijeme jméno, jinak ID.
                 const targetDisplay = log.target_name && log.target_name !== 'N/A' 
                     ? `<span class="fw-semibold text-info">${log.target_name}</span>` 
                     : `uživatelem s ID <span class="fw-semibold text-danger">${log.target_id || 'N/A ID'}</span>`;
                     
                 message += ` od ${targetDisplay} v kanálu <span class="fw-semibold text-info">${channelDisplay}</span>.`;
                 
-                // Přidání moderátora, který smazal (je-li odlišný)
+                // Přidání moderátora, který editaci zachytil/provedl
                 if (log.user_name && log.user_name !== 'Neznámý USER') {
-                    message += ` Zachyceno moderátorem <span class="fw-semibold text-warning">${log.user_name}</span>.`;
+                    message += ` Moderátor: <span class="fw-semibold text-warning">${log.user_name}</span>.`;
                 }
+
             } else if (log.action === 'message_delete') {
-                // Použijeme jméno kanálu, pokud je, jinak ID kanálu pro lepší kontext
+                // Kanál: Použijeme jméno, pokud je. Jinak ID z hlavní tabulky.
                 const channelDisplay = parsedData.channel_name_after 
                     ? `<span class="fw-semibold text-info">${parsedData.channel_name_after}</span>`
                     : `<span class="fw-semibold text-danger">#${log.channel_id || 'N/A ID'}</span>`; 
                 
-                // Target Name je původní autor smazané zprávy
+                // Cíl (původní autor zprávy): Použijeme jméno, jinak ID.
                 const targetDisplay = log.target_name && log.target_name !== 'N/A' 
                     ? `<span class="fw-semibold text-info">${log.target_name}</span>` 
                     : `uživatele s ID <span class="fw-semibold text-danger">${log.target_id || 'N/A ID'}</span>`;
@@ -539,12 +546,13 @@
                 if (log.target_name && log.target_name !== 'N/A') {
                     targetDisplay = `<span class="fw-semibold text-info">${log.target_name}</span>`;
                 } else if (log.target_id) {
-                    targetDisplay = `<span class="fw-semibold text-danger">ID: ${log.target_id} (Neznámá entita)</span>`;
+                    // ID cíle je vždy k dispozici
+                    targetDisplay = `<span class="fw-semibold text-info">ID: ${log.target_id}</span>`;
+                } else {
+                     targetDisplay = `<span class="fw-semibold text-danger">Není k dispozici</span>`;
                 }
 
-                if (targetDisplay) {
-                    message += ` na entitě ${targetDisplay}`;
-                }
+                message += ` na entitě ${targetDisplay}`;
 
                 // 2. Ošetření moderátora (user_name)
                 if (log.user_name && log.user_name !== 'Neznámý USER') {
@@ -568,9 +576,9 @@
                 let renderedMessageEdit = false;
 
                 // Speciální vykreslení pro úpravu zprávy (content_before/content_after)
-                if (log.action === 'message_edit' && parsedData.content_before) {
+                if (log.action === 'message_edit' && (parsedData.content_before || parsedData.content_after)) {
                     renderedMessageEdit = true;
-                    changeDetails += `<div class="mb-2"><span class="text-info fw-bold">Upravená zpráva:</span><span class="d-block text-danger">Před: ${parsedData.content_before || 'N/A'}</span><span class="d-block text-success">Po: ${parsedData.content_after || 'N/A'}</span></div>`;
+                    changeDetails += `<div class="mb-2"><span class="text-info fw-bold">Upravená zpráva:</span><span class="d-block text-danger">Před: ${parsedData.content_before || 'Nebylo v logu'}</span><span class="d-block text-success">Po: ${parsedData.content_after || 'Nebylo v logu'}</span></div>`;
                 }
 
                 // Standardní vykreslení ostatních změn
@@ -578,10 +586,17 @@
                     if (changeDetails !== '') {
                         changeDetails += '<hr class="my-2 border-secondary">';
                     }
-                    const oldValue = change.old_value !== undefined ? JSON.stringify(change.old_value) : 'N/A';
-                    const newValue = change.new_value !== undefined ? JSON.stringify(change.new_value) : 'N/A';
+                    // Formátování JSONu pro lepší čitelnost, pokud je hodnota objekt
+                    const oldValue = (typeof change.old_value === 'object' && change.old_value !== null) 
+                        ? JSON.stringify(change.old_value, null, 2) 
+                        : (change.old_value !== undefined ? String(change.old_value) : 'N/A');
                     
-                    changeDetails += `<div class="mb-2"><span class="text-info fw-bold">${(change.key || 'neznámý klíč').replace(/_/g, ' ')}:</span><span class="d-block text-danger">Původní: ${oldValue}</span><span class="d-block text-success">Nová: ${newValue}</span></div>`;
+                    const newValue = (typeof change.new_value === 'object' && change.new_value !== null) 
+                        ? JSON.stringify(change.new_value, null, 2) 
+                        : (change.new_value !== undefined ? String(change.new_value) : 'N/A');
+                    
+                    // Zobrazení v tagu pre pro zachování formátování u JSONu a ID seznamů
+                    changeDetails += `<div class="mb-2"><span class="text-info fw-bold">${(change.key || 'neznámý klíč').replace(/_/g, ' ')}:</span><span class="d-block text-danger">Původní: <pre class="log-value">${oldValue}</pre></span><span class="d-block text-success">Nová: <pre class="log-value">${newValue}</pre></span></div>`;
                 });
 
                 const totalChanges = changesArray.length + (renderedMessageEdit ? 1 : 0);
