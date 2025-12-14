@@ -505,17 +505,29 @@
             
             // --- ZJEDNODUŠENÍ TEXTU ZPRÁV ---
             if (log.action === 'message_edit') {
-                // 🚨 OPRAVENÁ LOGIKA: Priorita: log.channel_name > ID kanálu
-                const channelDisplay = log.channel_name 
-                    ? `<span class="fw-semibold text-info">#${log.channel_name}</span>` // Zobrazíme zjištěné jméno
-                    : `kanálu ID: <span class="fw-semibold text-info">${log.channel_id || 'N/A ID'}</span>`; 
                 
+                // 🚨 OPRAVENÁ LOGIKA: Hledáme jméno kanálu, ať už z channel_name, nebo target_name
+                let channelNameForDisplay = '';
+                if (log.channel_name && log.channel_name !== 'N/A') {
+                    channelNameForDisplay = log.channel_name; // Např. "🗣️┏obecná-diskuze"
+                } else if (log.target_name && log.target_name.startsWith('Kanál: #')) {
+                    // Extrahujeme název kanálu z "Kanál: #<název>"
+                    channelNameForDisplay = log.target_name.substring(8);
+                } else {
+                    channelNameForDisplay = log.channel_id || 'N/A ID';
+                }
+
+                const channelDisplay = channelNameForDisplay.startsWith('#')
+                    ? `<span class="fw-semibold text-info">${channelNameForDisplay}</span>`
+                    : `kanálu <span class="fw-semibold text-info">#${channelNameForDisplay}</span>`;
+
                 // 2. Cíl (autor zprávy): Použijeme jméno, jinak ID.
                 const targetDisplay = log.target_name && log.target_name !== 'N/A' 
                     ? `<span class="fw-semibold text-info">${log.target_name}</span>` 
                     : `uživatelem s ID <span class="fw-semibold text-danger">${log.target_id || 'N/A ID'}</span>`;
                     
                 // 3. Sestavení zprávy pro hlavní nadpis
+                // Poznámka: Zde vynecháváme "v" před {channelDisplay}, pokud už ho channelDisplay obsahuje (Kanálu ID:)
                 message += ` od ${targetDisplay} v ${channelDisplay}.`;
                 
                 // 4. Přidání moderátora
@@ -524,11 +536,22 @@
                 }
 
             } else if (log.action === 'message_delete') {
-                // 🚨 OPRAVENÁ LOGIKA: Priorita: log.channel_name > ID kanálu
-                const channelDisplay = log.channel_name 
-                    ? `<span class="fw-semibold text-info">#${log.channel_name}</span>` 
-                    : `kanálu ID: <span class="fw-semibold text-info">${log.channel_id || 'N/A ID'}</span>`;
                 
+                // 🚨 OPRAVENÁ LOGIKA: Hledáme jméno kanálu pro smazání
+                let channelNameForDisplay = '';
+                if (log.channel_name && log.channel_name !== 'N/A') {
+                    channelNameForDisplay = log.channel_name; // Např. "🗣️┏obecná-diskuze"
+                } else if (log.target_name && log.target_name.startsWith('Kanál: #')) {
+                    // Extrahujeme název kanálu z "Kanál: #<název>"
+                    channelNameForDisplay = log.target_name.substring(8);
+                } else {
+                    channelNameForDisplay = log.channel_id || 'N/A ID';
+                }
+                
+                const channelDisplay = channelNameForDisplay.startsWith('#')
+                    ? `<span class="fw-semibold text-info">${channelNameForDisplay}</span>`
+                    : `kanálu <span class="fw-semibold text-info">#${channelNameForDisplay}</span>`;
+
                 // 2. Cíl (původní autor zprávy): Použijeme jméno, jinak ID.
                 const targetDisplay = log.target_name && log.target_name !== 'N/A' 
                     ? `<span class="fw-semibold text-info">${log.target_name}</span>` 
@@ -548,7 +571,7 @@
                 // 1. Ošetření cíle (target_name / log.channel_name)
                 let targetDisplay = '';
                 
-                // 🚨 OPRAVA ZDE (Pro pozvánky a jiné akce s kanálem): Použijeme target_name / channel_name
+                // 🚨 Logika pro ostatní eventy
                 if (log.target_name && log.target_name !== 'N/A') {
                     targetDisplay = `<span class="fw-semibold text-info">${log.target_name}</span>`;
                 } else if (log.channel_name) {
