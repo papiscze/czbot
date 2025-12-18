@@ -204,6 +204,21 @@
             </div>
 
             <div class="command-box mod-command">
+                <h4 class="command-title">/warns</h4>
+                <p>Zobrazí historii trestů uživatele z databáze (varování, bany, kicky atd.).</p>
+                <table class="data-table small-font">
+                    <thead>
+                        <tr><th>Parametr</th><th>Popis</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><span class="command-code-modules">user</span></td><td><strong>Povinné.</strong> Uživatel, jehož historii chcete prověřit.</td></tr>
+                        <tr><td><span class="command-code-modules">scope</span></td><td><strong>Volitelné.</strong> Rozsah hledání. Možnosti: <code>Pouze tento server</code> nebo <code>Všechny servery (globální)</code>. Výchozí je <strong>tento server</strong>.</td></tr>
+                    </tbody>
+                </table>
+                <span class="command-code-modules-example mt-2">/warns user:@PetraDvorakova scope:Všechny servery (globální)</span>
+            </div>            
+
+            <div class="command-box mod-command">
                 <h4 class="command-title">/kick</h4>
                 <p>Odstraní uživatele ze serveru. Může se vrátit s pozvánkou.</p>
                 <table class="data-table small-font">
