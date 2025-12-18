@@ -394,9 +394,9 @@
                             </div>
                             <div class="module-link-small">
                                 <strong>Možnosti akce:</strong><br>
-                                - <code>block_message</code> – blokuje zprávy obsahující zakázané slovo.<br>
-                                - <code>timeout</code> – udělí timeout uživateli (výchozí 10 minut).<br>
-                                - <code>alert</code> – odešle upozornění do kanálu s volitelnou zprávou.<br><br>
+                                - <code>block_message</code> - blokuje zprávy obsahující zakázané slovo.<br>
+                                - <code>timeout</code> - udělí timeout uživateli (výchozí 10 minut).<br>
+                                - <code>alert</code> - odešle upozornění do kanálu s volitelnou zprávou.<br><br>
                                 Vyžaduje oprávnění <strong>Spravovat zprávy</strong>.<br>
                                 Bot musí mít oprávnění <strong>Spravovat server</strong> pro úpravu AutoMod pravidel.
                             </div>
@@ -496,9 +496,20 @@
                     </div>
                     <div class="command-detail-row" aria-hidden="true">
                         <div class="detail-content">
-                            <p>Vypíše seznam všech moderačních akcí (warn, kick, ban, timeout) uložených v databázi pro konkrétního uživatele. Výpis je omezen limitem zpráv Discordu (cca 2000 znaků).</p>
-                            <div class="syntax">Syntaxe: `/warns user:<@uživatel> [scope:local/global]`</div>
-                            <div class="module-link-small">Vyžaduje oprávnění <strong>Moderátor</strong> (Manage Messages).</div>
+                            <p>
+                                Vypíše seznam všech moderačních akcí (varování, kick, ban, timeout) uložených v databázi pro konkrétního uživatele. 
+                                Umožňuje moderátorům rychle posoudit, zda je uživatel problémový pouze lokálně, nebo má historii prohřešků i na jiných serverech.
+                            </p>
+                            <div class="syntax">
+                                Syntaxe: `/warns user:<@uživatel> [scope:local/global]`
+                            </div>
+                            <div class="module-link-small">
+                                <strong>Možnosti rozsahu (scope):</strong><br>
+                                - <code>local</code> - zobrazí záznamy pouze z aktuálního serveru (výchozí).<br>
+                                - <code>global</code> - zobrazí všechny nalezené záznamy uživatele napříč všemi servery.<br><br>
+                                Vyžaduje oprávnění <strong>Spravovat zprávy</strong> (Moderátor).<br>
+                                Odpověď je <strong>ephemeral</strong> - uvidí ji pouze moderátor, který příkaz použil.
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1989,7 +2000,7 @@
                     </div>
                     <div class="command-detail-row" aria-hidden="true">
                         <div class="detail-content">
-                            <p>Odesílá textovou zprávu anonymně. Anonymita je zachována – vaše jméno nebude zobrazeno.</p>
+                            <p>Odesílá textovou zprávu anonymně. Anonymita je zachována - vaše jméno nebude zobrazeno.</p>
                             <div class="syntax">Syntaxe: `/feedback poslat message:<vaše zpráva>`</div>
                             <div class="module-link-small">Dostupné pro <strong>všechny uživatele</strong>. Kanál musí být nejprve nastaven moderátory.</div>
                         </div>
