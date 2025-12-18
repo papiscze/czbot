@@ -489,6 +489,22 @@
 
                 <div class="command-group" data-tags="MODERACE">
                     <div class="command-item">
+                        <div class="command-name">/warns</div>
+                        <div class="command-description">Zobrazí historii trestů uživatele (tento server nebo globálně).</div>
+                        <div class="command-module-tag">Běžné moderátorské příkazy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Vypíše seznam všech moderačních akcí (warn, kick, ban, timeout) uložených v databázi pro konkrétního uživatele. Výpis je omezen limitem zpráv Discordu (cca 2000 znaků).</p>
+                            <div class="syntax">Syntaxe: `/warns user:<@uživatel> [scope:local/global]`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Moderátor</strong> (Manage Messages).</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="MODERACE">
+                    <div class="command-item">
                         <div class="command-name">/kick</div>
                         <div class="command-description">Odstraní uživatele ze serveru (uživatel se může vrátit).</div>
                         <div class="command-module-tag">Běžné moderátorské příkazy</div>
