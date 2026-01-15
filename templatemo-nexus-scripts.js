@@ -250,32 +250,46 @@ function initializeBackgroundEffects() {
 // =========================================================
 
 /**
+ * Vrátí správnou relativní cestu ke kořeni webu
+ * (řeší GitHub Pages + podsložky)
+ */
+function getBasePath() {
+    const path = window.location.pathname;
+
+    // Pokud jsme v podsložce (např. /repo/modules/...)
+    if (path.includes('/modules/')) {
+        return '..';
+    }
+
+    // Root webu
+    return '.';
+}
+
+/**
  * Inicializuje vkládání obsahu a spouští inicializaci menu
  * po úspěšném vložení headeru.
  */
 function initializePageContent() {
-    // Použijeme Promise.all pro zajištění, že se menu inicializuje AŽ po načtení headeru
-    
+    const BASE_PATH = getBasePath();
+
     const headerPromise = new Promise(resolve => {
-        // Vkládáme header a v resolve spustíme callback
-        includeHTML('/header.html', 'header-placeholder', resolve);
-    });
-    
-    const footerPromise = new Promise(resolve => {
-        // Vkládáme footer, nepotřebujeme callback
-        includeHTML('/footer.html', 'footer-placeholder', resolve);
+        includeHTML(`${BASE_PATH}/header.html`, 'header-placeholder', resolve);
     });
 
-    // Jakmile se header VLOŽÍ, můžeme inicializovat mobilní menu
+    const footerPromise = new Promise(resolve => {
+        includeHTML(`${BASE_PATH}/footer.html`, 'footer-placeholder', resolve);
+    });
+
+    // Menu inicializujeme až po vložení headeru
     headerPromise.then(() => {
         initializeMobileMenu();
     });
 
-    // Spustíme i efekty na pozadí
+    // Efekty na pozadí
     initializeBackgroundEffects();
 }
 
-// Inicializace po načtení DOM (nahrazuje původní blok)
+// Inicializace po načtení DOM
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initializePageContent);
 } else {
@@ -289,7 +303,7 @@ window.addEventListener('resize', () => {
     resizeTimer = setTimeout(() => {
         const matrixRain = document.getElementById('matrixRain');
         if (matrixRain) {
-             matrixRain.innerHTML = '';
+            matrixRain.innerHTML = '';
         }
         generateMatrixRain();
     }, 250);
