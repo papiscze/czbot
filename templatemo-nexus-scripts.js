@@ -256,7 +256,7 @@ function initializeBackgroundEffects() {
 function getBasePath() {
     const path = window.location.pathname;
 
-    // GitHub Pages repo (např. /czbot/...)
+    // GitHub Pages repo (např. /czbot/modules/...)
     const parts = path.split('/').filter(Boolean);
 
     // Pokud je stránka v podsložce (modules, admin, ...)
@@ -269,24 +269,48 @@ function getBasePath() {
 }
 
 /**
- * Inicializuje vkládání obsahu a spouští inicializaci menu
- * po úspěšném vložení headeru.
+ * Nahradí všechny {{BASE}} ve vloženém HTML správnou cestou
+ */
+function replaceBasePlaceholders(BASE_PATH, containerId) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    // Pro všechny odkazy, obrázky, skripty, linky
+    container.querySelectorAll('a, img, link, script').forEach(el => {
+        if (el.hasAttribute('href')) {
+            el.href = el.href.replace('{{BASE}}', BASE_PATH);
+        }
+        if (el.hasAttribute('src')) {
+            el.src = el.src.replace('{{BASE}}', BASE_PATH);
+        }
+    });
+}
+
+/**
+ * Inicializace obsahu stránky s podporou BASE
  */
 function initializePageContent() {
     const BASE_PATH = getBasePath();
 
+    // Načteme header a po vložení nahradíme {{BASE}}
     const headerPromise = new Promise(resolve => {
-        includeHTML(`${BASE_PATH}/header.html`, 'header-placeholder', resolve);
+        includeHTML(`${BASE_PATH}/header.html`, 'header-placeholder', () => {
+            replaceBasePlaceholders(BASE_PATH, 'header-placeholder');
+            resolve();
+        });
     });
 
-    includeHTML(`${BASE_PATH}/footer.html`, 'footer-placeholder');
+    // Načteme footer a nahraďme {{BASE}}
+    includeHTML(`${BASE_PATH}/footer.html`, 'footer-placeholder', () => {
+        replaceBasePlaceholders(BASE_PATH, 'footer-placeholder');
+    });
 
     // Menu inicializujeme až po vložení headeru
     headerPromise.then(() => {
         initializeMobileMenu();
     });
 
-    // Efekty na pozadí
+    // Efekty na pozadí (matrix rain apod.)
     initializeBackgroundEffects();
 }
 
@@ -297,7 +321,7 @@ if (document.readyState === 'loading') {
     initializePageContent();
 }
 
-// Regenerate matrix rain on window resize
+// Regenerace matrix rain při resize
 let resizeTimer;
 window.addEventListener('resize', () => {
     clearTimeout(resizeTimer);
