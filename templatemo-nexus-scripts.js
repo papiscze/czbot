@@ -279,9 +279,7 @@ function initializePageContent() {
         includeHTML(`${BASE_PATH}/header.html`, 'header-placeholder', resolve);
     });
 
-    const footerPromise = new Promise(resolve => {
-        includeHTML(`${BASE_PATH}/footer.html`, 'footer-placeholder', resolve);
-    });
+    includeHTML(`${BASE_PATH}/footer.html`, 'footer-placeholder');
 
     // Menu inicializujeme až po vložení headeru
     headerPromise.then(() => {
