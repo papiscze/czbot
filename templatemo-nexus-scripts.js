@@ -250,85 +250,46 @@ function initializeBackgroundEffects() {
 // =========================================================
 
 /**
- * Vrátí správnou relativní cestu ke kořeni webu
- * (řeší GitHub Pages + podsložky)
- */
-function getBasePath() {
-    const path = window.location.pathname;
-
-    // GitHub Pages repo (např. /czbot/modules/...)
-    const parts = path.split('/').filter(Boolean);
-
-    // Pokud je stránka v podsložce (modules, admin, ...)
-    if (parts.length > 2) {
-        return '..';
-    }
-
-    // Root webu
-    return '.';
-}
-
-/**
- * Nahradí všechny {{BASE}} ve vloženém HTML správnou cestou
- */
-function replaceBasePlaceholders(BASE_PATH, containerId) {
-    const container = document.getElementById(containerId);
-    if (!container) return;
-
-    // Pro všechny odkazy, obrázky, skripty, linky
-    container.querySelectorAll('a, img, link, script').forEach(el => {
-        if (el.hasAttribute('href')) {
-            el.href = el.href.replace('{{BASE}}', BASE_PATH);
-        }
-        if (el.hasAttribute('src')) {
-            el.src = el.src.replace('{{BASE}}', BASE_PATH);
-        }
-    });
-}
-
-/**
- * Inicializace obsahu stránky s podporou BASE
+ * Inicializuje vkládání obsahu a spouští inicializaci menu
+ * po úspěšném vložení headeru.
  */
 function initializePageContent() {
-    const BASE_PATH = getBasePath();
-
-    // Načteme header a po vložení nahradíme {{BASE}}
+    // Použijeme Promise.all pro zajištění, že se menu inicializuje AŽ po načtení headeru
+    
     const headerPromise = new Promise(resolve => {
-        includeHTML(`${BASE_PATH}/header.html`, 'header-placeholder', () => {
-            replaceBasePlaceholders(BASE_PATH, 'header-placeholder');
-            resolve();
-        });
+        // Vkládáme header a v resolve spustíme callback
+        includeHTML('header.html', 'header-placeholder', resolve);
+    });
+    
+    const footerPromise = new Promise(resolve => {
+        // Vkládáme footer, nepotřebujeme callback
+        includeHTML('/footer.html', 'footer-placeholder', resolve);
     });
 
-    // Načteme footer a nahraďme {{BASE}}
-    includeHTML(`${BASE_PATH}/footer.html`, 'footer-placeholder', () => {
-        replaceBasePlaceholders(BASE_PATH, 'footer-placeholder');
-    });
-
-    // Menu inicializujeme až po vložení headeru
+    // Jakmile se header VLOŽÍ, můžeme inicializovat mobilní menu
     headerPromise.then(() => {
         initializeMobileMenu();
     });
 
-    // Efekty na pozadí (matrix rain apod.)
+    // Spustíme i efekty na pozadí
     initializeBackgroundEffects();
 }
 
-// Inicializace po načtení DOM
+// Inicializace po načtení DOM (nahrazuje původní blok)
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initializePageContent);
 } else {
     initializePageContent();
 }
 
-// Regenerace matrix rain při resize
+// Regenerate matrix rain on window resize
 let resizeTimer;
 window.addEventListener('resize', () => {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => {
         const matrixRain = document.getElementById('matrixRain');
         if (matrixRain) {
-            matrixRain.innerHTML = '';
+             matrixRain.innerHTML = '';
         }
         generateMatrixRain();
     }, 250);
