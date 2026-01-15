@@ -64,6 +64,7 @@
                 <button class="tag-button" data-tag="TRANSLATE">Translate modul</button>
                 <button class="tag-button" data-tag="TVORBAVLAKEN">Tvorba vláken na zprávy</button>
                 <button class="tag-button" data-tag="WELCOMELEAVE">Uvítací a odchodové zprávy</button>
+                <button class="tag-button" data-tag="CUSTOMCOMMANDS">Vlastní příkazy</button>
                 <button class="tag-button" data-tag="VODOZNAK">Vodoznak s vlastním textem na obrázky</button>
                 <button class="tag-button" data-tag="VOTE">Hlasování</button>
                 <button class="tag-button" data-tag="XPLEVEL">XP systém a úrovně</button>
@@ -2617,6 +2618,59 @@
                         </div>
                     </div>
                 </div>                                           
+
+                <div class="command-group" data-tags="CUSTOMCOMMANDS">
+                    <div class="command-item">
+                        <div class="command-name">/command add</div>
+                        <div class="command-description">Vytvoří nový vlastní příkaz nebo aktualizuje stávající.</div>
+                        <div class="command-module-tag">Vlastní příkazy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Umožňuje vytvořit příkaz, na který bot odpoví předem definovaným textem. Pokud příkaz se stejným názvem již existuje, jeho odpověď bude aktualizována.</p>
+                            <div class="syntax">Syntaxe: `/command add nazev:<název> odpoved:<text_odpovědi>`</div>
+                            <div class="module-link-small">
+                                <strong>nazev:</strong> Klíčové slovo, na které bude bot reagovat (vyvolává se pak pomocí !nazev).<br>
+                                <strong>odpoved:</strong> Text, který bot odešle jako reakci. Podporuje standardní Discord formátování.<br>
+                                <strong>Požadovaná práva:</strong> Administrátor.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="CUSTOMCOMMANDS">
+                    <div class="command-item">
+                        <div class="command-name">/command delete</div>
+                        <div class="command-description">Smaže vybraný vlastní příkaz ze serveru.</div>
+                        <div class="command-module-tag">Vlastní příkazy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Trvale odstraní vlastní příkaz z databáze serveru. Bot na toto slovo již nebude reagovat.</p>
+                            <div class="syntax">Syntaxe: `/command delete nazev:<název>`</div>
+                            <div class="module-link-small">
+                                <strong>nazev:</strong> Název příkazu, který chcete odstranit.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="CUSTOMCOMMANDS">
+                    <div class="command-item">
+                        <div class="command-name">/command list</div>
+                        <div class="command-description">Zobrazí seznam všech vlastních příkazů a jejich odpovědí.</div>
+                        <div class="command-module-tag">Vlastní příkazy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Vypíše přehledný seznam všech vytvořených příkazů na tomto serveru. U každého příkazu uvidíte i nastavenou textovou odpověď.</p>
+                            <div class="syntax">Syntaxe: `/command list`</div>
+                        </div>
+                    </div>
+                </div>                
             </div> 
         </div> 
     </section>
