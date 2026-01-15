@@ -258,12 +258,12 @@ function initializePageContent() {
     
     const headerPromise = new Promise(resolve => {
         // Vkládáme header a v resolve spustíme callback
-        includeHTML('header.html', 'header-placeholder', resolve);
+        includeHTML('../header.html', 'header-placeholder', resolve);
     });
     
     const footerPromise = new Promise(resolve => {
         // Vkládáme footer, nepotřebujeme callback
-        includeHTML('/footer.html', 'footer-placeholder', resolve);
+        includeHTML('../footer.html', 'footer-placeholder', resolve);
     });
 
     // Jakmile se header VLOŽÍ, můžeme inicializovat mobilní menu
