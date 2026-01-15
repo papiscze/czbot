@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CZBOT - Vlastní příkazy (Custom Commands)</title>
+    
+    <link href="../templatemo-nexus-style.css" rel="stylesheet">
+    <link href="../module-styles.css" rel="stylesheet"> 
+</head>
+<body id="top" class="module-page"> 
+
+    <div class="cyber-bg">
+        <div class="cyber-gradient"></div>
+        <div class="matrix-rain" id="matrixRain"></div>
+    </div>
+    <div class="scanlines"></div>
+    <div class="noise-overlay"></div>
+    
+    <!-- Navigation -->
+    <div id="header-placeholder"></div> 
+    
+    <div class="content-section">
+        <div class="content-container">
+
+            <h1 class="page-title">💡 Vlastní textové příkazy</h1>
+            <p class="page-subtitle">Vytvořte si vlastní příkazy s unikátními odpověďmi pro váš server. 🎉</p>
+
+            <div class="module-intro-box">
+                <p>
+                    Tento modul vám umožňuje definovat vlastní příkazy začínající prefixem <strong>!</strong>. Je to ideální pro automatizaci odpovědí na časté dotazy, sdílení odkazů na sociální sítě nebo vytváření interních komunitních "meme" příkazů.
+                </p>
+                <div class="info-box mt-4">
+                    <strong>Tip pro správce:</strong> Příkazy můžete spravovat buď přímo v Discordu, nebo mnohem pohodlněji přes náš <strong>Webový Dashboard</strong>, kde vidíte i historii úprav a autory příkazů.
+                </div>
+            </div>
+
+            <h2 class="module-heading">⚙️ Oprávnění a funkce</h2>
+            
+            <ul class="bullet-list">
+                <li><strong>Odesílat zprávy</strong>: Bot musí mít právo odpovídat v kanálech, kde jsou příkazy vyvolávány.</li>
+                <li><strong>Webová správa</strong>: K editaci přes dashboard musíte mít na serveru roli s oprávněním <strong>Administrátor</strong>.</li>
+                <li><strong>Trvalost</strong>: Všechny příkazy jsou bezpečně uloženy v databázi a zůstávají aktivní i po restartu bota.</li>
+            </ul>
+            
+            <div class="module-divider"></div>
+
+            <h2 class="module-heading">🚀 Příkazy v Discordu: <span class="command-code-modules-modules">/command</span></h2>
+            
+            <p>Pro rychlou správu přímo z chatu použijte tyto Slash příkazy:</p>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Příkaz</th>
+                        <th>Parametry</th>
+                        <th>Popis</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="command-code-modules-modules">add</span></td>
+                        <td><span class="command-code-modules-modules">nazev</span>, <span class="command-code-modules-modules">odpoved</span></td>
+                        <td><strong>Vytvoří</strong> nový příkaz. Pokud již existuje, <strong>aktualizuje</strong> jeho odpověď.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="command-code-modules-modules">list</span></td>
+                        <td>-</td>
+                        <td>Zobrazí seznam všech aktivních vlastních příkazů a jejich odpovědí.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="command-code-modules-modules">delete</span></td>
+                        <td><span class="command-code-modules-modules">nazev</span></td>
+                        <td>Okamžitě <strong>smaže</strong> vybraný vlastní příkaz z databáze.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 class="module-heading">🖥️ Správa přes Webový Dashboard</h2>
+            <p>Nejjednodušší cesta k editaci příkazů. Dashboard nabízí:</p>
+            <ul class="bullet-list">
+                <li><strong>Přehledná tabulka</strong>: Seznam všech příkazů na jedné stránce.</li>
+                <li><strong>Auditní stopa</strong>: U každého příkazu vidíte, který moderátor jej naposledy upravil a kdy.</li>
+                <li><strong>Snadná editace</strong>: Stačí přepsat text odpovědi a kliknout na uložit - změna se projeví okamžitě.</li>
+            </ul>
+
+            <h4 class="mt-4">Příklad použití v chatu:</h4>
+            <div class="command-box">
+                <h4 class="command-title">Uživatel: !web</h4>
+                <div class="command-details">
+                    <div class="command-detail-row">
+                        <span class="command-label">Odpověď bota:</span>
+                        <span>Navštivte naše oficiální stránky na <a href="https://czbot.cz" target="_blank" style="color: var(--cyber-blue);">https://czbot.cz</a></span>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+<!--Footer-->
+    <div id="footer-placeholder"></div>
+
+    <script src="../templatemo-nexus-scripts.js"></script>
+</body>
+</html>
