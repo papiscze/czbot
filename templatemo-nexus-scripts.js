@@ -256,8 +256,11 @@ function initializeBackgroundEffects() {
 function getBasePath() {
     const path = window.location.pathname;
 
-    // Pokud jsme v podsložce (např. /repo/modules/...)
-    if (path.includes('/modules/')) {
+    // GitHub Pages repo (např. /czbot/...)
+    const parts = path.split('/').filter(Boolean);
+
+    // Pokud je stránka v podsložce (modules, admin, ...)
+    if (parts.length > 2) {
         return '..';
     }
 
