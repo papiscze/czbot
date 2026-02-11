@@ -723,6 +723,70 @@
                         </div>
                     </div>
                 </div>
+                <div class="command-group" data-tags="MODERACE">
+                    <div class="command-item">
+                        <div class="command-name">/unban</div>
+                        <div class="command-description">Zruší zákaz vstupu (ban) pro uživatele na serveru.</div>
+                        <div class="command-module-tag">Běžné moderátorské příkazy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Umožní dříve zabanovanému uživateli se znovu připojit na server. Budete potřebovat jeho Discord ID.</p>
+                            <div class="syntax">Syntaxe: `/unban user_id:<ID_uživatele> [reason:<důvod>]`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Zabanovat členy</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="MODERACE">
+                    <div class="command-item">
+                        <div class="command-name">/unmute</div>
+                        <div class="command-description">Předčasně zruší uživateli timeout (umlčení).</div>
+                        <div class="command-module-tag">Běžné moderátorské příkazy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Okamžitě vrátí uživateli možnost psát a připojovat se do hlasových kanálů, pokud má aktivní Timeout.</p>
+                            <div class="syntax">Syntaxe: `/unmute user:<@uživatel> [reason:<důvod>]`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Umlčet členy</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="MODERACE">
+                    <div class="command-item">
+                        <div class="command-name">/lock</div>
+                        <div class="command-description">Uzamkne aktuální kanál pro běžné členy.</div>
+                        <div class="command-module-tag">Běžné moderátorské příkazy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Zamezí roli @everyone odesílat zprávy v aktuálním kanále. Ideální při raidu nebo probíhajícím konfliktu.</p>
+                            <div class="syntax">Syntaxe: `/lock [channel:<#kanál>] [reason:<důvod>]`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat kanály</strong> nebo <strong>Správa chatu</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="MODERACE">
+                    <div class="command-item">
+                        <div class="command-name">/unlock</div>
+                        <div class="command-description">Odemkne dříve uzamčený kanál.</div>
+                        <div class="command-module-tag">Běžné moderátorské příkazy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Obnoví oprávnění pro odesílání zpráv v kanále pro roli @everyone.</p>
+                            <div class="syntax">Syntaxe: `/unlock [channel:<#kanál>]`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat kanály</strong> nebo <strong>Správa chatu</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="command-group" data-tags="LOCALIZACE">
                     <div class="command-item">
                         <div class="command-name">/lokalizace server</div>
