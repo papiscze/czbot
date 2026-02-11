@@ -18,7 +18,6 @@
     <div class="scanlines"></div>
     <div class="noise-overlay"></div>
     
-    <!-- Navigation -->
     <div id="header-placeholder"></div> 
     
     <div class="content-section">
@@ -51,6 +50,19 @@
             </div>
 
             <div class="command-box mod-command">
+                <h4 class="command-title">/unmute</h4>
+                <p>Předčasně zruší aktivní timeout (umlčení) uživatele.</p>
+                <table class="data-table small-font">
+                    <thead><tr><th>Parametr</th><th>Popis</th></tr></thead>
+                    <tbody>
+                        <tr><td><span class="command-code-modules">user</span></td><td><strong>Povinné.</strong> Uživatel, kterému chcete zrušit timeout.</td></tr>
+                        <tr><td><span class="command-code-modules">reason</span></td><td><strong>Volitelné.</strong> Důvod zrušení (zaznamená se do logů).</td></tr>
+                    </tbody>
+                </table>
+                <span class="command-code-modules-example mt-2">/unmute user:@JanNovak reason:Omluva přijata</span>
+            </div>
+
+            <div class="command-box mod-command">
                 <h4 class="command-title">/warn</h4>
                 <p>Upozorní uživatele a zaznamená varování do databáze.</p>
                 <table class="data-table small-font">
@@ -58,7 +70,7 @@
                     <tbody>
                         <tr><td><span class="command-code-modules">user</span></td><td><strong>Povinné.</strong> Uživatel k varování.</td></tr>
                         <tr><td><span class="command-code-modules">reason</span></td><td><strong>Povinné.</strong> Důvod varování.</td></tr>
-                        <tr><td><span class="command-code-modules">log_to_db</span></td><td><strong>Volitelné.</strong> Zda má být akce <strong>zaznamenána do databáze</strong> (ModLog). Výchozí je <strong>`True`</strong> (Ano)</td></tr>                         
+                        <tr><td><span class="command-code-modules">log_to_db</span></td><td><strong>Volitelné.</strong> Zda má být akce <strong>zaznamenána do databáze</strong> (ModLog). Výchozí je <strong>`True`</strong> (Ano)</td></tr>                        
                     </tbody>
                 </table>
                 <span class="command-code-modules-example mt-2">/warn user:@PetraDvorakova reason:Nevhodné chování log_to_db:False</span>
@@ -106,12 +118,38 @@
                         <tr><td><span class="command-code-modules">log_to_db</span></td><td><strong>Volitelné.</strong> Zda má být akce <strong>zaznamenána do databáze</strong> (ModLog). Výchozí je <strong>`True`</strong> (Ano)</td></tr> 
                     </tbody>
                 </table>
-                <span class="command-code-modules-example mt-2">/ban user:@EvaProchazkova reason:Těžké porušení TOS delete_messages_days:7 is_crossban:True log_to_db:True</span>
+                <span class="command-code-modules-example mt-2">/ban user:@EvaProchazkova reason:Těžké porušení TOS delete_messages_days:7 log_to_db:True</span>
+            </div>
+
+            <div class="command-box mod-command">
+                <h4 class="command-title">/unban</h4>
+                <p>Zruší ban uživateli. Jelikož uživatel není na serveru, je nutné použít jeho ID.</p>
+                <table class="data-table small-font">
+                    <thead><tr><th>Parametr</th><th>Popis</th></tr></thead>
+                    <tbody>
+                        <tr><td><span class="command-code-modules">user_id</span></td><td><strong>Povinné.</strong> Číselné ID uživatele (např. 123456789012345678).</td></tr>
+                        <tr><td><span class="command-code-modules">reason</span></td><td><strong>Volitelné.</strong> Důvod odbanování.</td></tr>
+                    </tbody>
+                </table>
+                <span class="command-code-modules-example mt-2">/unban user_id:123456789012345678 reason:Chybně udělený ban</span>
             </div>
 
             <div class="module-divider"></div>
             
             <h2 class="module-heading">2. Správa Kanálů a Zpráv <span class="badge">MOD</span></h2>
+
+            <div class="command-box mod-command">
+                <h4 class="command-title">/lock & /unlock</h4>
+                <p>Rychlé uzamčení nebo odemčení kanálu pro roli @everyone.</p>
+                <table class="data-table small-font">
+                    <thead><tr><th>Příkaz</th><th>Popis</th></tr></thead>
+                    <tbody>
+                        <tr><td><span class="command-code-modules">/lock</span></td><td>Zakáže roli @everyone posílat zprávy v aktuálním kanále.</td></tr>
+                        <tr><td><span class="command-code-modules">/unlock</span></td><td>Vrátí oprávnění posílat zprávy do výchozího stavu.</td></tr>
+                    </tbody>
+                </table>
+                <span class="command-code-modules-example mt-2">/lock reason:Probíhá údržba kanálu</span>
+            </div>
 
             <h3 class="mt-4">Smazání zpráv: <span class="command-code-modules">/clear</span></h3>
             <p>Skupina příkazů pro přesné smazání zpráv.</p>
@@ -273,8 +311,7 @@
             
         </div>
     </div>
-<!--Footer-->
-    <div id="footer-placeholder"></div>
+<div id="footer-placeholder"></div>
 
     <script src="../templatemo-nexus-scripts.js"></script>
 
