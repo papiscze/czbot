@@ -18,7 +18,6 @@
     <div class="scanlines"></div>
     <div class="noise-overlay"></div>
     
-    <!-- Navigation -->
     <div id="header-placeholder"></div> 
     
     <div class="content-section">
@@ -29,11 +28,13 @@
 
             <div class="module-intro-box">
                 <p>
-                    Tento modul nabízí dvě hlavní funkce pro organizaci diskuse:
+                    Tento modul nabízí tři hlavní funkce pro organizaci diskuse:
                     <br>
                     1. <strong>Automatická vlákna k textovým zprávám</strong>: Ideální pro kanály s nápady, návrhy nebo podporou.
                     <br>
-                    2. <strong>Moderace kanálu s vlákny k médiím</strong>: Udržuje kanály s obrázky a videi čisté a veškerou diskuzi přesouvá do vláken.
+                    2. <strong>Moderace kanálu s vlákny k médiím</strong>: Udržuje kanály čisté a veškerou diskuzi přesouvá do vláken pod obrázky/videa.
+                    <br>
+                    3. <strong>Automatické reakce</strong>: Automaticky přidává vybrané emoji na každou novou zprávu.
                 </p>
             </div>
 
@@ -44,7 +45,7 @@
                 <ul class="bullet-list">
                     <li><strong>Spravovat vlákna</strong>: Pro vytváření a správu vláken.</li>
                     <li><strong>Spravovat zprávy</strong>: Nezbytné pro funkci moderace médií (mazání textových zpráv).</li>
-                    <li><strong>Posílat zprávy</strong>: Pro odesílání úvodního textu a varování.</li>
+                    <li><strong>Posílat zprávy & Přidávat reakce</strong>: Pro odesílání úvodního textu, varování a automatické reakce.</li>
                 </ul>
             </div>
             
@@ -86,6 +87,18 @@
             </div>
 
             <div class="command-box mod-command">
+                <h4 class="command-title">/vlakna setthreads <span class="badge">MOD</span></h4>
+                <p>Umožňuje u existující moderace dodatečně zapnout nebo vypnout automatickou tvorbu vláken (pokud chcete jen mazat texty bez vytváření diskuzí).</p>
+                <span class="command-code-modules-example">/vlakna setthreads channel:#fotky povolit_tvorbu:False</span>
+            </div>
+
+            <div class="command-box mod-command">
+                <h4 class="command-title">/vlakna role <span class="badge">MOD</span></h4>
+                <p><strong>Výjimky z moderace:</strong> Nastaví role, které mohou do kanálu psát textové zprávy i bez příloh (např. moderátoři), aniž by jim bot zprávu smazal.</p>
+                <span class="command-code-modules-example">/vlakna role akce:Pridat channel:#fotky role:@Moderátor</span>
+            </div>
+
+            <div class="command-box mod-command">
                 <h4 class="command-title">/vlakna list <span class="badge">MOD</span></h4>
                 <p>Zobrazí seznam všech kanálů, které jsou nastaveny pro moderaci s vlákny k médiím.</p>
             </div>
@@ -95,11 +108,38 @@
                 <p>Deaktivuje moderaci a automatické vytváření vláken k médiím v kanálu.</p>
                 <span class="command-code-modules-example">/vlakna remove channel:#obrázky-a-videa</span>
             </div>
+
+            <div class="module-divider"></div>
+
+            <h2 class="module-heading">3. Automatické reakce</h2>
+            <p>Bot automaticky přidá vybrané emoji jako reakci na každou novou zprávu v kanálu. Skvělé pro hlasování nebo zvýšení aktivity.</p>
+
+            <h3 class="mt-4">Příkazy pro nastavení (MOD)</h3>
+
+            <div class="command-box mod-command">
+                <h4 class="command-title">/reakce add <span class="badge">MOD</span></h4>
+                <p>Přidá emoji do seznamu automatických reakcí pro konkrétní kanál.</p>
+                <span class="command-code-modules-example">/reakce add channel:#oznámení emoji:✅</span>
+            </div>
+
+            <div class="command-box mod-command">
+                <h4 class="command-title">/reakce list <span class="badge">MOD</span></h4>
+                <p>Zobrazí přehled všech nastavených automatických reakcí na serveru.</p>
+            </div>
+
+            <div class="command-box mod-command">
+                <h4 class="command-title">/reakce remove <span class="badge">MOD</span></h4>
+                <p>Odebere konkrétní emoji (nebo všechna emoji) z automatických reakcí kanálu.</p>
+                <span class="command-code-modules-example">/reakce remove channel:#oznámení emoji:✅</span>
+            </div>
+
+            <div class="info-box mt-3">
+                <p>💡 <strong>Tip:</strong> Pokud bot nemá oprávnění přidávat reakce v daném kanálu, automaticky odešle chlášení do vašeho nastaveného moderačního (changelog) kanálu.</p>
+            </div>
             
         </div>
     </div>
-<!--Footer-->
-    <div id="footer-placeholder"></div>
+<div id="footer-placeholder"></div>
 
     <script src="../templatemo-nexus-scripts.js"></script>
 
