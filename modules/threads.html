@@ -24,122 +24,142 @@
         <div class="content-container">
 
             <h1 class="page-title">💬 Vlákna a Moderace kanálů</h1>
-            <p class="page-subtitle">Pokročilé nástroje pro správu diskusí a udržování pořádku ve vybraných kanálech.</p>
+            <p class="page-subtitle">Pokročilé nástroje pro správu diskusí a automatizaci interakcí na vašem serveru.</p>
 
             <div class="module-intro-box">
                 <p>
-                    Tento modul nabízí tři hlavní funkce pro organizaci diskuse:
+                    Tento modul nabízí komplexní řešení pro organizaci diskuse ve třech klíčových oblastech:
+                    <br><br>
+                    1. <strong>Automatická vlákna k textovým zprávám</strong>: Ideální pro kanály podpory, nápady nebo návrhy, kde každá zpráva zahajuje samostatnou diskusi.
                     <br>
-                    1. <strong>Automatická vlákna k textovým zprávám</strong>: Ideální pro kanály s nápady, návrhy nebo podporou.
+                    2. <strong>Moderace kanálu s vlákny k médiím</strong>: Udržuje vizuální kanály čisté. Povoluje pouze média a veškerou diskuzi přesouvá do vláken.
                     <br>
-                    2. <strong>Moderace kanálu s vlákny k médiím</strong>: Udržuje kanály čisté a veškerou diskuzi přesouvá do vláken pod obrázky/videa.
-                    <br>
-                    3. <strong>Automatické reakce</strong>: Automaticky přidává vybrané emoji na každou novou zprávu.
+                    3. <strong>Automatické reakce</strong>: Okamžité přidávání emoji na každou zprávu pro hlasování nebo potvrzení přečtení.
                 </p>
             </div>
 
             <h2 class="module-heading">⚙️ Klíčová oprávnění bota</h2>
             
             <div class="info-box">
-                <p>Pro správnou funkci je <strong>kritické</strong> oprávnění <strong>Spravovat vlákna</strong> (Manage Threads).</p>
+                <p>Pro správnou funkci je <strong>kritické</strong>, aby měl bot v daných kanálech správně nastavená oprávnění:</p>
                 <ul class="bullet-list">
-                    <li><strong>Spravovat vlákna</strong>: Pro vytváření a správu vláken.</li>
-                    <li><strong>Spravovat zprávy</strong>: Nezbytné pro funkci moderace médií (mazání textových zpráv).</li>
-                    <li><strong>Posílat zprávy & Přidávat reakce</strong>: Pro odesílání úvodního textu, varování a automatické reakce.</li>
+                    <li><strong>Spravovat vlákna (Manage Threads)</strong>: Klíčové oprávnění pro vytváření, správu a archivaci diskusních vláken.</li>
+                    <li><strong>Spravovat zprávy (Manage Messages)</strong>: Nezbytné pro mazání zpráv, které neodpovídají pravidlům (u moderace médií).</li>
+                    <li><strong>Posílat zprávy & Přidávat reakce</strong>: Pro odesílání úvodních textů do vláken a provádění automatických reakcí.</li>
+                    <li><strong>Číst historii zpráv</strong>: Aby bot mohl korektně analyzovat obsah a detekovat přílohy či odkazy.</li>
                 </ul>
             </div>
             
             <div class="module-divider"></div>
 
             <h2 class="module-heading">1. Automatická vlákna k textovým zprávám</h2>
-            <p>Bot vytvoří vlákno pod <strong>každou</strong> novou zprávou a odešle do něj vámi definovaný úvodní text.</p>
+            <p>Bot automaticky vytvoří vlákno pod <strong>každou</strong> novou zprávou v nastaveném kanálu. Tato funkce zajišťuje, že hlavní kanál zůstane přehledný a podrobnosti se řeší v dedikovaném prostoru.</p>
+            
+            <div class="info-box bg-dark-transparent">
+                <p>💡 <strong>Dynamické názvy:</strong> Vlákno je automaticky pojmenováno ve formátu: <code>Vlákno uživatele [jméno autora]</code>.</p>
+            </div>
 
             <h3 class="mt-4">Příkazy pro nastavení (MOD)</h3>
 
             <div class="command-box mod-command">
                 <h4 class="command-title">/vlaknatext add <span class="badge">MOD</span></h4>
-                <p>Zapne automatické vytváření vláken a nastaví úvodní text pro vlákno.</p>
-                <span class="command-code-modules-example">/vlaknatext add channel:#návrhy text:Děkujeme za nápad! Prosím, rozveďte ho v tomto vlákně.</span>
+                <p>Zapne automatické vytváření vláken a nastaví úvodní text. Pro nový řádek použijte <code>\n</code>.</p>
+                <span class="command-code-modules-example">/vlaknatext add channel:#návrhy text:Děkujeme za nápad! \n Prosím, rozveďte ho v tomto vlákně.</span>
             </div>
 
             <div class="command-box mod-command">
                 <h4 class="command-title">/vlakna textlist <span class="badge">MOD</span></h4>
-                <p>Zobrazí seznam kanálů s nastaveným úvodním textem pro vlákna.</p>
+                <p>Zobrazí seznam všech kanálů, které mají aktivní automatickou tvorbu textových vláken včetně náhledu textu.</p>
             </div>
 
             <div class="command-box mod-command">
                 <h4 class="command-title">/vlakna textremove <span class="badge">MOD</span></h4>
-                <p>Odebere nastavený text a deaktivuje automatické vytváření vláken v kanálu.</p>
+                <p>Deaktivuje funkci a odebere nastavený úvodní text z databáze pro daný kanál.</p>
                 <span class="command-code-modules-example">/vlakna textremove channel:#návrhy</span>
             </div>
 
             <div class="module-divider"></div>
 
             <h2 class="module-heading">2. Moderace kanálu s vlákny k fotkám a médiím</h2>
-            <p>Bot automaticky vytváří vlákna pouze pod zprávami s přílohami/odkazy na média a zároveň maže čistě textové zprávy, které nemají být v hlavním kanálu.</p>
+            <p>Tato funkce je navržena pro "Showcase" kanály. Bot dohlíží na to, aby v kanálu byly pouze obrázky, videa nebo odkazy. Veškerý text bez médií je eliminován.</p>
+
+            <div class="info-box">
+                <p><strong>Podporovaný obsah:</strong></p>
+                <ul class="bullet-list">
+                    <li>Přímé přílohy (obrázky, videa, soubory).</li>
+                    <li>Odkazy na platformy: <strong>YouTube, Twitch, Instagram, TikTok</strong>.</li>
+                </ul>
+            </div>
 
             <h3 class="mt-4">Příkazy pro nastavení (MOD)</h3>
             
             <div class="command-box mod-command">
                 <h4 class="command-title">/vlakna add <span class="badge">MOD</span></h4>
-                <p>Aktivuje moderaci kanálu: povoleny jsou jen zprávy s médii, pod kterými se vytvoří vlákno pro diskuzi.</p>
-                <span class="command-code-modules-example">/vlakna add channel:#obrázky-a-videa</span>
+                <p>Aktivuje moderaci. Parametr <code>tvorba_vlakna</code> určuje, zda bot pod každým médiem založí diskusní vlákno.</p>
+                <span class="command-code-modules-example">/vlakna add channel:#galerie tvorba_vlakna:True</span>
             </div>
 
             <div class="command-box mod-command">
                 <h4 class="command-title">/vlakna setthreads <span class="badge">MOD</span></h4>
-                <p>Umožňuje u existující moderace dodatečně zapnout nebo vypnout automatickou tvorbu vláken (pokud chcete jen mazat texty bez vytváření diskuzí).</p>
-                <span class="command-code-modules-example">/vlakna setthreads channel:#fotky povolit_tvorbu:False</span>
+                <p>Změní nastavení tvorby vláken u kanálu, který již je v moderaci (přepíná mezi "pouze mazat text" a "mazat text + tvořit vlákna").</p>
+                <span class="command-code-modules-example">/vlakna setthreads channel:#galerie povolit_tvorbu:False</span>
             </div>
 
             <div class="command-box mod-command">
                 <h4 class="command-title">/vlakna role <span class="badge">MOD</span></h4>
-                <p><strong>Výjimky z moderace:</strong> Nastaví role, které mohou do kanálu psát textové zprávy i bez příloh (např. moderátoři), aniž by jim bot zprávu smazal.</p>
-                <span class="command-code-modules-example">/vlakna role akce:Pridat channel:#fotky role:@Moderátor</span>
+                <p><strong>Výjimky z moderace:</strong> Nastaví role, kterým bot zprávy nikdy nesmaže (ideální pro adminy, kteří potřebují vkládat oznámení do foto-kanálů).</p>
+                <span class="command-code-modules-example">/vlakna role akce:Pridat channel:#galerie role:@Moderátor</span>
             </div>
 
             <div class="command-box mod-command">
                 <h4 class="command-title">/vlakna list <span class="badge">MOD</span></h4>
-                <p>Zobrazí seznam všech kanálů, které jsou nastaveny pro moderaci s vlákny k médiím.</p>
+                <p>Komplexní přehled: seznam kanálů, stav vláken a seznam rolí s udělenou výjimkou.</p>
             </div>
 
             <div class="command-box mod-command">
                 <h4 class="command-title">/vlakna remove <span class="badge">MOD</span></h4>
-                <p>Deaktivuje moderaci a automatické vytváření vláken k médiím v kanálu.</p>
-                <span class="command-code-modules-example">/vlakna remove channel:#obrázky-a-videa</span>
+                <p>Úplně vypne moderaci a uvolní kanál pro běžné textové zprávy.</p>
             </div>
 
             <div class="module-divider"></div>
 
             <h2 class="module-heading">3. Automatické reakce</h2>
-            <p>Bot automaticky přidá vybrané emoji jako reakci na každou novou zprávu v kanálu. Skvělé pro hlasování nebo zvýšení aktivity.</p>
+            <p>Bot okamžitě po odeslání zprávy přidá definované emoji. Tato funkce je nezávislá na vláknech a lze ji použít v jakémkoliv kanálu.</p>
 
             <h3 class="mt-4">Příkazy pro nastavení (MOD)</h3>
 
             <div class="command-box mod-command">
                 <h4 class="command-title">/reakce add <span class="badge">MOD</span></h4>
-                <p>Přidá emoji do seznamu automatických reakcí pro konkrétní kanál.</p>
-                <span class="command-code-modules-example">/reakce add channel:#oznámení emoji:✅</span>
+                <p>Přidá emoji do automatiky. Do jednoho kanálu lze přidat i více různých emoji.</p>
+                <span class="command-code-modules-example">/reakce add channel:#hlasování emoji:👍</span>
             </div>
 
             <div class="command-box mod-command">
                 <h4 class="command-title">/reakce list <span class="badge">MOD</span></h4>
-                <p>Zobrazí přehled všech nastavených automatických reakcí na serveru.</p>
+                <p>Zobrazí přehled všech aktivních automatických reakcí na celém serveru.</p>
             </div>
 
             <div class="command-box mod-command">
                 <h4 class="command-title">/reakce remove <span class="badge">MOD</span></h4>
-                <p>Odebere konkrétní emoji (nebo všechna emoji) z automatických reakcí kanálu.</p>
-                <span class="command-code-modules-example">/reakce remove channel:#oznámení emoji:✅</span>
+                <p>Odebere konkrétní emoji z automatiky pro daný kanál.</p>
             </div>
 
-            <div class="info-box mt-3">
-                <p>💡 <strong>Tip:</strong> Pokud bot nemá oprávnění přidávat reakce v daném kanálu, automaticky odešle chlášení do vašeho nastaveného moderačního (changelog) kanálu.</p>
+            <div class="module-divider"></div>
+
+            <h2 class="module-heading">🛠️ Logika fungování (Deep Dive)</h2>
+            <div class="info-box bg-dark-transparent">
+                <p><strong>Detekce a mazání:</strong> Pokud uživatel pošle zprávu do moderovaného kanálu, bot nejprve zkontroluje přítomnost médií. Pokud nejsou nalezena, bot prověří, zda autor disponuje rolí s výjimkou. V případě, že podmínky nejsou splněny, zpráva je <strong>smazána</strong> a bot odešle autorovi <strong>soukromou zprávu (DM)</strong> s vysvětlením pravidel kanálu.</p>
+                <p><strong>Chybová hlášení:</strong> Pokud bot narazí na nedostatečná oprávnění při pokusu o přidání reakce, automaticky vygeneruje hlášení do vašeho <code>changelog</code> kanálu (nastaveného přes <code>/nastaveni</code>), aby byla zajištěna rychlá náprava správcem.</p>
+            </div>
+            
+            <div class="info-box mt-3 text-center">
+                <p>V případě dotazů k pokročilé konfiguraci se obraťte na administrátory nebo bot support tým.</p>
             </div>
             
         </div>
     </div>
-<div id="footer-placeholder"></div>
+
+    <div id="footer-placeholder"></div>
 
     <script src="../templatemo-nexus-scripts.js"></script>
 
