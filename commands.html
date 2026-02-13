@@ -2395,31 +2395,15 @@
                 <div class="command-group" data-tags="TVORBAVLAKEN">
                     <div class="command-item">
                         <div class="command-name">/vlakna add</div>
-                        <div class="command-description">Aktivuje moderaci média kanálu: povolí pouze média a vytváří k nim vlákna.</div>
+                        <div class="command-description">Aktivuje moderaci kanálu: povolí pouze média a nastaví výjimky pro role.</div>
                         <div class="command-module-tag">Vlákna a Moderace kanálů</div>
                         <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
                     </div>
                     <div class="command-detail-row" aria-hidden="true">
                         <div class="detail-content">
-                            <p>Nastavuje kanál tak, že jsou povoleny pouze zprávy s přílohami (fotky/videa) nebo mediálními odkazy (YouTube, TikTok atd.). <strong>Čistě textové zprávy jsou smazány</strong>, pokud uživatel nemá výjimku (viz <code>/vlakna role</code>).</p>
-                            <div class="syntax">Syntaxe: `/vlakna add channel:<#kanál> tvorba_vlakna:True/False`</div>
-                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat vlákna</strong> a <strong>Spravovat zprávy</strong>.</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="command-group" data-tags="TVORBAVLAKEN">
-                    <div class="command-item">
-                        <div class="command-name">/vlakna role</div>
-                        <div class="command-description">Nastavuje role, které mohou do média kanálů psát i bez příloh.</div>
-                        <div class="command-module-tag">Vlákna a Moderace kanálů</div>
-                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
-                    </div>
-                    <div class="command-detail-row" aria-hidden="true">
-                        <div class="detail-content">
-                            <p>Umožňuje přidat nebo odebrat roli, která má výjimku z mazání textových zpráv v moderovaných foto-kanálech. Užitečné pro administrátory nebo moderátory.</p>
-                            <div class="syntax">Syntaxe: `/vlakna role akce:Pridat/Odebrat channel:<#kanál> role:@role`</div>
-                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat server</strong>.</div>
+                            <p>Nastavuje kanál tak, že jsou povoleny pouze zprávy s přílohami (fotky/videa) nebo mediálními odkazy. <strong>Čistě textové zprávy jsou smazány</strong>, pokud uživatel nemá roli s výjimkou. Při přidání můžete nastavit až 3 role najednou.</p>
+                            <div class="syntax">Syntaxe: <code>/vlakna add channel:<#kanál> tvorba_vlakna:True/False role1:@role [role2:@role] [role3:@role]</code></div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat kanály</strong>.</div>
                         </div>
                     </div>
                 </div>
@@ -2427,15 +2411,23 @@
                 <div class="command-group" data-tags="TVORBAVLAKEN">
                     <div class="command-item">
                         <div class="command-name">/vlakna setthreads</div>
-                        <div class="command-description">Mění nastavení automatické tvorby vláken u existující moderace.</div>
+                        <div class="command-description">Správa automatických vláken a hromadná úprava výjimek pro role.</div>
                         <div class="command-module-tag">Vlákna a Moderace kanálů</div>
                         <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
                     </div>
                     <div class="command-detail-row" aria-hidden="true">
                         <div class="detail-content">
-                            <p>Přepíná, zda má bot pod vloženým médiem automaticky založit vlákno, nebo pouze hlídat, aby do kanálu nikdo nepsal textové zprávy.</p>
-                            <div class="syntax">Syntaxe: `/vlakna setthreads channel:<#kanál> povolit_tvorbu:True/False`</div>
-                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat vlákna</strong>.</div>
+                            <p>Umožňuje měnit nastavení tvorby vláken a spravovat seznam rolí, které mají výjimku z moderace. Pomocí parametru <strong>akce</strong> můžete role přidávat, odebírat nebo seznam úplně resetovat.</p>
+                            <div class="syntax">
+                                Sybtaxe: <code>/vlakna setthreads channel:<#kanál> povolit_tvorbu:True/False akce:[Přidat/Odebrat/Nahradit/Smazat] [role1-3]</code>
+                            </div>
+                            <ul style="margin-top: 10px; color: var(--text-color); opacity: 0.8;">
+                                <li><strong>Přidat:</strong> Přidá vybrané role k těm stávajícím.</li>
+                                <li><strong>Odebrat:</strong> Odstraní vybrané role ze seznamu výjimek.</li>
+                                <li><strong>Nahradit:</strong> Vymaže staré role a nastaví pouze ty nově vybrané.</li>
+                                <li><strong>Smazat:</strong> Kompletně vyčistí všechny výjimky v kanále.</li>
+                            </ul>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat kanály</strong>.</div>
                         </div>
                     </div>
                 </div>
