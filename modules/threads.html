@@ -95,25 +95,19 @@
             
             <div class="command-box mod-command">
                 <h4 class="command-title">/vlakna add <span class="badge">MOD</span></h4>
-                <p>Aktivuje moderaci. Parametr <code>tvorba_vlakna</code> určuje, zda bot pod každým médiem založí diskusní vlákno.</p>
-                <span class="command-code-modules-example">/vlakna add channel:#galerie tvorba_vlakna:True</span>
+                <p>Aktivuje moderaci. Můžete nastavit tvorbu vláken a až 3 role s výjimkou najednou.</p>
+                <span class="command-code-modules-example">/vlakna add channel:#galerie tvorba_vlakna:True role1:@Admin role2:@VIP</span>
             </div>
 
             <div class="command-box mod-command">
                 <h4 class="command-title">/vlakna setthreads <span class="badge">MOD</span></h4>
-                <p>Změní nastavení tvorby vláken u kanálu, který již je v moderaci (přepíná mezi "pouze mazat text" a "mazat text + tvořit vlákna").</p>
-                <span class="command-code-modules-example">/vlakna setthreads channel:#galerie povolit_tvorbu:False</span>
-            </div>
-
-            <div class="command-box mod-command">
-                <h4 class="command-title">/vlakna role <span class="badge">MOD</span></h4>
-                <p><strong>Výjimky z moderace:</strong> Nastaví role, kterým bot zprávy nikdy nesmaže (ideální pro adminy, kteří potřebují vkládat oznámení do foto-kanálů).</p>
-                <span class="command-code-modules-example">/vlakna role akce:Pridat channel:#galerie role:@Moderátor</span>
+                <p>Hromadná správa výjimek a nastavení vláken. Parametr <strong>akce</strong> určuje, jak bot naloží s vybranými rolemi (Přidat, Odebrat, Nahradit, Smazat).</p>
+                <span class="command-code-modules-example">/vlakna setthreads channel:#galerie akce:Přidat povolit_tvorbu:True role1:@Moderátor</span>
             </div>
 
             <div class="command-box mod-command">
                 <h4 class="command-title">/vlakna list <span class="badge">MOD</span></h4>
-                <p>Komplexní přehled: seznam kanálů, stav vláken a seznam rolí s udělenou výjimkou.</p>
+                <p>Komplexní přehled: seznam kanálů, stav vláken a seznam všech rolí s udělenou výjimkou.</p>
             </div>
 
             <div class="command-box mod-command">
@@ -148,7 +142,7 @@
 
             <h2 class="module-heading">🛠️ Logika fungování (Deep Dive)</h2>
             <div class="info-box bg-dark-transparent">
-                <p><strong>Detekce a mazání:</strong> Pokud uživatel pošle zprávu do moderovaného kanálu, bot nejprve zkontroluje přítomnost médií. Pokud nejsou nalezena, bot prověří, zda autor disponuje rolí s výjimkou. V případě, že podmínky nejsou splněny, zpráva je <strong>smazána</strong> a bot odešle autorovi <strong>soukromou zprávu (DM)</strong> s vysvětlením pravidel kanálu.</p>
+                <p><strong>Detekce a mazání:</strong> Pokud uživatel pošle zprávu do moderovaného kanálu, bot nejprve zkontroluje přítomnost médií. Pokud nejsou nalezena, bot prověří, zda autor disponuje <strong>alespoň jednou</strong> z rolí s výjimkou. V případě, že podmínky nejsou splněny, zpráva je <strong>smazána</strong> a bot odešle autorovi <strong>soukromou zprávu (DM)</strong> s vysvětlením pravidel kanálu.</p>
                 <p><strong>Chybová hlášení:</strong> Pokud bot narazí na nedostatečná oprávnění při pokusu o přidání reakce, automaticky vygeneruje hlášení do vašeho <code>changelog</code> kanálu (nastaveného přes <code>/nastaveni</code>), aby byla zajištěna rychlá náprava správcem.</p>
             </div>
             
