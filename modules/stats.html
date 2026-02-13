@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CZBOT - Modul Statistiky</title>
+    <title>CZBOT - Statistiky Bota</title>
     
-    <link href="../templatemo-nexus-style.css" rel="stylesheet">
-    <link href="../module-styles.css" rel="stylesheet"> 
+    <link href="templatemo-nexus-style.css" rel="stylesheet">
+    <link href="module-styles.css" rel="stylesheet"> 
     
-</head>
-<body id="top" class="module-page"> 
-
+    </head>
+<body id="top"> 
     <div class="cyber-bg">
         <div class="cyber-gradient"></div>
         <div class="matrix-rain" id="matrixRain"></div>
@@ -24,81 +23,170 @@
     <div class="content-section">
         <div class="content-container">
 
-            <h1 class="page-title">📊 Modul Statistiky</h1>
-            <p class="page-subtitle">Automatické sbírání dat o aktivitě serveru pro lepší správu komunity.</p>
+            <h1 class="page-title">Statistiky a Status Bota</h1>
+            <p class="page-subtitle">Aktuální přehled provozu a výkonu Discord Bota <strong>CZbot.</strong></p>
 
-            <div class="module-intro-box">
-                <p>
-                    Modul <strong>Statistiky</strong> automaticky zaznamenává nejdůležitější metriky dění na vašem serveru. Díky tomu získáte okamžitý přehled o zapojení členů, nejpoužívanějších kanálech a fluktuaci členů.
-                </p>
-                <div class="info-box mt-4">
-                    <strong>Poznámka:</strong> Všechny časy ve statistikách jsou zobrazeny v <strong>Pražské časové zóně</strong>, aby odrážely místní dění na serveru.
+            <div class="warn-box" id="warnBox" style="display:none;"></div> 
+
+            <div class="stats-grid">
+                
+                <div class="stat-card">
+                    <h4>Status Bota</h4>
+                    <span class="value" id="statStatus">Načítám...</span> 
                 </div>
+
+                <div class="stat-card">
+                    <h4>Počet Serverů</h4>
+                    <span class="value" id="statServers">Načítám...</span>
+                </div>
+                
+                <div class="stat-card">
+                    <h4>Uptime</h4>
+                    <span class="value" id="statUptime">Načítám...</span>
+                </div>
+                
+                <div class="stat-card">
+                    <h4>Využití CPU</h4>
+                    <span class="value" id="statCPU">Načítám...</span>
+                </div>
+
+                <div class="stat-card">
+                    <h4>Využití RAM</h4>
+                    <span class="value" id="statRAM">Načítám...</span>
+                </div>
+                
+                <div class="stat-card">
+                    <h4>API a DB Status</h4>
+                    <span class="value" id="statAPI">Načítám...</span> 
+                </div>
+                
             </div>
 
-            <h2 class="module-heading">📈 Jaká data bot sbírá?</h2>
-            <p>Bot monitoruje a ukládá klíčové události pro sestavení statistik:</p>
+            <div class="chart-container">
+                <h3>Stav Modulů (Cogs)</h3>
+                <ul class="cogs-list" id="cogsList">
+                    <li>Načítám moduly...</li> 
+                </ul>
+            </div>
             
-            <ul class="bullet-list">
-                <li><strong>Textová aktivita</strong>: Počet odeslaných zpráv od všech členů (boti jsou ignorováni).</li>
-                <li><strong>Hlasová aktivita</strong>: Vstupy a odchody z hlasových kanálů pro výpočet času stráveného v hovoru.</li>
-                <li><strong>Členství</strong>: Počet připojení a odchodů členů.</li>
-                <li><strong>Online stavy</strong>: Data o aktuálním rozdělení uživatelů podle jejich online statusu.</li>
-            </ul>
-            
-            <div class="module-divider"></div>
-
-            <h2 class="module-heading">🚀 Zobrazení statistik: <span class="command-code-modules">/stats</span></h2>
-            <p>Tento příkaz zobrazí statistiky v přehledné Embed zprávě přímo v Discordu.</p>
-            
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>Příkaz</th>
-                        <th>Časové období</th>
-                        <th>Popis</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><span class="command-code-modules">/stats</span></td>
-                        <td><strong>Posledních 24 hodin</strong></td>
-                        <td>Základní přehled o aktivitě za poslední den.</td>
-                    </tr>
-                    <tr>
-                        <td><span class="command-code-modules">/stats period:Posledních 7 dní</span></td>
-                        <td><strong>Posledních 7 dní</strong></td>
-                        <td>Týdenní přehled aktivity.</td>
-                    </tr>
-                    <tr>
-                        <td><span class="command-code-modules">/stats period:Poslední měsíc</span></td>
-                        <td><strong>Poslední měsíc</strong></td>
-                        <td>Měsíční přehled (cca 30 dní).</td>
-                    </tr>
-                    <tr>
-                        <td><span class="command-code-modules">/stats period:Celková doba</span></td>
-                        <td><strong>Celá doba</strong></td>
-                        <td>Statistiky od prvního spuštění modulu.</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h3 class="mt-4">Obsah zprávy se statistikami:</h3>
-            <p>Embed zpráva obsahuje následující informace pro zvolené období:</p>
-            
-            <ul class="bullet-list">
-                <li><strong>Celkem členů</strong> a rozdělení podle <strong>Online stavů</strong> (aktuální stav).</li>
-                <li><strong>Aktivita serveru</strong>: Počet <strong>Připojení</strong>, <strong>Odpojení</strong> a <strong>Zpráv celkem</strong>.</li>
-                <li><strong>🏆 Top 3 kanály</strong>: Nejpoužívanější textové kanály podle počtu zpráv.</li>
-                <li><strong>👑 Top 3 uživatelé</strong>: Nejaktivnější členové podle počtu odeslaných zpráv.</li>
-            </ul>
+            <div class="chart-container">
+                <h3>Historie Ping a Využití (Placeholder)</h3>
+                <p>Dynamické grafy budou implementovány později. Zde se budou zobrazovat historické metriky.</p>
+                <canvas id="pingChart" width="400" height="150" aria-label="Graf historie ping"></canvas>
+            </div>
             
         </div>
     </div>
+    
 <!--Footer-->
     <div id="footer-placeholder"></div>
 
-    <script src="../templatemo-nexus-scripts.js"></script>
+    <script src="templatemo-nexus-scripts.js"></script>
+    
+    <script>
+        const cogs_to_load = ["Audio Streaming","Administrátorský cog","Administrátorský 2 cog","Crossban","Pokročilé plánované zprávy","Auditlogger","Automatické publikace zpráv","Automatické role","Dočasné hlasové kanály","Giveaway","Hlasování","Kolo štěstí","Lokalizace","Moderátorské příkazy","Narozeniny","Ověřování a Reakční role","Patreon","Minihry","Překlad","RAID ochrana","Reputace","RSS čtečka", "Zálohování serverů", "Plánované zprávy","Scam ochrana","Statistiky","Svátky","Tikety","Uvítací/odchodové zprávy","Uživatelské příkazy","Vlákna a reakce na zprávy","Vodoznaky","XP úrovně","AI cog", "Zpovědi"];
+
+        async function fetchStatus() {
+            // Získání elementů z HTML
+            const statStatus = document.getElementById("statStatus");
+            const statServers = document.getElementById("statServers");
+            const statUptime = document.getElementById("statUptime");
+            const statCPU = document.getElementById("statCPU");
+            const statRAM = document.getElementById("statRAM");
+            const statAPI = document.getElementById("statAPI");
+            const cogsList = document.getElementById("cogsList");
+            const warnBox = document.getElementById("warnBox");
+
+            // 🟠 sem napiš vlastní status zprávu (pokud nechceš žádnou, nech to prázdné)
+            const warn_message = ""; 
+
+            // zobrazení nebo skrytí varovného boxu
+            if (warn_message && warn_message.trim() !== "") {
+                warnBox.textContent = "🚨 UPOZORNĚNÍ: " + warn_message; // Přidáme kybernetický prefix
+                warnBox.classList.add("warn-box-active"); 
+                warnBox.style.display = "block";
+            } else {
+                warnBox.classList.remove("warn-box-active");
+                warnBox.style.display = "none";
+            }
+
+            // Nastavení počátečních hodnot při načítání
+            [statStatus, statServers, statUptime, statCPU, statRAM, statAPI].forEach(el => el.textContent = "Načítám...");
+            cogsList.innerHTML="<li>Načítám moduly...</li>";
+
+            // Pomocná funkce pro vytvoření položky Cogs
+            function addCogItem(name, status, cls=""){ 
+                const li = document.createElement("li"); 
+                // Stylizace pro seznam modulů
+                li.innerHTML = `<span class="cog-label">${name}</span><span class="cog-value ${cls}">${status}</span>`; 
+                return li;
+            }
+
+            try {
+                const res = await fetch("https://rs422cznas.myds.me:5038/status");
+                const data = await res.json();
+
+                const uptime_sec = data.uptime_seconds || 0;
+                const hours = Math.floor(uptime_sec/3600);
+                const minutes = Math.floor((uptime_sec%3600)/60);
+                const seconds = Math.floor(uptime_sec%60);
+                const uptime_str = `${hours}h ${minutes}m ${seconds}s`;
+                
+                // 1. Vložení dat do karet
+                // Status bota
+                statStatus.textContent = data.bot_status.toUpperCase();
+                statStatus.className = data.bot_status === "online" ? "value status-online" : "value status-offline";
+                
+                // Ostatní metriky
+                statServers.textContent = data.guilds.toLocaleString('cs-CZ');
+                statUptime.textContent = uptime_str;
+                statCPU.textContent = `${data.cpu_percent} %`;
+                statRAM.textContent = `${data.ram_mb} MB`;
+                
+                // API a DB status
+                statAPI.textContent = data.api_db_status === "OK" ? "OK" : "PROBLÉM";
+                statAPI.className = data.api_db_status === "OK" ? "value status-ok" : "value status-err";
+
+                // 2. Vložení stavu modulů (Cogs)
+                cogsList.innerHTML="";
+                const sortedCogs = Object.entries(data.cogs).sort((a,b) => a[0].localeCompare(b[0], 'cs'));
+                
+                for(const [name,status] of sortedCogs){
+                    let cls="";
+                    if(status==="Funkční") cls="status-ok";
+                    else if(status.toLowerCase().includes("offline") || status.toLowerCase().includes("error") || status.toLowerCase().includes("offline")) cls="status-err";
+                    else cls="status-warn"; // Pro jiné stavy
+                    
+                    cogsList.appendChild(addCogItem(name, status, cls));
+                }
+                
+            } catch(err){
+                // 3. Zpracování chyby
+                console.error("Chyba při načítání statusu API:", err);
+                
+                // Nastavení chybových hodnot pro karty
+                statStatus.textContent = "OFFLINE";
+                statStatus.className = "value status-err"; 
+                statServers.textContent = "-";
+                statUptime.textContent = "-";
+                statCPU.textContent = "- %";
+                statRAM.textContent = "- MB";
+                statAPI.textContent = "NEDOSTUPNÉ";
+                statAPI.className = "value status-err";
+                
+                // Nastavení chybových hodnot pro Cogs
+                cogsList.innerHTML="";
+                cogs_to_load.forEach(label => {
+                    cogsList.appendChild(addCogItem(label, "Nedostupné", "status-err"));
+                });
+            }
+        }
+
+        // Spuštění načítání statusu
+        fetchStatus();
+        // Nastavení automatického refresh 
+        setInterval(fetchStatus, 30000); // Obnoví data každých 30 sekund
+    </script>
 
 </body>
 </html>
