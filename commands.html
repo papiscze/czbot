@@ -2024,7 +2024,7 @@
                 </div>
                 <div class="command-group" data-tags="STATISTIKY">
                     <div class="command-item">
-                        <div class="command-name">/stats</div>
+                        <div class="command-name">/stats show</div>
                         <div class="command-description">Zobrazí detailní přehled statistik serveru, včetně aktivity členů a kanálů.</div>
                         <div class="command-module-tag">Modul Statistiky</div>
                         <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
@@ -2032,8 +2032,58 @@
                     <div class="command-detail-row" aria-hidden="true">
                         <div class="detail-content">
                             <p>Umožňuje zobrazit statistiky za různá období (24 hodin, 7 dní, měsíc, celková doba).</p>
-                            <div class="syntax">Syntaxe: `/stats [period:<časové období>]`</div>
+                            <div class="syntax">Syntaxe: `/stats show [period:<časové období>]`</div>
                             <div class="module-link-small">Dostupné pro <strong>všechny uživatele</strong> (pokud není omezeno administrátorem). Výchozí období je <strong>Posledních 24 hodin</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="command-group" data-tags="STATISTIKY">
+                    <div class="command-item">
+                        <div class="command-name">/stats enable</div>
+                        <div class="command-description">Zapne modul statistik a začne sbírat data o aktivitě serveru.</div>
+                        <div class="command-module-tag">Modul Statistiky</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Po zapnutí začne bot sbírat statistiky o zprávách, hlasové aktivitě, připojení/odpojení členů a denní statistiky serveru.</p>
+                            <div class="syntax">Syntaxe: `/stats enable`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat server</strong>. Modul je ve výchozím stavu <strong>vypnutý</strong>.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="command-group" data-tags="STATISTIKY">
+                    <div class="command-item">
+                        <div class="command-name">/stats disable</div>
+                        <div class="command-description">Vypne modul statistik. Bot přestane sbírat nová data.</div>
+                        <div class="command-module-tag">Modul Statistiky</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Vypne sběr nových statistických dat. Stávající data v databázi zůstávají zachována.</p>
+                            <div class="syntax">Syntaxe: `/stats disable`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat server</strong>. Existující data můžete smazat pomocí <code>/stats reset</code>.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="command-group" data-tags="STATISTIKY">
+                    <div class="command-item">
+                        <div class="command-name">/stats reset</div>
+                        <div class="command-description">Trvale smaže všechna statistická data serveru z databáze.</div>
+                        <div class="command-module-tag">Modul Statistiky</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p><strong>⚠️ VAROVÁNÍ:</strong> Tato akce je nevratná! Smaže všechny zprávy, hlasovou aktivitu, připojení/odpojení členů a denní statistiky serveru.</p>
+                            <div class="syntax">Syntaxe: `/stats reset`</div>
+                            <ul>
+                                <li>Příkaz vyžaduje <strong>potvrzení tlačítkem</strong> před provedením.</li>
+                                <li>Po resetu modul <strong>zůstává v aktuálním stavu</strong> (zapnutý/vypnutý).</li>
+                                <li>Pokud je modul zapnutý, začne ihned sbírat nová data od nuly.</li>
+                            </ul>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Spravovat server</strong>. Používejte s opatrností!</div>
                         </div>
                     </div>
                 </div>
