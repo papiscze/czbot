@@ -566,6 +566,22 @@
 
                 <div class="command-group" data-tags="MODERACE">
                     <div class="command-item">
+                        <div class="command-name">/tempban</div>
+                        <div class="command-description">Dočasně zabanuje uživatele do určitého data.</div>
+                        <div class="command-module-tag">Běžné moderátorské příkazy</div>
+                        <button class="command-toggle-button" aria-expanded="false" title="Zobrazit detaily příkazu"><span class="arrow">^</span></button>
+                    </div>
+                    <div class="command-detail-row" aria-hidden="true">
+                        <div class="detail-content">
+                            <p>Zabanuje uživatele na serveru s automatickým odbanováním v nastavený den. Ideální pro tresty na několik dní či měsíců.</p>
+                            <div class="syntax">Syntaxe: `/tempban user:<@uživatel> unban_date:<DD.MM.YYYY> [reason:<důvod>] [delete_messages_days:<dny>] [log_to_db:True/False]`</div>
+                            <div class="module-link-small">Vyžaduje oprávnění <strong>Zabanovat členy</strong>. Datum musí být v budoucnu.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="command-group" data-tags="MODERACE">
+                    <div class="command-item">
                         <div class="command-name">/slowmode</div>
                         <div class="command-description">Nastaví nebo vypne pomalý režim v kanále.</div>
                         <div class="command-module-tag">Běžné moderátorské příkazy</div>
