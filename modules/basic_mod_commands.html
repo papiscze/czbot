@@ -122,6 +122,22 @@
             </div>
 
             <div class="command-box mod-command">
+                <h4 class="command-title">/tempban</h4>
+                <p>Dočasně zabanuje uživatele ze serveru do konkrétního data.</p>
+                <table class="data-table small-font">
+                    <thead><tr><th>Parametr</th><th>Popis</th></tr></thead>
+                    <tbody>
+                        <tr><td><span class="command-code-modules">user</span></td><td><strong>Povinné.</strong> Uživatel k dočasnému zabanování.</td></tr>
+                        <tr><td><span class="command-code-modules">unban_date</span></td><td><strong>Povinné.</strong> Datum odbanování ve formátu <strong>DD.MM.YYYY</strong> (např. 01.04.2027).</td></tr>
+                        <tr><td><span class="command-code-modules">reason</span></td><td><strong>Volitelné.</strong> Důvod dočasného banu.</td></tr>
+                        <tr><td><span class="command-code-modules">delete_messages_days</span></td><td><strong>Volitelné.</strong> Množství dní, za které se mají smazat zprávy (0, 1, 2, 7).</td></tr>
+                        <tr><td><span class="command-code-modules">log_to_db</span></td><td><strong>Volitelné.</strong> Zda má být akce <strong>zaznamenána do databáze</strong>. Výchozí je <strong>`True`</strong>.</td></tr> 
+                    </tbody>
+                </table>
+                <span class="command-code-modules-example mt-2">/tempban user:@PetrNovak unban_date:24.12.2026 reason:Nevhodné chování delete_messages_days:1</span>
+            </div>            
+
+            <div class="command-box mod-command">
                 <h4 class="command-title">/unban</h4>
                 <p>Zruší ban uživateli. Jelikož uživatel není na serveru, je nutné použít jeho ID.</p>
                 <table class="data-table small-font">
