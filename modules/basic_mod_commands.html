@@ -138,6 +138,19 @@
             </div>            
 
             <div class="command-box mod-command">
+                <h4 class="command-title">/checkban</h4>
+                <p>Zkontroluje aktuální stav banu uživatele a vypočítá zbývající čas u dočasných trestů.</p>
+                <table class="data-table small-font">
+                    <thead><tr><th>Parametr</th><th>Popis</th></tr></thead>
+                    <tbody>
+                        <tr><td><span class="command-code-modules">user_id</span></td><td><strong>Povinné.</strong> Číselné ID uživatele (funguje i pro uživatele, kteří již nejsou na serveru).</td></tr>
+                    </tbody>
+                </table>
+                <p class="mt-2" style="font-size: 0.9rem;">Příkaz prověří záznamy v databázi i v systémovém Audit Logu Discordu. U dočasných banů (tempban) zobrazí moderátora, důvod a zbývající dny/hodiny do automatického odbanování.</p>
+                <span class="command-code-modules-example mt-2">/checkban user_id:312536409665699840</span>
+            </div>
+
+            <div class="command-box mod-command">
                 <h4 class="command-title">/unban</h4>
                 <p>Zruší ban uživateli. Jelikož uživatel není na serveru, je nutné použít jeho ID.</p>
                 <table class="data-table small-font">
