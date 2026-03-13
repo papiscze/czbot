@@ -6,6 +6,48 @@
     <title>CZBOT - Moderní Discord Bot</title>
     <link href="templatemo-nexus-style.css" rel="stylesheet">
 <!--TemplateMo 594 nexus flow ; https://templatemo.com/tm-594-nexus-flow-->
+
+<style>
+/* ===== LANGUAGE SWITCHER — v navigaci ===== */
+#langSwitcher {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    margin-left: 16px;
+    flex-shrink: 0;
+}
+.lang-btn {
+    background: none;
+    border: 1px solid transparent;
+    color: #747F8D;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    padding: 3px 8px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+    text-transform: uppercase;
+    line-height: 1.4;
+}
+.lang-btn:hover {
+    color: #d1d1d1;
+    border-color: rgba(87, 242, 135, 0.3);
+}
+.lang-btn.active {
+    background: rgba(87, 242, 135, 0.15);
+    border-color: rgba(87, 242, 135, 0.5);
+    color: #57F287;
+}
+.lang-sep {
+    color: rgba(255,255,255,0.15);
+    font-size: 0.6rem;
+    user-select: none;
+    pointer-events: none;
+    padding: 0 1px;
+}
+</style>
 </head>
 <body id="top">
     <!-- Enhanced Background Elements -->
@@ -13,25 +55,20 @@
         <div class="cyber-gradient"></div>
         <div class="matrix-rain" id="matrixRain"></div>
     </div>
-    
     <div class="particles" id="particlesContainer"></div>
-    
     <div class="data-streams" id="dataStreams"></div>
-    
     <div class="orb orb1"></div>
     <div class="orb orb2"></div>
     <div class="orb orb3"></div>
-    
     <div class="grid-overlay">
         <div class="grid-lines"></div>
         <div class="grid-glow"></div>
     </div>
-    
     <div class="scanlines"></div>
     <div class="noise-overlay"></div>
-    
-    <!-- Navigation -->
-    <div id="header-placeholder"></div> 
+
+    <!-- Navigation (načítáno externě) -->
+    <div id="header-placeholder"></div>
 
     <!-- Hero Section -->
     <section class="hero">
@@ -39,10 +76,10 @@
             <h1 class="hero-title">
                 <span class="hero-nexus">CZ</span><span class="hero-flow">bot</span>
             </h1>
-            <p class="hero-subtitle">Inteligentní Discord bot s automatizací, moderací a pokročilými funkcemi pro každý server.</p>
+            <p class="hero-subtitle" data-i18n="hero_subtitle">Inteligentní Discord bot s automatizací, moderací a pokročilými funkcemi pro každý server.</p>
             <div class="hero-buttons">
-                <a href="about.html" class="btn-primary">O Mně</a>
-                <a href="https://discord.gg/hk6PdtVxbm" class="btn-secondary">Support server</a>
+                <a href="about.html" class="btn-primary" data-i18n="hero_btn_about">O Mně</a>
+                <a href="https://discord.gg/hk6PdtVxbm" class="btn-secondary" data-i18n="hero_btn_support">Support server</a>
             </div>
         </div>
     </section>
@@ -51,38 +88,37 @@
     <section class="stats fade-up" id="stats">
         <div class="stats-container">
             <div class="section-header">
-                <h2 class="section-title">Statistiky Bota</h2>
+                <h2 class="section-title" data-i18n="stats_title">Statistiky Bota</h2>
             </div>
-
             <div class="stats-grid" id="statsGrid">
                 <div class="stat-item">
                     <span class="stat-number" id="botStatus">—</span>
-                    <span class="stat-label">Status bota</span>
+                    <span class="stat-label" data-i18n="stats_status">Status bota</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-number" id="guilds">—</span>
-                    <span class="stat-label">Celkem serverů</span>
+                    <span class="stat-label" data-i18n="stats_guilds">Celkem serverů</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-number" id="users">—</span>
-                    <span class="stat-label">Celkem uživatelů</span>
+                    <span class="stat-label" data-i18n="stats_users">Celkem uživatelů</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-number" id="uptime">—</span>
-                    <span class="stat-label">Uptime od restartu</span>
+                    <span class="stat-label" data-i18n="stats_uptime">Uptime od restartu</span>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Server Carousel -->
     <section class="server-carousel fade-up" id="serverCarousel">
         <div class="server-carousel-container">
             <div class="section-header">
-                <h2 class="section-title">Některé servery, kde působím 🚀</h2>
+                <h2 class="section-title" data-i18n="carousel_title">Některé servery, kde působím 🚀</h2>
             </div>
             <div class="carousel-track-wrapper" id="carouselTrackWrapper">
-                <div class="carousel-track" id="serverCarouselTrack">
-                    </div>
+                <div class="carousel-track" id="serverCarouselTrack"></div>
             </div>
         </div>
     </section>
@@ -91,45 +127,39 @@
     <section class="features fade-up" id="features">
         <div class="features-container">
             <div class="section-header">
-                <h2 class="section-title">Klíčové funkce</h2>
-                <p class="section-subtitle">CZbot přináší špičkové nástroje pro automatizaci, správu komunity a bezpečnost.</p>
+                <h2 class="section-title" data-i18n="features_title">Klíčové funkce</h2>
+                <p class="section-subtitle" data-i18n="features_subtitle">CZbot přináší špičkové nástroje pro automatizaci, správu komunity a bezpečnost.</p>
             </div>
-            
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">🛡️</div>
-                    <h3>Ochrana serverů</h3>
-                    <p>Inteligentní ochrana proti spamu a scamu díky filtru zpráv a také díky možné spolupráci v rámci Crossbanu (nebo Crossbanů).</p>
+                    <h3 data-i18n="feat1_title">Ochrana serverů</h3>
+                    <p data-i18n="feat1_desc">Inteligentní ochrana proti spamu a scamu díky filtru zpráv a také díky možné spolupráci v rámci Crossbanu (nebo Crossbanů).</p>
                 </div>
-                
                 <div class="feature-card">
                     <div class="feature-icon">🔮</div>
-                    <h3>Vlákna</h3>
-                    <p>Automatické vytváření vláken na zprávy v definovaných kanálech pro přehlednost kanálů.</p>
+                    <h3 data-i18n="feat2_title">Vlákna</h3>
+                    <p data-i18n="feat2_desc">Automatické vytváření vláken na zprávy v definovaných kanálech pro přehlednost kanálů.</p>
                 </div>
-                
                 <div class="feature-card">
                     <div class="feature-icon">🌐</div>
-                    <h3>Jazykové lokalizace</h3>
-                    <p>Bot umí reagovat a odpovídat v požadovaném jazyce, jak na úrovni serveru, tak i dle nastavení uživatele.</p>
+                    <h3 data-i18n="feat3_title">Jazykové lokalizace</h3>
+                    <p data-i18n="feat3_desc">Bot umí reagovat a odpovídat v požadovaném jazyce, jak na úrovni serveru, tak i dle nastavení uživatele.</p>
                 </div>
-                
                 <div class="feature-card">
                     <div class="feature-icon">📰</div>
-                    <h3>RSS čtečka</h3>
-                    <p>Pokročilá RSS čtečka, umožňující odběr zpráv z webových stránek včetně vlastního popisu a možnosti pingu role.</p>
+                    <h3 data-i18n="feat4_title">RSS čtečka</h3>
+                    <p data-i18n="feat4_desc">Pokročilá RSS čtečka, umožňující odběr zpráv z webových stránek včetně vlastního popisu a možnosti pingu role.</p>
                 </div>
-                
                 <div class="feature-card">
                     <div class="feature-icon">⚙️</div>
-                    <h3>Plánování zpráv a role</h3>
-                    <p>Naplánuj zprávy, přiřazuj role reakcemi.</p>
+                    <h3 data-i18n="feat5_title">Plánování zpráv a role</h3>
+                    <p data-i18n="feat5_desc">Naplánuj zprávy, přiřazuj role reakcemi.</p>
                 </div>
-                
                 <div class="feature-card">
                     <div class="feature-icon">🎡</div>
-                    <h3>Zábavné moduly</h3>
-                    <p>Kolo štěstí, reputační systém, AFK zprávy, Minihry a další interaktivní funkce pro aktivní komunitu.</p>
+                    <h3 data-i18n="feat6_title">Zábavné moduly</h3>
+                    <p data-i18n="feat6_desc">Kolo štěstí, reputační systém, AFK zprávy, Minihry a další interaktivní funkce pro aktivní komunitu.</p>
                 </div>
             </div>
         </div>
@@ -139,116 +169,439 @@
     <section class="pricing fade-up" id="pricing">
         <div class="pricing-container">
             <div class="section-header">
-                <h2 class="section-title">CENOVÉ PLÁNY</h2>
-                <p class="section-subtitle">Zvolte si nejvhodnější balík, který bude vyhovovat vaším potřebám.</p>
+                <h2 class="section-title" data-i18n="pricing_title">CENOVÉ PLÁNY</h2>
+                <p class="section-subtitle" data-i18n="pricing_subtitle">Zvolte si nejvhodnější balík, který bude vyhovovat vaším potřebám.</p>
             </div>
-            
             <div class="pricing-grid">
                 <div class="pricing-card">
-                    <div class="plan-name">Základ</div>
-                    <div class="plan-price">Zdarma</div>
-                    <div class="plan-period">cena za měsíc</div>
+                    <div class="plan-name" data-i18n="plan1_name">Základ</div>
+                    <div class="plan-price" data-i18n="plan1_price">Zdarma</div>
+                    <div class="plan-period" data-i18n="plan_period">cena za měsíc</div>
                     <ul class="plan-features">
                         <li>Auditlogger</li>
-                        <li>Automatické publikování zpráv z kanálů oznámení</li>
-                        <li>Autorole, Ověřování uživatelů a Reakční role</li>
-                        <li>Běžné moderátorské příkazy</li>
-                        <li>Běžné uživatelské a zábavné příkazy</li>
-                        <li>Dočasné hlasové kanály</li>
-                        <li>Minihry</li>                        
-                        <li>Narozeniny</li>
+                        <li data-i18n="p1_f1">Automatické publikování zpráv z kanálů oznámení</li>
+                        <li data-i18n="p1_f2">Autorole, Ověřování uživatelů a Reakční role</li>
+                        <li data-i18n="p1_f3">Běžné moderátorské příkazy</li>
+                        <li data-i18n="p1_f4">Běžné uživatelské a zábavné příkazy</li>
+                        <li data-i18n="p1_f5">Dočasné hlasové kanály</li>
+                        <li data-i18n="p1_f6">Minihry</li>
+                        <li data-i18n="p1_f7">Narozeniny</li>
                         <li>Patreon</li>
-                        <li>Reakce smajlíky na zprávy</li>
-                        <li>Reputace</li>
-                        <li>RSS čtečka</li>
-                        <li>Schedules - Plánované zprávy</li>
-                        <li>Statistiky serveru</li>
-                        <li>Svátky (CZ SK)</li>
-                        <li>Systém zpětné vazby a návrhů</li>
-                        <li>Tikety</li>                     
-                        <li>Uvítací a odchodové zprávy (Welcome Leave)</li>
-                        <li>Vodoznak s vlastním textem na obrázky</li>
-                        <li>Vote - Hlasování</li>
-                        <li>XP systém a úrovně</li>
-                        <li>Zpovědi (Anonymní Zprávy)</li>
-                        
+                        <li data-i18n="p1_f8">Reakce smajlíky na zprávy</li>
+                        <li data-i18n="p1_f9">Reputace</li>
+                        <li data-i18n="p1_f10">RSS čtečka</li>
+                        <li data-i18n="p1_f11">Schedules - Plánované zprávy</li>
+                        <li data-i18n="p1_f12">Statistiky serveru</li>
+                        <li data-i18n="p1_f13">Svátky (CZ SK)</li>
+                        <li data-i18n="p1_f14">Systém zpětné vazby a návrhů</li>
+                        <li data-i18n="p1_f15">Tikety</li>
+                        <li data-i18n="p1_f16">Uvítací a odchodové zprávy (Welcome Leave)</li>
+                        <li data-i18n="p1_f17">Vodoznak s vlastním textem na obrázky</li>
+                        <li data-i18n="p1_f18">Vote - Hlasování</li>
+                        <li data-i18n="p1_f19">XP systém a úrovně</li>
+                        <li data-i18n="p1_f20">Zpovědi (Anonymní Zprávy)</li>
                     </ul>
-                    <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="btn-secondary">PŘIDAT</a>
+                    <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="btn-secondary" data-i18n="btn_add">PŘIDAT</a>
                 </div>
-                
                 <div class="pricing-card featured">
                     <div class="plan-name">Tier 1</div>
                     <div class="plan-price">0 CZK</div>
-                    <div class="plan-period">cena za měsíc</div>
+                    <div class="plan-period" data-i18n="plan_period">cena za měsíc</div>
                     <ul class="plan-features">
-                        <li>VŠE V ZÁKLADU</li>
-                        <li>Audio Stream</li>                        
+                        <li data-i18n="p2_f0">VŠE V ZÁKLADU</li>
+                        <li data-i18n="p2_f1">Audio Stream</li>
                         <li>Crossban</li>
-                        <li>Giveaway(e)</li>                        
-                        <li>Ochrana proti scamům a spamům</li>
-                        <li>Pokročilé plánované zprávy</li>
-                        <li>Prioritní podpora</li>
-                        <li>Translate modul</li>
-                        <li>Tvorba vláken na zprávy</li>
-                        <li>Vlastní příkazy</li>
-                        <li>Webové statistiky serveru</li>
-                        <li>Zálohování a Obnova Serverů</li>
+                        <li data-i18n="p2_f2">Giveaway(e)</li>
+                        <li data-i18n="p2_f3">Ochrana proti scamům a spamům</li>
+                        <li data-i18n="p2_f4">Pokročilé plánované zprávy</li>
+                        <li data-i18n="p2_f5">Prioritní podpora</li>
+                        <li data-i18n="p2_f6">Translate modul</li>
+                        <li data-i18n="p2_f7">Tvorba vláken na zprávy</li>
+                        <li data-i18n="p2_f8">Vlastní příkazy</li>
+                        <li data-i18n="p2_f9">Webové statistiky serveru</li>
+                        <li data-i18n="p2_f10">Zálohování a Obnova Serverů</li>
                     </ul>
-                    <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="btn-primary">PŘIDAT</a>
+                    <a href="https://discord.com/oauth2/authorize?client_id=902877191086420008&permissions=8&scope=bot%20applications.commands" class="btn-primary" data-i18n="btn_add">PŘIDAT</a>
                 </div>
             </div>
         </div>
     </section>
 
-<!--Footer-->
+    <!-- Footer (načítáno externě) -->
     <div id="footer-placeholder"></div>
 
     <script src="templatemo-nexus-scripts.js"></script>
     <script src="loadservers.js"></script>
 
     <script>
-        function formatUptime(seconds) {
-            if (isNaN(seconds) || seconds < 0) return "N/A";
-            const totalHours = Math.floor(seconds / 3600);
-            return `${totalHours}h`;
+    // =============================================================
+    //  i18n – překlady
+    // =============================================================
+    const TRANSLATIONS = {
+        cs: {
+            page_title: "CZBOT - Moderní Discord Bot",
+            hero_subtitle:    "Inteligentní Discord bot s automatizací, moderací a pokročilými funkcemi pro každý server.",
+            hero_btn_about:   "O Mně",
+            hero_btn_support: "Support server",
+            stats_title:  "Statistiky Bota",
+            stats_status: "Status bota",
+            stats_guilds: "Celkem serverů",
+            stats_users:  "Celkem uživatelů",
+            stats_uptime: "Uptime od restartu",
+            stat_online:  "Online",
+            stat_offline: "Offline",
+            carousel_title: "Některé servery, kde působím 🚀",
+            features_title:    "Klíčové funkce",
+            features_subtitle: "CZbot přináší špičkové nástroje pro automatizaci, správu komunity a bezpečnost.",
+            feat1_title: "Ochrana serverů",
+            feat1_desc:  "Inteligentní ochrana proti spamu a scamu díky filtru zpráv a také díky možné spolupráci v rámci Crossbanu (nebo Crossbanů).",
+            feat2_title: "Vlákna",
+            feat2_desc:  "Automatické vytváření vláken na zprávy v definovaných kanálech pro přehlednost kanálů.",
+            feat3_title: "Jazykové lokalizace",
+            feat3_desc:  "Bot umí reagovat a odpovídat v požadovaném jazyce, jak na úrovni serveru, tak i dle nastavení uživatele.",
+            feat4_title: "RSS čtečka",
+            feat4_desc:  "Pokročilá RSS čtečka, umožňující odběr zpráv z webových stránek včetně vlastního popisu a možnosti pingu role.",
+            feat5_title: "Plánování zpráv a role",
+            feat5_desc:  "Naplánuj zprávy, přiřazuj role reakcemi.",
+            feat6_title: "Zábavné moduly",
+            feat6_desc:  "Kolo štěstí, reputační systém, AFK zprávy, Minihry a další interaktivní funkce pro aktivní komunitu.",
+            pricing_title:    "CENOVÉ PLÁNY",
+            pricing_subtitle: "Zvolte si nejvhodnější balík, který bude vyhovovat vaším potřebám.",
+            plan1_name:  "Základ",
+            plan1_price: "Zdarma",
+            plan_period: "cena za měsíc",
+            btn_add:     "PŘIDAT",
+            p1_f1: "Automatické publikování zpráv z kanálů oznámení",
+            p1_f2: "Autorole, Ověřování uživatelů a Reakční role",
+            p1_f3: "Běžné moderátorské příkazy",
+            p1_f4: "Běžné uživatelské a zábavné příkazy",
+            p1_f5: "Dočasné hlasové kanály",
+            p1_f6: "Minihry",
+            p1_f7: "Narozeniny",
+            p1_f8: "Reakce smajlíky na zprávy",
+            p1_f9: "Reputace",
+            p1_f10: "RSS čtečka",
+            p1_f11: "Schedules - Plánované zprávy",
+            p1_f12: "Statistiky serveru",
+            p1_f13: "Svátky (CZ SK)",
+            p1_f14: "Systém zpětné vazby a návrhů",
+            p1_f15: "Tikety",
+            p1_f16: "Uvítací a odchodové zprávy (Welcome Leave)",
+            p1_f17: "Vodoznak s vlastním textem na obrázky",
+            p1_f18: "Vote - Hlasování",
+            p1_f19: "XP systém a úrovně",
+            p1_f20: "Zpovědi (Anonymní Zprávy)",
+            p2_f0:  "VŠE V ZÁKLADU",
+            p2_f1:  "Audio Stream",
+            p2_f2:  "Giveaway(e)",
+            p2_f3:  "Ochrana proti scamům a spamům",
+            p2_f4:  "Pokročilé plánované zprávy",
+            p2_f5:  "Prioritní podpora",
+            p2_f6:  "Translate modul",
+            p2_f7:  "Tvorba vláken na zprávy",
+            p2_f8:  "Vlastní příkazy",
+            p2_f9:  "Webové statistiky serveru",
+            p2_f10: "Zálohování a Obnova Serverů",
+        },
+
+        en: {
+            page_title: "CZBOT - Modern Discord Bot",
+            hero_subtitle:    "Intelligent Discord bot with automation, moderation and advanced features for every server.",
+            hero_btn_about:   "About",
+            hero_btn_support: "Support Server",
+            stats_title:  "Bot Statistics",
+            stats_status: "Bot Status",
+            stats_guilds: "Total Servers",
+            stats_users:  "Total Users",
+            stats_uptime: "Uptime since restart",
+            stat_online:  "Online",
+            stat_offline: "Offline",
+            carousel_title: "Some servers I'm active on 🚀",
+            features_title:    "Key Features",
+            features_subtitle: "CZbot brings top-tier tools for automation, community management and security.",
+            feat1_title: "Server Protection",
+            feat1_desc:  "Intelligent anti-spam and anti-scam protection via message filters and cross-server Crossban cooperation.",
+            feat2_title: "Threads",
+            feat2_desc:  "Automatic thread creation for messages in defined channels to keep things organized.",
+            feat3_title: "Language Localization",
+            feat3_desc:  "The bot responds in the desired language, configurable per server and per individual user.",
+            feat4_title: "RSS Reader",
+            feat4_desc:  "Advanced RSS reader with subscriptions, custom descriptions and role ping support.",
+            feat5_title: "Message Scheduling & Roles",
+            feat5_desc:  "Schedule messages, assign roles via reactions.",
+            feat6_title: "Fun Modules",
+            feat6_desc:  "Fortune wheel, reputation system, AFK messages, minigames and more for active communities.",
+            pricing_title:    "PRICING PLANS",
+            pricing_subtitle: "Choose the plan that best fits your needs.",
+            plan1_name:  "Basic",
+            plan1_price: "Free",
+            plan_period: "per month",
+            btn_add:     "ADD",
+            p1_f1: "Auto-publish messages from announcement channels",
+            p1_f2: "Autorole, User Verification and Reaction Roles",
+            p1_f3: "Standard moderation commands",
+            p1_f4: "Standard user and fun commands",
+            p1_f5: "Temporary voice channels",
+            p1_f6: "Minigames",
+            p1_f7: "Birthdays",
+            p1_f8: "Emoji reactions to messages",
+            p1_f9: "Reputation",
+            p1_f10: "RSS Reader",
+            p1_f11: "Schedules - Planned Messages",
+            p1_f12: "Server statistics",
+            p1_f13: "Name Days (CZ SK)",
+            p1_f14: "Feedback & Suggestions system",
+            p1_f15: "Tickets",
+            p1_f16: "Welcome & Leave messages",
+            p1_f17: "Watermark with custom text on images",
+            p1_f18: "Vote - Polls",
+            p1_f19: "XP system and levels",
+            p1_f20: "Confessions (Anonymous Messages)",
+            p2_f0:  "EVERYTHING IN BASIC",
+            p2_f1:  "Audio Stream",
+            p2_f2:  "Giveaway(s)",
+            p2_f3:  "Anti-scam and anti-spam protection",
+            p2_f4:  "Advanced scheduled messages",
+            p2_f5:  "Priority support",
+            p2_f6:  "Translate module",
+            p2_f7:  "Thread creation on messages",
+            p2_f8:  "Custom commands",
+            p2_f9:  "Web server statistics",
+            p2_f10: "Server Backup & Restore",
+        },
+
+        pl: {
+            page_title: "CZBOT - Nowoczesny Bot Discord",
+            hero_subtitle:    "Inteligentny bot Discord z automatyzacją, moderacją i zaawansowanymi funkcjami dla każdego serwera.",
+            hero_btn_about:   "O mnie",
+            hero_btn_support: "Serwer wsparcia",
+            stats_title:  "Statystyki Bota",
+            stats_status: "Status bota",
+            stats_guilds: "Łączna liczba serwerów",
+            stats_users:  "Łączna liczba użytkowników",
+            stats_uptime: "Uptime od restartu",
+            stat_online:  "Online",
+            stat_offline: "Offline",
+            carousel_title: "Niektóre serwery, na których działam 🚀",
+            features_title:    "Kluczowe funkcje",
+            features_subtitle: "CZbot zapewnia najwyższej klasy narzędzia do automatyzacji, zarządzania społecznością i bezpieczeństwa.",
+            feat1_title: "Ochrona serwerów",
+            feat1_desc:  "Inteligentna ochrona przed spamem i scamem dzięki filtrowi wiadomości oraz współpracy w ramach Crossbana.",
+            feat2_title: "Wątki",
+            feat2_desc:  "Automatyczne tworzenie wątków do wiadomości w zdefiniowanych kanałach dla lepszej przejrzystości.",
+            feat3_title: "Lokalizacje językowe",
+            feat3_desc:  "Bot reaguje w żądanym języku – konfigurowalnym na poziomie serwera i użytkownika.",
+            feat4_title: "Czytnik RSS",
+            feat4_desc:  "Zaawansowany czytnik RSS z subskrypcjami, własnym opisem i opcją pingowania roli.",
+            feat5_title: "Planowanie wiadomości i role",
+            feat5_desc:  "Planuj wiadomości, przypisuj role przez reakcje.",
+            feat6_title: "Moduły rozrywkowe",
+            feat6_desc:  "Koło fortuny, system reputacji, wiadomości AFK, minigry i inne dla aktywnej społeczności.",
+            pricing_title:    "PLANY CENOWE",
+            pricing_subtitle: "Wybierz najlepiej dopasowany pakiet do swoich potrzeb.",
+            plan1_name:  "Podstawowy",
+            plan1_price: "Bezpłatny",
+            plan_period: "cena za miesiąc",
+            btn_add:     "DODAJ",
+            p1_f1: "Automatyczna publikacja wiadomości z kanałów ogłoszeń",
+            p1_f2: "Autorole, Weryfikacja użytkowników i Role reakcji",
+            p1_f3: "Standardowe komendy moderacji",
+            p1_f4: "Standardowe komendy użytkownika i rozrywkowe",
+            p1_f5: "Tymczasowe kanały głosowe",
+            p1_f6: "Minigry",
+            p1_f7: "Urodziny",
+            p1_f8: "Reakcje emoji na wiadomości",
+            p1_f9: "Reputacja",
+            p1_f10: "Czytnik RSS",
+            p1_f11: "Schedules - Zaplanowane wiadomości",
+            p1_f12: "Statystyki serwera",
+            p1_f13: "Imieniny (CZ SK)",
+            p1_f14: "System opinii i sugestii",
+            p1_f15: "Tickety",
+            p1_f16: "Wiadomości powitalne i pożegnalne",
+            p1_f17: "Znak wodny z własnym tekstem na obrazy",
+            p1_f18: "Vote - Głosowanie",
+            p1_f19: "System XP i poziomy",
+            p1_f20: "Wyznania (Anonimowe wiadomości)",
+            p2_f0:  "WSZYSTKO W PODSTAWOWYM",
+            p2_f1:  "Audio Stream",
+            p2_f2:  "Giveaway(e)",
+            p2_f3:  "Ochrona przed scamem i spamem",
+            p2_f4:  "Zaawansowane zaplanowane wiadomości",
+            p2_f5:  "Priorytetowe wsparcie",
+            p2_f6:  "Moduł Translate",
+            p2_f7:  "Tworzenie wątków na wiadomości",
+            p2_f8:  "Własne komendy",
+            p2_f9:  "Statystyki serwera w przeglądarce",
+            p2_f10: "Kopia zapasowa i Odtwarzanie Serwerów",
         }
+    };
 
-        async function loadStats() {
-            try {
-                const res = await fetch('https://rs422cznas.myds.me:5038/status');
-                const data = await res.json();
+    // =============================================================
+    //  Stav
+    // =============================================================
+    let currentLang  = localStorage.getItem('czbot_lang') || 'cs';
+    let lastBotOnline = null; // null = ještě nenačteno, true/false po API
 
-                const botStatusElement = document.getElementById('botStatus');
-                const uptimeElement = document.getElementById('uptime');
-                const guildsElement = document.getElementById('guilds');
-                const usersElement = document.getElementById('users');
+    // =============================================================
+    //  setLang — přepnutí jazyka
+    // =============================================================
+    function setLang(lang) {
+        if (!TRANSLATIONS[lang]) return;
+        currentLang = lang;
+        localStorage.setItem('czbot_lang', lang);
 
-                let statusText = 'Offline';
-                if (typeof data.bot_status === 'string') {
-                    statusText = data.bot_status.toLowerCase() === 'online' ? 'Online' : 'Offline';
-                } else if (data.bot_status === true) {
-                    statusText = 'Online';
-                }
-                botStatusElement.textContent = statusText;
+        // html[lang] + <title>
+        document.documentElement.lang = lang;
+        document.title = TRANSLATIONS[lang].page_title;
 
-                uptimeElement.textContent = formatUptime(Number(data.uptime_seconds));
-                guildsElement.textContent = Number(data.guilds) ? Number(data.guilds).toLocaleString() : '—';
-                usersElement.textContent = Number(data.users) ? Number(data.users).toLocaleString() : '—';
-
-            } catch (e) {
-                console.error("Chyba při komunikaci s API:", e);
-                document.getElementById('botStatus').textContent = 'Offline';
-                document.getElementById('uptime').textContent = 'N/A';
-                document.getElementById('guilds').textContent = '—';
-                document.getElementById('users').textContent = '—';
+        // Přeložit všechny [data-i18n] elementy v dokumentu
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (TRANSLATIONS[lang][key] !== undefined) {
+                el.textContent = TRANSLATIONS[lang][key];
             }
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            loadStats();
-            setInterval(loadStats, 30000);
         });
 
+        // Označit aktivní tlačítko
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.lang === lang);
+        });
+
+        // Aktualizovat přeložený status bota (pokud API již odpovědělo)
+        renderBotStatus();
+    }
+
+    // =============================================================
+    //  Sestavení a vložení přepínače do navbaru
+    //  Navbar je načítán dynamicky do #header-placeholder.
+    //  Použijeme MutationObserver, aby byl přepínač vložen ihned
+    //  poté, co loadservers.js / templatemo-nexus-scripts.js
+    //  naplní placeholder obsahem navbaru.
+    // =============================================================
+    function buildSwitcher() {
+        const wrap = document.createElement('div');
+        wrap.id = 'langSwitcher';
+        wrap.setAttribute('role', 'group');
+        wrap.setAttribute('aria-label', 'Language switcher');
+
+        ['cs', 'en', 'pl'].forEach((lang, i) => {
+            if (i > 0) {
+                const sep = document.createElement('span');
+                sep.className = 'lang-sep';
+                sep.textContent = '|';
+                sep.setAttribute('aria-hidden', 'true');
+                wrap.appendChild(sep);
+            }
+            const btn = document.createElement('button');
+            btn.className = 'lang-btn' + (lang === currentLang ? ' active' : '');
+            btn.textContent = lang.toUpperCase();
+            btn.dataset.lang = lang;
+            btn.addEventListener('click', () => setLang(lang));
+            wrap.appendChild(btn);
+        });
+
+        return wrap;
+    }
+
+    function injectSwitcher() {
+        // Přepínač ještě neexistuje?
+        if (document.getElementById('langSwitcher')) return;
+
+        const placeholder = document.getElementById('header-placeholder');
+        if (!placeholder) return;
+
+        // Preferované cíle vložení (od nejkonkrétnějšího po nejobecnější)
+        const targets = [
+            placeholder.querySelector('.navbar-collapse'),
+            placeholder.querySelector('.navbar-nav'),
+            placeholder.querySelector('.navbar, nav'),
+            placeholder,
+        ];
+
+        const target = targets.find(Boolean);
+        if (!target) return;
+
+        target.appendChild(buildSwitcher());
+    }
+
+    function watchHeaderPlaceholder() {
+        // Zkusit ihned
+        injectSwitcher();
+
+        // Pak sledovat případné pozdější načtení
+        const placeholder = document.getElementById('header-placeholder');
+        if (!placeholder) return;
+
+        const obs = new MutationObserver(() => {
+            injectSwitcher();
+            if (document.getElementById('langSwitcher')) obs.disconnect();
+        });
+        obs.observe(placeholder, { childList: true, subtree: true });
+
+        // Jistota: zkusit znovu po 500 ms / 1500 ms pro pomalejší načtení
+        [500, 1500].forEach(ms => setTimeout(() => {
+            injectSwitcher();
+            if (document.getElementById('langSwitcher')) obs.disconnect();
+        }, ms));
+    }
+
+    // =============================================================
+    //  Stats API
+    // =============================================================
+    function formatUptime(seconds) {
+        if (isNaN(seconds) || seconds < 0) return 'N/A';
+        return `${Math.floor(seconds / 3600)}h`;
+    }
+
+    function renderBotStatus() {
+        const el = document.getElementById('botStatus');
+        if (!el || lastBotOnline === null) return;
+        const t = TRANSLATIONS[currentLang];
+        el.textContent = lastBotOnline ? t.stat_online : t.stat_offline;
+        el.style.color  = lastBotOnline ? '#57F287'    : '#F23F43';
+    }
+
+    async function loadStats() {
+        try {
+            const res  = await fetch('https://rs422cznas.myds.me:5038/status');
+            const data = await res.json();
+
+            let online = false;
+            if (typeof data.bot_status === 'string') {
+                online = data.bot_status.toLowerCase() === 'online';
+            } else if (data.bot_status === true) {
+                online = true;
+            }
+            lastBotOnline = online;
+            renderBotStatus();
+
+            document.getElementById('uptime').textContent =
+                formatUptime(Number(data.uptime_seconds));
+            document.getElementById('guilds').textContent =
+                Number(data.guilds) ? Number(data.guilds).toLocaleString() : '—';
+            document.getElementById('users').textContent =
+                Number(data.users)  ? Number(data.users).toLocaleString()  : '—';
+
+        } catch (e) {
+            console.error('Chyba při komunikaci s API:', e);
+            lastBotOnline = false;
+            renderBotStatus();
+            document.getElementById('uptime').textContent = 'N/A';
+            document.getElementById('guilds').textContent = '—';
+            document.getElementById('users').textContent  = '—';
+        }
+    }
+
+    // =============================================================
+    //  Init
+    // =============================================================
+    document.addEventListener('DOMContentLoaded', () => {
+        setLang(currentLang);       // Aplikovat uložený/výchozí jazyk
+        watchHeaderPlaceholder();   // Vložit přepínač do navbaru
+        loadStats();
+        setInterval(loadStats, 30000);
+    });
     </script>
 </body>
 </html>
