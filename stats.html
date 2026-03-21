@@ -119,7 +119,7 @@
 
             <!-- Graf latence -->
             <div class="chart-container">
-                <h3>Latence Discord API — posledních 24 hodin</h3>
+                <h3>Latence Discord API — posledních 12 hodin</h3>
 
                 <!-- Ministatistiky nad grafem -->
                 <div class="latency-stats" id="latencyStats" style="display:none;">
@@ -293,7 +293,7 @@
 
             if (!Array.isArray(historyData) || historyData.length === 0) {
                 overlay.style.display = 'flex';
-                overlay.innerHTML     = 'Zatím žádná data — bot sbírá historii (interval 15 min).';
+                overlay.innerHTML     = 'Zatím žádná data — bot sbírá historii (interval 5 min).';
                 statsBar.style.display = 'none';
                 return;
             }
@@ -448,7 +448,7 @@
         // ─── Start ──────────────────────────────────────────────────────────
         fetchStatus();
         // Jeden interval — status každých 30 s, graf se aktualizuje automaticky
-        // spolu s ním (nová data přibývají každých 15 min stejně)
+        // spolu s ním (nová data přibývají každých 5 min stejně)
         setInterval(fetchStatus, 30_000);
     </script>
 
