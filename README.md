@@ -1,7 +1,6 @@
-![Version](https://img.shields.io/badge/version-3.0-blue)
-![Release](https://img.shields.io/badge/release-major-red)
+![Version](https://img.shields.io/badge/version-3.0.1-blue)
+![Release](https://img.shields.io/badge/release-small-red)
 ![Discord Bot](https://img.shields.io/badge/platform-discord-5865F2)
-![Python](https://img.shields.io/badge/python-3.10+-yellow)
 ## czbot: Vše, co tvůj Discord server potřebuje, v jednom botovi! 🚀
 
 Už tě nebaví žonglovat s desítkami botů a složitým nastavováním? **czbot je komplexní a neustále se vyvíjející asistent**, který ti uvolní ruce. Nabízí **všechny základní i pokročilé nástroje** pro moderátory i běžné uživatele – **vše v jednom balíčku!**
