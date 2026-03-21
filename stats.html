@@ -6,189 +6,451 @@
     <title>CZBOT - Statistiky Bota</title>
     
     <link href="templatemo-nexus-style.css" rel="stylesheet">
-    <link href="module-styles.css" rel="stylesheet"> 
-    
-    </head>
-<body id="top"> 
+    <link href="module-styles.css" rel="stylesheet">
+
+    <style>
+        .chart-wrapper {
+            position: relative;
+            width: 100%;
+            height: 220px;
+        }
+        .latency-stats {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+        }
+        .latency-stat-item {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .latency-stat-label {
+            color: #666;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .latency-stat-value { font-weight: 700; font-size: 1rem; }
+        .latency-ok         { color: #00ff88; }
+        .latency-warn       { color: #faa81a; }
+        .latency-err        { color: #ff4444; }
+        .chart-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            color: #666;
+            pointer-events: none;
+        }
+        .chart-spinner {
+            width: 18px; height: 18px;
+            border: 2px solid rgba(0,255,136,0.2);
+            border-top-color: #00ff88;
+            border-radius: 50%;
+            animation: cspin 0.8s linear infinite;
+            margin-right: 8px;
+            display: inline-block;
+            flex-shrink: 0;
+        }
+        @keyframes cspin { to { transform: rotate(360deg); } }
+        .chart-meta {
+            font-size: 0.72rem;
+            color: #555;
+            text-align: right;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body id="top">
     <div class="cyber-bg">
         <div class="cyber-gradient"></div>
         <div class="matrix-rain" id="matrixRain"></div>
     </div>
     <div class="scanlines"></div>
     <div class="noise-overlay"></div>
-    
-    <!-- Navigation -->
-    <div id="header-placeholder"></div> 
-    
+
+    <div id="header-placeholder"></div>
+
     <div class="content-section">
         <div class="content-container">
 
             <h1 class="page-title">Statistiky a Status Bota</h1>
             <p class="page-subtitle">Aktuální přehled provozu a výkonu Discord Bota <strong>CZbot.</strong></p>
 
-            <div class="warn-box" id="warnBox" style="display:none;"></div> 
+            <div class="warn-box" id="warnBox" style="display:none;"></div>
 
             <div class="stats-grid">
-                
                 <div class="stat-card">
                     <h4>Status Bota</h4>
-                    <span class="value" id="statStatus">Načítám...</span> 
+                    <span class="value" id="statStatus">Načítám...</span>
                 </div>
-
                 <div class="stat-card">
                     <h4>Počet Serverů</h4>
                     <span class="value" id="statServers">Načítám...</span>
                 </div>
-                
                 <div class="stat-card">
                     <h4>Uptime</h4>
                     <span class="value" id="statUptime">Načítám...</span>
                 </div>
-                
                 <div class="stat-card">
                     <h4>Využití CPU</h4>
                     <span class="value" id="statCPU">Načítám...</span>
                 </div>
-
                 <div class="stat-card">
                     <h4>Využití RAM</h4>
                     <span class="value" id="statRAM">Načítám...</span>
                 </div>
-                
                 <div class="stat-card">
                     <h4>API a DB Status</h4>
-                    <span class="value" id="statAPI">Načítám...</span> 
+                    <span class="value" id="statAPI">Načítám...</span>
                 </div>
-                
             </div>
 
             <div class="chart-container">
                 <h3>Stav Modulů (Cogs)</h3>
                 <ul class="cogs-list" id="cogsList">
-                    <li>Načítám moduly...</li> 
+                    <li>Načítám moduly...</li>
                 </ul>
             </div>
-            
+
+            <!-- Graf latence -->
             <div class="chart-container">
-                <h3>Historie Ping a Využití (Placeholder)</h3>
-                <p>Dynamické grafy budou implementovány později. Zde se budou zobrazovat historické metriky.</p>
-                <canvas id="pingChart" width="400" height="150" aria-label="Graf historie ping"></canvas>
+                <h3>Latence Discord API — posledních 24 hodin</h3>
+
+                <!-- Ministatistiky nad grafem -->
+                <div class="latency-stats" id="latencyStats" style="display:none;">
+                    <div class="latency-stat-item">
+                        <span class="latency-stat-label">Poslední měření</span>
+                        <span class="latency-stat-value" id="latCurrent">—</span>
+                    </div>
+                    <div class="latency-stat-item">
+                        <span class="latency-stat-label">Průměr</span>
+                        <span class="latency-stat-value" id="latAvg">—</span>
+                    </div>
+                    <div class="latency-stat-item">
+                        <span class="latency-stat-label">Minimum</span>
+                        <span class="latency-stat-value latency-ok" id="latMin">—</span>
+                    </div>
+                    <div class="latency-stat-item">
+                        <span class="latency-stat-label">Maximum</span>
+                        <span class="latency-stat-value" id="latMax">—</span>
+                    </div>
+                </div>
+
+                <div class="chart-wrapper">
+                    <canvas id="latencyChart"
+                            aria-label="Graf latence Discord API za posledních 24 hodin">
+                    </canvas>
+                    <div class="chart-overlay" id="latencyOverlay">
+                        <span class="chart-spinner"></span> Načítám data...
+                    </div>
+                </div>
+                <div class="chart-meta" id="latencyMeta"></div>
             </div>
-            
+
         </div>
     </div>
-    
-<!--Footer-->
+
     <div id="footer-placeholder"></div>
 
     <script src="templatemo-nexus-scripts.js"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+
     <script>
-        const cogs_to_load = ["Audio Streaming","Administrátorský cog","Administrátorský 2 cog","Crossban","Pokročilé plánované zprávy","Auditlogger","Automatické publikace zpráv","Automatické role","Dočasné hlasové kanály","Giveaway","Hlasování","Kolo štěstí","Lokalizace","Moderátorské příkazy","Narozeniny","Ověřování a Reakční role","Patreon","Minihry","Překlad","RAID ochrana","Reputace","RSS čtečka", "Zálohování serverů", "Plánované zprávy","Scam ochrana","Statistiky","Svátky","Tikety","Uvítací/odchodové zprávy","Uživatelské příkazy","Vlákna a reakce na zprávy","Vodoznaky","XP úrovně","AI cog", "Zpovědi"];
+        // ─── Konfigurace ────────────────────────────────────────────────────
+        const STATUS_URL = "https://rs422cznas.myds.me:5038/status";
 
-        async function fetchStatus() {
-            // Získání elementů z HTML
-            const statStatus = document.getElementById("statStatus");
-            const statServers = document.getElementById("statServers");
-            const statUptime = document.getElementById("statUptime");
-            const statCPU = document.getElementById("statCPU");
-            const statRAM = document.getElementById("statRAM");
-            const statAPI = document.getElementById("statAPI");
-            const cogsList = document.getElementById("cogsList");
-            const warnBox = document.getElementById("warnBox");
+        // Manuální varovná zpráva — vyplňte text pro trvalé zobrazení varování.
+        // Prázdný řetězec ("") = automatický režim: zpráva se zobrazí pokud
+        // poslední naměřená latence překročí 1000 ms a skryje se pod tuto mez.
+        const MANUAL_WARN = "";
 
-            // 🟠 sem napiš vlastní status zprávu (pokud nechceš žádnou, nech to prázdné)
-            const warn_message = ""; 
+        const cogs_to_load = [
+            "Audio Streaming","Administrátorský cog","Administrátorský 2 cog","Crossban",
+            "Pokročilé plánované zprávy","Auditlogger","Automatické publikace zpráv",
+            "Automatické role","Dočasné hlasové kanály","Giveaway","Hlasování","Kolo štěstí",
+            "Lokalizace","Moderátorské příkazy","Narozeniny","Ověřování a Reakční role",
+            "Patreon","Minihry","Překlad","RAID ochrana","Reputace","RSS čtečka",
+            "Zálohování serverů","Plánované zprávy","Scam ochrana","Statistiky","Svátky",
+            "Tikety","Uvítací/odchodové zprávy","Uživatelské příkazy",
+            "Vlákna a reakce na zprávy","Vodoznaky","XP úrovně","AI cog","Zpovědi"
+        ];
 
-            // zobrazení nebo skrytí varovného boxu
-            if (warn_message && warn_message.trim() !== "") {
-                warnBox.textContent = "🚨 UPOZORNĚNÍ: " + warn_message; // Přidáme kybernetický prefix
-                warnBox.classList.add("warn-box-active"); 
-                warnBox.style.display = "block";
-            } else {
-                warnBox.classList.remove("warn-box-active");
-                warnBox.style.display = "none";
+        // ─── Graf instance ──────────────────────────────────────────────────
+        let latencyChart = null;
+
+        // ─── Pomocné funkce ─────────────────────────────────────────────────
+
+        function latencyColor(ms) {
+            if (ms < 150) return '#00ff88';
+            if (ms < 300) return '#faa81a';
+            return '#ff4444';
+        }
+
+        function latencyClass(ms) {
+            if (ms < 150) return 'latency-ok';
+            if (ms < 300) return 'latency-warn';
+            return 'latency-err';
+        }
+
+        function fmtMs(ms) {
+            return ms != null ? `${ms.toFixed(1)} ms` : '—';
+        }
+
+        function fmtTime(iso) {
+            if (!iso) return '';
+            const d = new Date(iso);
+            return d.toLocaleTimeString('cs-CZ', { hour: '2-digit', minute: '2-digit' });
+        }
+
+        function fmtDateShort(iso) {
+            if (!iso) return '';
+            const d = new Date(iso);
+            return d.toLocaleString('cs-CZ', {
+                day: '2-digit', month: '2-digit',
+                hour: '2-digit', minute: '2-digit'
+            });
+        }
+
+        // ─── Graf ───────────────────────────────────────────────────────────
+
+        function buildChart(labels, values, pointColors) {
+            const ctx = document.getElementById('latencyChart').getContext('2d');
+            if (latencyChart) latencyChart.destroy();
+
+            latencyChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels,
+                    datasets: [{
+                        label:                'Latence (ms)',
+                        data:                 values,
+                        borderColor:          '#00ff88',
+                        backgroundColor:      'rgba(0,255,136,0.07)',
+                        pointBackgroundColor: pointColors,
+                        pointBorderColor:     pointColors,
+                        pointRadius:          3,
+                        pointHoverRadius:     6,
+                        borderWidth:          2,
+                        tension:              0.35,
+                        fill:                 true,
+                    }]
+                },
+                options: {
+                    responsive:          true,
+                    maintainAspectRatio: false,
+                    animation:           { duration: 400 },
+                    interaction:         { mode: 'index', intersect: false },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: 'rgba(20,20,35,0.95)',
+                            borderColor:     'rgba(0,255,136,0.3)',
+                            borderWidth:     1,
+                            titleColor:      '#aaa',
+                            bodyColor:       '#00ff88',
+                            callbacks: {
+                                title: ctx => ctx[0]?.label || '',
+                                label: ctx => ` ${ctx.parsed.y.toFixed(1)} ms`,
+                            }
+                        },
+                    },
+                    scales: {
+                        x: {
+                            ticks: {
+                                color:       '#555',
+                                font:        { size: 10 },
+                                maxRotation: 0,
+                                // Zobrazíme každý 6. label (~1,5 h rozestup)
+                                callback: function(val, idx) {
+                                    return idx % 6 === 0 ? this.getLabelForValue(val) : '';
+                                }
+                            },
+                            grid: { color: 'rgba(255,255,255,0.04)' },
+                        },
+                        y: {
+                            min: 0,
+                            ticks: {
+                                color:    '#555',
+                                font:     { size: 10 },
+                                callback: v => `${v} ms`,
+                            },
+                            grid: { color: 'rgba(255,255,255,0.06)' },
+                        }
+                    }
+                }
+            });
+        }
+
+        function renderLatencyGraph(historyData) {
+            const overlay  = document.getElementById('latencyOverlay');
+            const statsBar = document.getElementById('latencyStats');
+            const metaEl   = document.getElementById('latencyMeta');
+
+            if (!Array.isArray(historyData) || historyData.length === 0) {
+                overlay.style.display = 'flex';
+                overlay.innerHTML     = 'Zatím žádná data — bot sbírá historii (interval 15 min).';
+                statsBar.style.display = 'none';
+                return;
             }
 
-            // Nastavení počátečních hodnot při načítání
-            [statStatus, statServers, statUptime, statCPU, statRAM, statAPI].forEach(el => el.textContent = "Načítám...");
-            cogsList.innerHTML="<li>Načítám moduly...</li>";
+            overlay.style.display = 'none';
 
-            // Pomocná funkce pro vytvoření položky Cogs
-            function addCogItem(name, status, cls=""){ 
-                const li = document.createElement("li"); 
-                // Stylizace pro seznam modulů
-                li.innerHTML = `<span class="cog-label">${name}</span><span class="cog-value ${cls}">${status}</span>`; 
+            const labels      = historyData.map(d => fmtTime(d.recorded_at));
+            const values      = historyData.map(d => d.latency_ms);
+            const pointColors = values.map(v => latencyColor(v));
+
+            buildChart(labels, values, pointColors);
+
+            // Ministatistiky
+            const last = values[values.length - 1];
+            const avg  = values.reduce((a, b) => a + b, 0) / values.length;
+            const min  = Math.min(...values);
+            const max  = Math.max(...values);
+
+            const elCur = document.getElementById('latCurrent');
+            elCur.textContent = fmtMs(last);
+            elCur.className   = `latency-stat-value ${latencyClass(last)}`;
+
+            document.getElementById('latAvg').textContent = fmtMs(avg);
+            document.getElementById('latMin').textContent = fmtMs(min);
+
+            const elMax = document.getElementById('latMax');
+            elMax.textContent = fmtMs(max);
+            elMax.className   = `latency-stat-value ${latencyClass(max)}`;
+
+            statsBar.style.display = 'flex';
+
+            // Meta řádek
+            metaEl.textContent = `${historyData.length} záznamů · `
+                + `od ${fmtDateShort(historyData[0].recorded_at)} `
+                + `do ${fmtDateShort(historyData[historyData.length - 1].recorded_at)}`;
+
+            // Automatické varování při vysoké latenci (≥ 1000 ms)
+            // Manuální warn_message má přednost — pokud je neprázdný, automatika se přeskočí
+            updateLatencyWarnBox(last);
+        }
+
+        function updateLatencyWarnBox(lastMs) {
+            // Pokud admin nastavil manuální zprávu, automatika nezasahuje
+            if (typeof MANUAL_WARN !== 'undefined' && MANUAL_WARN.trim()) return;
+
+            const warnBox = document.getElementById('warnBox');
+            if (lastMs >= 1000) {
+                warnBox.textContent = '🚨 UPOZORNĚNÍ: Byly zaznamenány problémy s odezvou bota, problém se prošetřuje.';
+                warnBox.classList.add('warn-box-active');
+                warnBox.style.display = 'block';
+            } else {
+                // Latence je pod 1000 ms — automatické varování skryjeme
+                // (manuální zpráva je prázdná, jinak bychom se sem nedostali)
+                warnBox.classList.remove('warn-box-active');
+                warnBox.style.display = 'none';
+            }
+        }
+
+        // ─── Hlavní fetch — jeden request pro vše ───────────────────────────
+
+        async function fetchStatus() {
+            const statStatus  = document.getElementById("statStatus");
+            const statServers = document.getElementById("statServers");
+            const statUptime  = document.getElementById("statUptime");
+            const statCPU     = document.getElementById("statCPU");
+            const statRAM     = document.getElementById("statRAM");
+            const statAPI     = document.getElementById("statAPI");
+            const cogsList    = document.getElementById("cogsList");
+            const warnBox     = document.getElementById("warnBox");
+            const overlay     = document.getElementById('latencyOverlay');
+
+            // Volitelná manuální varovná zpráva — pokud je neprázdná, zobrazí se vždy
+            // a automatická kontrola latence se přeskočí. Prázdný řetězec = automatický režim.
+            if (MANUAL_WARN.trim()) {
+                warnBox.textContent = "🚨 UPOZORNĚNÍ: " + MANUAL_WARN;
+                warnBox.classList.add("warn-box-active");
+                warnBox.style.display = "block";
+            }
+            // Pokud je MANUAL_WARN prázdný, warnBox řídí updateLatencyWarnBox()
+            // volaná z renderLatencyGraph po každém načtení dat.
+
+            [statStatus, statServers, statUptime, statCPU, statRAM, statAPI]
+                .forEach(el => el.textContent = "Načítám...");
+            cogsList.innerHTML    = "<li>Načítám moduly...</li>";
+            overlay.style.display = 'flex';
+            overlay.innerHTML     = '<span class="chart-spinner"></span> Načítám data...';
+
+            function addCogItem(name, status, cls = "") {
+                const li = document.createElement("li");
+                li.innerHTML = `<span class="cog-label">${name}</span>`
+                             + `<span class="cog-value ${cls}">${status}</span>`;
                 return li;
             }
 
             try {
-                const res = await fetch("https://rs422cznas.myds.me:5038/status");
+                const res  = await fetch(STATUS_URL);
                 const data = await res.json();
 
+                // ── Status karty ──
                 const uptime_sec = data.uptime_seconds || 0;
-                const hours = Math.floor(uptime_sec/3600);
-                const minutes = Math.floor((uptime_sec%3600)/60);
-                const seconds = Math.floor(uptime_sec%60);
-                const uptime_str = `${hours}h ${minutes}m ${seconds}s`;
-                
-                // 1. Vložení dat do karet
-                // Status bota
-                statStatus.textContent = data.bot_status.toUpperCase();
-                statStatus.className = data.bot_status === "online" ? "value status-online" : "value status-offline";
-                
-                // Ostatní metriky
-                statServers.textContent = data.guilds.toLocaleString('cs-CZ');
-                statUptime.textContent = uptime_str;
-                statCPU.textContent = `${data.cpu_percent} %`;
-                statRAM.textContent = `${data.ram_mb} MB`;
-                
-                // API a DB status
-                statAPI.textContent = data.api_db_status === "OK" ? "OK" : "PROBLÉM";
-                statAPI.className = data.api_db_status === "OK" ? "value status-ok" : "value status-err";
+                const hours   = Math.floor(uptime_sec / 3600);
+                const minutes = Math.floor((uptime_sec % 3600) / 60);
+                const seconds = Math.floor(uptime_sec % 60);
 
-                // 2. Vložení stavu modulů (Cogs)
-                cogsList.innerHTML="";
-                const sortedCogs = Object.entries(data.cogs).sort((a,b) => a[0].localeCompare(b[0], 'cs'));
-                
-                for(const [name,status] of sortedCogs){
-                    let cls="";
-                    if(status==="Funkční") cls="status-ok";
-                    else if(status.toLowerCase().includes("offline") || status.toLowerCase().includes("error") || status.toLowerCase().includes("offline")) cls="status-err";
-                    else cls="status-warn"; // Pro jiné stavy
-                    
+                statStatus.textContent  = data.bot_status.toUpperCase();
+                statStatus.className    = data.bot_status === "online"
+                    ? "value status-online" : "value status-offline";
+                statServers.textContent = data.guilds.toLocaleString('cs-CZ');
+                statUptime.textContent  = `${hours}h ${minutes}m ${seconds}s`;
+                statCPU.textContent     = `${data.cpu_percent} %`;
+                statRAM.textContent     = `${data.ram_mb} MB`;
+                statAPI.textContent     = data.api_db_status === "OK" ? "OK" : "PROBLÉM";
+                statAPI.className       = data.api_db_status === "OK"
+                    ? "value status-ok" : "value status-err";
+
+                // ── Cogs ──
+                cogsList.innerHTML = "";
+                const sortedCogs = Object.entries(data.cogs)
+                    .sort((a, b) => a[0].localeCompare(b[0], 'cs'));
+                for (const [name, status] of sortedCogs) {
+                    let cls = "status-warn";
+                    if (status === "Funkční") cls = "status-ok";
+                    else if (status.toLowerCase().includes("offline") ||
+                             status.toLowerCase().includes("error")) cls = "status-err";
                     cogsList.appendChild(addCogItem(name, status, cls));
                 }
-                
-            } catch(err){
-                // 3. Zpracování chyby
-                console.error("Chyba při načítání statusu API:", err);
-                
-                // Nastavení chybových hodnot pro karty
-                statStatus.textContent = "OFFLINE";
-                statStatus.className = "value status-err"; 
+
+                // ── Graf latence — data přicházejí přímo z téhož responsu ──
+                renderLatencyGraph(data.latency_history || []);
+
+            } catch (err) {
+                console.error("Chyba při načítání statusu:", err);
+
+                statStatus.textContent  = "OFFLINE";
+                statStatus.className    = "value status-err";
                 statServers.textContent = "-";
-                statUptime.textContent = "-";
-                statCPU.textContent = "- %";
-                statRAM.textContent = "- MB";
-                statAPI.textContent = "NEDOSTUPNÉ";
-                statAPI.className = "value status-err";
-                
-                // Nastavení chybových hodnot pro Cogs
-                cogsList.innerHTML="";
-                cogs_to_load.forEach(label => {
-                    cogsList.appendChild(addCogItem(label, "Nedostupné", "status-err"));
-                });
+                statUptime.textContent  = "-";
+                statCPU.textContent     = "- %";
+                statRAM.textContent     = "- MB";
+                statAPI.textContent     = "NEDOSTUPNÉ";
+                statAPI.className       = "value status-err";
+                cogsList.innerHTML      = "";
+                cogs_to_load.forEach(label =>
+                    cogsList.appendChild(addCogItem(label, "Nedostupné", "status-err"))
+                );
+
+                overlay.style.display = 'flex';
+                overlay.innerHTML     = 'Nepodařilo se načíst data.';
             }
         }
 
-        // Spuštění načítání statusu
+        // ─── Start ──────────────────────────────────────────────────────────
         fetchStatus();
-        // Nastavení automatického refresh 
-        setInterval(fetchStatus, 30000); // Obnoví data každých 30 sekund
+        // Jeden interval — status každých 30 s, graf se aktualizuje automaticky
+        // spolu s ním (nová data přibývají každých 15 min stejně)
+        setInterval(fetchStatus, 30_000);
     </script>
 
 </body>
-
 </html>
-
