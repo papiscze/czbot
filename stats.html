@@ -97,16 +97,17 @@
                     <span class="value" id="statUptime">Načítám...</span>
                 </div>
                 <div class="stat-card">
-                    <h4>Využití CPU</h4>
-                    <span class="value" id="statCPU">Načítám...</span>
-                </div>
-                <div class="stat-card">
                     <h4>Využití RAM</h4>
                     <span class="value" id="statRAM">Načítám...</span>
                 </div>
                 <div class="stat-card">
                     <h4>API a DB Status</h4>
                     <span class="value" id="statAPI">Načítám...</span>
+                </div>
+                <div class="stat-card">
+                    <h4>Redis Status</h4>
+                    <span class="value" id="statRedis">Načítám...</span>
+                    <span class="latency-stat-label" id="statRedisLatency" style="margin-top:4px;"></span>
                 </div>
             </div>
 
@@ -152,6 +153,40 @@
                 <div class="chart-meta" id="latencyMeta"></div>
             </div>
 
+            <!-- Graf latence Redis -->
+            <div class="chart-container">
+                <h3>Latence Redis TCP — posledních 12 hodin</h3>
+
+                <div class="latency-stats" id="redisLatencyStats" style="display:none;">
+                    <div class="latency-stat-item">
+                        <span class="latency-stat-label">Poslední měření</span>
+                        <span class="latency-stat-value" id="redisLatCurrent">—</span>
+                    </div>
+                    <div class="latency-stat-item">
+                        <span class="latency-stat-label">Průměr</span>
+                        <span class="latency-stat-value" id="redisLatAvg">—</span>
+                    </div>
+                    <div class="latency-stat-item">
+                        <span class="latency-stat-label">Minimum</span>
+                        <span class="latency-stat-value latency-ok" id="redisLatMin">—</span>
+                    </div>
+                    <div class="latency-stat-item">
+                        <span class="latency-stat-label">Maximum</span>
+                        <span class="latency-stat-value" id="redisLatMax">—</span>
+                    </div>
+                </div>
+
+                <div class="chart-wrapper">
+                    <canvas id="redisLatencyChart"
+                            aria-label="Graf latence Redis TCP za posledních 12 hodin">
+                    </canvas>
+                    <div class="chart-overlay" id="redisLatencyOverlay">
+                        <span class="chart-spinner"></span> Načítám data...
+                    </div>
+                </div>
+                <div class="chart-meta" id="redisLatencyMeta"></div>
+            </div>
+
         </div>
     </div>
 
@@ -182,6 +217,7 @@
 
         // ─── Graf instance ──────────────────────────────────────────────────
         let latencyChart = null;
+        let redisLatencyChart = null;
 
         // ─── Pomocné funkce ─────────────────────────────────────────────────
 
@@ -335,6 +371,131 @@
             updateLatencyWarnBox(last);
         }
 
+        function buildRedisChart(labels, values, pointColors) {
+            const ctx = document.getElementById('redisLatencyChart').getContext('2d');
+            if (redisLatencyChart) redisLatencyChart.destroy();
+
+            redisLatencyChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels,
+                    datasets: [{
+                        label:                'Redis TCP latence (ms)',
+                        data:                 values,
+                        borderColor:          '#7289da',
+                        backgroundColor:      'rgba(114,137,218,0.07)',
+                        pointBackgroundColor: pointColors,
+                        pointBorderColor:     pointColors,
+                        pointRadius:          3,
+                        pointHoverRadius:     6,
+                        borderWidth:          2,
+                        tension:              0.35,
+                        fill:                 true,
+                    }]
+                },
+                options: {
+                    responsive:          true,
+                    maintainAspectRatio: false,
+                    animation:           { duration: 400 },
+                    interaction:         { mode: 'index', intersect: false },
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: 'rgba(20,20,35,0.95)',
+                            borderColor:     'rgba(114,137,218,0.3)',
+                            borderWidth:     1,
+                            titleColor:      '#aaa',
+                            bodyColor:       '#7289da',
+                            callbacks: {
+                                title: ctx => ctx[0]?.label || '',
+                                label: ctx => ctx.parsed.y != null ? ` ${ctx.parsed.y.toFixed(1)} ms` : ' Nedostupný',
+                            }
+                        },
+                    },
+                    scales: {
+                        x: {
+                            ticks: {
+                                color:       '#555',
+                                font:        { size: 10 },
+                                maxRotation: 0,
+                                callback: function(val, idx) {
+                                    return idx % 6 === 0 ? this.getLabelForValue(val) : '';
+                                }
+                            },
+                            grid: { color: 'rgba(255,255,255,0.04)' },
+                        },
+                        y: {
+                            min: 0,
+                            ticks: {
+                                color:    '#555',
+                                font:     { size: 10 },
+                                callback: v => `${v} ms`,
+                            },
+                            grid: { color: 'rgba(255,255,255,0.06)' },
+                        }
+                    }
+                }
+            });
+        }
+
+        function renderRedisLatencyGraph(historyData) {
+            const overlay  = document.getElementById('redisLatencyOverlay');
+            const statsBar = document.getElementById('redisLatencyStats');
+            const metaEl   = document.getElementById('redisLatencyMeta');
+
+            if (!Array.isArray(historyData) || historyData.length === 0) {
+                overlay.style.display = 'flex';
+                overlay.innerHTML     = 'Zatím žádná data — bot sbírá historii (interval 5 min).';
+                statsBar.style.display = 'none';
+                return;
+            }
+
+            overlay.style.display = 'none';
+
+            // NULL záznamy (Redis nedostupný) zobrazíme jako přerušení v grafu
+            const labels      = historyData.map(d => fmtTime(d.recorded_at));
+            const values      = historyData.map(d => d.latency_ms);  // může být null
+            const pointColors = values.map(v => v == null ? '#ff4444' : (v < 100 ? '#00ff88' : v < 1000 ? '#faa81a' : '#ff4444'));
+
+            buildRedisChart(labels, values, pointColors);
+
+            // Ministatistiky — přeskočíme null hodnoty
+            const valid = values.filter(v => v != null);
+            if (valid.length === 0) {
+                statsBar.style.display = 'none';
+                return;
+            }
+
+            const last = values[values.length - 1];
+            const avg  = valid.reduce((a, b) => a + b, 0) / valid.length;
+            const min  = Math.min(...valid);
+            const max  = Math.max(...valid);
+
+            function redisLatClass(ms) {
+                if (ms == null) return 'latency-err';
+                if (ms < 100)  return 'latency-ok';
+                if (ms < 1000) return 'latency-warn';
+                return 'latency-err';
+            }
+
+            const elCur = document.getElementById('redisLatCurrent');
+            elCur.textContent = last != null ? fmtMs(last) : 'Nedostupný';
+            elCur.className   = `latency-stat-value ${redisLatClass(last)}`;
+
+            document.getElementById('redisLatAvg').textContent = fmtMs(avg);
+            document.getElementById('redisLatMin').textContent = fmtMs(min);
+
+            const elMax = document.getElementById('redisLatMax');
+            elMax.textContent = fmtMs(max);
+            elMax.className   = `latency-stat-value ${redisLatClass(max)}`;
+
+            statsBar.style.display = 'flex';
+
+            metaEl.textContent = `${historyData.length} záznamů · `
+                + `od ${fmtDateShort(historyData[0].recorded_at)} `
+                + `do ${fmtDateShort(historyData[historyData.length - 1].recorded_at)}`;
+        }
+
         function updateLatencyWarnBox(lastMs) {
             // Pokud admin nastavil manuální zprávu, automatika nezasahuje
             if (typeof MANUAL_WARN !== 'undefined' && MANUAL_WARN.trim()) return;
@@ -355,12 +516,13 @@
         // ─── Hlavní fetch — jeden request pro vše ───────────────────────────
 
         async function fetchStatus() {
-            const statStatus  = document.getElementById("statStatus");
-            const statServers = document.getElementById("statServers");
-            const statUptime  = document.getElementById("statUptime");
-            const statCPU     = document.getElementById("statCPU");
-            const statRAM     = document.getElementById("statRAM");
-            const statAPI     = document.getElementById("statAPI");
+            const statStatus      = document.getElementById("statStatus");
+            const statServers     = document.getElementById("statServers");
+            const statUptime      = document.getElementById("statUptime");
+            const statRAM         = document.getElementById("statRAM");
+            const statAPI         = document.getElementById("statAPI");
+            const statRedis       = document.getElementById("statRedis");
+            const statRedisLatency= document.getElementById("statRedisLatency");
             const cogsList    = document.getElementById("cogsList");
             const warnBox     = document.getElementById("warnBox");
             const overlay     = document.getElementById('latencyOverlay');
@@ -375,7 +537,7 @@
             // Pokud je MANUAL_WARN prázdný, warnBox řídí updateLatencyWarnBox()
             // volaná z renderLatencyGraph po každém načtení dat.
 
-            [statStatus, statServers, statUptime, statCPU, statRAM, statAPI]
+            [statStatus, statServers, statUptime, statRAM, statAPI, statRedis]
                 .forEach(el => el.textContent = "Načítám...");
             cogsList.innerHTML    = "<li>Načítám moduly...</li>";
             overlay.style.display = 'flex';
@@ -403,11 +565,20 @@
                     ? "value status-online" : "value status-offline";
                 statServers.textContent = data.guilds.toLocaleString('cs-CZ');
                 statUptime.textContent  = `${hours}h ${minutes}m ${seconds}s`;
-                statCPU.textContent     = `${data.cpu_percent} %`;
                 statRAM.textContent     = `${data.ram_mb} MB`;
                 statAPI.textContent     = data.api_db_status === "OK" ? "OK" : "PROBLÉM";
                 statAPI.className       = data.api_db_status === "OK"
                     ? "value status-ok" : "value status-err";
+
+                // ── Redis ──
+                const redisOk = data.redis_status === "OK";
+                statRedis.textContent = redisOk ? "OK" : "PROBLÉM";
+                statRedis.className   = redisOk ? "value status-ok" : "value status-err";
+                if (redisOk && data.redis_latency_ms != null) {
+                    statRedisLatency.textContent = `Latence: ${data.redis_latency_ms} ms`;
+                } else {
+                    statRedisLatency.textContent = redisOk ? "" : "Nedostupný";
+                }
 
                 // ── Cogs ──
                 cogsList.innerHTML = "";
@@ -421,8 +592,11 @@
                     cogsList.appendChild(addCogItem(name, status, cls));
                 }
 
-                // ── Graf latence — data přicházejí přímo z téhož responsu ──
+                // ── Graf latence Discord — data přicházejí přímo z téhož responsu ──
                 renderLatencyGraph(data.latency_history || []);
+
+                // ── Graf latence Redis ──
+                renderRedisLatencyGraph(data.redis_latency_history || []);
 
             } catch (err) {
                 console.error("Chyba při načítání statusu:", err);
@@ -431,10 +605,12 @@
                 statStatus.className    = "value status-err";
                 statServers.textContent = "-";
                 statUptime.textContent  = "-";
-                statCPU.textContent     = "- %";
                 statRAM.textContent     = "- MB";
                 statAPI.textContent     = "NEDOSTUPNÉ";
                 statAPI.className       = "value status-err";
+                statRedis.textContent   = "NEDOSTUPNÉ";
+                statRedis.className     = "value status-err";
+                statRedisLatency.textContent = "";
                 cogsList.innerHTML      = "";
                 cogs_to_load.forEach(label =>
                     cogsList.appendChild(addCogItem(label, "Nedostupné", "status-err"))
@@ -442,14 +618,18 @@
 
                 overlay.style.display = 'flex';
                 overlay.innerHTML     = 'Nepodařilo se načíst data.';
+
+                const redisOverlay = document.getElementById('redisLatencyOverlay');
+                redisOverlay.style.display = 'flex';
+                redisOverlay.innerHTML     = 'Nepodařilo se načíst data.';
             }
         }
 
         // ─── Start ──────────────────────────────────────────────────────────
         fetchStatus();
-        // Jeden interval — status každých 30 s, graf se aktualizuje automaticky
+        // Jeden interval — status každých 60 s, graf se aktualizuje automaticky
         // spolu s ním (nová data přibývají každých 5 min stejně)
-        setInterval(fetchStatus, 30_000);
+        setInterval(fetchStatus, 60_000);
     </script>
 
 </body>
