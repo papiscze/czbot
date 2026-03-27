@@ -1,4 +1,4 @@
-![Version](https://img.shields.io/badge/version-3.0.1-blue)
+![Version](https://img.shields.io/badge/version-3.0.2-blue)
 ![Release](https://img.shields.io/badge/release-small-red)
 ![Discord Bot](https://img.shields.io/badge/platform-discord-5865F2)
 ## czbot: Vše, co tvůj Discord server potřebuje, v jednom botovi! 🚀
