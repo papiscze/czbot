@@ -414,7 +414,7 @@ section:nth-child(3){animation-delay:0.15s}
   </div>
   <div class="callout callout-info">
     <span class="callout-icon">💡</span>
-    <div>Ekonomika je na každém serveru <strong>vypnuta ve výchozím stavu</strong>. Admin musí použít <code>/economy ekonomika-nastavit</code> pro aktivaci.</div>
+    <div>Ekonomika je na každém serveru <strong>vypnuta ve výchozím stavu</strong>. Admin musí použít <code>/economy setup</code> pro aktivaci.</div>
   </div>
 </section>
 
@@ -447,12 +447,12 @@ section:nth-child(3){animation-delay:0.15s}
     <tbody>
       <tr><td>Bankovní poplatek</td><td>Automaticky denně</td><td>0,03 % z bank_balance (pokud není trezor)</td></tr>
       <tr><td>Anti-inflační daň</td><td>Automaticky denně</td><td>0,1 % z částky přesahující 1 000 000</td></tr>
-      <tr><td>Kasino (prohra)</td><td><code>/economy kasino</code></td><td>Plná sázka</td></tr>
-      <tr><td>Kasinový poplatek (výhra)</td><td><code>/economy kasino</code></td><td>5 % z výhry → Komunitní fond</td></tr>
-      <tr><td>Pokuta za neúspěšnou krádež</td><td><code>/economy kradout</code></td><td>500–2 000 → Komunitní fond</td></tr>
-      <tr><td>Nákup v obchodě</td><td><code>/economy koupit</code></td><td>Cena předmětu</td></tr>
-      <tr><td>XP konverze</td><td><code>/economy xp-konverze</code></td><td>Min. 1 000 za 100 XP (bez boostu)</td></tr>
-      <tr><td>Úrok z půjčky</td><td><code>/economy pujcka splatit</code></td><td>1 % ze splátky</td></tr>
+      <tr><td>Kasino (prohra)</td><td><code>/economy casino</code></td><td>Plná sázka</td></tr>
+      <tr><td>Kasinový poplatek (výhra)</td><td><code>/economy casino</code></td><td>5 % z výhry → Komunitní fond</td></tr>
+      <tr><td>Pokuta za neúspěšnou krádež</td><td><code>/economy rob</code></td><td>500–2 000 → Komunitní fond</td></tr>
+      <tr><td>Nákup v obchodě</td><td><code>/economy buy</code></td><td>Cena předmětu</td></tr>
+      <tr><td>XP konverze</td><td><code>/economy xp-convert</code></td><td>Min. 1 000 za 100 XP (bez boostu)</td></tr>
+      <tr><td>Úrok z půjčky</td><td><code>/economy loan splatit</code></td><td>1 % ze splátky</td></tr>
       <tr><td>Auto-splácení dluhu</td><td>Automaticky denně</td><td>0,5 % z dluhu strhávané ze zisku</td></tr>
       <tr><td>Prestiž reset</td><td><code>/economy prestiz</code></td><td>Celý majetek (vyjma startovacího bonusu)</td></tr>
     </tbody>
@@ -464,42 +464,42 @@ section:nth-child(3){animation-delay:0.15s}
   <h2><span class="sec-icon">⌨️</span> Základní příkazy</h2>
   <div class="cmd-grid">
     <div class="cmd-card">
-      <div class="cmd-name">/economy stav [uzivatel]</div>
+      <div class="cmd-name">/economy status [uzivatel]</div>
       <div class="cmd-desc">Zobrazí hotovost, banku, akcie, čisté jmění, prestiž a celkové statistiky.</div>
       <span class="cmd-tag tag-hrac">Hráč</span>
     </div>
     <div class="cmd-card">
-      <div class="cmd-name">/economy zebricek</div>
+      <div class="cmd-name">/economy leaderboard</div>
       <div class="cmd-desc">TOP 10 nejbohatších hráčů serveru seřazených dle čistého jmění.</div>
       <span class="cmd-tag tag-hrac">Hráč</span>
     </div>
     <div class="cmd-card">
-      <div class="cmd-name">/economy kurz</div>
+      <div class="cmd-name">/economy rate</div>
       <div class="cmd-desc">Aktuální kurz CZBOT Coinu a stav Komunitního fondu.</div>
       <span class="cmd-tag tag-hrac">Hráč</span>
     </div>
     <div class="cmd-card">
-      <div class="cmd-name">/economy zaplatit &lt;hráč&gt; &lt;částka&gt;</div>
+      <div class="cmd-name">/economy pay &lt;hráč&gt; &lt;částka&gt;</div>
       <div class="cmd-desc">Převod hotovosti mezi hráči (z cash do cash příjemce).</div>
       <span class="cmd-tag tag-hrac">Hráč</span>
     </div>
     <div class="cmd-card">
-      <div class="cmd-name">/economy denni-odmena</div>
+      <div class="cmd-name">/economy daily-reward</div>
       <div class="cmd-desc">Denní odměna s narůstajícím streak bonusem a prestiž bonusem.</div>
       <span class="cmd-tag tag-hrac">Hráč</span>
     </div>
     <div class="cmd-card">
-      <div class="cmd-name">/economy mise</div>
+      <div class="cmd-name">/economy missions</div>
       <div class="cmd-desc">Zobrazí dnešní mise s progress barem a odměnami.</div>
       <span class="cmd-tag tag-hrac">Hráč</span><span class="cmd-tag tag-new">Nové</span>
     </div>
     <div class="cmd-card">
-      <div class="cmd-name">/historie</div>
+      <div class="cmd-name">/economy transactions</div>
       <div class="cmd-desc">Posledních 15 transakcí hráče (audit log).</div>
       <span class="cmd-tag tag-hrac">Hráč</span><span class="cmd-tag tag-new">Nové</span>
     </div>
     <div class="cmd-card">
-      <div class="cmd-name">/economy inventar</div>
+      <div class="cmd-name">/economy inventory</div>
       <div class="cmd-desc">Aktivní předměty v inventáři s časy expirace.</div>
       <span class="cmd-tag tag-hrac">Hráč</span><span class="cmd-tag tag-new">Nové</span>
     </div>
@@ -511,7 +511,7 @@ section:nth-child(3){animation-delay:0.15s}
   <h2><span class="sec-icon">🏦</span> Banka</h2>
   <p>Banka chrání peníze před zloději. Zároveň generuje pasivní úrok, ale účtuje malý poplatek. Předmět <strong>Bankovní trezor</strong> poplatky přeskočí.</p>
 
-  <h3>Příkaz /economy banka</h3>
+  <h3>Příkaz /economy bank</h3>
   <p>Otevře interaktivní panel se dvěma tlačítky: <strong>Vložit</strong> (Cash → Banka) a <strong>Vybrat</strong> (Banka → Cash). Obě akce přijímají číslo nebo <code>vse</code> pro celou částku.</p>
 
   <table>
@@ -526,14 +526,14 @@ section:nth-child(3){animation-delay:0.15s}
 
   <div class="callout callout-warn">
     <span class="callout-icon">⚠️</span>
-    <div>Hotovost v <strong>cash</strong> může být ukradena pomocí <code>/economy kradout</code>. Banka je vždy bezpečná.</div>
+    <div>Hotovost v <strong>cash</strong> může být ukradena pomocí <code>/economy rob</code>. Banka je vždy bezpečná.</div>
   </div>
 </section>
 
 <!-- ═══ PRÁCE ═══ -->
 <section id="prace">
   <h2><span class="sec-icon">🔨</span> Práce &amp; Pasivní příjmy</h2>
-  <h3>/economy prace — Práce (4h cooldown)</h3>
+  <h3>/economy work — Práce (4h cooldown)</h3>
   <p>Náhodně vybere jedno z <strong>26 povolání</strong>. Rizikové profese (makléř, hráč, kryptotrader…) mohou skončit ztrátou — to je záměr. Výsledek závisí na hodu:</p>
   <table>
     <thead><tr><th>Výsledek</th><th>Pravděpodobnost</th><th>Dopad</th></tr></thead>
@@ -597,22 +597,22 @@ section:nth-child(3){animation-delay:0.15s}
 
   <div class="cmd-grid">
     <div class="cmd-card">
-      <div class="cmd-name">/economy kasino coinflip &lt;castka&gt; &lt;hlava|panna&gt;</div>
+      <div class="cmd-name">/economy casino coinflip &lt;castka&gt; &lt;hlava|panna&gt;</div>
       <div class="cmd-desc">50/50 šance. Z výhry odchází 5 % do Komunitního fondu.</div>
       <span class="cmd-tag tag-casino">Casino</span>
     </div>
     <div class="cmd-card">
-      <div class="cmd-name">/economy kasino kostky &lt;castka&gt;</div>
+      <div class="cmd-name">/economy casino kostky &lt;castka&gt;</div>
       <div class="cmd-desc">Hod 1d6 vs. dealer. Vyšší číslo vyhraje, remíza vrátí sázku.</div>
       <span class="cmd-tag tag-casino">Casino</span>
     </div>
     <div class="cmd-card">
-      <div class="cmd-name">/economy kasino blackjack &lt;castka&gt;</div>
+      <div class="cmd-name">/economy casino blackjack &lt;castka&gt;</div>
       <div class="cmd-desc">Interaktivní blackjack s Hit, Stand, Double Down. Cíl: 21 bez přebušení.</div>
       <span class="cmd-tag tag-casino">Casino</span><span class="cmd-tag tag-new">Rozšířeno</span>
     </div>
     <div class="cmd-card">
-      <div class="cmd-name">/economy kasino dostihy &lt;castka&gt; [kůň emoji]</div>
+      <div class="cmd-name">/economy casino dostihy &lt;castka&gt; [kůň emoji]</div>
       <div class="cmd-desc">5 koní, náhodný vítěz, výplata ×2/×3/×5. Talisman zvyšuje šanci.</div>
       <span class="cmd-tag tag-casino">Casino</span>
     </div>
@@ -726,18 +726,18 @@ section:nth-child(3){animation-delay:0.15s}
 <!-- ═══ OBCHOD ═══ -->
 <section id="obchod">
   <h2><span class="sec-icon">🏪</span> Obchod</h2>
-  <p>Příkazy: <code>/economy obchod</code> — prohlédnout, <code>/economy koupit &lt;item_id&gt;</code> — zakoupit, <code>/economy inventar</code> — přehled zakoupených.</p>
+  <p>Příkazy: <code>/economy shop</code> — prohlédnout, <code>/economy buy &lt;item_id&gt;</code> — zakoupit, <code>/economy inventory</code> — přehled zakoupených.</p>
 
   <div class="shop-grid">
     <div class="shop-item">
       <div class="item-name">🛡️ Štít proti krádeži</div>
       <div class="item-price">5 000 | 24h</div>
-      <div class="item-desc">Blokuje pokusy o <code>/economy kradout</code> tvé hotovosti.</div>
+      <div class="item-desc">Blokuje pokusy o <code>/economy rob</code> tvé hotovosti.</div>
     </div>
     <div class="shop-item">
       <div class="item-name">⚡ Pracovní boost</div>
       <div class="item-price">3 000 | 8h</div>
-      <div class="item-desc">Zdvojnásobí výdělek z <code>/economy prace</code>.</div>
+      <div class="item-desc">Zdvojnásobí výdělek z <code>/economy work</code>.</div>
     </div>
     <div class="shop-item">
       <div class="item-name">✨ XP Boost</div>
@@ -780,10 +780,10 @@ section:nth-child(3){animation-delay:0.15s}
     <thead><tr><th>Mise</th><th>Popis</th><th>Cíl</th><th>Odměna</th><th>Sledováno při</th></tr></thead>
     <tbody>
       <tr><td>🗣️ Chatař</td><td>Pošli zprávy</td><td>10</td><td>500</td><td>Každé zprávě v kanálu</td></tr>
-      <tr><td>🔍 Průzkumník</td><td>Použij příkazy bota</td><td>5</td><td>300</td><td><code>/economy prace</code>, <code>/economy investice</code>, <code>/economy kasino</code>…</td></tr>
-      <tr><td>🎰 Hazardér</td><td>Zahraj kasino</td><td>3</td><td>800</td><td><code>/economy kasino</code></td></tr>
-      <tr><td>🥷 Zloděj</td><td>Pokus se o krádež</td><td>1</td><td>400</td><td><code>/economy kradout</code></td></tr>
-      <tr><td>💰 Spořič</td><td>Vlož do banky</td><td>2</td><td>600</td><td>Tlačítko Vložit v <code>/economy banka</code></td></tr>
+      <tr><td>🔍 Průzkumník</td><td>Použij příkazy bota</td><td>5</td><td>300</td><td><code>/economy work</code>, <code>/economy invest</code>, <code>/economy casino</code>…</td></tr>
+      <tr><td>🎰 Hazardér</td><td>Zahraj kasino</td><td>3</td><td>800</td><td><code>/economy casino</code></td></tr>
+      <tr><td>🥷 Zloděj</td><td>Pokus se o krádež</td><td>1</td><td>400</td><td><code>/economy rob</code></td></tr>
+      <tr><td>💰 Spořič</td><td>Vlož do banky</td><td>2</td><td>600</td><td>Tlačítko Vložit v <code>/economy bank</code></td></tr>
     </tbody>
   </table>
 </section>
@@ -810,7 +810,7 @@ section:nth-child(3){animation-delay:0.15s}
 <!-- ═══ PVP ═══ -->
 <section id="pvp">
   <h2><span class="sec-icon">🥷</span> PvP — Krádeže</h2>
-  <p>Příkaz <code>/economy kradout &lt;obet&gt;</code> — pokusí se ukrást část hotovosti jiného hráče.</p>
+  <p>Příkaz <code>/economy rob &lt;obet&gt;</code> — pokusí se ukrást část hotovosti jiného hráče.</p>
   <table>
     <thead><tr><th>Podmínka</th><th>Hodnota</th></tr></thead>
     <tbody>
@@ -827,7 +827,7 @@ section:nth-child(3){animation-delay:0.15s}
 <!-- ═══ PŮJČKY ═══ -->
 <section id="pujcky">
   <h2><span class="sec-icon">💸</span> Půjčky</h2>
-  <p>Příkaz <code>/economy pujcka vzit &lt;castka&gt;</code> / <code>/economy pujcka splatit &lt;castka&gt;</code>.</p>
+  <p>Příkaz <code>/economy loan vzit &lt;castka&gt;</code> / <code>/economy loan splatit &lt;castka&gt;</code>.</p>
   <table>
     <thead><tr><th>Parametr</th><th>Hodnota</th></tr></thead>
     <tbody>
@@ -848,7 +848,7 @@ section:nth-child(3){animation-delay:0.15s}
   <h2><span class="sec-icon">🏦</span> Komunitní fond</h2>
   <p>Fond je sdílená globální peněženka plněná z pokut, kasinových poplatků a zlodějských pokut. Hráči hlasují o jeho využití.</p>
 
-  <h3>Příkaz /economy fond-hlasovani</h3>
+  <h3>Příkaz /economy fund-vote</h3>
   <p>Otevře hlasování se třemi možnostmi. Každý hráč může hlasovat jednou. Admin tlačítkem vyhodnotí výsledek:</p>
   <table>
     <thead><tr><th>Možnost</th><th>Efekt</th><th>Náklady</th></tr></thead>
@@ -867,7 +867,7 @@ section:nth-child(3){animation-delay:0.15s}
   <h2><span class="sec-icon">🔑</span> Admin příkazy</h2>
   <div class="cmd-grid">
     <div class="cmd-card">
-      <div class="cmd-name">/economy ekonomika-nastavit</div>
+      <div class="cmd-name">/economy setup</div>
       <div class="cmd-desc">Zapne/vypne ekonomiku, nastaví název měny a hlavní oznamovací kanál pro server.</div>
       <span class="cmd-tag tag-admin">Admin</span>
     </div>
@@ -877,17 +877,17 @@ section:nth-child(3){animation-delay:0.15s}
       <span class="cmd-tag tag-admin">Admin</span><span class="cmd-tag tag-new">Nové</span>
     </div>
     <div class="cmd-card">
-      <div class="cmd-name">/economy admin-dej-penize &lt;hráč&gt; &lt;částka&gt;</div>
+      <div class="cmd-name">/economy give_money &lt;hráč&gt; &lt;částka&gt;</div>
       <div class="cmd-desc">Přidá nebo odebere cash hráči (záporné číslo = odebrání).</div>
       <span class="cmd-tag tag-admin">Admin</span>
     </div>
     <div class="cmd-card">
-      <div class="cmd-name">/economy admin-reset &lt;hráč&gt;</div>
+      <div class="cmd-name">/economy reset_player &lt;hráč&gt;</div>
       <div class="cmd-desc">Resetuje ekonomiku hráče na výchozí hodnoty (1 000 cash, vše ostatní 0).</div>
       <span class="cmd-tag tag-admin">Admin</span>
     </div>
     <div class="cmd-card">
-      <div class="cmd-name">/economy fond-hlasovani (tlačítko Vyhodnotit)</div>
+      <div class="cmd-name">/economy fund-vote (tlačítko Vyhodnotit)</div>
       <div class="cmd-desc">Pouze admin může stisknout tlačítko pro vyhodnocení hlasování o fondu.</div>
       <span class="cmd-tag tag-admin">Admin</span>
     </div>
