@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CZBOT Economy — Dokumentace</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:         #0c0e14;
+  --surface:    #13161f;
+  --surface2:   #1c2030;
+  --border:     #252b3b;
+  --accent:     #7c6af7;
+  --accent2:    #f7c76a;
+  --accent3:    #6af7c2;
+  --red:        #f7716a;
+  --text:       #e8eaf2;
+  --muted:      #7a8299;
+  --mono:       'Space Mono', monospace;
+  --sans:       'Syne', sans-serif;
+  --radius:     10px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--sans);
+  font-size:16px;
+  line-height:1.65;
+  overflow-x:hidden;
+}
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;
+}
+.wrapper{
+  display:grid;
+  grid-template-columns:270px 1fr;
+  min-height:100vh;
+  position:relative;z-index:1;
+}
+nav{
+  position:sticky;top:0;height:100vh;overflow-y:auto;
+  background:var(--surface);
+  border-right:1px solid var(--border);
+  padding:2rem 1.5rem;
+  display:flex;flex-direction:column;gap:0.2rem;
+}
+.nav-logo{
+  font-family:var(--mono);font-size:1.05rem;font-weight:700;
+  color:var(--accent2);margin-bottom:1.75rem;padding-bottom:1.25rem;
+  border-bottom:1px solid var(--border);letter-spacing:0.05em;
+}
+.nav-logo span{color:var(--accent);}
+.nav-section{
+  font-size:0.68rem;font-weight:700;letter-spacing:0.15em;
+  text-transform:uppercase;color:var(--muted);margin:1.1rem 0 0.4rem;
+}
+nav a{
+  display:block;padding:0.35rem 0.75rem;border-radius:6px;
+  color:var(--muted);text-decoration:none;font-size:0.86rem;transition:all 0.15s;
+}
+nav a:hover{background:var(--surface2);color:var(--text);}
+nav a.active{background:var(--accent);color:#fff;}
+main{padding:3rem 3.5rem;max-width:920px;}
+
+/* HERO */
+.hero{margin-bottom:4rem;padding-bottom:3rem;border-bottom:1px solid var(--border);}
+.hero-eyebrow{
+  font-family:var(--mono);font-size:0.72rem;letter-spacing:0.2em;
+  text-transform:uppercase;color:var(--accent3);margin-bottom:1rem;
+}
+.hero h1{font-size:3.2rem;font-weight:800;line-height:1.1;margin-bottom:1rem;}
+.hero h1 span{color:var(--accent);}
+.hero p{font-size:1.1rem;color:var(--muted);max-width:580px;}
+.badge-row{display:flex;gap:0.75rem;margin-top:1.5rem;flex-wrap:wrap;}
+.badge{
+  font-family:var(--mono);font-size:0.72rem;padding:0.3rem 0.75rem;
+  border-radius:100px;border:1px solid;
+}
+.badge-purple{border-color:var(--accent);color:var(--accent);}
+.badge-gold{border-color:var(--accent2);color:var(--accent2);}
+.badge-teal{border-color:var(--accent3);color:var(--accent3);}
+.badge-red{border-color:var(--red);color:var(--red);}
+
+/* SECTIONS */
+section{margin-bottom:3.5rem;}
+h2{font-size:1.7rem;font-weight:700;margin-bottom:1.5rem;display:flex;align-items:center;gap:0.75rem;}
+h2 .sec-icon{
+  width:34px;height:34px;background:var(--surface2);border:1px solid var(--border);
+  border-radius:8px;display:grid;place-items:center;font-size:1rem;flex-shrink:0;
+}
+h3{font-size:1.05rem;font-weight:600;color:var(--accent2);margin:1.75rem 0 0.75rem;}
+p{color:var(--muted);margin-bottom:0.75rem;}
+
+/* COMMAND CARDS */
+.cmd-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.cmd-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);padding:1.25rem 1.5rem;
+  transition:border-color 0.2s,transform 0.15s;
+}
+.cmd-card:hover{border-color:var(--accent);transform:translateY(-2px);}
+.cmd-name{font-family:var(--mono);font-size:0.88rem;color:var(--accent);margin-bottom:0.4rem;}
+.cmd-desc{font-size:0.87rem;color:var(--muted);margin-bottom:0;}
+.cmd-tag{
+  display:inline-block;font-family:var(--mono);font-size:0.63rem;
+  padding:0.15rem 0.5rem;border-radius:4px;margin-top:0.5rem;margin-right:0.25rem;
+}
+.tag-hrac{background:rgba(124,106,247,0.15);color:var(--accent);}
+.tag-admin{background:rgba(247,113,106,0.15);color:var(--red);}
+.tag-new{background:rgba(106,247,194,0.15);color:var(--accent3);}
+.tag-upd{background:rgba(247,199,106,0.15);color:var(--accent2);}
+.tag-public{background:rgba(106,247,194,0.1);color:var(--accent3);}
+.tag-ephem{background:rgba(124,106,247,0.1);color:var(--muted);}
+
+/* FEATURE BLOCK */
+.feature-block{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;
+}
+.feature-block .feature-title{font-weight:700;margin-bottom:0.5rem;display:flex;align-items:center;gap:0.5rem;}
+.feature-block p{font-size:0.9rem;color:var(--muted);margin-bottom:0;}
+
+/* TABLE */
+table{width:100%;border-collapse:collapse;margin-bottom:1rem;font-size:0.9rem;}
+th{
+  background:var(--surface2);color:var(--muted);font-family:var(--mono);
+  font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;
+  padding:0.65rem 1rem;text-align:left;border-bottom:1px solid var(--border);
+}
+td{padding:0.65rem 1rem;border-bottom:1px solid var(--border);color:var(--text);}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:rgba(124,106,247,0.04);}
+code{
+  font-family:var(--mono);font-size:0.82rem;
+  background:var(--surface2);padding:0.1rem 0.4rem;
+  border-radius:4px;color:var(--accent3);
+}
+
+/* CALLOUT */
+.callout{
+  display:flex;gap:1rem;align-items:flex-start;
+  border-radius:var(--radius);padding:1rem 1.25rem;margin:1rem 0;
+  border:1px solid;
+}
+.callout-icon{font-size:1.2rem;flex-shrink:0;margin-top:0.1rem;}
+.callout div{font-size:0.9rem;}
+.callout-info{background:rgba(124,106,247,0.08);border-color:rgba(124,106,247,0.3);color:var(--text);}
+.callout-warn{background:rgba(247,199,106,0.08);border-color:rgba(247,199,106,0.3);color:var(--text);}
+.callout-success{background:rgba(106,247,194,0.08);border-color:rgba(106,247,194,0.3);color:var(--text);}
+.callout-danger{background:rgba(247,113,106,0.08);border-color:rgba(247,113,106,0.3);color:var(--text);}
+
+/* SHOP GRID */
+.shop-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;}
+.shop-item{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);padding:1.1rem 1.25rem;
+  transition:border-color 0.2s;
+}
+.shop-item:hover{border-color:var(--accent2);}
+.item-name{font-weight:700;font-size:0.95rem;margin-bottom:0.25rem;}
+.item-price{font-family:var(--mono);font-size:0.78rem;color:var(--accent2);margin-bottom:0.4rem;}
+.item-desc{font-size:0.85rem;color:var(--muted);}
+
+/* PRESTIGE */
+.prestige-row{
+  display:flex;gap:1.25rem;align-items:center;
+  padding:0.85rem 1rem;border-radius:8px;
+  background:var(--surface);border:1px solid var(--border);margin-bottom:0.6rem;
+  transition:border-color 0.2s;
+}
+.prestige-row:hover{border-color:var(--accent);}
+.prestige-level{
+  font-family:var(--mono);font-size:1.2rem;font-weight:700;
+  color:var(--accent2);min-width:2.5rem;text-align:center;
+}
+.prestige-title{font-weight:700;margin-bottom:0.15rem;}
+.prestige-bonus{font-size:0.85rem;color:var(--muted);}
+
+/* JOBS GRID */
+.jobs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;}
+.job-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:8px;padding:0.85rem 1rem;
+}
+.job-emoji{font-size:1.3rem;margin-bottom:0.3rem;}
+.job-range{font-family:var(--mono);font-size:0.75rem;color:var(--accent3);}
+.job-name{font-size:0.88rem;font-weight:600;margin-bottom:0.2rem;}
+
+/* CASINO GRID */
+.casino-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;}
+.casino-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);padding:1.25rem;
+}
+.casino-title{font-weight:700;font-size:1rem;margin-bottom:0.5rem;}
+.casino-detail{font-size:0.85rem;color:var(--muted);}
+.casino-detail li{margin-bottom:0.2rem;list-style:none;padding-left:1rem;position:relative;}
+.casino-detail li::before{content:"→";position:absolute;left:0;color:var(--accent);}
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+<!-- ═══ SIDEBAR ═══ -->
+<nav>
+  <div class="nav-logo">CZ<span>BOT</span> Economy</div>
+
+  <div class="nav-section">Základy</div>
+  <a href="#uvod">Úvod</a>
+  <a href="#prikazy">Přehled příkazů</a>
+
+  <div class="nav-section">Herní systémy</div>
+  <a href="#prace">Práce</a>
+  <a href="#banka">Banka</a>
+  <a href="#invest">Investice CZBOT</a>
+  <a href="#akcie-eventy">Tržní eventy</a>
+  <a href="#casino">Kasino</a>
+  <a href="#pvp">PvP — Krádeže</a>
+  <a href="#heist">Bank Heist</a>
+  <a href="#pujcky">Půjčky</a>
+  <a href="#fond">Komunitní fond</a>
+
+  <div class="nav-section">Progrese</div>
+  <a href="#mise">Mise</a>
+  <a href="#prestiz">Prestiž</a>
+  <a href="#obchod">Obchod</a>
+  <a href="#xp">XP konverze</a>
+
+  <div class="nav-section">Admin</div>
+  <a href="#admin-cmd">Admin příkazy</a>
+</nav>
+
+<!-- ═══ MAIN ═══ -->
+<main>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Dokumentace · Aktuální verze</div>
+  <h1>CZBOT <span>Economy</span></h1>
+  <p>Kompletní průvodce ekonomickým systémem — práce, investice, kasino, PvP krádeže, mise, prestiž a správa serveru.</p>
+  <div class="badge-row">
+    <span class="badge badge-teal">Startovní cash: 1 000</span>
+    <span class="badge badge-gold">Počáteční kurz CZBOT: 10 000</span>
+    <span class="badge badge-purple">Komunitní fond: 20 000 start</span>
+    <span class="badge badge-red">Eventy každé 2h</span>
+  </div>
+</div>
+
+<!-- ═══ ÚVOD ═══ -->
+<section id="uvod">
+  <h2><span class="sec-icon">📖</span> Úvod</h2>
+  <p>Economy modul musí být aktivován adminem přes <code>/economy setup</code>. Každý příkaz ověřuje dvoustupňově: nejdříve zda je modul povolen v nastavení, pak zda je ekonomika aktivní na daném serveru.</p>
+
+  <div class="callout callout-info">
+    <span class="callout-icon">🌐</span>
+    <div>Všechny příkazy jsou <strong>plně lokalizované</strong> — Discord zobrazuje názvy voleb, popisky parametrů i tlačítka ve tvém jazyce (CS / EN / PL). Výsledky <em>ephemeral</em> příkazů jsou v jazyce uživatele, výsledky <em>veřejných</em> příkazů v jazyce serveru.</div>
+  </div>
+
+  <div class="callout callout-warn">
+    <span class="callout-icon">⏱️</span>
+    <div>Každý příkaz používá <strong>defer</strong> jako pojistku pro případ pomalé odezvy databáze nebo Redis cache.</div>
+  </div>
+</section>
+
+<!-- ═══ PŘEHLED PŘÍKAZŮ ═══ -->
+<section id="prikazy">
+  <h2><span class="sec-icon">⚡</span> Přehled příkazů</h2>
+
+  <h3>Hráčské příkazy</h3>
+  <div class="cmd-grid">
+    <div class="cmd-card">
+      <div class="cmd-name">/economy status [hráč]</div>
+      <div class="cmd-desc">Zobrazí přehled hotovosti, banky, akcií, čistého jmění a prestiže. Nepovinný parametr pro zobrazení jiného hráče.</div>
+      <span class="cmd-tag tag-hrac">Hráč</span><span class="cmd-tag tag-ephem">Ephemeral</span>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">/economy bank</div>
+      <div class="cmd-desc">Správa banky — vklad a výběr přes interaktivní tlačítka s modálním formulářem.</div>
+      <span class="cmd-tag tag-hrac">Hráč</span><span class="cmd-tag tag-ephem">Ephemeral</span>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">/economy daily-reward</div>
+      <div class="cmd-desc">Denní odměna s bonusem za streak. Cooldown 20 hodin. Prestiž bonusem zvyšuje odměnu.</div>
+      <span class="cmd-tag tag-hrac">Hráč</span><span class="cmd-tag tag-ephem">Ephemeral</span>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">/economy missions [typ]</div>
+      <div class="cmd-desc">Zobrazí aktuální denní nebo týdenní mise a jejich postup. Volba: <em>Denní / Týdenní</em>.</div>
+      <span class="cmd-tag tag-hrac">Hráč</span><span class="cmd-tag tag-ephem">Ephemeral</span>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">/economy work</div>
+      <div class="cmd-desc">Náhodná práce z 26 povolání. Cooldown 4 hodiny. Work Boost zdvojnásobí výdělek.</div>
+      <span class="cmd-tag tag-hrac">Hráč</span><span class="cmd-tag tag-ephem">Ephemeral</span>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">/economy rob &lt;oběť&gt;</div>
+      <div class="cmd-desc">Pokus o krádež hotovosti. Při chycení → vězení 12h. Cooldown 1 hodina.</div>
+      <span class="cmd-tag tag-hrac">Hráč</span><span class="cmd-tag tag-public">Veřejný</span>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">/economy pay &lt;hráč&gt; &lt;částka&gt;</div>
+      <div class="cmd-desc">Pošle hotovost jinému hráči. Veřejně oznámeno v kanálu.</div>
+      <span class="cmd-tag tag-hrac">Hráč</span><span class="cmd-tag tag-public">Veřejný</span>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">/economy invest &lt;akce&gt; &lt;typ&gt; &lt;hodnota&gt;</div>
+      <div class="cmd-desc">Nákup/prodej akcií CZBOT. Podporuje celé i zlomkové akcie. Lze zadat „vše/all" pro nákup za veškerou hotovost nebo prodej všech akcií.</div>
+      <span class="cmd-tag tag-hrac">Hráč</span><span class="cmd-tag tag-ephem">Ephemeral</span><span class="cmd-tag tag-new">Zlomky</span>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">/economy casino &lt;hra&gt; &lt;sázka&gt;</div>
+      <div class="cmd-desc">Kasino hry: Coinflip 🪙, Kostky 🎲, Blackjack 🃏, Dostihy 🏇.</div>
+      <span class="cmd-tag tag-hrac">Hráč</span><span class="cmd-tag tag-ephem">Ephemeral</span>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">/economy bank-heist &lt;sázka&gt;</div>
+      <div class="cmd-desc">Skupinová loupež banky. Cooldown 24 hodin. Ostatní se mohou přidat jako zloději nebo bránit jako policie.</div>
+      <span class="cmd-tag tag-hrac">Hráč</span><span class="cmd-tag tag-public">Veřejný</span>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">/economy shop</div>
+      <div class="cmd-desc">Prohlédnout dostupné předměty a boosty v obchodě.</div>
+      <span class="cmd-tag tag-hrac">Hráč</span><span class="cmd-tag tag-ephem">Ephemeral</span>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">/economy inventory</div>
+      <div class="cmd-desc">Přehled zakoupených předmětů a jejich zbývající doby platnosti.</div>
+      <span class="cmd-tag tag-hrac">Hráč</span><span class="cmd-tag tag-ephem">Ephemeral</span>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">/economy loan &lt;akce&gt; &lt;částka&gt;</div>
+      <div class="cmd-desc">Půjčka (max 50 000) nebo splácení dluhu. Akce: <em>Vzít 💰 / Splatit 💳</em>.</div>
+      <span class="cmd-tag tag-hrac">Hráč</span><span class="cmd-tag tag-ephem">Ephemeral</span>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">/economy fund-vote</div>
+      <div class="cmd-desc">Hlasování o využití komunitního fondu. Jednou za 24 hodin na hráče.</div>
+      <span class="cmd-tag tag-hrac">Hráč</span><span class="cmd-tag tag-public">Veřejný</span>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">/economy transactions</div>
+      <div class="cmd-desc">Historie posledních transakcí hráče.</div>
+      <span class="cmd-tag tag-hrac">Hráč</span><span class="cmd-tag tag-ephem">Ephemeral</span>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">/economy xp-convert &lt;xp&gt;</div>
+      <div class="cmd-desc">Převede serverové XP body na herní měnu. XP Boost zlevní konverzi.</div>
+      <span class="cmd-tag tag-hrac">Hráč</span><span class="cmd-tag tag-ephem">Ephemeral</span>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">/economy rate</div>
+      <div class="cmd-desc">Zobrazí aktuální kurz CZBOT akcií a trend.</div>
+      <span class="cmd-tag tag-hrac">Hráč</span><span class="cmd-tag tag-ephem">Ephemeral</span>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">/economy leaderboard</div>
+      <div class="cmd-desc">Žebříček top 10 hráčů podle čistého jmění na serveru.</div>
+      <span class="cmd-tag tag-hrac">Hráč</span><span class="cmd-tag tag-ephem">Ephemeral</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PRÁCE ═══ -->
+<section id="prace">
+  <h2><span class="sec-icon">💼</span> Práce</h2>
+  <p>Příkaz <code>/economy work</code> — cooldown <strong>4 hodiny</strong>. Bot náhodně vybere jedno z 26 povolání a vyplatí odpovídající odměnu.</p>
+
+  <div class="callout callout-info">
+    <span class="callout-icon">⚡</span>
+    <div>Předmět <strong>Work Boost</strong> z obchodu zvýší výdělek o 30 % na 4 hodiny. Prestiž bonus se přidá procentuálně nad základní výdělek.</div>
+  </div>
+
+  <h3>Dostupná povolání</h3>
+  <div class="jobs-grid">
+    <div class="job-card"><div class="job-emoji">🔨</div><div class="job-name">Moderátor</div><div class="job-range">500 – 1 500</div></div>
+    <div class="job-card"><div class="job-emoji">🤖</div><div class="job-name">AI Programátor</div><div class="job-range">1 500 – 5 000</div></div>
+    <div class="job-card"><div class="job-emoji">💻</div><div class="job-name">Hacker</div><div class="job-range">1 000 – 6 000</div></div>
+    <div class="job-card"><div class="job-emoji">🐛</div><div class="job-name">Bug Bounty Hunter</div><div class="job-range">2 000 – 10 000</div></div>
+    <div class="job-card"><div class="job-emoji">📊</div><div class="job-name">Trader</div><div class="job-range">−500 – 8 000</div></div>
+    <div class="job-card"><div class="job-emoji">🎨</div><div class="job-name">NFT Artist</div><div class="job-range">50 – 8 000</div></div>
+    <div class="job-card"><div class="job-emoji">🕹️</div><div class="job-name">Game Tester</div><div class="job-range">800 – 2 000</div></div>
+    <div class="job-card"><div class="job-emoji">🖥️</div><div class="job-name">Správce sítě</div><div class="job-range">1 200 – 3 500</div></div>
+    <div class="job-card"><div class="job-emoji">🎥</div><div class="job-name">Streamer</div><div class="job-range">300 – 3 000</div></div>
+    <div class="job-card"><div class="job-emoji">▶️</div><div class="job-name">YouTuber</div><div class="job-range">400 – 3 500</div></div>
+    <div class="job-card"><div class="job-emoji">🖌️</div><div class="job-name">Designer</div><div class="job-range">600 – 2 500</div></div>
+    <div class="job-card"><div class="job-emoji">✍️</div><div class="job-name">Copywriter</div><div class="job-range">500 – 2 000</div></div>
+    <div class="job-card"><div class="job-emoji">🎙️</div><div class="job-name">Podcaster</div><div class="job-range">200 – 2 800</div></div>
+    <div class="job-card"><div class="job-emoji">🚗</div><div class="job-name">Řidič</div><div class="job-range">350 – 800</div></div>
+    <div class="job-card"><div class="job-emoji">🌙</div><div class="job-name">Noční hlídač</div><div class="job-range">200 – 700</div></div>
+    <div class="job-card"><div class="job-emoji">☕</div><div class="job-name">Barista</div><div class="job-range">250 – 600</div></div>
+    <div class="job-card"><div class="job-emoji">🚪</div><div class="job-name">Vyhazovač</div><div class="job-range">400 – 1 200</div></div>
+    <div class="job-card"><div class="job-emoji">⚡</div><div class="job-name">Elektrikář</div><div class="job-range">700 – 2 200</div></div>
+    <div class="job-card"><div class="job-emoji">👨‍🍳</div><div class="job-name">Kuchař</div><div class="job-range">450 – 1 400</div></div>
+    <div class="job-card"><div class="job-emoji">📈</div><div class="job-name">Makléř</div><div class="job-range">−2 000 – 15 000</div></div>
+    <div class="job-card"><div class="job-emoji">🍋</div><div class="job-name">Prodavač limonád</div><div class="job-range">100 – 500</div></div>
+    <div class="job-card"><div class="job-emoji">🎰</div><div class="job-name">Profesionální hráč</div><div class="job-range">−3 000 – 12 000</div></div>
+    <div class="job-card"><div class="job-emoji">🕵️</div><div class="job-name">Detektiv</div><div class="job-range">900 – 4 500</div></div>
+    <div class="job-card"><div class="job-emoji">🗺️</div><div class="job-name">Průvodce</div><div class="job-range">300 – 1 500</div></div>
+    <div class="job-card"><div class="job-emoji">🏪</div><div class="job-name">Prodavač</div><div class="job-range">500 – 1 800</div></div>
+  </div>
+  <div class="callout callout-warn">
+    <span class="callout-icon">⚠️</span>
+    <div>Povolání jako <strong>Trader, Makléř nebo Profesionální hráč</strong> mohou vygenerovat záporný výsledek — přijdeš o peníze!</div>
+  </div>
+</section>
+
+<!-- ═══ BANKA ═══ -->
+<section id="banka">
+  <h2><span class="sec-icon">🏦</span> Banka</h2>
+  <p>Příkaz <code>/economy bank</code> — zobrazí stav bankovního účtu s tlačítky pro vklad a výběr. Tlačítka jsou přeložena dle jazyka uživatele.</p>
+  <table>
+    <thead><tr><th>Parametr</th><th>Hodnota</th></tr></thead>
+    <tbody>
+      <tr><td>Úroková sazba (výnos)</td><td>+0,05 % denně z vkladu</td></tr>
+      <tr><td>Poplatek za vedení</td><td>−0,03 % denně z vkladu</td></tr>
+      <tr><td>Automatické strhávání dluhu</td><td>0,5 % z dluhu denně ze zisku</td></tr>
+    </tbody>
+  </table>
+  <div class="callout callout-success">
+    <span class="callout-icon">🔒</span>
+    <div>Předmět <strong>Bankovní trezor</strong> odpouští denní poplatky za vedení. Úrok z vkladu stále plyne.</div>
+  </div>
+</section>
+
+<!-- ═══ INVESTICE ═══ -->
+<section id="invest">
+  <h2><span class="sec-icon">📈</span> Investice CZBOT</h2>
+  <p>Příkaz <code>/economy invest</code> — nákup a prodej akcií CZBOT tokenu. Akcie jsou ukládány jako mikro-podíly (×1 000 000), takže lze kupovat i <strong>zlomky akcií</strong>.</p>
+
+  <h3>Parametry příkazu</h3>
+  <table>
+    <thead><tr><th>Parametr</th><th>Volby</th><th>Popis</th></tr></thead>
+    <tbody>
+      <tr><td><code>akce</code></td><td>Koupit 📈 / Prodat 📉</td><td>Směr transakce</td></tr>
+      <tr><td><code>typ_nakupu</code></td><td>Akcie (počet) / Částka (měna)</td><td>Způsob zadání hodnoty</td></tr>
+      <tr><td><code>hodnota</code></td><td>číslo, desetinné číslo, nebo <code>vše</code> / <code>all</code></td><td>Kolik koupit/prodat</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Příklady použití</h3>
+  <table>
+    <thead><tr><th>Příklad</th><th>Výsledek</th></tr></thead>
+    <tbody>
+      <tr><td>akce: Koupit, typ: Akcie, hodnota: <code>5</code></td><td>Koupí 5 celých akcií za 5× kurz</td></tr>
+      <tr><td>akce: Koupit, typ: Akcie, hodnota: <code>0.5</code></td><td>Koupí 0,5 akcie za 0,5× kurz</td></tr>
+      <tr><td>akce: Koupit, typ: Částka, hodnota: <code>500</code></td><td>Koupí za přesně 500 (může být zlomek)</td></tr>
+      <tr><td>akce: Koupit, typ: Částka, hodnota: <code>vše</code></td><td>Koupí za veškerou dostupnou hotovost</td></tr>
+      <tr><td>akce: Prodat, typ: Akcie, hodnota: <code>vše</code></td><td>Prodá všechny akcie najednou</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-info">
+    <span class="callout-icon">💡</span>
+    <div>Kurz CZBOT se automaticky aktualizuje každých <strong>12 hodin</strong> (±30 % drift). Po každém tržním eventu je drift na 30 minut pozastaven, aby event nebyl okamžitě přebyt náhodným pohybem.</div>
+  </div>
+</section>
+
+<!-- ═══ TRŽNÍ EVENTY ═══ -->
+<section id="akcie-eventy">
+  <h2><span class="sec-icon">📊</span> Tržní eventy CZBOT</h2>
+  <p>Automatický event každé <strong>2 hodiny</strong>. Bot vždy pošle varování <strong>10 minut předem</strong>, poté proběhne změna kurzu. Po eventu je kurz chráněn 30 minut před běžným driftem.</p>
+
+  <h3>📈 Bull eventy (pozitivní)</h3>
+  <table>
+    <thead><tr><th>Emoji</th><th>Název</th><th>Typ</th><th>Změna kurzu</th></tr></thead>
+    <tbody>
+      <tr><td>🤝</td><td>Partnerství / Spolupráce</td><td>📈 Bull</td><td>+8 % až +22 %</td></tr>
+      <tr><td>🏛️</td><td>Regulační schválení</td><td>📈 Bull</td><td>+5 % až +18 %</td></tr>
+      <tr><td>🌍</td><td>Globální adopce</td><td>📈 Bull</td><td>+12 % až +30 %</td></tr>
+      <tr><td>🏦</td><td>Institucionální investice</td><td>📈 Bull</td><td>+10 % až +25 %</td></tr>
+      <tr><td>⛏️</td><td>Mining boom</td><td>📈 Bull</td><td>+15 % až +35 %</td></tr>
+      <tr><td>📢</td><td>Virální kampaň</td><td>📈 Bull</td><td>+6 % až +20 %</td></tr>
+      <tr><td>🤖</td><td>AI integrace</td><td>📈 Bull</td><td>+8 % až +18 %</td></tr>
+      <tr><td>📊</td><td>Pozitivní výsledky</td><td>📈 Bull</td><td>+4 % až +14 %</td></tr>
+    </tbody>
+  </table>
+
+  <h3>📉 Bear eventy (negativní)</h3>
+  <table>
+    <thead><tr><th>Emoji</th><th>Název</th><th>Typ</th><th>Změna kurzu</th></tr></thead>
+    <tbody>
+      <tr><td>💀</td><td>Krize zasáhla trhy</td><td>📉 Bear</td><td>−18 % až −40 %</td></tr>
+      <tr><td>🚫</td><td>Regulační zákaz</td><td>📉 Bear</td><td>−20 % až −35 %</td></tr>
+      <tr><td>🐋</td><td>Whale Dump</td><td>📉 Bear</td><td>−15 % až −30 %</td></tr>
+      <tr><td>🎰</td><td>Kasinový skandál</td><td>📉 Bear</td><td>−12 % až −25 %</td></tr>
+      <tr><td>💔</td><td>Krach partnera</td><td>📉 Bear</td><td>−13 % až −28 %</td></tr>
+      <tr><td>🔒</td><td>Kyberútok na infrastrukturu</td><td>📉 Bear</td><td>−8 % až −20 %</td></tr>
+      <tr><td>📰</td><td>Mediální bouře</td><td>📉 Bear</td><td>−10 % až −22 %</td></tr>
+      <tr><td>📉</td><td>Flash Crash</td><td>📉 Bear</td><td>−22 % až −45 %</td></tr>
+    </tbody>
+  </table>
+
+  <h3>🌀 Wild eventy (extrémně volatilní)</h3>
+  <table>
+    <thead><tr><th>Emoji</th><th>Název</th><th>Typ</th><th>Rozsah (oběma směry)</th></tr></thead>
+    <tbody>
+      <tr><td>🦢</td><td>Black Swan Event</td><td>🌀 Wild</td><td>−60 % až +60 %</td></tr>
+      <tr><td>🚀</td><td>Memecoin Frenzy</td><td>🌀 Wild</td><td>−50 % až +100 %</td></tr>
+      <tr><td>⚛️</td><td>Kvantový computing útok</td><td>🌀 Wild</td><td>−55 % až +50 %</td></tr>
+      <tr><td>🌐</td><td>Geopolitická krize</td><td>🌀 Wild</td><td>−50 % až +40 %</td></tr>
+      <tr><td>🔬</td><td>Výsledky výzkumu</td><td>🌀 Wild</td><td>−40 % až +45 %</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ═══ KASINO ═══ -->
+<section id="casino">
+  <h2><span class="sec-icon">🎰</span> Kasino</h2>
+  <p>Příkaz <code>/economy casino</code> — výběr hry přes lokalizované choices. Předmět <strong>Šťastný talisman</strong> zvyšuje šanci v kasinu a dostihy.</p>
+
+  <div class="casino-grid">
+    <div class="casino-card">
+      <div class="casino-title">🪙 Coinflip</div>
+      <ul class="casino-detail">
+        <li>Volba: hlava / panna</li>
+        <li>Šance 50/50</li>
+        <li>Výhra: 2× sázka</li>
+      </ul>
+    </div>
+    <div class="casino-card">
+      <div class="casino-title">🎲 Kostky</div>
+      <ul class="casino-detail">
+        <li>Hráč vs. bot (1–6)</li>
+        <li>Remíza → vrácení sázky</li>
+        <li>Výhra: 2× sázka</li>
+      </ul>
+    </div>
+    <div class="casino-card">
+      <div class="casino-title">🃏 Blackjack</div>
+      <ul class="casino-detail">
+        <li>Klasická hra — cíl 21</li>
+        <li>Tlačítka: Lístek / Stát</li>
+        <li>Výhra: 2× sázka, Blackjack: 2,5×</li>
+      </ul>
+    </div>
+    <div class="casino-card">
+      <div class="casino-title">🏇 Dostihy</div>
+      <ul class="casino-detail">
+        <li>4 koně, sázka na jednoho</li>
+        <li>Výhra: 4× sázka</li>
+        <li>Šťastný talisman: +30 % šance</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PVP ═══ -->
+<section id="pvp">
+  <h2><span class="sec-icon">🥷</span> PvP — Krádeže</h2>
+  <p>Příkaz <code>/economy rob &lt;oběť&gt;</code> — pokus o krádež hotovosti. Výsledek je vždy oznámen veřejně v kanálu serveru v jazyce serveru.</p>
+  <table>
+    <thead><tr><th>Podmínka</th><th>Hodnota</th></tr></thead>
+    <tbody>
+      <tr><td>Cooldown (úspěch i neúspěch)</td><td>1 hodina</td></tr>
+      <tr><td>Vězení při chycení</td><td>12 hodin — nelze loupit</td></tr>
+      <tr><td>Min. hotovost oběti</td><td>500</td></tr>
+      <tr><td>Šance na úspěch</td><td>40 % (+ 20 % s Rob Boost)</td></tr>
+      <tr><td>Ukradená část (úspěch)</td><td>10–40 % hotovosti oběti</td></tr>
+      <tr><td>Pokuta při chycení</td><td>500–2 000 → Komunitní fond</td></tr>
+      <tr><td>Snížení pokuty</td><td>50 % s předmětem 🛡️ Rob Shield</td></tr>
+    </tbody>
+  </table>
+  <div class="callout callout-danger">
+    <span class="callout-icon">🔒</span>
+    <div>Pokud jsi ve <strong>vězení</strong>, příkaz <code>/economy rob</code> zobrazí odpočet do propuštění. Cooldown a vězení jsou oddělené — po propuštění začíná běžný 1h cooldown.</div>
+  </div>
+</section>
+
+<!-- ═══ BANK HEIST ═══ -->
+<section id="heist">
+  <h2><span class="sec-icon">🏦</span> Bank Heist</h2>
+  <p>Příkaz <code>/economy bank-heist &lt;sázka&gt;</code> — skupinová loupež bankovního komunitního fondu. Výsledek oznámen veřejně. Cooldown <strong>24 hodin</strong>.</p>
+
+  <div class="feature-block">
+    <div class="feature-title">🥷 Zloději</div>
+    <p>Leader spustí heist, ostatní se mohou přidat tlačítkem <em>Join</em>. Každý zloděj vsází 500. Šance na úspěch: <code>50 % + 3 % za každého zloděje − 5 % za každého obránce</code>. Minimálně 10 %.</p>
+  </div>
+  <div class="feature-block">
+    <div class="feature-title">🚔 Obránci</div>
+    <p>Hráči mohou kliknout <em>Policie</em> a snížit šanci zlodějů. Obránce riskuje pouze svůj čas.</p>
+  </div>
+  <div class="feature-block">
+    <div class="feature-title">💰 Výsledek</div>
+    <p><strong>Úspěch:</strong> Zloději ukradnou až 30 % komunitního fondu (max 100 000), rovnoměrně rozděleno. <strong>Neúspěch:</strong> Každý zloděj zaplatí pokutu 1 500 do fondu.</p>
+  </div>
+
+  <div class="callout callout-info">
+    <span class="callout-icon">🌐</span>
+    <div>Tlačítka v heist embedu (Join, Policie, Spustit loupež) jsou zobrazena v jazyce serveru. Zprávy o chybách jsou v jazyce konkrétního uživatele.</div>
+  </div>
+</section>
+
+<!-- ═══ PŮJČKY ═══ -->
+<section id="pujcky">
+  <h2><span class="sec-icon">💸</span> Půjčky</h2>
+  <p>Příkaz <code>/economy loan</code> — výběr akce přes lokalizované choices <em>Vzít 💰</em> nebo <em>Splatit 💳</em>.</p>
+  <table>
+    <thead><tr><th>Parametr</th><th>Hodnota</th></tr></thead>
+    <tbody>
+      <tr><td>Maximální půjčka</td><td>50 000</td></tr>
+      <tr><td>Úrok při splácení</td><td>1 % ze splátky</td></tr>
+      <tr><td>Automatické strhávání</td><td>0,5 % z dluhu denně ze zisku</td></tr>
+      <tr><td>Druhá půjčka</td><td>Nelze, dokud není splacena první</td></tr>
+    </tbody>
+  </table>
+  <div class="callout callout-success">
+    <span class="callout-icon">📜</span>
+    <div>Předmět <strong>Odpuštění dluhu</strong> z obchodu okamžitě smaže celý dluh bez úroku.</div>
+  </div>
+</section>
+
+<!-- ═══ KOMUNITNÍ FOND ═══ -->
+<section id="fond">
+  <h2><span class="sec-icon">🏛️</span> Komunitní fond</h2>
+  <p>Sdílená globální peněženka plněná z pokut za loupež, kasinových poplatků a neúspěšných bank-heist pokusů. Startovní hodnota: <strong>20 000</strong>.</p>
+
+  <h3>Hlasování /economy fund-vote</h3>
+  <p>Každý hráč může hlasovat jednou za <strong>24 hodin</strong>. Admin tlačítkem vyhodnotí výsledek.</p>
+  <table>
+    <thead><tr><th>Možnost</th><th>Efekt</th><th>Náklady</th></tr></thead>
+    <tbody>
+      <tr><td>📈 Boost CZBOT kurzu (+5 %)</td><td>Okamžité zvýšení kurzu</td><td>10 000 z fondu</td></tr>
+      <tr><td>💰 Rozdělit mezi TOP 5</td><td>Fond rozdělen rovnoměrně</td><td>Celý fond</td></tr>
+      <tr><td>🎁 Bonus pro všechny (+200)</td><td>Každý hráč dostane +200</td><td>200 × počet hráčů</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ═══ MISE ═══ -->
+<section id="mise">
+  <h2><span class="sec-icon">📋</span> Mise</h2>
+  <p>Příkaz <code>/economy missions [typ]</code> — zobrazí postup misí. Při splnění mise přijde <strong>ephemeral notifikace přímo v kanálu</strong> (nikoliv DM) s názvem serveru a odměnou. Progress se sleduje automaticky.</p>
+
+  <h3>Denní mise (reset každý den)</h3>
+  <table>
+    <thead><tr><th>Mise</th><th>Popis</th><th>Cíl</th><th>Odměna</th><th>Sledováno při</th></tr></thead>
+    <tbody>
+      <tr><td>🗣️ Chatař</td><td>Pošli zprávy v kanálech</td><td>10</td><td>500</td><td>Každé zprávě</td></tr>
+      <tr><td>🔍 Průzkumník</td><td>Použij příkazy bota</td><td>5</td><td>300</td><td>Jakémkoliv slash příkazu CZBota</td></tr>
+      <tr><td>🎰 Hazardér</td><td>Zahraj kasino</td><td>3</td><td>800</td><td><code>/economy casino</code></td></tr>
+      <tr><td>🥷 Zloděj</td><td>Pokus se o krádež</td><td>1</td><td>400</td><td><code>/economy rob</code></td></tr>
+      <tr><td>💰 Spořič</td><td>Vlož do banky</td><td>1</td><td>250</td><td>Tlačítko Vložit v <code>/economy bank</code></td></tr>
+      <tr><td>💼 Pracant</td><td>Pracuj</td><td>2</td><td>600</td><td><code>/economy work</code></td></tr>
+    </tbody>
+  </table>
+
+  <h3>Týdenní mise (reset každé pondělí)</h3>
+  <table>
+    <thead><tr><th>Mise</th><th>Popis</th><th>Cíl</th><th>Odměna</th></tr></thead>
+    <tbody>
+      <tr><td>💸 Vydělej 10 000</td><td>Celkový výdělek za týden</td><td>10 000</td><td>5 000</td></tr>
+      <tr><td>🎰 Hráč týdne</td><td>Zahraj kasino 10×</td><td>10</td><td>3 000</td></tr>
+      <tr><td>📅 Věrný hráč</td><td>Přihlaš se 5 dní v týdnu</td><td>5</td><td>7 500</td></tr>
+      <tr><td>🥷 Sériový zloděj</td><td>Loupit 3×</td><td>3</td><td>4 000</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-info">
+    <span class="callout-icon">🔍</span>
+    <div>Mise <strong>Průzkumník</strong> se počítá pro <em>všechny</em> slash příkazy CZBota — nejen economy. Kdykoli použiješ jakýkoliv příkaz bota, progress se zvýší.</div>
+  </div>
+</section>
+
+<!-- ═══ PRESTIŽ ═══ -->
+<section id="prestiz">
+  <h2><span class="sec-icon">⭐</span> Prestiž systém</h2>
+  <p>Volitelný reset majetku za trvalé výhody. Každá úroveň prestiže přidává <strong>+5 % bonus</strong> ke všem výdělkům. Vyžaduje čisté jmění alespoň <strong>500 000</strong>.</p>
+
+  <div class="prestige-row"><div class="prestige-level">0</div><div><div class="prestige-title">🌱 Nováček</div><div class="prestige-bonus">+0 % bonus | Start: 1 000</div></div></div>
+  <div class="prestige-row"><div class="prestige-level">1</div><div><div class="prestige-title">🥉 Obchodník</div><div class="prestige-bonus">+5 % bonus | Start: 1 000</div></div></div>
+  <div class="prestige-row"><div class="prestige-level">2</div><div><div class="prestige-title">🥈 Makléř</div><div class="prestige-bonus">+10 % bonus | Start: 1 000</div></div></div>
+  <div class="prestige-row"><div class="prestige-level">3+</div><div><div class="prestige-title">🥇 Investor a výše</div><div class="prestige-bonus">+5 % za každou další úroveň (kumulativně)</div></div></div>
+
+  <div class="callout callout-warn">
+    <span class="callout-icon">⚠️</span>
+    <div>Prestiž resetuje <strong>cash, bank_balance, czbot_shares a loan_amount</strong>. Inventář, mise a prestige_bonus_pct zůstávají. Lze aktivovat přes předmět <strong>Prestiž Token</strong> z obchodu.</div>
+  </div>
+</section>
+
+<!-- ═══ OBCHOD ═══ -->
+<section id="obchod">
+  <h2><span class="sec-icon">🏪</span> Obchod</h2>
+  <p>Příkazy: <code>/economy shop</code> — prohlédnout, <code>/economy inventory</code> — přehled zakoupených předmětů.</p>
+
+  <div class="shop-grid">
+    <div class="shop-item">
+      <div class="item-name">🛡️ Rob Shield</div>
+      <div class="item-price">2 000 | Trvalý (pasivní)</div>
+      <div class="item-desc">Snižuje pokutu při chycení při loupeži o 50 %.</div>
+    </div>
+    <div class="shop-item">
+      <div class="item-name">🗡️ Rob Boost</div>
+      <div class="item-price">3 500 | 6 hodin</div>
+      <div class="item-desc">Zvyšuje šanci na úspěch loupeže o +20 % (jednorázové použití).</div>
+    </div>
+    <div class="shop-item">
+      <div class="item-name">⚡ Work Boost</div>
+      <div class="item-price">1 500 | 4 hodiny</div>
+      <div class="item-desc">Zvyšuje výdělek z <code>/economy work</code> o 30 %.</div>
+    </div>
+    <div class="shop-item">
+      <div class="item-name">💬 Passive Boost</div>
+      <div class="item-price">5 000 | 2 hodiny</div>
+      <div class="item-desc">Pasivní zisk ze zpráv je 3× vyšší.</div>
+    </div>
+    <div class="shop-item">
+      <div class="item-name">✨ XP Boost</div>
+      <div class="item-price">4 000 | 8 hodin</div>
+      <div class="item-desc">XP konverze je 2× výhodnější.</div>
+    </div>
+    <div class="shop-item">
+      <div class="item-name">🍀 Šťastný talisman</div>
+      <div class="item-price">8 000 | 12 hodin</div>
+      <div class="item-desc">Zvyšuje šanci v kasinu a dostihy o 15 %.</div>
+    </div>
+    <div class="shop-item">
+      <div class="item-name">📜 Odpuštění dluhu</div>
+      <div class="item-price">15 000 | Jednorázové</div>
+      <div class="item-desc">Okamžitě smaže veškerý aktuální dluh bez úroku.</div>
+    </div>
+    <div class="shop-item">
+      <div class="item-name">⭐ Prestiž Token</div>
+      <div class="item-price">50 000 | Jednorázové</div>
+      <div class="item-desc">Aktivuje prestiž — resetuje majetek a přidá permanentní +5 % bonus k výdělkům.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ XP KONVERZE ═══ -->
+<section id="xp">
+  <h2><span class="sec-icon">🔄</span> XP konverze</h2>
+  <p>Příkaz <code>/economy xp-convert &lt;xp&gt;</code> — převede serverové XP body na herní měnu. Předmět <strong>XP Boost</strong> zdvojnásobí efektivitu konverze.</p>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <div>XP konverze je závislá na nastavení serveru a dostupném XP systému. Výsledná částka se odvíjí od počtu převáděných XP.</div>
+  </div>
+</section>
+
+<!-- ═══ ADMIN ═══ -->
+<section id="admin-cmd">
+  <h2><span class="sec-icon">🔑</span> Admin příkazy</h2>
+  <div class="cmd-grid">
+    <div class="cmd-card">
+      <div class="cmd-name">/economy setup</div>
+      <div class="cmd-desc">Zapne/vypne ekonomiku, nastaví název měny, oznamovací kanál a kanál pro tržní eventy — vše v jednom příkazu.</div>
+      <span class="cmd-tag tag-admin">Admin</span><span class="cmd-tag tag-upd">Aktualizováno</span>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">/economy give_money &lt;hráč&gt; &lt;částka&gt;</div>
+      <div class="cmd-desc">Přidá nebo odebere cash hráči (záporné číslo = odebrání).</div>
+      <span class="cmd-tag tag-admin">Admin</span>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">/economy reset_player &lt;hráč&gt;</div>
+      <div class="cmd-desc">Resetuje ekonomiku hráče na výchozí hodnoty (1 000 cash, vše ostatní 0).</div>
+      <span class="cmd-tag tag-admin">Admin</span>
+    </div>
+    <div class="cmd-card">
+      <div class="cmd-name">/economy fund-vote → tlačítko Vyhodnotit</div>
+      <div class="cmd-desc">Pouze admin může stisknout tlačítko pro vyhodnocení hlasování o fondu.</div>
+      <span class="cmd-tag tag-admin">Admin</span>
+    </div>
+  </div>
+
+  <h3>Nastavení přes /economy setup</h3>
+  <table>
+    <thead><tr><th>Parametr</th><th>Popis</th></tr></thead>
+    <tbody>
+      <tr><td><code>zapnout</code></td><td>True / False — zapnutí nebo vypnutí ekonomiky</td></tr>
+      <tr><td><code>nazev_meny</code></td><td>Název měny serveru (výchozí: Koruny)</td></tr>
+      <tr><td><code>kanal</code></td><td>Kanál pro obecná oznámení ekonomiky</td></tr>
+      <tr><td><code>event_kanal</code></td><td>Kanál pro automatické tržní eventy (volitelný — výchozí = oznamovací kanál)</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-info">
+    <span class="callout-icon">🔑</span>
+    <div>Příkaz <code>/economy setup</code> lze použít i tehdy, když ekonomika ještě <strong>není aktivní</strong> — je vyjmut z kontroly ekonomiky, aby bylo možné ji vůbec zapnout. Stejně tak <code>/economy give_money</code> a <code>/economy reset_player</code>.</div>
+  </div>
+</section>
+
+</main>
+</div>
+
+<script>
+const sections = document.querySelectorAll('section[id]');
+const navLinks  = document.querySelectorAll('nav a');
+const observer  = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      navLinks.forEach(l => l.classList.remove('active'));
+      const active = document.querySelector(`nav a[href="#${e.target.id}"]`);
+      if (active) active.classList.add('active');
+    }
+  });
+}, {threshold: 0.25});
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
