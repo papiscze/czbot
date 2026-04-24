@@ -1,807 +1,690 @@
 <!DOCTYPE html>
-<html lang="cs">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CZBOT Economy — Dokumentace</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<title>CZBOT Coin — Market Terminal</title>
+<script
+    src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.js"
+    integrity="sha384-tgbB5AKnszdcfwcZtTfuhR3Ko1XZdlDfsLtkxiiAZiVkkXCkFmp+FQFh+V/UTo54"
+    crossorigin="anonymous"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
 :root {
-  --bg:         #0c0e14;
-  --surface:    #13161f;
-  --surface2:   #1c2030;
-  --border:     #252b3b;
-  --accent:     #7c6af7;
-  --accent2:    #f7c76a;
-  --accent3:    #6af7c2;
-  --red:        #f7716a;
-  --text:       #e8eaf2;
-  --muted:      #7a8299;
-  --mono:       'Space Mono', monospace;
-  --sans:       'Syne', sans-serif;
-  --radius:     10px;
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{
-  background:var(--bg);
-  color:var(--text);
-  font-family:var(--sans);
-  font-size:16px;
-  line-height:1.65;
-  overflow-x:hidden;
-}
-body::before{
-  content:'';
-  position:fixed;inset:0;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events:none;z-index:0;
-}
-.wrapper{
-  display:grid;
-  grid-template-columns:270px 1fr;
-  min-height:100vh;
-  position:relative;z-index:1;
-}
-nav{
-  position:sticky;top:0;height:100vh;overflow-y:auto;
-  background:var(--surface);
-  border-right:1px solid var(--border);
-  padding:2rem 1.5rem;
-  display:flex;flex-direction:column;gap:0.2rem;
-}
-.nav-logo{
-  font-family:var(--mono);font-size:1.05rem;font-weight:700;
-  color:var(--accent2);margin-bottom:1.75rem;padding-bottom:1.25rem;
-  border-bottom:1px solid var(--border);letter-spacing:0.05em;
-}
-.nav-logo span{color:var(--accent);}
-.nav-section{
-  font-size:0.68rem;font-weight:700;letter-spacing:0.15em;
-  text-transform:uppercase;color:var(--muted);margin:1.1rem 0 0.4rem;
-}
-nav a{
-  display:block;padding:0.35rem 0.75rem;border-radius:6px;
-  color:var(--muted);text-decoration:none;font-size:0.86rem;transition:all 0.15s;
-}
-nav a:hover{background:var(--surface2);color:var(--text);}
-nav a.active{background:var(--accent);color:#fff;}
-main{padding:3rem 3.5rem;max-width:920px;}
-
-/* HERO */
-.hero{margin-bottom:4rem;padding-bottom:3rem;border-bottom:1px solid var(--border);}
-.hero-eyebrow{
-  font-family:var(--mono);font-size:0.72rem;letter-spacing:0.2em;
-  text-transform:uppercase;color:var(--accent3);margin-bottom:1rem;
-}
-.hero h1{font-size:3.2rem;font-weight:800;line-height:1.1;margin-bottom:1rem;}
-.hero h1 span{color:var(--accent);}
-.hero p{font-size:1.1rem;color:var(--muted);max-width:580px;}
-.badge-row{display:flex;gap:0.75rem;margin-top:1.5rem;flex-wrap:wrap;}
-.badge{
-  font-family:var(--mono);font-size:0.72rem;padding:0.3rem 0.75rem;
-  border-radius:100px;border:1px solid;
-}
-.badge-purple{border-color:var(--accent);color:var(--accent);}
-.badge-gold{border-color:var(--accent2);color:var(--accent2);}
-.badge-teal{border-color:var(--accent3);color:var(--accent3);}
-.badge-red{border-color:var(--red);color:var(--red);}
-
-/* SECTIONS */
-section{margin-bottom:3.5rem;}
-h2{font-size:1.7rem;font-weight:700;margin-bottom:1.5rem;display:flex;align-items:center;gap:0.75rem;}
-h2 .sec-icon{
-  width:34px;height:34px;background:var(--surface2);border:1px solid var(--border);
-  border-radius:8px;display:grid;place-items:center;font-size:1rem;flex-shrink:0;
-}
-h3{font-size:1.05rem;font-weight:600;color:var(--accent2);margin:1.75rem 0 0.75rem;}
-p{color:var(--muted);margin-bottom:0.75rem;}
-
-/* COMMAND CARDS */
-.cmd-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
-.cmd-card{
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:var(--radius);padding:1.25rem 1.5rem;
-  transition:border-color 0.2s,transform 0.15s;
-}
-.cmd-card:hover{border-color:var(--accent);transform:translateY(-2px);}
-.cmd-name{font-family:var(--mono);font-size:0.88rem;color:var(--accent);margin-bottom:0.4rem;}
-.cmd-desc{font-size:0.87rem;color:var(--muted);margin-bottom:0;}
-.cmd-tag{
-  display:inline-block;font-family:var(--mono);font-size:0.63rem;
-  padding:0.15rem 0.5rem;border-radius:4px;margin-top:0.5rem;margin-right:0.25rem;
-}
-.tag-hrac{background:rgba(124,106,247,0.15);color:var(--accent);}
-.tag-admin{background:rgba(247,113,106,0.15);color:var(--red);}
-.tag-new{background:rgba(106,247,194,0.15);color:var(--accent3);}
-.tag-upd{background:rgba(247,199,106,0.15);color:var(--accent2);}
-.tag-public{background:rgba(106,247,194,0.1);color:var(--accent3);}
-.tag-ephem{background:rgba(124,106,247,0.1);color:var(--muted);}
-
-/* FEATURE BLOCK */
-.feature-block{
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:var(--radius);padding:1.5rem;margin-bottom:1rem;
-}
-.feature-block .feature-title{font-weight:700;margin-bottom:0.5rem;display:flex;align-items:center;gap:0.5rem;}
-.feature-block p{font-size:0.9rem;color:var(--muted);margin-bottom:0;}
-
-/* TABLE */
-table{width:100%;border-collapse:collapse;margin-bottom:1rem;font-size:0.9rem;}
-th{
-  background:var(--surface2);color:var(--muted);font-family:var(--mono);
-  font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;
-  padding:0.65rem 1rem;text-align:left;border-bottom:1px solid var(--border);
-}
-td{padding:0.65rem 1rem;border-bottom:1px solid var(--border);color:var(--text);}
-tr:last-child td{border-bottom:none;}
-tr:hover td{background:rgba(124,106,247,0.04);}
-code{
-  font-family:var(--mono);font-size:0.82rem;
-  background:var(--surface2);padding:0.1rem 0.4rem;
-  border-radius:4px;color:var(--accent3);
+    --bg:         #080c12;
+    --bg2:        #0d1320;
+    --bg3:        #111827;
+    --border:     rgba(255,255,255,0.07);
+    --border2:    rgba(255,255,255,0.12);
+    --text:       #e2e8f0;
+    --muted:      #4b5e78;
+    --muted2:     #6b7e96;
+    --up:         #00e5a0;
+    --up-dim:     rgba(0,229,160,0.12);
+    --down:       #ff4d6a;
+    --down-dim:   rgba(255,77,106,0.12);
+    --accent:     #3b82f6;
+    --accent-dim: rgba(59,130,246,0.15);
+    --gold:       #f59e0b;
+    --pred:       #a78bfa;
+    --mono:       'Space Mono', monospace;
+    --sans:       'DM Sans', sans-serif;
 }
 
-/* CALLOUT */
-.callout{
-  display:flex;gap:1rem;align-items:flex-start;
-  border-radius:var(--radius);padding:1rem 1.25rem;margin:1rem 0;
-  border:1px solid;
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    min-height: 100vh;
+    overflow-x: hidden;
 }
-.callout-icon{font-size:1.2rem;flex-shrink:0;margin-top:0.1rem;}
-.callout div{font-size:0.9rem;}
-.callout-info{background:rgba(124,106,247,0.08);border-color:rgba(124,106,247,0.3);color:var(--text);}
-.callout-warn{background:rgba(247,199,106,0.08);border-color:rgba(247,199,106,0.3);color:var(--text);}
-.callout-success{background:rgba(106,247,194,0.08);border-color:rgba(106,247,194,0.3);color:var(--text);}
-.callout-danger{background:rgba(247,113,106,0.08);border-color:rgba(247,113,106,0.3);color:var(--text);}
 
-/* SHOP GRID */
-.shop-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;}
-.shop-item{
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:var(--radius);padding:1.1rem 1.25rem;
-  transition:border-color 0.2s;
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.06) 2px, rgba(0,0,0,0.06) 4px);
+    pointer-events: none;
+    z-index: 1000;
 }
-.shop-item:hover{border-color:var(--accent2);}
-.item-name{font-weight:700;font-size:0.95rem;margin-bottom:0.25rem;}
-.item-price{font-family:var(--mono);font-size:0.78rem;color:var(--accent2);margin-bottom:0.4rem;}
-.item-desc{font-size:0.85rem;color:var(--muted);}
 
-/* PRESTIGE */
-.prestige-row{
-  display:flex;gap:1.25rem;align-items:center;
-  padding:0.85rem 1rem;border-radius:8px;
-  background:var(--surface);border:1px solid var(--border);margin-bottom:0.6rem;
-  transition:border-color 0.2s;
-}
-.prestige-row:hover{border-color:var(--accent);}
-.prestige-level{
-  font-family:var(--mono);font-size:1.2rem;font-weight:700;
-  color:var(--accent2);min-width:2.5rem;text-align:center;
-}
-.prestige-title{font-weight:700;margin-bottom:0.15rem;}
-.prestige-bonus{font-size:0.85rem;color:var(--muted);}
+.ticker-wrap { background: var(--bg2); border-bottom: 1px solid var(--border); overflow: hidden; height: 32px; display: flex; align-items: center; }
+.ticker-inner { display: flex; gap: 60px; white-space: nowrap; animation: ticker 30s linear infinite; font-family: var(--mono); font-size: 0.7rem; }
+.ticker-item { display: flex; align-items: center; gap: 8px; }
+.ticker-item .sym { color: var(--muted2); }
+.ticker-item .val { color: var(--text); }
+.ticker-item .chg.up { color: var(--up); }
+.ticker-item .chg.dn { color: var(--down); }
+@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-/* JOBS GRID */
-.jobs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.75rem;}
-.job-card{
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:8px;padding:0.85rem 1rem;
-}
-.job-emoji{font-size:1.3rem;margin-bottom:0.3rem;}
-.job-range{font-family:var(--mono);font-size:0.75rem;color:var(--accent3);}
-.job-name{font-size:0.88rem;font-weight:600;margin-bottom:0.2rem;}
+.page { max-width: 1280px; margin: 0 auto; padding: 24px 20px 40px; }
 
-/* CASINO GRID */
-.casino-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;}
-.casino-card{
-  background:var(--surface);border:1px solid var(--border);
-  border-radius:var(--radius);padding:1.25rem;
+.top-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; margin-bottom: 20px; flex-wrap: wrap; }
+.coin-identity { display: flex; align-items: center; gap: 14px; }
+.coin-icon { width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #3b82f6 0%, #00e5a0 100%); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 1rem; font-weight: 700; color: #fff; flex-shrink: 0; box-shadow: 0 0 20px rgba(59,130,246,0.4); }
+.coin-name { font-family: var(--sans); font-weight: 600; font-size: 1.1rem; color: var(--muted2); letter-spacing: 0.05em; text-transform: uppercase; }
+.coin-full { font-family: var(--sans); font-size: 1.5rem; font-weight: 300; color: var(--text); margin-top: 1px; }
+.price-block { text-align: right; }
+.price-main { font-family: var(--mono); font-size: 2.6rem; font-weight: 700; line-height: 1; letter-spacing: -1px; color: var(--text); }
+.price-badge { display: inline-flex; align-items: center; gap: 5px; font-family: var(--mono); font-size: 0.8rem; font-weight: 700; padding: 4px 10px; border-radius: 4px; margin-top: 6px; }
+.price-badge.up   { background: var(--up-dim);    color: var(--up); }
+.price-badge.down { background: var(--down-dim);   color: var(--down); }
+.price-badge.flat { background: var(--accent-dim); color: var(--muted2); }
+
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-bottom: 16px; }
+.stat-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; position: relative; overflow: hidden; transition: border-color 0.2s; }
+.stat-card:hover { border-color: var(--border2); }
+.stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; }
+.stat-card.ath::before { background: linear-gradient(90deg, var(--up),     transparent); }
+.stat-card.atl::before { background: linear-gradient(90deg, var(--down),   transparent); }
+.stat-card.avg::before { background: linear-gradient(90deg, var(--gold),   transparent); }
+.stat-card.vlt::before { background: linear-gradient(90deg, var(--accent), transparent); }
+.stat-card.cnt::before { background: linear-gradient(90deg, var(--pred),   transparent); }
+.stat-label { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.stat-value { font-family: var(--mono); font-size: 1.05rem; font-weight: 700; color: var(--text); }
+.stat-value.up   { color: var(--up); }
+.stat-value.down { color: var(--down); }
+.stat-sub { font-family: var(--sans); font-size: 0.7rem; color: var(--muted); margin-top: 3px; }
+
+.chart-panel { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 12px; }
+.chart-toolbar { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid var(--border); gap: 12px; flex-wrap: wrap; }
+.toolbar-left { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.toolbar-label { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-right: 4px; }
+.toolbar-sep { width: 1px; height: 16px; background: var(--border); margin: 0 6px; }
+
+.range-btn { background: transparent; border: 1px solid transparent; color: var(--muted2); padding: 4px 11px; border-radius: 4px; cursor: pointer; font-family: var(--mono); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; transition: all 0.15s; }
+.range-btn:hover { color: var(--text); border-color: var(--border2); }
+.range-btn.active { background: var(--bg3); border-color: var(--border2); color: var(--text); }
+
+.pred-btn { background: transparent; border: 1px solid transparent; color: var(--muted); padding: 4px 11px; border-radius: 4px; cursor: pointer; font-family: var(--mono); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; transition: all 0.15s; }
+.pred-btn:hover { color: var(--pred); border-color: rgba(167,139,250,0.3); }
+.pred-btn.active { background: rgba(167,139,250,0.12); border-color: rgba(167,139,250,0.4); color: var(--pred); }
+
+.toolbar-right { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+.live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--up); animation: pulse-dot 2s ease-in-out infinite; }
+@keyframes pulse-dot { 0%,100% { opacity:1; box-shadow: 0 0 0 0 rgba(0,229,160,0.4); } 50% { opacity:0.6; box-shadow: 0 0 0 4px transparent; } }
+
+.chart-wrap { position: relative; height: 420px; padding: 12px 0 0; }
+.chart-loading { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: var(--bg2); gap: 12px; z-index: 10; }
+.chart-loading.hidden { display: none; }
+.spinner { width: 28px; height: 28px; border: 2px solid var(--border); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-text { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); letter-spacing: 0.1em; }
+
+.error-bar { background: rgba(255,77,106,0.08); border: 1px solid rgba(255,77,106,0.25); border-radius: 6px; padding: 10px 16px; font-family: var(--mono); font-size: 0.75rem; color: var(--down); margin-bottom: 12px; display: none; }
+
+.footer { display: flex; align-items: center; justify-content: space-between; padding: 0 4px; font-family: var(--mono); font-size: 0.65rem; color: var(--muted); letter-spacing: 0.05em; flex-wrap: wrap; gap: 8px; }
+.footer-left { display: flex; align-items: center; gap: 16px; }
+.footer-badge { border: 1px solid var(--border); border-radius: 3px; padding: 2px 7px; font-size: 0.6rem; letter-spacing: 0.08em; }
+
+@media (max-width: 600px) {
+    .price-main { font-size: 1.9rem; }
+    .stat-grid { grid-template-columns: repeat(2, 1fr); }
 }
-.casino-title{font-weight:700;font-size:1rem;margin-bottom:0.5rem;}
-.casino-detail{font-size:0.85rem;color:var(--muted);}
-.casino-detail li{margin-bottom:0.2rem;list-style:none;padding-left:1rem;position:relative;}
-.casino-detail li::before{content:"→";position:absolute;left:0;color:var(--accent);}
 </style>
 </head>
 <body>
-<div class="wrapper">
 
-<!-- ═══ SIDEBAR ═══ -->
-<nav>
-  <div class="nav-logo">CZ<span>BOT</span> Economy</div>
-
-  <div class="nav-section">Základy</div>
-  <a href="#uvod">Úvod</a>
-  <a href="#prikazy">Přehled příkazů</a>
-
-  <div class="nav-section">Herní systémy</div>
-  <a href="#prace">Práce</a>
-  <a href="#banka">Banka</a>
-  <a href="#invest">Investice CZBOT</a>
-  <a href="#akcie-eventy">Tržní eventy</a>
-  <a href="#casino">Kasino</a>
-  <a href="#pvp">PvP — Krádeže</a>
-  <a href="#heist">Bank Heist</a>
-  <a href="#pujcky">Půjčky</a>
-  <a href="#fond">Komunitní fond</a>
-
-  <div class="nav-section">Progrese</div>
-  <a href="#mise">Mise</a>
-  <a href="#prestiz">Prestiž</a>
-  <a href="#obchod">Obchod</a>
-  <a href="#xp">XP konverze</a>
-
-  <div class="nav-section">Admin</div>
-  <a href="#admin-cmd">Admin příkazy</a>
-</nav>
-
-<!-- ═══ MAIN ═══ -->
-<main>
-
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-eyebrow">Dokumentace · Aktuální verze</div>
-  <h1>CZBOT <span>Economy</span></h1>
-  <p>Kompletní průvodce ekonomickým systémem — práce, investice, kasino, PvP krádeže, mise, prestiž a správa serveru.</p>
-  <div class="badge-row">
-    <span class="badge badge-teal">Startovní cash: 1 000</span>
-    <span class="badge badge-gold">Počáteční kurz CZBOT: 10 000</span>
-    <span class="badge badge-purple">Komunitní fond: 20 000 start</span>
-    <span class="badge badge-red">Eventy každé 2h</span>
-  </div>
+<div class="ticker-wrap">
+    <div class="ticker-inner" id="tickerInner"></div>
 </div>
 
-<!-- ═══ ÚVOD ═══ -->
-<section id="uvod">
-  <h2><span class="sec-icon">📖</span> Úvod</h2>
-  <p>Economy modul musí být aktivován adminem přes <code>/economy setup</code>. Každý příkaz ověřuje dvoustupňově: nejdříve zda je modul povolen v nastavení, pak zda je ekonomika aktivní na daném serveru.</p>
-
-  <div class="callout callout-info">
-    <span class="callout-icon">🌐</span>
-    <div>Všechny příkazy jsou <strong>plně lokalizované</strong> — Discord zobrazuje názvy voleb, popisky parametrů i tlačítka ve tvém jazyce (CS / EN / PL). Výsledky <em>ephemeral</em> příkazů jsou v jazyce uživatele, výsledky <em>veřejných</em> příkazů v jazyce serveru.</div>
-  </div>
-
-  <div class="callout callout-warn">
-    <span class="callout-icon">⏱️</span>
-    <div>Každý příkaz používá <strong>defer</strong> jako pojistku pro případ pomalé odezvy databáze nebo Redis cache.</div>
-  </div>
-</section>
-
-<!-- ═══ PŘEHLED PŘÍKAZŮ ═══ -->
-<section id="prikazy">
-  <h2><span class="sec-icon">⚡</span> Přehled příkazů</h2>
-
-  <h3>Hráčské příkazy</h3>
-  <div class="cmd-grid">
-    <div class="cmd-card">
-      <div class="cmd-name">/economy status [hráč]</div>
-      <div class="cmd-desc">Zobrazí přehled hotovosti, banky, akcií, čistého jmění a prestiže. Nepovinný parametr pro zobrazení jiného hráče.</div>
-      <span class="cmd-tag tag-hrac">Hráč</span><span class="cmd-tag tag-ephem">Ephemeral</span>
+<div class="page">
+    <div class="top-header">
+        <div class="coin-identity">
+            <div class="coin-icon">CZ</div>
+            <div>
+                <div class="coin-name">CZBOT / CZCoin</div>
+                <div class="coin-full">CZBOT Coin</div>
+            </div>
+        </div>
+        <div class="price-block">
+            <div class="price-main" id="priceMain">&#x2014;</div>
+            <div><span class="price-badge flat" id="priceBadge">&#x2014; %</span></div>
+        </div>
     </div>
-    <div class="cmd-card">
-      <div class="cmd-name">/economy bank</div>
-      <div class="cmd-desc">Správa banky — vklad a výběr přes interaktivní tlačítka s modálním formulářem.</div>
-      <span class="cmd-tag tag-hrac">Hráč</span><span class="cmd-tag tag-ephem">Ephemeral</span>
+
+    <div class="stat-grid">
+        <div class="stat-card ath">
+            <div class="stat-label">&#x25B2; All-Time High</div>
+            <div class="stat-value up" id="statATH">&#x2014;</div>
+            <div class="stat-sub" id="statATHDate">&#x2014;</div>
+        </div>
+        <div class="stat-card atl">
+            <div class="stat-label">&#x25BC; All-Time Low</div>
+            <div class="stat-value down" id="statATL">&#x2014;</div>
+            <div class="stat-sub" id="statATLDate">&#x2014;</div>
+        </div>
+        <div class="stat-card avg">
+            <div class="stat-label">&#x2296; Avg Price</div>
+            <div class="stat-value" id="statAvg">&#x2014;</div>
+            <div class="stat-sub">period average</div>
+        </div>
+        <div class="stat-card vlt">
+            <div class="stat-label">&#x2195; Volatility</div>
+            <div class="stat-value" id="statVol">&#x2014;</div>
+            <div class="stat-sub">high &#x2212; low spread</div>
+        </div>
+        <div class="stat-card cnt">
+            <div class="stat-label">&#x25C8; Data Points</div>
+            <div class="stat-value" id="statCount">&#x2014;</div>
+            <div class="stat-sub">in selected range</div>
+        </div>
     </div>
-    <div class="cmd-card">
-      <div class="cmd-name">/economy daily-reward</div>
-      <div class="cmd-desc">Denní odměna s bonusem za streak. Cooldown 20 hodin. Prestiž bonusem zvyšuje odměnu.</div>
-      <span class="cmd-tag tag-hrac">Hráč</span><span class="cmd-tag tag-ephem">Ephemeral</span>
+
+    <div class="error-bar" id="errorBar"></div>
+
+    <div class="chart-panel">
+        <div class="chart-toolbar">
+            <div class="toolbar-left">
+                <span class="toolbar-label">Range</span>
+                <button class="range-btn" id="btn-24" onclick="applyFilter(24)">24H</button>
+                <button class="range-btn" id="btn-72" onclick="applyFilter(72)">3D</button>
+                <button class="range-btn active" id="btn-0"  onclick="applyFilter(0)">7D</button>
+                <div class="toolbar-sep"></div>
+                <span class="toolbar-label">Prediction</span>
+                <button class="pred-btn active" id="btn-pred" onclick="togglePrediction()">&#x1F52E; ON</button>
+            </div>
+            <div class="toolbar-right">
+                <div class="live-dot"></div>
+                <span id="lastUpdated">LOADING&#x2026;</span>
+            </div>
+        </div>
+        <div class="chart-wrap">
+            <div class="chart-loading" id="chartLoading">
+                <div class="spinner"></div>
+                <div class="loading-text">FETCHING MARKET DATA</div>
+            </div>
+            <canvas id="tradingChart"></canvas>
+        </div>
     </div>
-    <div class="cmd-card">
-      <div class="cmd-name">/economy missions [typ]</div>
-      <div class="cmd-desc">Zobrazí aktuální denní nebo týdenní mise a jejich postup. Volba: <em>Denní / Týdenní</em>.</div>
-      <span class="cmd-tag tag-hrac">Hráč</span><span class="cmd-tag tag-ephem">Ephemeral</span>
+
+    <div class="footer">
+        <div class="footer-left">
+            <span class="footer-badge">VIRTUAL CURRENCY</span>
+            <span class="footer-badge">CZBOT ECONOMY</span>
+            <span>Prices in CZCoin &bull; Times in Prague (CET/CEST)</span>
+        </div>
+        <span>czbot.online</span>
     </div>
-    <div class="cmd-card">
-      <div class="cmd-name">/economy work</div>
-      <div class="cmd-desc">Náhodná práce z 26 povolání. Cooldown 4 hodiny. Work Boost zdvojnásobí výdělek.</div>
-      <span class="cmd-tag tag-hrac">Hráč</span><span class="cmd-tag tag-ephem">Ephemeral</span>
-    </div>
-    <div class="cmd-card">
-      <div class="cmd-name">/economy rob &lt;oběť&gt;</div>
-      <div class="cmd-desc">Pokus o krádež hotovosti. Při chycení → vězení 12h. Cooldown 1 hodina.</div>
-      <span class="cmd-tag tag-hrac">Hráč</span><span class="cmd-tag tag-public">Veřejný</span>
-    </div>
-    <div class="cmd-card">
-      <div class="cmd-name">/economy pay &lt;hráč&gt; &lt;částka&gt;</div>
-      <div class="cmd-desc">Pošle hotovost jinému hráči. Veřejně oznámeno v kanálu.</div>
-      <span class="cmd-tag tag-hrac">Hráč</span><span class="cmd-tag tag-public">Veřejný</span>
-    </div>
-    <div class="cmd-card">
-      <div class="cmd-name">/economy invest &lt;akce&gt; &lt;typ&gt; &lt;hodnota&gt;</div>
-      <div class="cmd-desc">Nákup/prodej akcií CZBOT. Podporuje celé i zlomkové akcie. Lze zadat „vše/all" pro nákup za veškerou hotovost nebo prodej všech akcií.</div>
-      <span class="cmd-tag tag-hrac">Hráč</span><span class="cmd-tag tag-ephem">Ephemeral</span><span class="cmd-tag tag-new">Zlomky</span>
-    </div>
-    <div class="cmd-card">
-      <div class="cmd-name">/economy casino &lt;hra&gt; &lt;sázka&gt;</div>
-      <div class="cmd-desc">Kasino hry: Coinflip 🪙, Kostky 🎲, Blackjack 🃏, Dostihy 🏇.</div>
-      <span class="cmd-tag tag-hrac">Hráč</span><span class="cmd-tag tag-ephem">Ephemeral</span>
-    </div>
-    <div class="cmd-card">
-      <div class="cmd-name">/economy bank-heist &lt;sázka&gt;</div>
-      <div class="cmd-desc">Skupinová loupež banky. Cooldown 24 hodin. Ostatní se mohou přidat jako zloději nebo bránit jako policie.</div>
-      <span class="cmd-tag tag-hrac">Hráč</span><span class="cmd-tag tag-public">Veřejný</span>
-    </div>
-    <div class="cmd-card">
-      <div class="cmd-name">/economy shop</div>
-      <div class="cmd-desc">Prohlédnout dostupné předměty a boosty v obchodě.</div>
-      <span class="cmd-tag tag-hrac">Hráč</span><span class="cmd-tag tag-ephem">Ephemeral</span>
-    </div>
-    <div class="cmd-card">
-      <div class="cmd-name">/economy inventory</div>
-      <div class="cmd-desc">Přehled zakoupených předmětů a jejich zbývající doby platnosti.</div>
-      <span class="cmd-tag tag-hrac">Hráč</span><span class="cmd-tag tag-ephem">Ephemeral</span>
-    </div>
-    <div class="cmd-card">
-      <div class="cmd-name">/economy loan &lt;akce&gt; &lt;částka&gt;</div>
-      <div class="cmd-desc">Půjčka (max 50 000) nebo splácení dluhu. Akce: <em>Vzít 💰 / Splatit 💳</em>.</div>
-      <span class="cmd-tag tag-hrac">Hráč</span><span class="cmd-tag tag-ephem">Ephemeral</span>
-    </div>
-    <div class="cmd-card">
-      <div class="cmd-name">/economy fund-vote</div>
-      <div class="cmd-desc">Hlasování o využití komunitního fondu. Jednou za 24 hodin na hráče.</div>
-      <span class="cmd-tag tag-hrac">Hráč</span><span class="cmd-tag tag-public">Veřejný</span>
-    </div>
-    <div class="cmd-card">
-      <div class="cmd-name">/economy transactions</div>
-      <div class="cmd-desc">Historie posledních transakcí hráče.</div>
-      <span class="cmd-tag tag-hrac">Hráč</span><span class="cmd-tag tag-ephem">Ephemeral</span>
-    </div>
-    <div class="cmd-card">
-      <div class="cmd-name">/economy xp-convert &lt;xp&gt;</div>
-      <div class="cmd-desc">Převede serverové XP body na herní měnu. XP Boost zlevní konverzi.</div>
-      <span class="cmd-tag tag-hrac">Hráč</span><span class="cmd-tag tag-ephem">Ephemeral</span>
-    </div>
-    <div class="cmd-card">
-      <div class="cmd-name">/economy rate</div>
-      <div class="cmd-desc">Zobrazí aktuální kurz CZBOT akcií a trend.</div>
-      <span class="cmd-tag tag-hrac">Hráč</span><span class="cmd-tag tag-ephem">Ephemeral</span>
-    </div>
-    <div class="cmd-card">
-      <div class="cmd-name">/economy leaderboard</div>
-      <div class="cmd-desc">Žebříček top 10 hráčů podle čistého jmění na serveru.</div>
-      <span class="cmd-tag tag-hrac">Hráč</span><span class="cmd-tag tag-ephem">Ephemeral</span>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ PRÁCE ═══ -->
-<section id="prace">
-  <h2><span class="sec-icon">💼</span> Práce</h2>
-  <p>Příkaz <code>/economy work</code> — cooldown <strong>4 hodiny</strong>. Bot náhodně vybere jedno z 26 povolání a vyplatí odpovídající odměnu.</p>
-
-  <div class="callout callout-info">
-    <span class="callout-icon">⚡</span>
-    <div>Předmět <strong>Work Boost</strong> z obchodu zvýší výdělek o 30 % na 4 hodiny. Prestiž bonus se přidá procentuálně nad základní výdělek.</div>
-  </div>
-
-  <h3>Dostupná povolání</h3>
-  <div class="jobs-grid">
-    <div class="job-card"><div class="job-emoji">🔨</div><div class="job-name">Moderátor</div><div class="job-range">500 – 1 500</div></div>
-    <div class="job-card"><div class="job-emoji">🤖</div><div class="job-name">AI Programátor</div><div class="job-range">1 500 – 5 000</div></div>
-    <div class="job-card"><div class="job-emoji">💻</div><div class="job-name">Hacker</div><div class="job-range">1 000 – 6 000</div></div>
-    <div class="job-card"><div class="job-emoji">🐛</div><div class="job-name">Bug Bounty Hunter</div><div class="job-range">2 000 – 10 000</div></div>
-    <div class="job-card"><div class="job-emoji">📊</div><div class="job-name">Trader</div><div class="job-range">−500 – 8 000</div></div>
-    <div class="job-card"><div class="job-emoji">🎨</div><div class="job-name">NFT Artist</div><div class="job-range">50 – 8 000</div></div>
-    <div class="job-card"><div class="job-emoji">🕹️</div><div class="job-name">Game Tester</div><div class="job-range">800 – 2 000</div></div>
-    <div class="job-card"><div class="job-emoji">🖥️</div><div class="job-name">Správce sítě</div><div class="job-range">1 200 – 3 500</div></div>
-    <div class="job-card"><div class="job-emoji">🎥</div><div class="job-name">Streamer</div><div class="job-range">300 – 3 000</div></div>
-    <div class="job-card"><div class="job-emoji">▶️</div><div class="job-name">YouTuber</div><div class="job-range">400 – 3 500</div></div>
-    <div class="job-card"><div class="job-emoji">🖌️</div><div class="job-name">Designer</div><div class="job-range">600 – 2 500</div></div>
-    <div class="job-card"><div class="job-emoji">✍️</div><div class="job-name">Copywriter</div><div class="job-range">500 – 2 000</div></div>
-    <div class="job-card"><div class="job-emoji">🎙️</div><div class="job-name">Podcaster</div><div class="job-range">200 – 2 800</div></div>
-    <div class="job-card"><div class="job-emoji">🚗</div><div class="job-name">Řidič</div><div class="job-range">350 – 800</div></div>
-    <div class="job-card"><div class="job-emoji">🌙</div><div class="job-name">Noční hlídač</div><div class="job-range">200 – 700</div></div>
-    <div class="job-card"><div class="job-emoji">☕</div><div class="job-name">Barista</div><div class="job-range">250 – 600</div></div>
-    <div class="job-card"><div class="job-emoji">🚪</div><div class="job-name">Vyhazovač</div><div class="job-range">400 – 1 200</div></div>
-    <div class="job-card"><div class="job-emoji">⚡</div><div class="job-name">Elektrikář</div><div class="job-range">700 – 2 200</div></div>
-    <div class="job-card"><div class="job-emoji">👨‍🍳</div><div class="job-name">Kuchař</div><div class="job-range">450 – 1 400</div></div>
-    <div class="job-card"><div class="job-emoji">📈</div><div class="job-name">Makléř</div><div class="job-range">−2 000 – 15 000</div></div>
-    <div class="job-card"><div class="job-emoji">🍋</div><div class="job-name">Prodavač limonád</div><div class="job-range">100 – 500</div></div>
-    <div class="job-card"><div class="job-emoji">🎰</div><div class="job-name">Profesionální hráč</div><div class="job-range">−3 000 – 12 000</div></div>
-    <div class="job-card"><div class="job-emoji">🕵️</div><div class="job-name">Detektiv</div><div class="job-range">900 – 4 500</div></div>
-    <div class="job-card"><div class="job-emoji">🗺️</div><div class="job-name">Průvodce</div><div class="job-range">300 – 1 500</div></div>
-    <div class="job-card"><div class="job-emoji">🏪</div><div class="job-name">Prodavač</div><div class="job-range">500 – 1 800</div></div>
-  </div>
-  <div class="callout callout-warn">
-    <span class="callout-icon">⚠️</span>
-    <div>Povolání jako <strong>Trader, Makléř nebo Profesionální hráč</strong> mohou vygenerovat záporný výsledek — přijdeš o peníze!</div>
-  </div>
-</section>
-
-<!-- ═══ BANKA ═══ -->
-<section id="banka">
-  <h2><span class="sec-icon">🏦</span> Banka</h2>
-  <p>Příkaz <code>/economy bank</code> — zobrazí stav bankovního účtu s tlačítky pro vklad a výběr. Tlačítka jsou přeložena dle jazyka uživatele.</p>
-  <table>
-    <thead><tr><th>Parametr</th><th>Hodnota</th></tr></thead>
-    <tbody>
-      <tr><td>Úroková sazba (výnos)</td><td>+0,05 % denně z vkladu</td></tr>
-      <tr><td>Poplatek za vedení</td><td>−0,03 % denně z vkladu</td></tr>
-      <tr><td>Automatické strhávání dluhu</td><td>0,5 % z dluhu denně ze zisku</td></tr>
-    </tbody>
-  </table>
-  <div class="callout callout-success">
-    <span class="callout-icon">🔒</span>
-    <div>Předmět <strong>Bankovní trezor</strong> odpouští denní poplatky za vedení. Úrok z vkladu stále plyne.</div>
-  </div>
-</section>
-
-<!-- ═══ INVESTICE ═══ -->
-<section id="invest">
-  <h2><span class="sec-icon">📈</span> Investice CZBOT</h2>
-  <p>Příkaz <code>/economy invest</code> — nákup a prodej akcií CZBOT tokenu. Akcie jsou ukládány jako mikro-podíly (×1 000 000), takže lze kupovat i <strong>zlomky akcií</strong>.</p>
-
-  <h3>Parametry příkazu</h3>
-  <table>
-    <thead><tr><th>Parametr</th><th>Volby</th><th>Popis</th></tr></thead>
-    <tbody>
-      <tr><td><code>akce</code></td><td>Koupit 📈 / Prodat 📉</td><td>Směr transakce</td></tr>
-      <tr><td><code>typ_nakupu</code></td><td>Akcie (počet) / Částka (měna)</td><td>Způsob zadání hodnoty</td></tr>
-      <tr><td><code>hodnota</code></td><td>číslo, desetinné číslo, nebo <code>vše</code> / <code>all</code></td><td>Kolik koupit/prodat</td></tr>
-    </tbody>
-  </table>
-
-  <h3>Příklady použití</h3>
-  <table>
-    <thead><tr><th>Příklad</th><th>Výsledek</th></tr></thead>
-    <tbody>
-      <tr><td>akce: Koupit, typ: Akcie, hodnota: <code>5</code></td><td>Koupí 5 celých akcií za 5× kurz</td></tr>
-      <tr><td>akce: Koupit, typ: Akcie, hodnota: <code>0.5</code></td><td>Koupí 0,5 akcie za 0,5× kurz</td></tr>
-      <tr><td>akce: Koupit, typ: Částka, hodnota: <code>500</code></td><td>Koupí za přesně 500 (může být zlomek)</td></tr>
-      <tr><td>akce: Koupit, typ: Částka, hodnota: <code>vše</code></td><td>Koupí za veškerou dostupnou hotovost</td></tr>
-      <tr><td>akce: Prodat, typ: Akcie, hodnota: <code>vše</code></td><td>Prodá všechny akcie najednou</td></tr>
-    </tbody>
-  </table>
-
-  <div class="callout callout-info">
-    <span class="callout-icon">💡</span>
-    <div>Kurz CZBOT se automaticky aktualizuje každých <strong>12 hodin</strong> (±30 % drift). Po každém tržním eventu je drift na 30 minut pozastaven, aby event nebyl okamžitě přebyt náhodným pohybem.</div>
-  </div>
-</section>
-
-<!-- ═══ TRŽNÍ EVENTY ═══ -->
-<section id="akcie-eventy">
-  <h2><span class="sec-icon">📊</span> Tržní eventy CZBOT</h2>
-  <p>Automatický event každé <strong>2 hodiny</strong>. Bot vždy pošle varování <strong>10 minut předem</strong>, poté proběhne změna kurzu. Po eventu je kurz chráněn 30 minut před běžným driftem.</p>
-
-  <h3>📈 Bull eventy (pozitivní)</h3>
-  <table>
-    <thead><tr><th>Emoji</th><th>Název</th><th>Typ</th><th>Změna kurzu</th></tr></thead>
-    <tbody>
-      <tr><td>🤝</td><td>Partnerství / Spolupráce</td><td>📈 Bull</td><td>+8 % až +22 %</td></tr>
-      <tr><td>🏛️</td><td>Regulační schválení</td><td>📈 Bull</td><td>+5 % až +18 %</td></tr>
-      <tr><td>🌍</td><td>Globální adopce</td><td>📈 Bull</td><td>+12 % až +30 %</td></tr>
-      <tr><td>🏦</td><td>Institucionální investice</td><td>📈 Bull</td><td>+10 % až +25 %</td></tr>
-      <tr><td>⛏️</td><td>Mining boom</td><td>📈 Bull</td><td>+15 % až +35 %</td></tr>
-      <tr><td>📢</td><td>Virální kampaň</td><td>📈 Bull</td><td>+6 % až +20 %</td></tr>
-      <tr><td>🤖</td><td>AI integrace</td><td>📈 Bull</td><td>+8 % až +18 %</td></tr>
-      <tr><td>📊</td><td>Pozitivní výsledky</td><td>📈 Bull</td><td>+4 % až +14 %</td></tr>
-    </tbody>
-  </table>
-
-  <h3>📉 Bear eventy (negativní)</h3>
-  <table>
-    <thead><tr><th>Emoji</th><th>Název</th><th>Typ</th><th>Změna kurzu</th></tr></thead>
-    <tbody>
-      <tr><td>💀</td><td>Krize zasáhla trhy</td><td>📉 Bear</td><td>−18 % až −40 %</td></tr>
-      <tr><td>🚫</td><td>Regulační zákaz</td><td>📉 Bear</td><td>−20 % až −35 %</td></tr>
-      <tr><td>🐋</td><td>Whale Dump</td><td>📉 Bear</td><td>−15 % až −30 %</td></tr>
-      <tr><td>🎰</td><td>Kasinový skandál</td><td>📉 Bear</td><td>−12 % až −25 %</td></tr>
-      <tr><td>💔</td><td>Krach partnera</td><td>📉 Bear</td><td>−13 % až −28 %</td></tr>
-      <tr><td>🔒</td><td>Kyberútok na infrastrukturu</td><td>📉 Bear</td><td>−8 % až −20 %</td></tr>
-      <tr><td>📰</td><td>Mediální bouře</td><td>📉 Bear</td><td>−10 % až −22 %</td></tr>
-      <tr><td>📉</td><td>Flash Crash</td><td>📉 Bear</td><td>−22 % až −45 %</td></tr>
-    </tbody>
-  </table>
-
-  <h3>🌀 Wild eventy (extrémně volatilní)</h3>
-  <table>
-    <thead><tr><th>Emoji</th><th>Název</th><th>Typ</th><th>Rozsah (oběma směry)</th></tr></thead>
-    <tbody>
-      <tr><td>🦢</td><td>Black Swan Event</td><td>🌀 Wild</td><td>−60 % až +60 %</td></tr>
-      <tr><td>🚀</td><td>Memecoin Frenzy</td><td>🌀 Wild</td><td>−50 % až +100 %</td></tr>
-      <tr><td>⚛️</td><td>Kvantový computing útok</td><td>🌀 Wild</td><td>−55 % až +50 %</td></tr>
-      <tr><td>🌐</td><td>Geopolitická krize</td><td>🌀 Wild</td><td>−50 % až +40 %</td></tr>
-      <tr><td>🔬</td><td>Výsledky výzkumu</td><td>🌀 Wild</td><td>−40 % až +45 %</td></tr>
-    </tbody>
-  </table>
-</section>
-
-<!-- ═══ KASINO ═══ -->
-<section id="casino">
-  <h2><span class="sec-icon">🎰</span> Kasino</h2>
-  <p>Příkaz <code>/economy casino</code> — výběr hry přes lokalizované choices. Předmět <strong>Šťastný talisman</strong> zvyšuje šanci v kasinu a dostihy.</p>
-
-  <div class="casino-grid">
-    <div class="casino-card">
-      <div class="casino-title">🪙 Coinflip</div>
-      <ul class="casino-detail">
-        <li>Volba: hlava / panna</li>
-        <li>Šance 50/50</li>
-        <li>Výhra: 2× sázka</li>
-      </ul>
-    </div>
-    <div class="casino-card">
-      <div class="casino-title">🎲 Kostky</div>
-      <ul class="casino-detail">
-        <li>Hráč vs. bot (1–6)</li>
-        <li>Remíza → vrácení sázky</li>
-        <li>Výhra: 2× sázka</li>
-      </ul>
-    </div>
-    <div class="casino-card">
-      <div class="casino-title">🃏 Blackjack</div>
-      <ul class="casino-detail">
-        <li>Klasická hra — cíl 21</li>
-        <li>Tlačítka: Lístek / Stát</li>
-        <li>Výhra: 2× sázka, Blackjack: 2,5×</li>
-      </ul>
-    </div>
-    <div class="casino-card">
-      <div class="casino-title">🏇 Dostihy</div>
-      <ul class="casino-detail">
-        <li>4 koně, sázka na jednoho</li>
-        <li>Výhra: 4× sázka</li>
-        <li>Šťastný talisman: +30 % šance</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ PVP ═══ -->
-<section id="pvp">
-  <h2><span class="sec-icon">🥷</span> PvP — Krádeže</h2>
-  <p>Příkaz <code>/economy rob &lt;oběť&gt;</code> — pokus o krádež hotovosti. Výsledek je vždy oznámen veřejně v kanálu serveru v jazyce serveru.</p>
-  <table>
-    <thead><tr><th>Podmínka</th><th>Hodnota</th></tr></thead>
-    <tbody>
-      <tr><td>Cooldown (úspěch i neúspěch)</td><td>1 hodina</td></tr>
-      <tr><td>Vězení při chycení</td><td>12 hodin — nelze loupit</td></tr>
-      <tr><td>Min. hotovost oběti</td><td>500</td></tr>
-      <tr><td>Šance na úspěch</td><td>40 % (+ 20 % s Rob Boost)</td></tr>
-      <tr><td>Ukradená část (úspěch)</td><td>10–40 % hotovosti oběti</td></tr>
-      <tr><td>Pokuta při chycení</td><td>500–2 000 → Komunitní fond</td></tr>
-      <tr><td>Snížení pokuty</td><td>50 % s předmětem 🛡️ Rob Shield</td></tr>
-    </tbody>
-  </table>
-  <div class="callout callout-danger">
-    <span class="callout-icon">🔒</span>
-    <div>Pokud jsi ve <strong>vězení</strong>, příkaz <code>/economy rob</code> zobrazí odpočet do propuštění. Cooldown a vězení jsou oddělené — po propuštění začíná běžný 1h cooldown.</div>
-  </div>
-</section>
-
-<!-- ═══ BANK HEIST ═══ -->
-<section id="heist">
-  <h2><span class="sec-icon">🏦</span> Bank Heist</h2>
-  <p>Příkaz <code>/economy bank-heist &lt;sázka&gt;</code> — skupinová loupež bankovního komunitního fondu. Výsledek oznámen veřejně. Cooldown <strong>24 hodin</strong>.</p>
-
-  <div class="feature-block">
-    <div class="feature-title">🥷 Zloději</div>
-    <p>Leader spustí heist, ostatní se mohou přidat tlačítkem <em>Join</em>. Každý zloděj vsází 500. Šance na úspěch: <code>50 % + 3 % za každého zloděje − 5 % za každého obránce</code>. Minimálně 10 %.</p>
-  </div>
-  <div class="feature-block">
-    <div class="feature-title">🚔 Obránci</div>
-    <p>Hráči mohou kliknout <em>Policie</em> a snížit šanci zlodějů. Obránce riskuje pouze svůj čas.</p>
-  </div>
-  <div class="feature-block">
-    <div class="feature-title">💰 Výsledek</div>
-    <p><strong>Úspěch:</strong> Zloději ukradnou až 30 % komunitního fondu (max 100 000), rovnoměrně rozděleno. <strong>Neúspěch:</strong> Každý zloděj zaplatí pokutu 1 500 do fondu.</p>
-  </div>
-
-  <div class="callout callout-info">
-    <span class="callout-icon">🌐</span>
-    <div>Tlačítka v heist embedu (Join, Policie, Spustit loupež) jsou zobrazena v jazyce serveru. Zprávy o chybách jsou v jazyce konkrétního uživatele.</div>
-  </div>
-</section>
-
-<!-- ═══ PŮJČKY ═══ -->
-<section id="pujcky">
-  <h2><span class="sec-icon">💸</span> Půjčky</h2>
-  <p>Příkaz <code>/economy loan</code> — výběr akce přes lokalizované choices <em>Vzít 💰</em> nebo <em>Splatit 💳</em>.</p>
-  <table>
-    <thead><tr><th>Parametr</th><th>Hodnota</th></tr></thead>
-    <tbody>
-      <tr><td>Maximální půjčka</td><td>50 000</td></tr>
-      <tr><td>Úrok při splácení</td><td>1 % ze splátky</td></tr>
-      <tr><td>Automatické strhávání</td><td>0,5 % z dluhu denně ze zisku</td></tr>
-      <tr><td>Druhá půjčka</td><td>Nelze, dokud není splacena první</td></tr>
-    </tbody>
-  </table>
-  <div class="callout callout-success">
-    <span class="callout-icon">📜</span>
-    <div>Předmět <strong>Odpuštění dluhu</strong> z obchodu okamžitě smaže celý dluh bez úroku.</div>
-  </div>
-</section>
-
-<!-- ═══ KOMUNITNÍ FOND ═══ -->
-<section id="fond">
-  <h2><span class="sec-icon">🏛️</span> Komunitní fond</h2>
-  <p>Sdílená globální peněženka plněná z pokut za loupež, kasinových poplatků a neúspěšných bank-heist pokusů. Startovní hodnota: <strong>20 000</strong>.</p>
-
-  <h3>Hlasování /economy fund-vote</h3>
-  <p>Každý hráč může hlasovat jednou za <strong>24 hodin</strong>. Admin tlačítkem vyhodnotí výsledek.</p>
-  <table>
-    <thead><tr><th>Možnost</th><th>Efekt</th><th>Náklady</th></tr></thead>
-    <tbody>
-      <tr><td>📈 Boost CZBOT kurzu (+5 %)</td><td>Okamžité zvýšení kurzu</td><td>10 000 z fondu</td></tr>
-      <tr><td>💰 Rozdělit mezi TOP 5</td><td>Fond rozdělen rovnoměrně</td><td>Celý fond</td></tr>
-      <tr><td>🎁 Bonus pro všechny (+200)</td><td>Každý hráč dostane +200</td><td>200 × počet hráčů</td></tr>
-    </tbody>
-  </table>
-</section>
-
-<!-- ═══ MISE ═══ -->
-<section id="mise">
-  <h2><span class="sec-icon">📋</span> Mise</h2>
-  <p>Příkaz <code>/economy missions [typ]</code> — zobrazí postup misí. Při splnění mise přijde <strong>ephemeral notifikace přímo v kanálu</strong> (nikoliv DM) s názvem serveru a odměnou. Progress se sleduje automaticky.</p>
-
-  <h3>Denní mise (reset každý den)</h3>
-  <table>
-    <thead><tr><th>Mise</th><th>Popis</th><th>Cíl</th><th>Odměna</th><th>Sledováno při</th></tr></thead>
-    <tbody>
-      <tr><td>🗣️ Chatař</td><td>Pošli zprávy v kanálech</td><td>10</td><td>500</td><td>Každé zprávě</td></tr>
-      <tr><td>🔍 Průzkumník</td><td>Použij příkazy bota</td><td>5</td><td>300</td><td>Jakémkoliv slash příkazu CZBota</td></tr>
-      <tr><td>🎰 Hazardér</td><td>Zahraj kasino</td><td>3</td><td>800</td><td><code>/economy casino</code></td></tr>
-      <tr><td>🥷 Zloděj</td><td>Pokus se o krádež</td><td>1</td><td>400</td><td><code>/economy rob</code></td></tr>
-      <tr><td>💰 Spořič</td><td>Vlož do banky</td><td>1</td><td>250</td><td>Tlačítko Vložit v <code>/economy bank</code></td></tr>
-      <tr><td>💼 Pracant</td><td>Pracuj</td><td>2</td><td>600</td><td><code>/economy work</code></td></tr>
-    </tbody>
-  </table>
-
-  <h3>Týdenní mise (reset každé pondělí)</h3>
-  <table>
-    <thead><tr><th>Mise</th><th>Popis</th><th>Cíl</th><th>Odměna</th></tr></thead>
-    <tbody>
-      <tr><td>💸 Vydělej 10 000</td><td>Celkový výdělek za týden</td><td>10 000</td><td>5 000</td></tr>
-      <tr><td>🎰 Hráč týdne</td><td>Zahraj kasino 10×</td><td>10</td><td>3 000</td></tr>
-      <tr><td>📅 Věrný hráč</td><td>Přihlaš se 5 dní v týdnu</td><td>5</td><td>7 500</td></tr>
-      <tr><td>🥷 Sériový zloděj</td><td>Loupit 3×</td><td>3</td><td>4 000</td></tr>
-    </tbody>
-  </table>
-
-  <div class="callout callout-info">
-    <span class="callout-icon">🔍</span>
-    <div>Mise <strong>Průzkumník</strong> se počítá pro <em>všechny</em> slash příkazy CZBota — nejen economy. Kdykoli použiješ jakýkoliv příkaz bota, progress se zvýší.</div>
-  </div>
-</section>
-
-<!-- ═══ PRESTIŽ ═══ -->
-<section id="prestiz">
-  <h2><span class="sec-icon">⭐</span> Prestiž systém</h2>
-  <p>Volitelný reset majetku za trvalé výhody. Každá úroveň prestiže přidává <strong>+5 % bonus</strong> ke všem výdělkům. Vyžaduje čisté jmění alespoň <strong>500 000</strong>.</p>
-
-  <div class="prestige-row"><div class="prestige-level">0</div><div><div class="prestige-title">🌱 Nováček</div><div class="prestige-bonus">+0 % bonus | Start: 1 000</div></div></div>
-  <div class="prestige-row"><div class="prestige-level">1</div><div><div class="prestige-title">🥉 Obchodník</div><div class="prestige-bonus">+5 % bonus | Start: 1 000</div></div></div>
-  <div class="prestige-row"><div class="prestige-level">2</div><div><div class="prestige-title">🥈 Makléř</div><div class="prestige-bonus">+10 % bonus | Start: 1 000</div></div></div>
-  <div class="prestige-row"><div class="prestige-level">3+</div><div><div class="prestige-title">🥇 Investor a výše</div><div class="prestige-bonus">+5 % za každou další úroveň (kumulativně)</div></div></div>
-
-  <div class="callout callout-warn">
-    <span class="callout-icon">⚠️</span>
-    <div>Prestiž resetuje <strong>cash, bank_balance, czbot_shares a loan_amount</strong>. Inventář, mise a prestige_bonus_pct zůstávají. Lze aktivovat přes předmět <strong>Prestiž Token</strong> z obchodu.</div>
-  </div>
-</section>
-
-<!-- ═══ OBCHOD ═══ -->
-<section id="obchod">
-  <h2><span class="sec-icon">🏪</span> Obchod</h2>
-  <p>Příkazy: <code>/economy shop</code> — prohlédnout, <code>/economy inventory</code> — přehled zakoupených předmětů.</p>
-
-  <div class="shop-grid">
-    <div class="shop-item">
-      <div class="item-name">🛡️ Rob Shield</div>
-      <div class="item-price">100 000 | Trvalý (pasivní)</div>
-      <div class="item-desc">Snižuje pokutu při chycení při loupeži o 50 %.</div>
-    </div>
-    <div class="shop-item">
-      <div class="item-name">🗡️ Rob Boost</div>
-      <div class="item-price">15 500 | 6 hodin</div>
-      <div class="item-desc">Zvyšuje šanci na úspěch loupeže o +20 % (jednorázové použití).</div>
-    </div>
-    <div class="shop-item">
-      <div class="item-name">⚡ Work Boost</div>
-      <div class="item-price">5 500 | 4 hodiny</div>
-      <div class="item-desc">Zvyšuje výdělek z <code>/economy work</code> o 30 %.</div>
-    </div>
-    <div class="shop-item">
-      <div class="item-name">💬 Passive Boost</div>
-      <div class="item-price">30 000 | 2 hodiny</div>
-      <div class="item-desc">Pasivní zisk ze zpráv je 3× vyšší.</div>
-    </div>
-    <div class="shop-item">
-      <div class="item-name">✨ XP Boost</div>
-      <div class="item-price">300 000 | 8 hodin</div>
-      <div class="item-desc">XP konverze je 2× výhodnější.</div>
-    </div>
-    <div class="shop-item">
-      <div class="item-name">🍀 Šťastný talisman</div>
-      <div class="item-price">50 000 | 12 hodin</div>
-      <div class="item-desc">Zvyšuje šanci v kasinu a dostihy o 15 %.</div>
-    </div>
-    <div class="shop-item">
-      <div class="item-name">📜 Odpuštění dluhu</div>
-      <div class="item-price">550 000 | Jednorázové</div>
-      <div class="item-desc">Okamžitě smaže veškerý aktuální dluh bez úroku.</div>
-    </div>
-    <div class="shop-item">
-      <div class="item-name">⭐ Prestiž Token</div>
-      <div class="item-price">800 000 | Jednorázové</div>
-      <div class="item-desc">Aktivuje prestiž — resetuje majetek a přidá permanentní +5 % bonus k výdělkům.</div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ XP KONVERZE ═══ -->
-<section id="xp">
-  <h2><span class="sec-icon">🔄</span> XP konverze</h2>
-  <p>Příkaz <code>/economy xp-convert &lt;xp&gt;</code> — převede serverové XP body na herní měnu. Předmět <strong>XP Boost</strong> zdvojnásobí efektivitu konverze.</p>
-  <div class="callout callout-info">
-    <span class="callout-icon">ℹ️</span>
-    <div>XP konverze je závislá na nastavení serveru a dostupném XP systému. Výsledná částka se odvíjí od počtu převáděných XP.</div>
-  </div>
-</section>
-
-<!-- ═══ ADMIN ═══ -->
-<section id="admin-cmd">
-  <h2><span class="sec-icon">🔑</span> Admin příkazy</h2>
-  <div class="cmd-grid">
-    <div class="cmd-card">
-      <div class="cmd-name">/economy setup</div>
-      <div class="cmd-desc">Zapne/vypne ekonomiku, nastaví název měny, oznamovací kanál a kanál pro tržní eventy — vše v jednom příkazu.</div>
-      <span class="cmd-tag tag-admin">Admin</span><span class="cmd-tag tag-upd">Aktualizováno</span>
-    </div>
-    <div class="cmd-card">
-      <div class="cmd-name">/economy give_money &lt;hráč&gt; &lt;částka&gt;</div>
-      <div class="cmd-desc">Přidá nebo odebere cash hráči (záporné číslo = odebrání).</div>
-      <span class="cmd-tag tag-admin">Admin</span>
-    </div>
-    <div class="cmd-card">
-      <div class="cmd-name">/economy reset_player &lt;hráč&gt;</div>
-      <div class="cmd-desc">Resetuje ekonomiku hráče na výchozí hodnoty (1 000 cash, vše ostatní 0).</div>
-      <span class="cmd-tag tag-admin">Admin</span>
-    </div>
-    <div class="cmd-card">
-      <div class="cmd-name">/economy fund-vote → tlačítko Vyhodnotit</div>
-      <div class="cmd-desc">Pouze admin může stisknout tlačítko pro vyhodnocení hlasování o fondu.</div>
-      <span class="cmd-tag tag-admin">Admin</span>
-    </div>
-  </div>
-
-  <h3>Nastavení přes /economy setup</h3>
-  <table>
-    <thead><tr><th>Parametr</th><th>Popis</th></tr></thead>
-    <tbody>
-      <tr><td><code>zapnout</code></td><td>True / False — zapnutí nebo vypnutí ekonomiky</td></tr>
-      <tr><td><code>nazev_meny</code></td><td>Název měny serveru (výchozí: Koruny)</td></tr>
-      <tr><td><code>kanal</code></td><td>Kanál pro obecná oznámení ekonomiky</td></tr>
-      <tr><td><code>event_kanal</code></td><td>Kanál pro automatické tržní eventy (volitelný — výchozí = oznamovací kanál)</td></tr>
-    </tbody>
-  </table>
-
-  <div class="callout callout-info">
-    <span class="callout-icon">🔑</span>
-    <div>Příkaz <code>/economy setup</code> lze použít i tehdy, když ekonomika ještě <strong>není aktivní</strong> — je vyjmut z kontroly ekonomiky, aby bylo možné ji vůbec zapnout. Stejně tak <code>/economy give_money</code> a <code>/economy reset_player</code>.</div>
-  </div>
-</section>
-
-</main>
 </div>
 
 <script>
-const sections = document.querySelectorAll('section[id]');
-const navLinks  = document.querySelectorAll('nav a');
-const observer  = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      navLinks.forEach(l => l.classList.remove('active'));
-      const active = document.querySelector(`nav a[href="#${e.target.id}"]`);
-      if (active) active.classList.add('active');
+// ── Config ────────────────────────────────────────────────────────────────────
+var PRAGUE_TZ  = 'Europe/Prague';
+var PRED_STEPS = 8;    // predikčních kroků
+var LOOKBACK   = 10;   // posledních bodů pro analýzu trendu
+
+// ── Váhy eventů — zrcadlí _pick_market_event z bota ──────────────────────────
+var MARKET_WEIGHTS = {
+    bull:          30,
+    bear:          30,
+    neutral:       15,
+    wild:           6,
+    special_bull:   5,
+    special_bear:   5,
+    crash:          1
+};
+// Střední faktor odpovídající rozsahu ev[3]..ev[4] pro každý typ
+var EVENT_FACTORS = {
+    bull:          0.05,
+    bear:         -0.05,
+    neutral:       0.008,
+    wild:          0.18,   // znaménko rozhodne další hod
+    special_bull:  0.13,
+    special_bear: -0.13,
+    crash:        -0.55    // dramatický propad
+};
+var TOTAL_WEIGHT = 0;
+var WEIGHT_KEYS  = Object.keys(MARKET_WEIGHTS);
+for (var _i = 0; _i < WEIGHT_KEYS.length; _i++) TOTAL_WEIGHT += MARKET_WEIGHTS[WEIGHT_KEYS[_i]];
+
+// ── State ─────────────────────────────────────────────────────────────────────
+var myChart         = null;
+var fullHistory     = [];
+var currentPrice    = 0;
+var currentFiltered = [];
+var currentFilter   = 0;
+var showPrediction  = true;
+var PRED_SEED       = Date.now();
+
+// ── Seeded RNG (mulberry32) ───────────────────────────────────────────────────
+function seededRand(s) {
+    var t = (s + 0x6D2B79F5) >>> 0;
+    t = Math.imul(t ^ t >>> 15, t | 1);
+    t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+}
+
+// ── Timezone helpers ──────────────────────────────────────────────────────────
+function parseUTC(isoStr) {
+    return new Date(isoStr.endsWith('Z') ? isoStr : isoStr + 'Z');
+}
+
+function pragueparts(isoStr) {
+    var d     = parseUTC(isoStr);
+    var parts = new Intl.DateTimeFormat('en-GB', {
+        timeZone: PRAGUE_TZ,
+        year: 'numeric', month: '2-digit', day: '2-digit',
+        hour: '2-digit', minute: '2-digit', hour12: false
+    }).formatToParts(d);
+    var p = {};
+    parts.forEach(function(x) { p[x.type] = x.value; });
+    return p;
+}
+
+function labelShort(isoStr) {
+    var p = pragueparts(isoStr);
+    return p.day + '.' + p.month + '. ' + p.hour + ':' + p.minute;
+}
+
+function labelFull(isoStr) {
+    var p = pragueparts(isoStr);
+    return p.day + '.' + p.month + '.' + p.year + '  ' + p.hour + ':' + p.minute;
+}
+
+function fmtPrice(n) {
+    return n.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+}
+
+// ── Historická analýza ────────────────────────────────────────────────────────
+// Vrátí průměrnou relativní změnu a std. dev. z posledních N cen.
+function analyzeHistory(prices) {
+    if (prices.length < 2) return { meanChange: 0, stdDev: 0.03 };
+    var changes = [];
+    for (var i = 1; i < prices.length; i++) {
+        if (prices[i - 1] > 0) changes.push((prices[i] - prices[i - 1]) / prices[i - 1]);
     }
-  });
-}, {threshold: 0.25});
-sections.forEach(s => observer.observe(s));
+    if (!changes.length) return { meanChange: 0, stdDev: 0.03 };
+
+    var mean = 0;
+    for (var j = 0; j < changes.length; j++) mean += changes[j];
+    mean /= changes.length;
+
+    var variance = 0;
+    for (var k = 0; k < changes.length; k++) variance += (changes[k] - mean) * (changes[k] - mean);
+    variance /= changes.length;
+
+    return {
+        meanChange: mean,
+        stdDev: Math.max(0.005, Math.min(Math.sqrt(variance), 0.25))
+    };
+}
+
+// ── Váhovaný výběr eventu (simuluje _pick_market_event) ───────────────────────
+function pickEvent(seed) {
+    var r   = seededRand(seed) * TOTAL_WEIGHT;
+    var cum = 0;
+    for (var i = 0; i < WEIGHT_KEYS.length; i++) {
+        cum += MARKET_WEIGHTS[WEIGHT_KEYS[i]];
+        if (r <= cum) return WEIGHT_KEYS[i];
+    }
+    return 'neutral';
+}
+
+// ── Generátor predikce ────────────────────────────────────────────────────────
+// 1. Analyzuj posledních LOOKBACK bodů → trend (meanChange) + volatilita (stdDev)
+// 2. Váhovaný výběr eventu podle pravděpodobností z bota → eventFactor
+// 3. combinedBias = trend × 0.6 + eventFactor × 0.4
+// 4. Každý krok: price × (1 + combinedBias + noise × stdDev)
+// 5. Crash přebije vše → dramatický postupný propad
+// Výsledek[0] = basePrice — přesný spojovací bod na konec reálné křivky
+function generatePrediction(basePrice, historyData) {
+    var recent = historyData.slice(-LOOKBACK).map(function(r) { return r.price; });
+    var stats  = analyzeHistory(recent);
+
+    var seed      = PRED_SEED;
+    seed++;
+    var eventType = pickEvent(seed);
+    var eventFactor = EVENT_FACTORS[eventType];
+
+    // Wild: znaménko rozhodne další hod
+    if (eventType === 'wild') {
+        seed += 3;
+        if (seededRand(seed) < 0.5) eventFactor = -eventFactor;
+    }
+
+    var combinedBias = stats.meanChange * 0.6 + eventFactor * 0.4;
+
+    var pts   = [basePrice];
+    var price = basePrice;
+
+    for (var i = 0; i < PRED_STEPS; i++) {
+        seed += 7;
+        var noise  = (seededRand(seed) * 2 - 1) * stats.stdDev;
+        var change = eventType === 'crash'
+            ? eventFactor + noise * 0.1          // crash: minimální šum, max propad
+            : combinedBias + noise;
+        price = Math.max(1, Math.round(price * (1 + change)));
+        pts.push(price);
+    }
+    return pts;
+}
+
+// Časové labely pro predikční kroky (interval odhadnut z reálných dat)
+function buildPredictionLabels(data) {
+    var lastMs     = parseUTC(data[data.length - 1].recorded_at).getTime();
+    var intervalMs = 2 * 3600000;
+    if (data.length >= 2) {
+        var n    = Math.min(5, data.length);
+        var span = parseUTC(data[data.length - 1].recorded_at).getTime()
+                 - parseUTC(data[data.length - n].recorded_at).getTime();
+        intervalMs = Math.max(30 * 60000, Math.round(span / (n - 1)));
+    }
+    var labels = [];
+    for (var i = 1; i <= PRED_STEPS; i++) {
+        labels.push(new Date(lastMs + i * intervalMs).toISOString().slice(0, 19));
+    }
+    return labels;
+}
+
+// ── Toggle predikce ───────────────────────────────────────────────────────────
+function togglePrediction() {
+    showPrediction = !showPrediction;
+    var btn = document.getElementById('btn-pred');
+    btn.innerHTML = showPrediction ? '&#x1F52E; ON' : '&#x1F52E; OFF';
+    if (showPrediction) btn.classList.add('active');
+    else btn.classList.remove('active');
+    if (currentFiltered.length) buildChart(currentFiltered);
+}
+
+// ── Ticker (vždy posledních 24h) ──────────────────────────────────────────────
+function buildTicker(history) {
+    if (!history.length) return;
+    var lastTs   = parseUTC(history[history.length - 1].recorded_at);
+    var cutoff24 = new Date(lastTs.getTime() - 24 * 3600000);
+    var src      = history.filter(function(r) { return parseUTC(r.recorded_at) >= cutoff24; });
+    if (!src.length) src = history;
+
+    var items = [];
+    for (var i = 0; i < src.length; i++) {
+        var r    = src[i];
+        var prev = i > 0 ? src[i - 1] : null;
+        var chg  = prev ? ((r.price - prev.price) / prev.price * 100).toFixed(2) : null;
+        var pp   = pragueparts(r.recorded_at);
+        items.push({ date: pp.day + '.' + pp.month + '.', time: pp.hour + ':' + pp.minute, price: fmtPrice(r.price), chg: chg });
+    }
+
+    function render() {
+        return items.map(function(it) {
+            var cls     = it.chg === null ? '' : (parseFloat(it.chg) >= 0 ? 'up' : 'dn');
+            var sign    = it.chg === null ? '' : (parseFloat(it.chg) >= 0 ? '+' : '');
+            var chgHtml = it.chg !== null ? '<span class="chg ' + cls + '">' + sign + it.chg + '%</span>' : '';
+            return '<span class="ticker-item">'
+                 + '<span class="sym">' + it.date + ' ' + it.time + '</span>'
+                 + '<span class="val">' + it.price + '</span>'
+                 + chgHtml + '</span>';
+        }).join('');
+    }
+    document.getElementById('tickerInner').innerHTML = render() + render();
+}
+
+// ── Stat cards ────────────────────────────────────────────────────────────────
+function updateStats(data) {
+    if (!data.length) return;
+    var prices = data.map(function(r) { return r.price; });
+    var max = Math.max.apply(null, prices);
+    var min = Math.min.apply(null, prices);
+    var avg = Math.round(prices.reduce(function(a,b){return a+b;},0) / prices.length);
+    document.getElementById('statATH').textContent     = fmtPrice(max);
+    document.getElementById('statATHDate').textContent = labelShort(data[prices.indexOf(max)].recorded_at);
+    document.getElementById('statATL').textContent     = fmtPrice(min);
+    document.getElementById('statATLDate').textContent = labelShort(data[prices.indexOf(min)].recorded_at);
+    document.getElementById('statAvg').textContent     = fmtPrice(avg);
+    document.getElementById('statVol').textContent     = fmtPrice(max - min);
+    document.getElementById('statCount').textContent   = data.length + ' pts';
+}
+
+// ── Header ────────────────────────────────────────────────────────────────────
+function updateHeader(data) {
+    document.getElementById('priceMain').textContent =
+        fmtPrice(currentPrice || (data.length ? data[data.length - 1].price : 0));
+    if (data.length >= 2) {
+        var first = data[0].price, last = data[data.length - 1].price;
+        var diff  = last - first;
+        var pct   = ((diff / first) * 100).toFixed(2);
+        var badge = document.getElementById('priceBadge');
+        badge.textContent = (diff >= 0 ? '\u25B2 +' : '\u25BC ') + pct + '%  PERIOD';
+        badge.className   = 'price-badge ' + (diff >= 0 ? 'up' : 'down');
+    }
+}
+
+// ── Chart ─────────────────────────────────────────────────────────────────────
+function buildChart(data) {
+    var ctx    = document.getElementById('tradingChart').getContext('2d');
+    var prices = data.map(function(r) { return r.price; });
+
+    // Predikce vychází vždy z current_price (živá hodnota z API)
+    var predValues = generatePrediction(currentPrice || prices[prices.length - 1], data);
+    var predLabels = buildPredictionLabels(data);
+
+    // allLabels: historické ISO + predikční ISO
+    var allLabels = data.map(function(r) { return r.recorded_at; }).concat(predLabels);
+
+    // histData: reálné ceny + null výplň pro predikční část
+    var histData = prices.concat(new Array(PRED_STEPS).fill(null));
+
+    // predData: (data.length-1) × null + predValues
+    // predValues[0] = basePrice → sdílí pozici [data.length-1] jako spojovací bod
+    // Délka: (data.length-1) + (PRED_STEPS+1) = data.length + PRED_STEPS = allLabels.length ✓
+    var predData = new Array(data.length - 1).fill(null).concat(predValues);
+
+    // Y osa zahrnuje i predikci → žádné ořezání
+    var allForY  = prices.concat(showPrediction ? predValues : []);
+    var yMin     = Math.min.apply(null, allForY);
+    var yMax     = Math.max.apply(null, allForY);
+    var yPad     = Math.max((yMax - yMin) * 0.1, yMax * 0.05);
+    var yAxisMin = Math.max(0, Math.floor((yMin - yPad) / 100) * 100);
+    var yAxisMax = Math.ceil((yMax + yPad) / 100) * 100;
+
+    // Gradienty
+    var grad = ctx.createLinearGradient(0, 0, 0, 420);
+    grad.addColorStop(0,   'rgba(0,229,160,0.18)');
+    grad.addColorStop(0.6, 'rgba(0,229,160,0.04)');
+    grad.addColorStop(1,   'rgba(0,229,160,0)');
+
+    var baseForPred = currentPrice || prices[prices.length - 1];
+    var predUp      = predValues[predValues.length - 1] >= baseForPred;
+    var predColor   = predUp ? 'rgba(0,229,160,0.75)' : 'rgba(255,77,106,0.75)';
+    var predFill    = predUp ? 'rgba(0,229,160,0.07)'  : 'rgba(255,77,106,0.07)';
+
+    var datasets = [{
+        label: 'Price',
+        data:  histData,
+        fill:  true,
+        backgroundColor: grad,
+        borderWidth: 2,
+        tension: 0.35,
+        spanGaps: false,
+        segment: {
+            borderColor: function(c) {
+                return c.p1.parsed.y >= c.p0.parsed.y ? '#00e5a0' : '#ff4d6a';
+            }
+        },
+        pointRadius: function(c) { return c.dataIndex < data.length ? 3 : 0; },
+        pointHoverRadius: function(c) { return c.dataIndex < data.length ? 7 : 0; },
+        pointBackgroundColor: function(c) {
+            var i = c.dataIndex;
+            if (i >= data.length) return 'transparent';
+            if (i === 0) return '#00e5a0';
+            return data[i].price >= data[i - 1].price ? '#00e5a0' : '#ff4d6a';
+        },
+        pointBorderColor: '#080c12',
+        pointBorderWidth: 1.5
+    }];
+
+    if (showPrediction) {
+        datasets.push({
+            label: 'AI Prediction',
+            data:  predData,
+            fill:  true,
+            backgroundColor: predFill,
+            borderColor: predColor,
+            borderWidth: 1.5,
+            borderDash: [6, 4],
+            tension: 0.4,
+            spanGaps: false,
+            pointRadius: function(c) {
+                var i = c.dataIndex;
+                if (c.raw === null) return 0;
+                if (i === data.length - 1) return 0; // spojovací bod — skryt pod reálným markerem
+                return i >= data.length ? 2.5 : 0;
+            },
+            pointHoverRadius: function(c) {
+                return (c.dataIndex >= data.length && c.raw !== null) ? 5 : 0;
+            },
+            pointBackgroundColor: predColor,
+            pointBorderColor: '#080c12',
+            pointBorderWidth: 1
+        });
+    }
+
+    var options = {
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: { duration: 500, easing: 'easeInOutQuart' },
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+            legend: {
+                display: true, position: 'top', align: 'end',
+                labels: {
+                    color: '#4b5e78',
+                    font: { family: "'Space Mono', monospace", size: 10 },
+                    boxWidth: 20, boxHeight: 2, padding: 16,
+                    filter: function(item) { return item.text === 'AI Prediction'; }
+                }
+            },
+            tooltip: {
+                enabled: true,
+                backgroundColor: '#0d1320',
+                borderColor: 'rgba(255,255,255,0.1)',
+                borderWidth: 1,
+                padding: 14,
+                titleColor: '#6b7e96',
+                bodyColor: '#e2e8f0',
+                titleFont: { family: "'Space Mono', monospace", size: 10 },
+                bodyFont:  { family: "'Space Mono', monospace", size: 13, weight: '700' },
+                displayColors: true,
+                callbacks: {
+                    title: function(items) {
+                        return labelFull(allLabels[items[0].dataIndex]);
+                    },
+                    label: function(item) {
+                        var idx    = item.dataIndex;
+                        var val    = item.raw;
+                        if (val === null) return null;
+                        var isPred = idx >= data.length;
+                        if (isPred) {
+                            var base = currentPrice || prices[prices.length - 1];
+                            var d2   = val - base;
+                            var pct2 = ((d2 / base) * 100).toFixed(2);
+                            return '\uD83D\uDD2E  ' + fmtPrice(val) + ' CZCoin  ('
+                                + (d2 >= 0 ? '+' : '') + pct2 + '%)';
+                        }
+                        var p    = data[idx].price;
+                        var prev = idx > 0 ? data[idx - 1].price : p;
+                        var d1   = p - prev;
+                        var pct1 = prev !== 0 ? ((d1 / prev) * 100).toFixed(2) : '0.00';
+                        return [fmtPrice(p) + ' CZCoin', (d1 >= 0 ? '\u25B2 +' : '\u25BC ') + pct1 + '%'];
+                    },
+                    labelColor: function(item) {
+                        var idx = item.dataIndex, val = item.raw;
+                        if (val === null) return { borderColor: 'transparent', backgroundColor: 'transparent' };
+                        if (idx >= data.length) return { borderColor: predColor, backgroundColor: predColor };
+                        var prev = idx > 0 ? data[idx - 1].price : val;
+                        var up   = val >= prev;
+                        return { borderColor: up ? '#00e5a0' : '#ff4d6a', backgroundColor: up ? '#00e5a0' : '#ff4d6a' };
+                    }
+                }
+            }
+        },
+        scales: {
+            y: {
+                position: 'right',
+                min: yAxisMin, max: yAxisMax,
+                grid:  { color: 'rgba(255,255,255,0.04)', drawBorder: false },
+                ticks: { color: '#4b5e78', font: { family: "'Space Mono', monospace", size: 10 }, callback: function(v) { return fmtPrice(v); }, maxTicksLimit: 7 },
+                border: { display: false }
+            },
+            x: {
+                grid: { display: false },
+                ticks: {
+                    color: '#4b5e78',
+                    font:  { family: "'Space Mono', monospace", size: 10 },
+                    maxRotation: 0, autoSkip: true, maxTicksLimit: 9,
+                    callback: function(val, index) {
+                        var lbl  = allLabels[index];
+                        if (!lbl) return '';
+                        var prev   = index > 0 ? allLabels[index - 1] : null;
+                        var pp     = pragueparts(lbl);
+                        var hhmm   = pp.hour + ':' + pp.minute;
+                        var newDay = !prev || lbl.slice(0, 10) !== prev.slice(0, 10);
+                        var base   = newDay ? (pp.day + '.' + pp.month + '  ' + hhmm) : hhmm;
+                        return index >= data.length ? base + ' ?' : base;
+                    }
+                },
+                border: { display: false }
+            }
+        }
+    };
+
+    if (myChart) {
+        myChart.data    = { labels: allLabels, datasets: datasets };
+        myChart.options = options;
+        myChart.update('none');
+    } else {
+        myChart = new Chart(ctx, { type: 'line', data: { labels: allLabels, datasets: datasets }, options: options });
+    }
+}
+
+// ── Filter ────────────────────────────────────────────────────────────────────
+function applyFilter(hours) {
+    currentFilter = hours;
+    document.querySelectorAll('.range-btn').forEach(function(b) { b.classList.remove('active'); });
+    if (hours === 0) {
+        document.getElementById('btn-0').classList.add('active');
+        currentFiltered = fullHistory.slice();
+    } else {
+        var btn = document.getElementById('btn-' + hours);
+        if (btn) btn.classList.add('active');
+        if (!fullHistory.length) { currentFiltered = []; return; }
+        var lastTs = parseUTC(fullHistory[fullHistory.length - 1].recorded_at);
+        var cutoff = new Date(lastTs.getTime() - hours * 3600000);
+        currentFiltered = fullHistory.filter(function(r) { return parseUTC(r.recorded_at) >= cutoff; });
+    }
+    if (!currentFiltered.length) return;
+    updateHeader(currentFiltered);
+    updateStats(currentFiltered);
+    buildChart(currentFiltered);
+    document.getElementById('chartLoading').classList.add('hidden');
+}
+
+// ── Load ──────────────────────────────────────────────────────────────────────
+async function loadData() {
+    try {
+        var resp = await fetch('https://rs422cznas.myds.me:7784/api/economy/price');
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        var json = await resp.json();
+        fullHistory  = json.history || [];
+        currentPrice = json.current_price || 0;
+        var now = new Intl.DateTimeFormat('en-GB', {
+            timeZone: PRAGUE_TZ, hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
+        }).format(new Date());
+        document.getElementById('lastUpdated').textContent = 'UPDATED ' + now + ' CET';
+        buildTicker(fullHistory);
+        applyFilter(currentFilter);
+    } catch (err) {
+        console.error(err);
+        document.getElementById('errorBar').textContent = '\u26A0  Failed to load market data: ' + err.message;
+        document.getElementById('errorBar').style.display = 'block';
+        document.getElementById('chartLoading').classList.add('hidden');
+    }
+}
+
+window.onload = function() { loadData(); };
 </script>
 </body>
 </html>
