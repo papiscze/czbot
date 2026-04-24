@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CZBOT Coin — Market Terminal</title>
+<script
+    src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.js"
+    integrity="sha384-tgbB5AKnszdcfwcZtTfuhR3Ko1XZdlDfsLtkxiiAZiVkkXCkFmp+FQFh+V/UTo54"
+    crossorigin="anonymous"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+    --bg:          #080c12;
+    --bg2:         #0d1320;
+    --bg3:         #111827;
+    --border:      rgba(255,255,255,0.07);
+    --border2:     rgba(255,255,255,0.12);
+    --text:        #e2e8f0;
+    --muted:       #4b5e78;
+    --muted2:      #6b7e96;
+    --up:          #00e5a0;
+    --up-dim:      rgba(0,229,160,0.12);
+    --up-glow:     rgba(0,229,160,0.35);
+    --down:        #ff4d6a;
+    --down-dim:    rgba(255,77,106,0.12);
+    --accent:      #3b82f6;
+    --accent-dim:  rgba(59,130,246,0.15);
+    --gold:        #f59e0b;
+    --mono:        'Space Mono', monospace;
+    --sans:        'DM Sans', sans-serif;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* ── Scanline texture overlay ── */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.07) 2px,
+        rgba(0,0,0,0.07) 4px
+    );
+    pointer-events: none;
+    z-index: 1000;
+}
+
+/* ── Ticker tape ── */
+.ticker-wrap {
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+    height: 32px;
+    display: flex;
+    align-items: center;
+}
+.ticker-inner {
+    display: flex;
+    gap: 60px;
+    white-space: nowrap;
+    animation: ticker 30s linear infinite;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+}
+.ticker-item { display: flex; align-items: center; gap: 8px; }
+.ticker-item .sym { color: var(--muted2); }
+.ticker-item .val { color: var(--text); }
+.ticker-item .chg.up  { color: var(--up); }
+.ticker-item .chg.dn  { color: var(--down); }
+@keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ── Layout ── */
+.page { max-width: 1280px; margin: 0 auto; padding: 24px 20px 40px; }
+
+/* ── Top header ── */
+.top-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.coin-identity { display: flex; align-items: center; gap: 14px; }
+.coin-icon {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: linear-gradient(135deg, #3b82f6 0%, #00e5a0 100%);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 1rem; font-weight: 700;
+    color: #fff; flex-shrink: 0;
+    box-shadow: 0 0 20px rgba(59,130,246,0.4);
+}
+.coin-name { font-family: var(--sans); font-weight: 600; font-size: 1.1rem; color: var(--muted2); letter-spacing: 0.05em; text-transform: uppercase; }
+.coin-full { font-family: var(--sans); font-size: 1.5rem; font-weight: 300; color: var(--text); margin-top: 1px; }
+
+.price-block { text-align: right; }
+.price-main {
+    font-family: var(--mono);
+    font-size: 2.6rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -1px;
+    color: var(--text);
+    transition: color 0.3s;
+}
+.price-main.flash-up   { color: var(--up); }
+.price-main.flash-down { color: var(--down); }
+
+.price-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-family: var(--mono); font-size: 0.8rem; font-weight: 700;
+    padding: 4px 10px; border-radius: 4px; margin-top: 6px;
+}
+.price-badge.up   { background: var(--up-dim);   color: var(--up); }
+.price-badge.down { background: var(--down-dim);  color: var(--down); }
+.price-badge.flat { background: var(--accent-dim); color: var(--muted2); }
+
+/* ── Stat cards ── */
+.stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    margin-bottom: 16px;
+}
+.stat-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s;
+}
+.stat-card:hover { border-color: var(--border2); }
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+}
+.stat-card.ath::before  { background: linear-gradient(90deg, var(--up), transparent); }
+.stat-card.atl::before  { background: linear-gradient(90deg, var(--down), transparent); }
+.stat-card.vol::before  { background: linear-gradient(90deg, var(--gold), transparent); }
+.stat-card.chg::before  { background: linear-gradient(90deg, var(--accent), transparent); }
+.stat-card.cnt::before  { background: linear-gradient(90deg, #a78bfa, transparent); }
+
+.stat-label {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+}
+.stat-value {
+    font-family: var(--mono);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text);
+}
+.stat-value.up   { color: var(--up); }
+.stat-value.down { color: var(--down); }
+.stat-sub {
+    font-family: var(--sans);
+    font-size: 0.7rem;
+    color: var(--muted);
+    margin-top: 3px;
+}
+
+/* ── Chart panel ── */
+.chart-panel {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 12px;
+}
+
+.chart-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.toolbar-left { display: flex; align-items: center; gap: 8px; }
+.toolbar-label {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-right: 4px;
+}
+
+.range-btn {
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--muted2);
+    padding: 4px 11px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    transition: all 0.15s;
+}
+.range-btn:hover { color: var(--text); border-color: var(--border2); }
+.range-btn.active {
+    background: var(--bg3);
+    border-color: var(--border2);
+    color: var(--text);
+}
+
+.toolbar-right {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--muted);
+    display: flex; align-items: center; gap: 6px;
+}
+.live-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--up);
+    animation: pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 var(--up-glow); }
+    50%       { opacity: 0.6; box-shadow: 0 0 0 4px transparent; }
+}
+
+.chart-wrap {
+    position: relative;
+    height: 420px;
+    padding: 12px 0 0;
+}
+
+.chart-loading {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg2);
+    gap: 12px;
+    z-index: 10;
+}
+.chart-loading.hidden { display: none; }
+.spinner {
+    width: 28px; height: 28px;
+    border: 2px solid var(--border);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-text { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); letter-spacing: 0.1em; }
+
+/* ── Error bar ── */
+.error-bar {
+    background: rgba(255,77,106,0.08);
+    border: 1px solid rgba(255,77,106,0.25);
+    border-radius: 6px;
+    padding: 10px 16px;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    color: var(--down);
+    margin-bottom: 12px;
+    display: none;
+}
+
+/* ── Footer ── */
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 4px;
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.footer-left { display: flex; align-items: center; gap: 16px; }
+.footer-badge {
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 2px 7px;
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+}
+
+/* ── Crosshair price label ── */
+#crosshairLabel {
+    position: absolute;
+    right: 12px;
+    background: var(--bg3);
+    border: 1px solid var(--border2);
+    border-radius: 4px;
+    padding: 3px 8px;
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--text);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s;
+    z-index: 5;
+}
+
+@media (max-width: 600px) {
+    .price-main { font-size: 1.9rem; }
+    .stat-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- Ticker tape -->
+<div class="ticker-wrap">
+    <div class="ticker-inner" id="tickerInner">
+        <!-- populated by JS, doubled for seamless loop -->
+    </div>
+</div>
+
+<div class="page">
+
+    <!-- Top header -->
+    <div class="top-header">
+        <div class="coin-identity">
+            <div class="coin-icon">CZ</div>
+            <div>
+                <div class="coin-name">CZBOT / CZCoin</div>
+                <div class="coin-full">CZBOT Coin</div>
+            </div>
+        </div>
+        <div class="price-block">
+            <div class="price-main" id="priceMain">—</div>
+            <div>
+                <span class="price-badge flat" id="priceBadge">— %</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stat cards -->
+    <div class="stat-grid">
+        <div class="stat-card ath">
+            <div class="stat-label">▲ All-Time High</div>
+            <div class="stat-value up" id="statATH">—</div>
+            <div class="stat-sub" id="statATHDate">—</div>
+        </div>
+        <div class="stat-card atl">
+            <div class="stat-label">▼ All-Time Low</div>
+            <div class="stat-value down" id="statATL">—</div>
+            <div class="stat-sub" id="statATLDate">—</div>
+        </div>
+        <div class="stat-card vol">
+            <div class="stat-label">⊘ Avg Price</div>
+            <div class="stat-value" id="statAvg">—</div>
+            <div class="stat-sub">7-day average</div>
+        </div>
+        <div class="stat-card chg">
+            <div class="stat-label">↕ Volatility</div>
+            <div class="stat-value" id="statVol">—</div>
+            <div class="stat-sub">high − low spread</div>
+        </div>
+        <div class="stat-card cnt">
+            <div class="stat-label">◈ Data Points</div>
+            <div class="stat-value" id="statCount">—</div>
+            <div class="stat-sub">in selected range</div>
+        </div>
+    </div>
+
+    <!-- Error -->
+    <div class="error-bar" id="errorBar"></div>
+
+    <!-- Chart panel -->
+    <div class="chart-panel">
+        <div class="chart-toolbar">
+            <div class="toolbar-left">
+                <span class="toolbar-label">Range</span>
+                <button class="range-btn" id="btn-24"  onclick="applyFilter(24)">24H</button>
+                <button class="range-btn" id="btn-72"  onclick="applyFilter(72)">3D</button>
+                <button class="range-btn active" id="btn-0" onclick="applyFilter(0)">7D</button>
+            </div>
+            <div class="toolbar-right">
+                <div class="live-dot"></div>
+                <span id="lastUpdated">LOADING…</span>
+            </div>
+        </div>
+
+        <div class="chart-wrap">
+            <div class="chart-loading" id="chartLoading">
+                <div class="spinner"></div>
+                <div class="loading-text">FETCHING MARKET DATA</div>
+            </div>
+            <div id="crosshairLabel"></div>
+            <canvas id="tradingChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="footer-left">
+            <span class="footer-badge">VIRTUAL CURRENCY</span>
+            <span class="footer-badge">CZBOT ECONOMY</span>
+            <span>Prices in CZCoin &bull; Times in Prague (CET/CEST)</span>
+        </div>
+        <span>czbot.online</span>
+    </div>
+
+</div><!-- /page -->
+
+<script>
+// ── Constants ────────────────────────────────────────────────────────────────
+const PRAGUE_TZ = 'Europe/Prague';
+
+// ── State ────────────────────────────────────────────────────────────────────
+let myChart          = null;
+let fullHistory      = [];
+let currentFiltered  = [];
+let currentFilter    = 0;
+
+// ── Time helpers ─────────────────────────────────────────────────────────────
+function parseUTC(isoStr) {
+    return new Date(isoStr.endsWith('Z') ? isoStr : isoStr + 'Z');
+}
+
+function pragueparts(isoStr) {
+    const d = parseUTC(isoStr);
+    const parts = new Intl.DateTimeFormat('en-GB', {
+        timeZone: PRAGUE_TZ,
+        year: 'numeric', month: '2-digit', day: '2-digit',
+        hour: '2-digit', minute: '2-digit',
+        hour12: false
+    }).formatToParts(d);
+    const p = {};
+    parts.forEach(function(x) { p[x.type] = x.value; });
+    return p;
+}
+
+function labelShort(isoStr) {
+    const p = pragueparts(isoStr);
+    return p.day + '.' + p.month + '. ' + p.hour + ':' + p.minute;
+}
+
+function labelFull(isoStr) {
+    const p = pragueparts(isoStr);
+    return p.day + '.' + p.month + '.' + p.year + '  ' + p.hour + ':' + p.minute;
+}
+
+function fmtPrice(n) {
+    return n.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+}
+
+// ── Ticker ───────────────────────────────────────────────────────────────────
+function buildTicker(history) {
+    if (!history.length) return;
+
+    // Vždy zobrazujeme posledních 24h bez ohledu na aktivní filtr grafu
+    const lastTs   = parseUTC(history[history.length - 1].recorded_at);
+    const cutoff24 = new Date(lastTs.getTime() - 24 * 3600000);
+    const data24   = history.filter(function(r) { return parseUTC(r.recorded_at) >= cutoff24; });
+    const src      = data24.length ? data24 : history;
+
+    const items = [];
+    for (let i = 0; i < src.length; i++) {
+        const r    = src[i];
+        const prev = i > 0 ? src[i - 1] : null;
+        const chg  = prev ? ((r.price - prev.price) / prev.price * 100).toFixed(2) : null;
+        const p    = pragueparts(r.recorded_at);
+        items.push({
+            date:  p.day + '.' + p.month + '.',
+            time:  p.hour + ':' + p.minute,
+            price: fmtPrice(r.price),
+            chg:   chg
+        });
+    }
+
+    function renderItems() {
+        return items.map(function(it) {
+            const cls  = it.chg === null ? '' : (parseFloat(it.chg) >= 0 ? 'up' : 'dn');
+            const sign = it.chg === null ? '' : (parseFloat(it.chg) >= 0 ? '+' : '');
+            const chgHtml = it.chg !== null
+                ? '<span class="chg ' + cls + '">' + sign + it.chg + '%</span>'
+                : '';
+            return '<span class="ticker-item">'
+                + '<span class="sym">' + it.date + ' ' + it.time + '</span>'
+                + '<span class="val">' + it.price + '</span>'
+                + chgHtml
+                + '</span>';
+        }).join('');
+    }
+
+    const inner = document.getElementById('tickerInner');
+    inner.innerHTML = renderItems() + renderItems();
+}
+
+// ── Stat cards ───────────────────────────────────────────────────────────────
+function updateStats(data) {
+    if (!data.length) return;
+
+    const prices = data.map(function(r) { return r.price; });
+    const max    = Math.max.apply(null, prices);
+    const min    = Math.min.apply(null, prices);
+    const avg    = Math.round(prices.reduce(function(a, b) { return a + b; }, 0) / prices.length);
+    const spread = max - min;
+
+    const athIdx = prices.indexOf(max);
+    const atlIdx = prices.indexOf(min);
+
+    document.getElementById('statATH').textContent    = fmtPrice(max);
+    document.getElementById('statATHDate').textContent = labelShort(data[athIdx].recorded_at);
+    document.getElementById('statATL').textContent    = fmtPrice(min);
+    document.getElementById('statATLDate').textContent = labelShort(data[atlIdx].recorded_at);
+    document.getElementById('statAvg').textContent    = fmtPrice(avg);
+    document.getElementById('statVol').textContent    = fmtPrice(spread);
+    document.getElementById('statCount').textContent  = data.length + ' pts';
+}
+
+// ── Header price ─────────────────────────────────────────────────────────────
+function updateHeader(currentPrice, data) {
+    const el = document.getElementById('priceMain');
+    el.textContent = fmtPrice(currentPrice);
+
+    const badge = document.getElementById('priceBadge');
+    if (data.length >= 2) {
+        const first = data[0].price;
+        const last  = data[data.length - 1].price;
+        const diff  = last - first;
+        const pct   = ((diff / first) * 100).toFixed(2);
+        const up    = diff >= 0;
+        badge.textContent = (up ? '▲ +' : '▼ ') + pct + '%  PERIOD';
+        badge.className   = 'price-badge ' + (up ? 'up' : 'down');
+    }
+}
+
+// ── Chart ─────────────────────────────────────────────────────────────────────
+// ── Prediction generator ─────────────────────────────────────────────────────
+// Simuluje náhodný random walk vycházející z poslední known ceny.
+// Stejný seed per-session aby se křivka neměnila při přepínání filtrů.
+let _predSeed = Date.now();
+function seededRand(seed) {
+    // simple mulberry32
+    var t = seed + 0x6D2B79F5;
+    t = Math.imul(t ^ t >>> 15, t | 1);
+    t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+}
+
+function generatePrediction(lastPrice, steps) {
+    // Počet kroků = ~polovina historických bodů, max 12
+    steps = Math.min(steps, 12);
+    const pts   = [null]; // první bod zarovnaný na konec historie = null (bez markeru)
+    let   price = lastPrice;
+    let   seed  = _predSeed;
+
+    // Náhodný bias: 40% šance na výrazný trend, jinak neutrální
+    seed++;
+    const biasRoll = seededRand(seed);
+    const bias = biasRoll < 0.2 ? 0.018       // silný bull
+               : biasRoll < 0.4 ? -0.018      // silný bear
+               : biasRoll < 0.6 ? 0.007       // mírný bull
+               : biasRoll < 0.8 ? -0.007      // mírný bear
+               : 0;                            // neutrální
+
+    for (let i = 0; i < steps; i++) {
+        seed += 7;
+        const r     = seededRand(seed) * 2 - 1;   // -1 .. +1
+        const swing = price * (0.03 * r + bias);
+        price = Math.max(1, Math.round(price + swing));
+        pts.push(price);
+    }
+    return pts;
+}
+
+function buildPredictionLabels(data, steps) {
+    // Vygeneruje ISO-like labely pro predikční kroky (každé 2h od posledního bodu)
+    steps = Math.min(steps, 12);
+    const lastISO = data[data.length - 1].recorded_at;
+    const lastMs  = parseUTC(lastISO).getTime();
+    const labels  = [];
+    for (let i = 1; i <= steps; i++) {
+        const ms  = lastMs + i * 2 * 3600000;
+        const iso = new Date(ms).toISOString().slice(0, 19); // UTC bez Z
+        labels.push(iso);
+    }
+    return labels;
+}
+
+function buildChart(data) {
+    const ctx    = document.getElementById('tradingChart').getContext('2d');
+    const prices = data.map(function(r) { return r.price; });
+
+    // ── Predikce ──────────────────────────────────────────────────────────────
+    const PRED_STEPS  = Math.max(4, Math.min(12, Math.round(data.length / 3)));
+    const predValues  = generatePrediction(prices[prices.length - 1], PRED_STEPS);
+    const predLabels  = buildPredictionLabels(data, PRED_STEPS);
+
+    // Celkové labely = historické + predikční (bez prvního null bodu který sdílí konec historie)
+    const allLabels = data.map(function(r) { return r.recorded_at; }).concat(predLabels);
+
+    // Historická data doplněná null pro predikční část
+    const histPadded = prices.concat(new Array(PRED_STEPS).fill(null));
+    // Predikční data — null pro historickou část + spojovací bod (poslední cena) + predikce
+    const predPadded = new Array(data.length - 1).fill(null)
+        .concat(predValues); // predValues[0] = null (marker skrytý), zbytek = predikce
+
+    // ── Gradienty ─────────────────────────────────────────────────────────────
+    const grad = ctx.createLinearGradient(0, 0, 0, 420);
+    grad.addColorStop(0,   'rgba(0,229,160,0.18)');
+    grad.addColorStop(0.6, 'rgba(0,229,160,0.04)');
+    grad.addColorStop(1,   'rgba(0,229,160,0)');
+
+    const predGrad = ctx.createLinearGradient(0, 0, 0, 420);
+    predGrad.addColorStop(0, 'rgba(139,92,246,0.10)');
+    predGrad.addColorStop(1, 'rgba(139,92,246,0)');
+
+    // Barva predikce podle směru
+    const lastReal = prices[prices.length - 1];
+    const lastPred = predValues[predValues.length - 1];
+    const predUp   = lastPred >= lastReal;
+    const predColor = predUp ? 'rgba(0,229,160,0.7)' : 'rgba(255,77,106,0.7)';
+    const predColorDim = predUp ? 'rgba(0,229,160,0.12)' : 'rgba(255,77,106,0.12)';
+
+    const chartData = {
+        labels: allLabels,
+        datasets: [
+            // ── Dataset 1: Historická křivka ──────────────────────────────────
+            {
+                label: 'Price',
+                data:   histPadded,
+                fill:   true,
+                backgroundColor: grad,
+                borderWidth: 2,
+                tension: 0.35,
+                spanGaps: false,
+                segment: {
+                    borderColor: function(c) {
+                        return c.p1.parsed.y >= c.p0.parsed.y ? '#00e5a0' : '#ff4d6a';
+                    }
+                },
+                pointRadius: function(c) {
+                    // Viditelné body jen na historické části
+                    return c.dataIndex < data.length ? 3 : 0;
+                },
+                pointHoverRadius: function(c) {
+                    return c.dataIndex < data.length ? 7 : 0;
+                },
+                pointBackgroundColor: function(c) {
+                    const i = c.dataIndex;
+                    if (i === 0) return '#00e5a0';
+                    if (i >= data.length) return 'transparent';
+                    return data[i].price >= data[i - 1].price ? '#00e5a0' : '#ff4d6a';
+                },
+                pointBorderColor: '#080c12',
+                pointBorderWidth: 1.5
+            },
+            // ── Dataset 2: Predikční křivka ───────────────────────────────────
+            {
+                label: 'AI Prediction',
+                data:   predPadded,
+                fill:   true,
+                backgroundColor: predColorDim,
+                borderColor: predColor,
+                borderWidth: 1.5,
+                borderDash: [5, 5],
+                tension: 0.4,
+                spanGaps: false,
+                pointRadius: function(c) {
+                    // Pouze poslední predikční bod
+                    const validFrom = data.length;
+                    return c.dataIndex >= validFrom && c.raw !== null ? 2.5 : 0;
+                },
+                pointHoverRadius: 5,
+                pointBackgroundColor: predColor,
+                pointBorderColor: '#080c12',
+                pointBorderWidth: 1
+            }
+        ]
+    };
+
+    const options = {
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: { duration: 500, easing: 'easeInOutQuart' },
+        interaction: { mode: 'index', intersect: false },
+        plugins: {
+            legend: {
+                display: true,
+                position: 'top',
+                align: 'end',
+                labels: {
+                    color: '#4b5e78',
+                    font: { family: "'Space Mono', monospace", size: 10 },
+                    boxWidth: 20,
+                    boxHeight: 2,
+                    padding: 16,
+                    filter: function(item) {
+                        return item.text === 'AI Prediction';
+                    }
+                }
+            },
+            tooltip: {
+                enabled: true,
+                backgroundColor: '#0d1320',
+                borderColor: 'rgba(255,255,255,0.1)',
+                borderWidth: 1,
+                padding: 14,
+                titleColor: '#6b7e96',
+                bodyColor: '#e2e8f0',
+                titleFont: { family: "'Space Mono', monospace", size: 10 },
+                bodyFont:  { family: "'Space Mono', monospace", size: 13, weight: '700' },
+                displayColors: true,
+                callbacks: {
+                    title: function(items) {
+                        const idx = items[0].dataIndex;
+                        const lbl = allLabels[idx];
+                        return labelFull(lbl);
+                    },
+                    label: function(item) {
+                        const idx  = item.dataIndex;
+                        const isPred = idx >= data.length;
+                        const val  = item.raw;
+                        if (val === null) return null;
+
+                        if (isPred) {
+                            const lastReal = prices[prices.length - 1];
+                            const diff = val - lastReal;
+                            const pct  = ((diff / lastReal) * 100).toFixed(2);
+                            const arr  = diff >= 0 ? '▲' : '▼';
+                            return '🔮 PREDICTION  ' + fmtPrice(val)
+                                + '  (' + arr + (diff >= 0 ? '+' : '') + pct + '% vs now)';
+                        }
+
+                        const p    = data[idx].price;
+                        const prev = idx > 0 ? data[idx - 1].price : p;
+                        const diff = p - prev;
+                        const pct  = prev !== 0 ? ((diff / prev) * 100).toFixed(2) : '0.00';
+                        const arr  = diff >= 0 ? '▲' : '▼';
+                        return [
+                            fmtPrice(p) + ' CZCoin',
+                            arr + ' ' + (diff >= 0 ? '+' : '') + pct + '%'
+                        ];
+                    },
+                    labelColor: function(item) {
+                        const idx    = item.dataIndex;
+                        const isPred = idx >= data.length;
+                        if (isPred) {
+                            return { borderColor: 'rgba(139,92,246,0.8)', backgroundColor: 'rgba(139,92,246,0.8)' };
+                        }
+                        const val  = item.raw;
+                        const prev = idx > 0 ? data[idx - 1].price : val;
+                        const up   = val >= prev;
+                        return {
+                            borderColor: up ? '#00e5a0' : '#ff4d6a',
+                            backgroundColor: up ? '#00e5a0' : '#ff4d6a'
+                        };
+                    }
+                }
+            }
+        },
+        scales: {
+            y: {
+                position: 'right',
+                grid: {
+                    color: 'rgba(255,255,255,0.04)',
+                    drawBorder: false
+                },
+                ticks: {
+                    color: '#4b5e78',
+                    font: { family: "'Space Mono', monospace", size: 10 },
+                    callback: function(v) { return fmtPrice(v); },
+                    maxTicksLimit: 6
+                },
+                border: { display: false }
+            },
+            x: {
+                grid: { display: false },
+                ticks: {
+                    color: '#4b5e78',
+                    font: { family: "'Space Mono', monospace", size: 10 },
+                    maxRotation: 0,
+                    autoSkip: true,
+                    maxTicksLimit: 8,
+                    callback: function(val, index) {
+                        const lbl  = allLabels[index];
+                        if (!lbl) return '';
+                        const isPred = index >= data.length;
+                        const p    = pragueparts(lbl);
+                        const hhmm = p.hour + ':' + p.minute;
+                        const prevLbl = index > 0 ? allLabels[index - 1] : null;
+                        const sameDay = prevLbl && lbl.slice(0, 10) === prevLbl.slice(0, 10);
+                        const base = sameDay ? hhmm : (p.day + '.' + p.month + '  ' + hhmm);
+                        return isPred ? (base + ' ?') : base;
+                    }
+                },
+                border: { display: false }
+            }
+        }
+    };
+
+    if (myChart) {
+        myChart.data    = chartData;
+        myChart.options = options;
+        myChart.update();
+    } else {
+        myChart = new Chart(ctx, { type: 'line', data: chartData, options: options });
+    }
+}
+
+// ── Filter ───────────────────────────────────────────────────────────────────
+function applyFilter(hours) {
+    currentFilter = hours;
+    document.querySelectorAll('.range-btn').forEach(function(b) { b.classList.remove('active'); });
+
+    if (hours === 0) {
+        document.getElementById('btn-0').classList.add('active');
+        currentFiltered = fullHistory.slice();
+    } else {
+        var btn = document.getElementById('btn-' + hours);
+        if (btn) btn.classList.add('active');
+        if (!fullHistory.length) {
+            currentFiltered = [];
+        } else {
+            var lastTs  = parseUTC(fullHistory[fullHistory.length - 1].recorded_at);
+            var cutoff = new Date(lastTs.getTime() - hours * 3600000);
+            currentFiltered = fullHistory.filter(function(r) { return parseUTC(r.recorded_at) >= cutoff; });
+        }
+    }
+
+    if (!currentFiltered.length) return;
+
+    const lastPrice = currentFiltered[currentFiltered.length - 1].price;
+    updateHeader(lastPrice, currentFiltered);
+    updateStats(currentFiltered);
+    buildChart(currentFiltered);
+    document.getElementById('chartLoading').classList.add('hidden');
+}
+
+// ── Load data ─────────────────────────────────────────────────────────────────
+async function loadData() {
+    try {
+        const resp = await fetch('/api/economy/price');
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        const json = await resp.json();
+
+        fullHistory = json.history || [];
+
+        const now = new Intl.DateTimeFormat('en-GB', {
+            timeZone: PRAGUE_TZ,
+            hour: '2-digit', minute: '2-digit', second: '2-digit',
+            hour12: false
+        }).format(new Date());
+        document.getElementById('lastUpdated').textContent = 'UPDATED ' + now + ' CET';
+
+        buildTicker(fullHistory);
+        applyFilter(currentFilter);
+
+    } catch (err) {
+        console.error(err);
+        const bar = document.getElementById('errorBar');
+        bar.textContent = '⚠  Failed to load market data: ' + err.message;
+        bar.style.display = 'block';
+        document.getElementById('chartLoading').classList.add('hidden');
+    }
+}
+
+window.onload = function() { loadData(); };
+</script>
+</body>
+</html>
