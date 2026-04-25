@@ -230,7 +230,6 @@ code{
   <a href="#mise">Mise</a>
   <a href="#prestiz">Prestiž</a>
   <a href="#obchod">Obchod</a>
-  <a href="#xp">XP konverze</a>
 
   <div class="nav-section">Admin</div>
   <a href="#admin-cmd">Admin příkazy</a>
@@ -275,8 +274,8 @@ code{
   <h3>Hráčské příkazy</h3>
   <div class="cmd-grid">
     <div class="cmd-card">
-      <div class="cmd-name">/economy status [hráč]</div>
-      <div class="cmd-desc">Zobrazí přehled hotovosti, banky, akcií, čistého jmění a prestiže. Nepovinný parametr pro zobrazení jiného hráče.</div>
+      <div class="cmd-name">/economy status</div>
+      <div class="cmd-desc">Zobrazí přehled hotovosti, banky, akcií, čistého jmění, prestiže a pořadí v žebříčku.</div>
       <span class="cmd-tag tag-hrac">Hráč</span><span class="cmd-tag tag-ephem">Ephemeral</span>
     </div>
     <div class="cmd-card">
@@ -296,7 +295,7 @@ code{
     </div>
     <div class="cmd-card">
       <div class="cmd-name">/economy work</div>
-      <div class="cmd-desc">Náhodná práce z 26 povolání. Cooldown 4 hodiny. Work Boost zdvojnásobí výdělek.</div>
+      <div class="cmd-desc">Náhodná práce z 25 povolání. Cooldown 4 hodiny. Work Boost zvýší výdělek o 30 %.</div>
       <span class="cmd-tag tag-hrac">Hráč</span><span class="cmd-tag tag-ephem">Ephemeral</span>
     </div>
     <div class="cmd-card">
@@ -316,7 +315,7 @@ code{
     </div>
     <div class="cmd-card">
       <div class="cmd-name">/economy casino &lt;hra&gt; &lt;sázka&gt;</div>
-      <div class="cmd-desc">Kasino hry: Coinflip 🪙, Kostky 🎲, Blackjack 🃏, Dostihy 🏇.</div>
+      <div class="cmd-desc">Kasino hry: Coinflip 🪙, Kostky 🎲, Blackjack 🃏, Dostihy 🏇, Automaty 🎰.</div>
       <span class="cmd-tag tag-hrac">Hráč</span><span class="cmd-tag tag-ephem">Ephemeral</span>
     </div>
     <div class="cmd-card">
@@ -350,11 +349,6 @@ code{
       <span class="cmd-tag tag-hrac">Hráč</span><span class="cmd-tag tag-ephem">Ephemeral</span>
     </div>
     <div class="cmd-card">
-      <div class="cmd-name">/economy xp-convert &lt;xp&gt;</div>
-      <div class="cmd-desc">Převede serverové XP body na herní měnu. XP Boost zlevní konverzi.</div>
-      <span class="cmd-tag tag-hrac">Hráč</span><span class="cmd-tag tag-ephem">Ephemeral</span>
-    </div>
-    <div class="cmd-card">
       <div class="cmd-name">/economy rate</div>
       <div class="cmd-desc">Zobrazí aktuální kurz CZBOT akcií a trend.</div>
       <span class="cmd-tag tag-hrac">Hráč</span><span class="cmd-tag tag-ephem">Ephemeral</span>
@@ -370,7 +364,7 @@ code{
 <!-- ═══ PRÁCE ═══ -->
 <section id="prace">
   <h2><span class="sec-icon">💼</span> Práce</h2>
-  <p>Příkaz <code>/economy work</code> — cooldown <strong>4 hodiny</strong>. Bot náhodně vybere jedno z 26 povolání a vyplatí odpovídající odměnu.</p>
+  <p>Příkaz <code>/economy work</code> — cooldown <strong>4 hodiny</strong>. Bot náhodně vybere jedno z 25 povolání a vyplatí odpovídající odměnu.</p>
 
   <div class="callout callout-info">
     <span class="callout-icon">⚡</span>
@@ -381,9 +375,9 @@ code{
   <div class="jobs-grid">
     <div class="job-card"><div class="job-emoji">🔨</div><div class="job-name">Moderátor</div><div class="job-range">500 – 1 500</div></div>
     <div class="job-card"><div class="job-emoji">🤖</div><div class="job-name">AI Programátor</div><div class="job-range">1 500 – 5 000</div></div>
-    <div class="job-card"><div class="job-emoji">💻</div><div class="job-name">Hacker</div><div class="job-range">1 000 – 6 000</div></div>
+    <div class="job-card"><div class="job-emoji">💻</div><div class="job-name">Hacker</div><div class="job-range">1 000 – 20 000</div></div>
     <div class="job-card"><div class="job-emoji">🐛</div><div class="job-name">Bug Bounty Hunter</div><div class="job-range">2 000 – 10 000</div></div>
-    <div class="job-card"><div class="job-emoji">📊</div><div class="job-name">Trader</div><div class="job-range">−500 – 8 000</div></div>
+    <div class="job-card"><div class="job-emoji">📊</div><div class="job-name">Trader</div><div class="job-range">−5 000 – 18 000</div></div>
     <div class="job-card"><div class="job-emoji">🎨</div><div class="job-name">NFT Artist</div><div class="job-range">50 – 8 000</div></div>
     <div class="job-card"><div class="job-emoji">🕹️</div><div class="job-name">Game Tester</div><div class="job-range">800 – 2 000</div></div>
     <div class="job-card"><div class="job-emoji">🖥️</div><div class="job-name">Správce sítě</div><div class="job-range">1 200 – 3 500</div></div>
@@ -398,9 +392,9 @@ code{
     <div class="job-card"><div class="job-emoji">🚪</div><div class="job-name">Vyhazovač</div><div class="job-range">400 – 1 200</div></div>
     <div class="job-card"><div class="job-emoji">⚡</div><div class="job-name">Elektrikář</div><div class="job-range">700 – 2 200</div></div>
     <div class="job-card"><div class="job-emoji">👨‍🍳</div><div class="job-name">Kuchař</div><div class="job-range">450 – 1 400</div></div>
-    <div class="job-card"><div class="job-emoji">📈</div><div class="job-name">Makléř</div><div class="job-range">−2 000 – 15 000</div></div>
+    <div class="job-card"><div class="job-emoji">📈</div><div class="job-name">Makléř</div><div class="job-range">−20 000 – 40 000</div></div>
     <div class="job-card"><div class="job-emoji">🍋</div><div class="job-name">Prodavač limonád</div><div class="job-range">100 – 500</div></div>
-    <div class="job-card"><div class="job-emoji">🎰</div><div class="job-name">Profesionální hráč</div><div class="job-range">−3 000 – 12 000</div></div>
+    <div class="job-card"><div class="job-emoji">🎰</div><div class="job-name">Profesionální hráč</div><div class="job-range">−30 000 – 60 000</div></div>
     <div class="job-card"><div class="job-emoji">🕵️</div><div class="job-name">Detektiv</div><div class="job-range">900 – 4 500</div></div>
     <div class="job-card"><div class="job-emoji">🗺️</div><div class="job-name">Průvodce</div><div class="job-range">300 – 1 500</div></div>
     <div class="job-card"><div class="job-emoji">🏪</div><div class="job-name">Prodavač</div><div class="job-range">500 – 1 800</div></div>
@@ -469,45 +463,91 @@ code{
 
   <h3>📈 Bull eventy (pozitivní)</h3>
   <table>
-    <thead><tr><th>Emoji</th><th>Název</th><th>Typ</th><th>Změna kurzu</th></tr></thead>
+    <thead><tr><th>Emoji</th><th>Typ</th><th>Změna kurzu</th></tr></thead>
     <tbody>
-      <tr><td>🤝</td><td>Partnerství / Spolupráce</td><td>📈 Bull</td><td>+8 % až +22 %</td></tr>
-      <tr><td>🏛️</td><td>Regulační schválení</td><td>📈 Bull</td><td>+5 % až +18 %</td></tr>
-      <tr><td>🌍</td><td>Globální adopce</td><td>📈 Bull</td><td>+12 % až +30 %</td></tr>
-      <tr><td>🏦</td><td>Institucionální investice</td><td>📈 Bull</td><td>+10 % až +25 %</td></tr>
-      <tr><td>⛏️</td><td>Mining boom</td><td>📈 Bull</td><td>+15 % až +35 %</td></tr>
-      <tr><td>📢</td><td>Virální kampaň</td><td>📈 Bull</td><td>+6 % až +20 %</td></tr>
-      <tr><td>🤖</td><td>AI integrace</td><td>📈 Bull</td><td>+8 % až +18 %</td></tr>
-      <tr><td>📊</td><td>Pozitivní výsledky</td><td>📈 Bull</td><td>+4 % až +14 %</td></tr>
+      <tr><td>🤝</td><td>📈 Bull</td><td>+8 % až +22 %</td></tr>
+      <tr><td>🏛️</td><td>📈 Bull</td><td>+5 % až +18 %</td></tr>
+      <tr><td>🌍</td><td>📈 Bull</td><td>+12 % až +30 %</td></tr>
+      <tr><td>🏦</td><td>📈 Bull</td><td>+10 % až +25 %</td></tr>
+      <tr><td>⛏️</td><td>📈 Bull</td><td>+15 % až +35 %</td></tr>
+      <tr><td>📢</td><td>📈 Bull</td><td>+6 % až +20 %</td></tr>
+      <tr><td>🤖</td><td>📈 Bull</td><td>+8 % až +18 %</td></tr>
+      <tr><td>📊</td><td>📈 Bull</td><td>+4 % až +14 %</td></tr>
+      <tr><td>🎯</td><td>📈 Bull</td><td>+7 % až +21 %</td></tr>
+      <tr><td>🔋</td><td>📈 Bull</td><td>+9 % až +28 %</td></tr>
+      <tr><td>🛸</td><td>📈 Bull</td><td>+20 % až +45 %</td></tr>
+      <tr><td>💊</td><td>📈 Bull</td><td>+6 % až +19 %</td></tr>
+      <tr><td>🏆</td><td>📈 Bull</td><td>+3 % až +12 %</td></tr>
+      <tr><td>🌱</td><td>📈 Bull</td><td>+5 % až +17 %</td></tr>
+      <tr><td>🚂</td><td>📈 Bull</td><td>+8 % až +24 %</td></tr>
+      <tr><td>💡</td><td>📈 Bull</td><td>+11 % až +32 %</td></tr>
+      <tr><td>🎪</td><td>📈 Bull</td><td>+4 % až +16 %</td></tr>
+      <tr><td>🌊</td><td>📈 Bull</td><td>+13 % až +29 %</td></tr>
     </tbody>
   </table>
 
   <h3>📉 Bear eventy (negativní)</h3>
   <table>
-    <thead><tr><th>Emoji</th><th>Název</th><th>Typ</th><th>Změna kurzu</th></tr></thead>
+    <thead><tr><th>Emoji</th><th>Typ</th><th>Změna kurzu</th></tr></thead>
     <tbody>
-      <tr><td>💀</td><td>Krize zasáhla trhy</td><td>📉 Bear</td><td>−18 % až −40 %</td></tr>
-      <tr><td>🚫</td><td>Regulační zákaz</td><td>📉 Bear</td><td>−20 % až −35 %</td></tr>
-      <tr><td>🐋</td><td>Whale Dump</td><td>📉 Bear</td><td>−15 % až −30 %</td></tr>
-      <tr><td>🎰</td><td>Kasinový skandál</td><td>📉 Bear</td><td>−12 % až −25 %</td></tr>
-      <tr><td>💔</td><td>Krach partnera</td><td>📉 Bear</td><td>−13 % až −28 %</td></tr>
-      <tr><td>🔒</td><td>Kyberútok na infrastrukturu</td><td>📉 Bear</td><td>−8 % až −20 %</td></tr>
-      <tr><td>📰</td><td>Mediální bouře</td><td>📉 Bear</td><td>−10 % až −22 %</td></tr>
-      <tr><td>📉</td><td>Flash Crash</td><td>📉 Bear</td><td>−22 % až −45 %</td></tr>
+      <tr><td>💀</td><td>📉 Bear</td><td>−18 % až −40 %</td></tr>
+      <tr><td>🚫</td><td>📉 Bear</td><td>−20 % až −35 %</td></tr>
+      <tr><td>🐋</td><td>📉 Bear</td><td>−15 % až −30 %</td></tr>
+      <tr><td>🎰</td><td>📉 Bear</td><td>−12 % až −25 %</td></tr>
+      <tr><td>💔</td><td>📉 Bear</td><td>−13 % až −28 %</td></tr>
+      <tr><td>🔒</td><td>📉 Bear</td><td>−8 % až −20 %</td></tr>
+      <tr><td>📰</td><td>📉 Bear</td><td>−10 % až −22 %</td></tr>
+      <tr><td>📉</td><td>📉 Bear</td><td>−22 % až −45 %</td></tr>
+      <tr><td>🏚️</td><td>📉 Bear</td><td>−11 % až −27 %</td></tr>
+      <tr><td>⚡</td><td>📉 Bear</td><td>−16 % až −32 %</td></tr>
+      <tr><td>🌪️</td><td>📉 Bear</td><td>−19 % až −38 %</td></tr>
+      <tr><td>🦠</td><td>📉 Bear</td><td>−21 % až −42 %</td></tr>
+      <tr><td>🔧</td><td>📉 Bear</td><td>−9 % až −24 %</td></tr>
+      <tr><td>📦</td><td>📉 Bear</td><td>−14 % až −29 %</td></tr>
+      <tr><td>🗑️</td><td>📉 Bear</td><td>−17 % až −34 %</td></tr>
+      <tr><td>🕳️</td><td>📉 Bear</td><td>−25 % až −50 %</td></tr>
+      <tr><td>🧨</td><td>📉 Bear</td><td>−18 % až −37 %</td></tr>
+      <tr><td>🪦</td><td>📉 Bear</td><td>−23 % až −43 %</td></tr>
     </tbody>
   </table>
 
   <h3>🌀 Wild eventy (extrémně volatilní)</h3>
   <table>
-    <thead><tr><th>Emoji</th><th>Název</th><th>Typ</th><th>Rozsah (oběma směry)</th></tr></thead>
+    <thead><tr><th>Emoji</th><th>Typ</th><th>Rozsah (oběma směry)</th></tr></thead>
     <tbody>
-      <tr><td>🦢</td><td>Black Swan Event</td><td>🌀 Wild</td><td>−60 % až +60 %</td></tr>
-      <tr><td>🚀</td><td>Memecoin Frenzy</td><td>🌀 Wild</td><td>−50 % až +100 %</td></tr>
-      <tr><td>⚛️</td><td>Kvantový computing útok</td><td>🌀 Wild</td><td>−55 % až +50 %</td></tr>
-      <tr><td>🌐</td><td>Geopolitická krize</td><td>🌀 Wild</td><td>−50 % až +40 %</td></tr>
-      <tr><td>🔬</td><td>Výsledky výzkumu</td><td>🌀 Wild</td><td>−40 % až +45 %</td></tr>
+      <tr><td>🦢</td><td>🌀 Wild</td><td>−60 % až +60 %</td></tr>
+      <tr><td>🚀</td><td>🌀 Wild</td><td>−50 % až +100 %</td></tr>
+      <tr><td>⚛️</td><td>🌀 Wild</td><td>−55 % až +50 %</td></tr>
+      <tr><td>🌐</td><td>🌀 Wild</td><td>−50 % až +40 %</td></tr>
+      <tr><td>🔬</td><td>🌀 Wild</td><td>−40 % až +45 %</td></tr>
     </tbody>
   </table>
+
+  <h3>😴 Neutrální eventy (minimální pohyb)</h3>
+  <table>
+    <thead><tr><th>Emoji</th><th>Typ</th><th>Změna kurzu</th></tr></thead>
+    <tbody>
+      <tr><td>😴</td><td>Neutrální</td><td>−3 % až +3 %</td></tr>
+      <tr><td>🌤️</td><td>Neutrální</td><td>−2 % až +5 %</td></tr>
+      <tr><td>☕</td><td>Neutrální</td><td>−1 % až +1 %</td></tr>
+      <tr><td>📎</td><td>Neutrální</td><td>−4 % až +4 %</td></tr>
+    </tbody>
+  </table>
+
+  <h3>⭐ Speciální eventy (vzácné, ~10 % šance)</h3>
+  <table>
+    <thead><tr><th>Emoji</th><th>Typ</th><th>Změna kurzu</th></tr></thead>
+    <tbody>
+      <tr><td>🐳</td><td>⭐ Special Bull</td><td>+40 % až +55 %</td></tr>
+      <tr><td>🩸</td><td>⭐ Special Bear</td><td>−40 % až −55 %</td></tr>
+    </tbody>
+  </table>
+
+  <h3>☠️ Krach (velmi vzácný)</h3>
+  <div class="callout callout-danger">
+    <span class="callout-icon">☠️</span>
+    <div>Pokud nastane <strong>Krach</strong>, kurz CZBOT padne na nulu — všichni hráči přijdou o akcie a kurz se resetuje na výchozích <strong>10 000</strong>. Šance je přibližně 1 %.</div>
+  </div>
 </section>
 
 <!-- ═══ KASINO ═══ -->
@@ -521,7 +561,7 @@ code{
       <ul class="casino-detail">
         <li>Volba: hlava / panna</li>
         <li>Šance 50/50</li>
-        <li>Výhra: 2× sázka</li>
+        <li>Výhra: 2× sázka (−5 % poplatek do fondu)</li>
       </ul>
     </div>
     <div class="casino-card">
@@ -529,25 +569,38 @@ code{
       <ul class="casino-detail">
         <li>Hráč vs. bot (1–6)</li>
         <li>Remíza → vrácení sázky</li>
-        <li>Výhra: 2× sázka</li>
+        <li>Výhra: 2× sázka (−5 % poplatek do fondu)</li>
       </ul>
     </div>
     <div class="casino-card">
       <div class="casino-title">🃏 Blackjack</div>
       <ul class="casino-detail">
         <li>Klasická hra — cíl 21</li>
-        <li>Tlačítka: Lístek / Stát</li>
-        <li>Výhra: 2× sázka, Blackjack: 2,5×</li>
+        <li>Tlačítka: Hit / Stand / Double Down</li>
+        <li>Výhra: 2× sázka, Blackjack: 2,5×, Remíza: vrácení sázky</li>
       </ul>
     </div>
     <div class="casino-card">
       <div class="casino-title">🏇 Dostihy</div>
       <ul class="casino-detail">
         <li>4 koně, sázka na jednoho</li>
-        <li>Výhra: 4× sázka</li>
-        <li>Šťastný talisman: +30 % šance</li>
+        <li>Výhra: 2× (50 %), 3× (35 %), nebo 5× (15 %)</li>
+        <li>Šťastný talisman zvyšuje šanci na výhru</li>
       </ul>
     </div>
+    <div class="casino-card">
+      <div class="casino-title">🎰 Automaty (Slots)</div>
+      <ul class="casino-detail">
+        <li>3×3 mřížka, výherní řada uprostřed</li>
+        <li>Trojice 7️⃣ → 50×, 💎 → 20×, 🍀 → 15×, ⭐ → 10× atd.</li>
+        <li>Dva stejné vzácné symboly → malá výhra (2–3×)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout callout-warn">
+    <span class="callout-icon">⚠️</span>
+    <div>Při vysokých sázkách (nad 2 000) platí <strong>house edge</strong> — casino má až +15 % výhodu. Šance na výhru se postupně snižuje čím vyšší je sázka.</div>
   </div>
 </section>
 
@@ -588,7 +641,11 @@ code{
   </div>
   <div class="feature-block">
     <div class="feature-title">💰 Výsledek</div>
-    <p><strong>Úspěch:</strong> Zloději ukradnou až 30 % komunitního fondu (max 100 000), rovnoměrně rozděleno. <strong>Neúspěch:</strong> Každý zloděj zaplatí pokutu 1 500 do fondu.</p>
+    <p><strong>Úspěch:</strong> Zloději ukradnou až 30 % komunitního fondu (max 100 000), rovnoměrně rozděleno. <strong>Neúspěch:</strong> Každý zloděj zaplatí pokutu 1 500 do fondu. Obránci dostanou 500 + podíl z 20 % pokut.</p>
+  </div>
+  <div class="feature-block">
+    <div class="feature-title">🏃 Únik (3+ zloději)</div>
+    <p>Při 3 a více zlodějích je <strong>10% šance</strong> na útěk jednoho ze skupiny — ten dostane až 5 % z fondu (max 10 000) a vyhne se pokutě. Zbytek skupiny zaplatí pokuty normálně.</p>
   </div>
 
   <div class="callout callout-info">
@@ -692,22 +749,22 @@ code{
   <div class="shop-grid">
     <div class="shop-item">
       <div class="item-name">🛡️ Rob Shield</div>
-      <div class="item-price">100 000 | Trvalý (pasivní)</div>
+      <div class="item-price">500 000 | Trvalý (pasivní)</div>
       <div class="item-desc">Snižuje pokutu při chycení při loupeži o 50 %.</div>
     </div>
     <div class="shop-item">
       <div class="item-name">🗡️ Rob Boost</div>
-      <div class="item-price">15 500 | 6 hodin</div>
+      <div class="item-price">12 500 | 6 hodin</div>
       <div class="item-desc">Zvyšuje šanci na úspěch loupeže o +20 % (jednorázové použití).</div>
     </div>
     <div class="shop-item">
       <div class="item-name">⚡ Work Boost</div>
-      <div class="item-price">5 500 | 4 hodiny</div>
+      <div class="item-price">1 500 | 4 hodiny</div>
       <div class="item-desc">Zvyšuje výdělek z <code>/economy work</code> o 30 %.</div>
     </div>
     <div class="shop-item">
       <div class="item-name">💬 Passive Boost</div>
-      <div class="item-price">30 000 | 2 hodiny</div>
+      <div class="item-price">40 000 | 2 hodiny</div>
       <div class="item-desc">Pasivní zisk ze zpráv je 3× vyšší.</div>
     </div>
     <div class="shop-item">
@@ -717,29 +774,19 @@ code{
     </div>
     <div class="shop-item">
       <div class="item-name">🍀 Šťastný talisman</div>
-      <div class="item-price">50 000 | 12 hodin</div>
+      <div class="item-price">74 000 | 12 hodin</div>
       <div class="item-desc">Zvyšuje šanci v kasinu a dostihy o 15 %.</div>
     </div>
     <div class="shop-item">
       <div class="item-name">📜 Odpuštění dluhu</div>
-      <div class="item-price">550 000 | Jednorázové</div>
-      <div class="item-desc">Okamžitě smaže veškerý aktuální dluh bez úroku.</div>
+      <div class="item-price">30 000 | Jednorázové</div>
+      <div class="item-desc">Okamžitě odpustí 20 % aktuálního dluhu.</div>
     </div>
     <div class="shop-item">
       <div class="item-name">⭐ Prestiž Token</div>
       <div class="item-price">800 000 | Jednorázové</div>
       <div class="item-desc">Aktivuje prestiž — resetuje majetek a přidá permanentní +5 % bonus k výdělkům.</div>
     </div>
-  </div>
-</section>
-
-<!-- ═══ XP KONVERZE ═══ -->
-<section id="xp">
-  <h2><span class="sec-icon">🔄</span> XP konverze</h2>
-  <p>Příkaz <code>/economy xp-convert &lt;xp&gt;</code> — převede serverové XP body na herní měnu. Předmět <strong>XP Boost</strong> zdvojnásobí efektivitu konverze.</p>
-  <div class="callout callout-info">
-    <span class="callout-icon">ℹ️</span>
-    <div>XP konverze je závislá na nastavení serveru a dostupném XP systému. Výsledná částka se odvíjí od počtu převáděných XP.</div>
   </div>
 </section>
 
