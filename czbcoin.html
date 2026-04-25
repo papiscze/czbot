@@ -665,7 +665,7 @@ function applyFilter(hours) {
 // ── Load ──────────────────────────────────────────────────────────────────────
 async function loadData() {
     try {
-        var resp = await fetch('/api/economy/price');
+        var resp = await fetch('https://rs422cznas.myds.me:7784/api/economy/price');
         if (!resp.ok) throw new Error('HTTP ' + resp.status);
         var json = await resp.json();
         fullHistory  = json.history || [];
