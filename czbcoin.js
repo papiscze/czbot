@@ -77,6 +77,7 @@ var WEIGHT_KEYS = ['bull','bear','neutral','wild','special_bull','special_bear',
 var myChart         = null;
 var fullHistory     = [];
 var currentPrice    = 0;
+var allTimeRecords  = null;
 var currentFiltered = [];
 var currentFilter   = 0;
 var showPrediction  = true;
@@ -286,18 +287,34 @@ function buildTicker(history) {
 }
 
 // ── Stat cards ────────────────────────────────────────────────────────────────
-function updateStats(data) {
+function updateStats(data, records) {
     if (!data.length) return;
     var prices = data.map(function(r) { return r.price; });
     var max = Math.max.apply(null, prices);
     var min = Math.min.apply(null, prices);
     var avg = Math.round(prices.reduce(function(a,b){return a+b;},0) / prices.length);
-    document.getElementById('statATH').textContent     = fmtPrice(max);
-    document.getElementById('statATHDate').textContent = labelShort(data[prices.indexOf(max)].recorded_at);
-    document.getElementById('statATL').textContent     = fmtPrice(min);
-    document.getElementById('statATLDate').textContent = labelShort(data[prices.indexOf(min)].recorded_at);
+
+    // ATH/ATL — z /api/economy/records (all-time), fallback na aktuální okno
+    if (records && records.all_time_high && records.all_time_high.price !== null) {
+        document.getElementById('statATH').textContent     = fmtPrice(records.all_time_high.price);
+        document.getElementById('statATHDate').textContent = records.all_time_high.timestamp
+            ? labelShort(records.all_time_high.timestamp) : '—';
+    } else {
+        document.getElementById('statATH').textContent     = fmtPrice(max);
+        document.getElementById('statATHDate').textContent = labelShort(data[prices.indexOf(max)].recorded_at);
+    }
+    if (records && records.all_time_low && records.all_time_low.price !== null) {
+        document.getElementById('statATL').textContent     = fmtPrice(records.all_time_low.price);
+        document.getElementById('statATLDate').textContent = records.all_time_low.timestamp
+            ? labelShort(records.all_time_low.timestamp) : '—';
+    } else {
+        document.getElementById('statATL').textContent     = fmtPrice(min);
+        document.getElementById('statATLDate').textContent = labelShort(data[prices.indexOf(min)].recorded_at);
+    }
+
     document.getElementById('statAvg').textContent     = fmtPrice(avg);
-    document.getElementById('statVol').textContent     = fmtPrice(max - min);
+    var spreadPct = max > 0 ? (((max - min) / max) * 100).toFixed(1) : '0.0';
+    document.getElementById('statVol').textContent     = spreadPct + '%';
     document.getElementById('statCount').textContent   = data.length + ' pts';
 }
 
@@ -520,7 +537,7 @@ function applyFilter(hours) {
     }
     if (!currentFiltered.length) return;
     updateHeader(currentFiltered);
-    updateStats(currentFiltered);
+    updateStats(currentFiltered, allTimeRecords);
     buildChart(currentFiltered);
     document.getElementById('chartLoading').classList.add('hidden');
 }
@@ -528,9 +545,14 @@ function applyFilter(hours) {
 // ── Load ──────────────────────────────────────────────────────────────────────
 async function loadData() {
     try {
-        var resp = await fetch('https://rs422cznas.myds.me:7784/api/economy/price');
+        // Paralelní fetch ceny + all-time rekordů
+        var [resp, recResp] = await Promise.all([
+            fetch('https://rs422cznas.myds.me:7784/api/economy/price'),
+            fetch('https://rs422cznas.myds.me:7784/api/economy/records')
+        ]);
         if (!resp.ok) throw new Error('HTTP ' + resp.status);
         var json = await resp.json();
+        allTimeRecords = recResp.ok ? await recResp.json() : null;
         fullHistory  = json.history || [];
         currentPrice = json.current_price || 0;
         var now = new Intl.DateTimeFormat('en-GB', {
